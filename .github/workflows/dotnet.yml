@@ -1,4 +1,4 @@
-name: .NET
+name: .NET Desktop App
 
 on:
   push:
@@ -10,22 +10,19 @@ jobs:
   build:
 
     runs-on: windows-latest
-
+    
     steps:
-    - uses: actions/checkout@v2
-      name: Checkout Code
-    
-    -name: Add msbuild to PATH
-     uses: microsoft/setup-msbuild@v1.0.2
-    
-    -name: Setup NuGet
-     uses: NuGet/setup-nuget@v1.0.2
-    
+      -uses: actions/checkout@main
+      -name: Setup .NET
+       uses: actions/setup-dotnet@v2
+      with:
+        doenet-version: 4.7.x
+     -name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
     -name: Restore Nuget Packages
      run: nuget restore POSSystem.sln
-     
-     - name: Build
-      run: dotnet build --no-restore
-      
-     - name: Publish App 
-       run: msbuild POSSystem.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+      -name: Build with dotnet
+       run: dotnet build --configuration Release
+      -name: Test
+       runt: dotnet test --veerbosity normal
+    
