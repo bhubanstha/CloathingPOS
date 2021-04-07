@@ -1,8 +1,10 @@
-name: EZRep Build
+name: POSSystem Build
 
 on:
   push:
-    branches: master
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -24,16 +26,16 @@ jobs:
       run: mkdir _build
       
     - name: Restore Packages
-      run: nuget restore EzRep.sln
+      run: nuget restore POSSystem.sln
 
     - name: Build Solution
       run: |
-        msbuild.exe EzRep.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
+        msbuild.exe POSSystem.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
         
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: EZRepBundle
+        name: POSSystemBundle
         path: "./_build"        
         
     
