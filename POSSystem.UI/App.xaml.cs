@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using POSSystem.UI.Startup;
 using Autofac;
+using POSSystem.UI.Service;
 
 namespace POSSystem.UI
 {
@@ -21,8 +22,11 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<LoginWindow>();
-            this.MainWindow = window; 
+            var window = container.Resolve<MainWindow>();
+            this.MainWindow = window;
+            StaticContainer.ThisApp = this;
+            StaticContainer.Container = container;
+
             window.Show();
         }
 

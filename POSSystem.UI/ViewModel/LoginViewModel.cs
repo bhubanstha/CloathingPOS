@@ -14,44 +14,64 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Runtime.Caching;
+using POSSystem.UI.Service;
+using System.Windows;
+using Autofac;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class LoginViewModel 
+    public class LoginViewModel : NotifyPropertyChanged
     {
-        public System.Windows.Input.ICommand LoginCommand { get; }
-        public IMessageDialogService _dialogService { get; set; }
+        public ICommand LoginCommand { get; }
+        private IMessageDialogService _dialogService { get; set; }
 
         private IGenericDataRepository<User> _genericDataRepository;
         private IBouncyCastleEncryption _bouncyCastleEncryption;
+        private ICacheService _cacheService;
 
         public MetroWindow Window { get;  set; }
-        public LoginViewModel(IMessageDialogService messageDialogService)
+
+        public string UserName { get; set; }
+        public bool RememberMe { get; set; }
+
+        public LoginViewModel(IMessageDialogService messageDialogService, ICacheService cacheService)
         {
-            LoginCommand = new DelegateCommand(OnLoginExecute, OnLoginCanExecute);
+            LoginCommand = new DelegateCommand<object>(OnLoginExecute, OnLoginCanExecute);
             _dialogService = messageDialogService;
             _genericDataRepository = new DataRepository<User>(new POSDataContext());
             _bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
-            //Window = window;
+            _cacheService = cacheService;
         }
 
-        private void OnLoginExecute()
+        private void OnLoginExecute(object parameter)
         {
+            var passwordBox = parameter as PasswordBox;
+            var password = passwordBox.Password;
             IEnumerable<User> users = _genericDataRepository.GetAll().ToList();
-            var u = users
-                .Where(f => f.UserName == "sysadmin" && f.Password == _bouncyCastleEncryption.EncryptAsAsync("123").Result).FirstOrDefault();
+            User u = users
+                .Where(f => CompareString(f.UserName, UserName)
+                        && f.Password == _bouncyCastleEncryption.EncryptAsAsync(password).Result)
+                .FirstOrDefault();
             if (u != null)
             {
-                _dialogService.ShowDialog("This is test", Window);
+                _cacheService.SetCache("LoginUser", u);
+                MainWindow newWindow = StaticContainer.Container.Resolve<MainWindow>();
+                newWindow.Show();
+                StaticContainer.ThisApp.MainWindow = newWindow;
+                Window.Close();
+                //_dialogService.ShowDialog("This is test", Window);
             }
         }
 
-        private bool OnLoginCanExecute()
+        private bool OnLoginCanExecute(object parameter)
         {
             return true;
         }
 
+        
         
     }
 }

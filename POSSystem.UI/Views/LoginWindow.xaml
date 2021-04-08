@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -12,14 +13,21 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         ShowMaxRestoreButton="False"
-        Title="LoginWindow" Height="528" Width="400">
+        Title="LoginWindow" Height="540" Width="400"
+        Icon="/Image/pos_icon_toolbar.png"
+                 >
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image Source="/Image/pos_icon.png"></Image>
+        </DataTemplate>
+    </mah:MetroWindow.IconTemplate>
+    
     <StackPanel Background="#f0f2f1">
         <Label Content="POS Login" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0" />
         <Grid Margin="30 10 30 20" Background="White" xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160"/>
-                <RowDefinition Height="200"/>
-                <RowDefinition Height="15"/>
+                <RowDefinition Height="225"/>
             </Grid.RowDefinitions>
 
             <Image Source="/Image/img_avatar.png" Height="120" Width="120"
@@ -35,7 +43,8 @@
                 <StackPanel Orientation="Horizontal">
                 <TextBox materialDesign:HintAssist.Hint="EMAIL" 
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
-                         Width="300"/>
+                         Width="300"
+                         Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <iconPacks:PackIconBootstrapIcons Kind="Person" VerticalAlignment="Center" 
                                                   HorizontalAlignment="Center"
                                                   Padding="2" Height="30"
@@ -57,39 +66,34 @@
                                                 Width="20"
                                                 Foreground="{Binding ElementName=Password, Path=IsFocused}"/>
                 </StackPanel>
-             
-
-                <Grid Grid.Row="1" Margin="0 0 0 5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <CheckBox  Grid.Column="0" Grid.Row="0"/>
-                    <Label Content="Remember Me" Grid.Column="1" Grid.Row="0"/>
-
-
-                </Grid>
+                <StackPanel Margin="0 0 0 20">
+                    <CheckBox  Grid.Column="0" Grid.Row="0" FlowDirection="LeftToRight"
+                               IsChecked="{Binding RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBlock FlowDirection="LeftToRight" Margin="0 0 0 2">Remember me</TextBlock>
+                    </CheckBox>
+                </StackPanel>
                 <Button Height="35" Width="100" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                        Command="{Binding LoginCommand}">
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=Password}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{iconPacks:BootstrapIconsImage Kind=DoorOpenFill, Brush=White}" Height="20" Width="24" HorizontalAlignment="Right" Grid.Column="0"  />
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center">Login</TextBlock>
+                        <Image Source="{iconPacks:BootstrapIconsImage Kind=DoorOpenFill, Brush=White}" Height="20" Width="24" HorizontalAlignment="Left" Grid.Column="0"  />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Login</TextBlock>
                     </Grid>
                 </Button>
             </StackPanel>
 
         </Grid>
 
-        <StackPanel  Background="Gray" VerticalAlignment="Bottom">
-            <Label Content="Copy right" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" xf:Animations.Primary="{StaticResource FadeIn}"/>
+        <StackPanel  Background="Gray" VerticalAlignment="Bottom" Height="30" Orientation="Horizontal">
+            <!--<Label Content="Copy right" Foreground="White" />-->
+            <TextBlock 
+                VerticalAlignment="Center" 
+                Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneTime, StringFormat=' yyyy'}"
+                FontSize="15" TextAlignment="Center" HorizontalAlignment="Center" >©</TextBlock>
         </StackPanel>
 
     </StackPanel>

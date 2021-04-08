@@ -3,6 +3,7 @@ using MahApps.Metro.Controls;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
+using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
@@ -20,10 +21,21 @@ namespace POSSystem.UI.Startup
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
+            builder.RegisterType<MainWindow>().AsSelf();
+
+            //Service Registration
+            builder.RegisterType<CacheService>().As<ICacheService>();
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            
+            //View Model Registration
             builder.RegisterType<LoginViewModel>().AsSelf();
+            builder.RegisterType<MainWindowViewModel>().AsSelf();
+
+            //Db Context Registration
             builder.RegisterType<POSDataContext>().AsSelf();
+            
 
             return builder.Build();
         }

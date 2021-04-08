@@ -5,35 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:views="clr-namespace:POSSystem.UI.Views"
         xmlns:local="clr-namespace:POSSystem.UI"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
-        Title="MainWindow" Height="450" Width="800">
-    <mah:MetroWindow.LeftWindowCommands>
+        Title="MainWindow" 
+                 Height="450" 
+                 Width="800"
+                 MinWidth="800"
+        Icon="/Image/pos_icon.png"
+                 >
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image Source="/Image/pos_icon.png"></Image>
+        </DataTemplate>
+    </mah:MetroWindow.IconTemplate>
+    <!--<mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
             <Button ToolTip="Open up the GitHub site">
-                <iconPacks:PackIconModern Width="22"
+                <iconPacks:Material Width="22"
                                   Height="22"
-                                  Kind="SocialGithubOctocat" />
+                                  Kind="AbjadHebrew" />
             </Button>
         </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>-->
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button Content="Deploy CupCakes">
+            <Button Content="{Binding User.DisplayName}" 
+                    Command="{Binding TestCommand}"
+                    CommandParameter="{Binding ElementName=UMenuPopup}">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconModern Width="22"
+                            <iconPacks:PackIconFontAwesome Width="22"
                                         Height="22"
                                         VerticalAlignment="Center"
-                                        Kind="FoodCupcake" />
+                                        Kind="UserAltSolid" />
                             <TextBlock Margin="4 0 0 0"
                          VerticalAlignment="Center"
                          Text="{Binding}" />
                         </StackPanel>
+                        
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
@@ -41,5 +55,12 @@
     </mah:MetroWindow.RightWindowCommands>
     <Grid>
         
+                
+        <Grid HorizontalAlignment="Right" Margin="0 0 80 0">
+            <views:UserMenuPopupControl x:Name="UMenuPopup"/>
+        </Grid>
+        
     </Grid>
+    
+    
 </mah:MetroWindow>

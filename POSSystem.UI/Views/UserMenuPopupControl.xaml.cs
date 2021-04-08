@@ -1,6 +1,4 @@
-﻿using MahApps.Metro.Controls;
-using POSSystem.UI.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSSystem.UI
+namespace POSSystem.UI.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserMenuPopupControl.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class UserMenuPopupControl : UserControl
     {
-        private MainWindowViewModel _model;
-        public MainWindow(MainWindowViewModel model)
+        public UserMenuPopupControl()
         {
             InitializeComponent();
-            _model = model;
-            _model.Window = this;
-            DataContext = _model;
         }
     }
 }

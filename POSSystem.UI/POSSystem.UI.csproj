@@ -275,6 +275,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -350,13 +351,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Service\CacheService.cs" />
+    <Compile Include="Service\ICacheService.cs" />
+    <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\Service\IMessageDialogService.cs" />
     <Compile Include="ViewModel\Service\MessageDialogService.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserMenuPopupControl.xaml.cs">
+      <DependentUpon>UserMenuPopupControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wrapper\LoginWrapper.cs" />
+    <Compile Include="Wrapper\WrapperBase.cs" />
     <Page Include="Animations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -374,6 +386,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserMenuPopupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -407,7 +423,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interface\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\img_avatar.png" />
@@ -425,6 +440,12 @@
       <Project>{36e57be4-520f-4de1-b896-26f9c00e433d}</Project>
       <Name>POS.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\pos_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\pos_icon_toolbar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
