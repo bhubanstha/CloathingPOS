@@ -34,8 +34,8 @@ namespace POSSystem.UI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            string msg = string.Format("{0},{1},{2}", container.ActualWidth, PrimaryScrollViewer.Width, PrimaryGrid.Width);
-            MessageBox.Show(msg, "Width");
+            //string msg = string.Format("{0},{1},{2}", container.ActualWidth, PrimaryScrollViewer.Width, PrimaryGrid.Width);
+            //MessageBox.Show(msg, "Width");
             //PrimaryScrollViewer.Width = PrimaryGrid.Width = container.ActualWidth;
         }
     }
