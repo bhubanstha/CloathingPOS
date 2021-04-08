@@ -27,7 +27,7 @@ namespace POSSystem.UI.ViewModel
         public MetroWindow Window { get; set; }
         public User User { get; set; }
 
-        private Visibility _userManuVisibility;
+        private Visibility _userManuVisibility = Visibility.Hidden;
 
         public Visibility UserMenuVisibility
         {
@@ -40,7 +40,6 @@ namespace POSSystem.UI.ViewModel
 
         public MainWindowViewModel(ICacheService cacheService, IMessageDialogService messageDialogService)
         {
-            UserMenuVisibility = Visibility.Visible;
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
             User = cacheService.ReadCache<User>("LoginUser");

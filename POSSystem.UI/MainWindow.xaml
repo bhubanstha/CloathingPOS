@@ -47,20 +47,36 @@
                          VerticalAlignment="Center"
                          Text="{Binding}" />
                         </StackPanel>
-                        
+
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
-    <Grid>
-        
-                
-        <Grid HorizontalAlignment="Right" Margin="0 0 80 0">
-            <views:UserMenuPopupControl x:Name="UMenuPopup"/>
+    <Canvas x:Name="container">
+        <Grid Panel.ZIndex="1" Canvas.Right="80" Canvas.Top="2">
+            <views:UserMenuPopupControl x:Name="UMenuPopup" 
+                                        Margin="100 0 0 0" 
+                                        HorizontalAlignment="Right"
+                                        Visibility="Hidden"/>
         </Grid>
+        <ScrollViewer Width="{Binding ElementName=container, Path= ActualWidth, Mode=OneWay}"
+                      x:Name="PrimaryScrollViewer">
+            <Grid Width="{Binding ElementName=container, Path= ActualWidth, Mode=OneWay}" Margin="10 0 10 0"
+                  x:Name="PrimaryGrid">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Button Content" />
+            </Grid>
+        </ScrollViewer>
         
-    </Grid>
-    
-    
+    </Canvas>
+
+
 </mah:MetroWindow>
