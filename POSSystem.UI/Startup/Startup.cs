@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
@@ -35,7 +36,9 @@ namespace POSSystem.UI.Startup
 
             //Db Context Registration
             builder.RegisterType<POSDataContext>().AsSelf();
-            
+
+            //Framework DI
+            builder.RegisterType<DialogCoordinator>().As<IDialogCoordinator>();
 
             return builder.Build();
         }

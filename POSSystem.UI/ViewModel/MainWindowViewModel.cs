@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using POS.Model;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel.Service;
@@ -20,6 +21,7 @@ namespace POSSystem.UI.ViewModel
     {
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
+        private IDialogCoordinator _dialogCoordinator;
         private UserMenuPopupControl _popuMenu;
         public ICommand TestCommand { get; }
         public ICommand ManageAccount { get; }
@@ -38,10 +40,13 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public MainWindowViewModel(ICacheService cacheService, IMessageDialogService messageDialogService)
+        public MainWindowViewModel(ICacheService cacheService, 
+            IMessageDialogService messageDialogService,
+            IDialogCoordinator dialogCoordinator)
         {
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
+            _dialogCoordinator = dialogCoordinator;
             User = cacheService.ReadCache<User>("LoginUser");
             TestCommand = new DelegateCommand<UserMenuPopupControl>(OnLoginExecute, OnLoginCanExecute);
             ManageAccount = new DelegateCommand(OnManageAccountExecute, OnManageAccountCanExecute);
@@ -49,6 +54,7 @@ namespace POSSystem.UI.ViewModel
 
         private void OnManageAccountExecute()
         {
+            _dialogCoordinator.ShowMessageAsync(this, "This is title", "This is message", MessageDialogStyle.Affirmative);
             _messageDialogService.ShowDialog("Manage account clicked", Window);
             ManageMenuVisibility(); 
         }
