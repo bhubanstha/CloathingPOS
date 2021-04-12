@@ -351,10 +351,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\WindowHeightConverter.cs" />
     <Compile Include="Service\CacheService.cs" />
     <Compile Include="Service\ICacheService.cs" />
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
+    <Compile Include="UIHelpers\AlphabetsOnly.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\NotifyPropertyChanged.cs" />

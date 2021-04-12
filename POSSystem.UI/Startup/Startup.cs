@@ -22,6 +22,11 @@ namespace POSSystem.UI.Startup
         {
             var builder = new ContainerBuilder();
 
+            //View Registration
+            builder.RegisterType<CreateUserView>().AsSelf();
+            builder.RegisterType<InventoryView>().AsSelf();
+            
+
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();

@@ -38,5 +38,10 @@ namespace POSSystem.UI
             //MessageBox.Show(msg, "Width");
             //PrimaryScrollViewer.Width = PrimaryGrid.Width = container.ActualWidth;
         }
+
+        private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
+        {
+            HamburgerMenuControl.Content = args.InvokedItem;
+        }
     }
 }
