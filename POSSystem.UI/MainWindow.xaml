@@ -264,17 +264,38 @@
                     <!--  Items  -->
                     <mah:HamburgerMenu.ItemsSource>
                         <mah:HamburgerMenuItemCollection>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Home}" Label="Home" >
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Account}" Label="User" >
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:CreateUserView/>
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=AccountCircle}" Label="Private">
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TshirtCrew}" Label="Inventory">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:InventoryView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Octicons Kind=Briefcase}" Label="Briefcase">
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory History">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:InventoryView />
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:SalesView />
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FileDocument}" Label="Report">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:SalesView />
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ChartBox}" Label="Report">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:GraphView/>
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
+                            
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Octicons Kind=Hubot}" Label="Inline Content">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <UserControl>
                                         <StackPanel Orientation="Vertical">
@@ -292,7 +313,7 @@
 
                     
                     
-                      Options  
+                      <!--Options-->  
                     <mah:HamburgerMenu.OptionsItemsSource>
                         <mah:HamburgerMenuItemCollection>
                             <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Information}" Label="About">

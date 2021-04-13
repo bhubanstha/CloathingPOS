@@ -25,19 +25,31 @@ namespace POSSystem.UI.Startup
             //View Registration
             builder.RegisterType<CreateUserView>().AsSelf();
             builder.RegisterType<InventoryView>().AsSelf();
+            builder.RegisterType<GraphView>().AsSelf();
+            builder.RegisterType<SalesView>().AsSelf();
             
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();
 
+
+
             //Service Registration
             builder.RegisterType<CacheService>().As<ICacheService>();
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            builder.RegisterType<NepDateConverter>().AsImplementedInterfaces();
+            builder.RegisterType<NepDate>().AsSelf();
+            builder.RegisterType<ColorService>().As<IColorService>();
             
+
+
             //View Model Registration
             builder.RegisterType<LoginViewModel>().AsSelf();
             builder.RegisterType<MainWindowViewModel>().AsSelf();
+            builder.RegisterType<LineSeriesViewModel>().AsSelf();
+
+
 
             //Db Context Registration
             builder.RegisterType<POSDataContext>().AsSelf();

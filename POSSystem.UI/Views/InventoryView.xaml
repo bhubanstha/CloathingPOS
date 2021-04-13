@@ -9,9 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <Border BorderThickness="2px" BorderBrush="{DynamicResource MahApps.Brushes.Accent}" >
-        </Border>
-        <Grid Margin="0 30 30 0">
+        <Border Style="{StaticResource HeaderBorder }" />
+
+        <Grid Style="{StaticResource ControlerMainGrid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -137,21 +137,11 @@
                  Grid.Row="6"
                  Grid.Column="1"
                         IsTodayHighlighted="True"
-                   mah:TextBoxHelper.ClearTextButton="True"
                      mah:TextBoxHelper.SelectAllOnFocus="True"    
                      mah:TextBoxHelper.Watermark="Some Watermark"
                      Margin="{StaticResource ControlMargin}"
-                     Padding="{StaticResource ControlPadding}">
-                <DatePicker.Style>
-                    <Style TargetType="DatePicker">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=PurchaseDate, Path=GotFocus}" Value="true">
-                                <Setter Property="IsEnabled" Value="False"/>
-
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </DatePicker.Style>
+                     Padding="{StaticResource ControlPadding}"
+                        CalendarStyle="{StaticResource resizedCalendarItem}">
             </DatePicker>
 
 
