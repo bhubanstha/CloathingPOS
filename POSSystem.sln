@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Data", "POS.Data\POS.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.Utilities", "POS.Utilities\POS.Utilities.csproj", "{36E57BE4-520F-4DE1-B896-26F9C00E433D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS.BusinessRule", "POS.BusinessRule\POS.BusinessRule.csproj", "{1AA88AB6-9138-4739-B72D-198555DA769D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{36E57BE4-520F-4DE1-B896-26F9C00E433D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36E57BE4-520F-4DE1-B896-26F9C00E433D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36E57BE4-520F-4DE1-B896-26F9C00E433D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AA88AB6-9138-4739-B72D-198555DA769D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AA88AB6-9138-4739-B72D-198555DA769D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AA88AB6-9138-4739-B72D-198555DA769D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AA88AB6-9138-4739-B72D-198555DA769D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
