@@ -80,7 +80,7 @@
                        Margin="0 0 0 0"
                        >
                     <Label.InputBindings>
-                        <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick"/>
                     </Label.InputBindings>
                 </Label>
 

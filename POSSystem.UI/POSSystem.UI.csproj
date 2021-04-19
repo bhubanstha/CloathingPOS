@@ -392,6 +392,7 @@
     <Compile Include="ViewModel\Service\MessageDialogService.cs" />
     <Compile Include="ViewModel\Service\NoEase.cs" />
     <Compile Include="ViewModel\Service\Pnl.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\CreateUserView.xaml.cs">
       <DependentUpon>CreateUserView.xaml</DependentUpon>
@@ -407,6 +408,9 @@
     </Compile>
     <Compile Include="Views\SalesView.xaml.cs">
       <DependentUpon>SalesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserMenuPopupControl.xaml.cs">
       <DependentUpon>UserMenuPopupControl.xaml</DependentUpon>
@@ -450,6 +454,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SalesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

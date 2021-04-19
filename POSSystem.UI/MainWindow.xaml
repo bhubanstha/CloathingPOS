@@ -226,7 +226,12 @@
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
-    
+
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl x:Name="flyoutcontrol">
+            <views:SettingView x:Name="SettingsFlyout"/>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
     
     <Canvas x:Name="container"  Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}">
         <Grid Panel.ZIndex="1" Canvas.Right="80" Canvas.Top="2">

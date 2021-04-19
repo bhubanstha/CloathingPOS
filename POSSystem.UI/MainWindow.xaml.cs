@@ -28,6 +28,7 @@ namespace POSSystem.UI
             InitializeComponent();
             _model = model;
             _model.Window = this;
+            _model.SettingFlyout = this.SettingsFlyout;
             DataContext = _model;
             this.Loaded += MainWindow_Loaded;
         }

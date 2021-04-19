@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace POSSystem.UI.Service
     {
         public static App ThisApp { get; set; }
         public static IContainer Container { get; set; }
+
+        public static Flyout SettingFlyout { get; set; }
 
     }
 }

@@ -25,8 +25,10 @@ namespace POSSystem.UI.ViewModel
         private UserMenuPopupControl _popuMenu;
         public ICommand TestCommand { get; }
         public ICommand ManageAccount { get; }
+        public ICommand SettingsCommand { get; }
 
         public MetroWindow Window { get; set; }
+        public Flyout SettingFlyout { get; set; }
         public User User { get; set; }
 
         private Visibility _userManuVisibility = Visibility.Hidden;
@@ -50,6 +52,19 @@ namespace POSSystem.UI.ViewModel
             User = cacheService.ReadCache<User>("LoginUser");
             TestCommand = new DelegateCommand<UserMenuPopupControl>(OnLoginExecute, OnLoginCanExecute);
             ManageAccount = new DelegateCommand(OnManageAccountExecute, OnManageAccountCanExecute);
+            SettingsCommand = new DelegateCommand(OnSettingsCommandExecute, OnSettingsCommandCanExecute);
+        }
+
+        private void OnSettingsCommandExecute()
+        {
+            Flyout f = StaticContainer.SettingFlyout;
+            f.IsOpen = !f.IsOpen;
+            //this.SettingFlyout.IsOpen = !SettingFlyout.IsOpen;
+        }
+
+        private bool OnSettingsCommandCanExecute()
+        {
+            return true;
         }
 
         private void OnManageAccountExecute()

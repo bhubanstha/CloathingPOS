@@ -27,6 +27,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<InventoryView>().AsSelf();
             builder.RegisterType<GraphView>().AsSelf();
             builder.RegisterType<SalesView>().AsSelf();
+            builder.RegisterType<SettingView>().AsSelf();
             
 
             //Window Registration
