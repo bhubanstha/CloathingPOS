@@ -6,15 +6,19 @@
              xmlns:local="clr-namespace:POSSystem.UI.Views"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
+             xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
              mc:Ignorable="d" 
+
              d:DesignHeight="450" d:DesignWidth="800">
 
     
     <StackPanel>
         <Border BorderThickness="2px" BorderBrush="{DynamicResource MahApps.Brushes.Accent}" >
         </Border>
-        <Grid Margin="0 30 30 0">
+        <Grid Margin="0 30 30 0" x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -32,12 +36,12 @@
                    Margin="10 5 0 5"
                    />
             <TextBox x:Name="UserName"
-                     Text="Bhuban Shrestha"
+                     Text="{Binding UserName}"
                      Grid.Row="0"
                      Grid.Column="1"
                      mah:TextBoxHelper.ClearTextButton="True"
                      mah:TextBoxHelper.SelectAllOnFocus="True"    
-                     mah:TextBoxHelper.Watermark="Some Watermark"
+                     mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                      SpellCheck.IsEnabled="True"
                      Margin="{StaticResource ControlMargin}"
                      Padding="{StaticResource ControlPadding}"
@@ -53,9 +57,10 @@
                      Text="{Binding DisplayName}"
                      Grid.Row="1"
                      Grid.Column="1"
+                    
                  mah:TextBoxHelper.ClearTextButton="True"
                      mah:TextBoxHelper.SelectAllOnFocus="True"    
-                     mah:TextBoxHelper.Watermark="Some Watermark"
+                     mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
                      SpellCheck.IsEnabled="True"
                      Margin="{StaticResource ControlMargin}"
                      Padding="{StaticResource ControlPadding}"
@@ -68,17 +73,16 @@
                    Grid.Column="0"
                    Margin="10 5 0 5"
                    />
-            <TextBox x:Name="Password"
-                 Text="{Binding Password}"
+            <PasswordBox x:Name="Password"
                  Grid.Row="2"
                  Grid.Column="1"
                  mah:TextBoxHelper.ClearTextButton="True"
                      mah:TextBoxHelper.SelectAllOnFocus="True"    
-                     mah:TextBoxHelper.Watermark="Some Watermark"
-                     SpellCheck.IsEnabled="True"
+                     mah:TextBoxHelper.Watermark="Enter simple password"
+                         MaxLength="6"
                      Margin="{StaticResource ControlMargin}"
                      Padding="{StaticResource ControlPadding}"
-                     Style="{DynamicResource MahApps.Styles.TextBox.Button}"/>
+                     Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}"/>
 
             <TextBlock Text="Is Admin"
                    Grid.Row="3"
@@ -90,19 +94,55 @@
                               OnContent="Yes"
                               Grid.Row="3"
                               Grid.Column="1"
-                              ContentPadding="0 0 0 3"/>
+                              ContentPadding="0 0 0 3"
+                              IsOn="{Binding IsAdmin}"
+                              />
+
+            <TextBlock Text="For Password Change"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="10 5 0 5"
+                   />
+            <mah:ToggleSwitch Margin="{StaticResource ControlMargin}"
+                              OffContent="No"
+                              OnContent="Yes"
+                              Grid.Row="4"
+                              Grid.Column="1"
+                              ContentPadding="0 0 0 3"
+                              IsOn="{Binding PromptForPasswordReset}"/>
+
             
-            <!--<CheckBox x:Name="IsAdmin"
-                 IsChecked="{Binding IsAdmin}"
-                 Grid.Row="3"
-                 Grid.Column="1"
-                  Margin="0 5 0 5"/>-->
+            <!--<TextBlock Text="Auto Compolete Text"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="10 5 0 5"
+                   />
+
+            <ctrl:AutoCompleteTextBox x:Name="txt" 
+                                   AutoCompleteWidth="{Binding ElementName=txt, Path=ActualWidth}"
+                                   AutoCompleteHeight="150"
+                                   AutoCompletePlacementTarget="{Binding ElementName=txt}"
+                                   AutoCompletePlacement="Bottom"
+                                   Grid.Row="4"
+                                   Grid.Column="1"
+                                   >
+                <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                    <DataGridTextColumn Header="Id" MinWidth="60" Width="Auto" Binding="{Binding EmployeeId}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Full Name" Width="*" Binding="{Binding FullName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Contact" Width="150" Binding="{Binding Contact}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Salary" Width="100" Binding="{Binding Salary}"></DataGridTextColumn>
+                </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+            </ctrl:AutoCompleteTextBox>-->
+
+           
             <Button Content="Create Account"
-                    Grid.Row="4"
+                    Grid.Row="6"
                     Grid.Column="1"
                     Width="150"
                     Margin="0 5 0 5"
                     HorizontalAlignment="Left"
+                    Command="{Binding CreateUserCommand}"
+                    CommandParameter="{Binding ElementName=Password}"
                     Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" >
             </Button>
                     

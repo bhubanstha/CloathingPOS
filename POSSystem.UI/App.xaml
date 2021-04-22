@@ -13,9 +13,14 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
-
+                
                 <ResourceDictionary Source="animations.xaml"/>
 
+                <ResourceDictionary Source="Resources/Colors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/TextBox.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/DataGrid.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml"></ResourceDictionary>
+                
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="DescriptionHeaderStyle"

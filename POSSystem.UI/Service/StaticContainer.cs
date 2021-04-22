@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace POSSystem.UI.Service
         public static IContainer Container { get; set; }
 
         public static Flyout SettingFlyout { get; set; }
+
+        public static IDialogCoordinator DialogCoordinator { get; set; }
 
     }
 }

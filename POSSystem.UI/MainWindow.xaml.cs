@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,14 @@ namespace POSSystem.UI
     public partial class MainWindow : MetroWindow
     {
         private MainWindowViewModel _model;
+        public IDialogCoordinator DialogCoordinator;
         public MainWindow(MainWindowViewModel model)
         {
             InitializeComponent();
             _model = model;
             _model.Window = this;
             _model.SettingFlyout = this.SettingsFlyout;
+            DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;
             this.Loaded += MainWindow_Loaded;
         }

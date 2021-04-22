@@ -42,7 +42,6 @@
 
                 <StackPanel Orientation="Horizontal">
                 <TextBox materialDesign:HintAssist.Hint="EMAIL" 
-                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Width="300"
                          Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <iconPacks:PackIconBootstrapIcons Kind="Person" VerticalAlignment="Center" 
@@ -54,7 +53,6 @@
 
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 15">
                     <PasswordBox materialDesign:HintAssist.Hint="PASSWORD" 
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
                                  Width="300"
                                  Name="Password"/>
                     

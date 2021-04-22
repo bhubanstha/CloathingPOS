@@ -24,9 +24,12 @@ namespace POSSystem.UI
 
             var window = container.Resolve<MainWindow>();
             this.MainWindow = window;
+
+
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.SettingFlyout = window.SettingsFlyout;// container.Resolve<SettingView>();
+            StaticContainer.DialogCoordinator = window.DialogCoordinator;
 
             window.Show();
         }

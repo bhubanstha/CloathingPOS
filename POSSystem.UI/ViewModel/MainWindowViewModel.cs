@@ -21,7 +21,7 @@ namespace POSSystem.UI.ViewModel
     {
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
-        private IDialogCoordinator _dialogCoordinator;
+        public IDialogCoordinator _dialogCoordinator;
         private UserMenuPopupControl _popuMenu;
         public ICommand TestCommand { get; }
         public ICommand ManageAccount { get; }
@@ -69,6 +69,7 @@ namespace POSSystem.UI.ViewModel
 
         private void OnManageAccountExecute()
         {
+            
             _dialogCoordinator.ShowMessageAsync(this, "This is title", "This is message", MessageDialogStyle.Affirmative);
             _messageDialogService.ShowDialog("Manage account clicked", Window);
             ManageMenuVisibility(); 

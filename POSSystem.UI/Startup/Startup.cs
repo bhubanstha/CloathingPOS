@@ -49,7 +49,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<LoginViewModel>().AsSelf();
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<LineSeriesViewModel>().AsSelf();
-
+            builder.RegisterType<UserViewModel>().AsSelf();
 
 
             //Db Context Registration

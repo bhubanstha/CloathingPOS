@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ObjectFinder.cs" />
     <Compile Include="Encryption\BouncyCastleEncryption.cs" />
     <Compile Include="Encryption\IBouncyCastleEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

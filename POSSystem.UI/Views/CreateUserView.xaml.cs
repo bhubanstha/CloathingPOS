@@ -1,4 +1,9 @@
-﻿using System;
+﻿
+using MahApps.Metro.Controls.Dialogs;
+using POS.Utilities;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Autofac;
 
 namespace POSSystem.UI.Views
 {
@@ -23,6 +29,11 @@ namespace POSSystem.UI.Views
         public CreateUserView()
         {
             InitializeComponent();
+
+            UserViewModel viewModel = new UserViewModel();
+
+            this.DataContext = viewModel;
+
         }
     }
 }
