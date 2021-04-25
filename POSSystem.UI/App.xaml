@@ -20,7 +20,7 @@
                 <ResourceDictionary Source="Resources/TextBox.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/DataGrid.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml"></ResourceDictionary>
-                
+                <!--<ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="DescriptionHeaderStyle"
@@ -133,7 +133,7 @@
             </Style>
 
             <Style x:Key="ControlerMainGrid" TargetType="Grid">
-                <Setter Property="Margin" Value="0 30 30 0"/>
+                <Setter Property="Margin" Value="0 30 40 0"/>
             </Style>
 
             <Style x:Key="TabularLabel" TargetType="Label">

@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoryBO.cs" />
+    <Compile Include="InventoryBO.cs" />
     <Compile Include="UserBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -230,7 +230,10 @@
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyoutcontrol">
             <views:SettingView x:Name="SettingsFlyout"/>
+            <views:AddCategory x:Name="CategoryFlyout"/>
+            
         </mah:FlyoutsControl>
+        
     </mah:MetroWindow.Flyouts>
     
     <Canvas x:Name="container"  Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}">

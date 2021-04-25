@@ -370,6 +370,7 @@
     <Compile Include="Interface\IEasingFunction.cs" />
     <Compile Include="Service\CacheService.cs" />
     <Compile Include="Service\ColorService.cs" />
+    <Compile Include="Service\ConfigurationReader.cs" />
     <Compile Include="Service\ICacheService.cs" />
     <Compile Include="Service\IColorService.cs" />
     <Compile Include="Service\NepDate.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="ViewModel\Extensions\AnimationExtensions.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.linearbarseries.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.lineseries.cs" />
+    <Compile Include="ViewModel\InventoryViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\IAnimationViewModel.cs" />
     <Compile Include="ViewModel\LineSeriesViewModel.cs" />
@@ -397,6 +399,9 @@
     <Compile Include="ViewModel\Service\Pnl.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Views\AddCategory.xaml.cs">
+      <DependentUpon>AddCategory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateUserView.xaml.cs">
       <DependentUpon>CreateUserView.xaml</DependentUpon>
     </Compile>
@@ -452,6 +457,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\DatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -463,6 +472,10 @@
     <Page Include="Resources\TextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddCategory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateUserView.xaml">
       <SubType>Designer</SubType>

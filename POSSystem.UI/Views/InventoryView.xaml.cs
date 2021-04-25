@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POSSystem.UI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,17 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class InventoryView : UserControl
     {
+        private InventoryViewModel model;
         public InventoryView()
         {
             InitializeComponent();
+            model = new InventoryViewModel();
+            this.DataContext = model;
+        }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

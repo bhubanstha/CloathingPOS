@@ -15,6 +15,7 @@ namespace POSSystem.UI.Service
         public static IContainer Container { get; set; }
 
         public static Flyout SettingFlyout { get; set; }
+        public static Flyout AddCategoryFlyout { get; set; }
 
         public static IDialogCoordinator DialogCoordinator { get; set; }
 

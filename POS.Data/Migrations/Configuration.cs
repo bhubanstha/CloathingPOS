@@ -27,6 +27,7 @@
             context.User.AddOrUpdate(
                     u=> u.Id,
                     new User { 
+                        Id=1,
                         UserName = "sysadmin", 
                         DisplayName = "System Admin", 
                         Password = encryption.EncryptAsAsync("123").Result, 
@@ -38,6 +39,7 @@
                     },
                     new User
                     {
+                        Id=2,
                         UserName = "hom",
                         DisplayName = "Hom Bdr. Tamang",
                         Password = encryption.EncryptAsAsync("123456").Result,
@@ -47,6 +49,36 @@
                         CreatedDate = DateTime.Now,
                         DeactivationDate = null
                     }
+                );
+
+            context.Categories.AddOrUpdate(
+                    c => c.Id,
+                    new Category
+                    {
+                        Id = 1,
+                        Name = "Men"
+                    },
+                    new Category
+                    {
+                        Id = 2,
+                        Name = "Woman"
+                    },
+                    new Category
+                    {
+                        Id = 3,
+                        Name = "Men Upper"
+                    },
+                    new Category
+                    {
+                        Id = 4,
+                        Name = "Woman Upper"
+                    },
+                    new Category
+                    {
+                        Id = 5,
+                        Name = "Children"
+                    }
+
                 );
         }
     }
