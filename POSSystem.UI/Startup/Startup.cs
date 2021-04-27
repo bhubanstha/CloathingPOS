@@ -8,6 +8,7 @@ using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
+using POSSystem.UI.Views.Flyouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,16 @@ namespace POSSystem.UI.Startup
         {
             var builder = new ContainerBuilder();
 
+            //Flyout Registration
+            builder.RegisterType<SettingFlyout>().AsSelf();
+            builder.RegisterType<AddCategoryFlyout>().AsSelf();
+
             //View Registration
             builder.RegisterType<CreateUserView>().AsSelf();
             builder.RegisterType<InventoryView>().AsSelf();
             builder.RegisterType<GraphView>().AsSelf();
             builder.RegisterType<SalesView>().AsSelf();
-            builder.RegisterType<SettingView>().AsSelf();
+            
             
 
             //Window Registration

@@ -83,7 +83,7 @@ namespace POSSystem.UI.ViewModel
             int c = await InventoryBO.Save(inventory);
             if(c>0)
             {
-               await _window.ShowMessageAsync("Product Added", $"Product: {this.Name} added into inventory.", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
+               await _window.ShowMessageAsync("Product Added", $"Product: {this.Name} - {this.Size} purchased on {this.FirstPurchaseDate} added into inventory.", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
                 this.Size = "";
                 this.Id = 0;
             }

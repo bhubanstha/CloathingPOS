@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSSystem.UI.Views
+namespace POSSystem.UI.Views.Flyouts
 {
     /// <summary>
     /// Interaction logic for AddCategory.xaml
     /// </summary>
-    public partial class AddCategory : Flyout
+    public partial class AddCategoryFlyout : Flyout
     {
-        public AddCategory()
+        public AddCategoryFlyout()
         {
             InitializeComponent();
         }

@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSSystem.UI.Views
+namespace POSSystem.UI.Views.Flyouts
 {
     /// <summary>
     /// Interaction logic for SettingView.xaml
     /// </summary>
-    public partial class SettingView : Flyout
+    public partial class SettingFlyout : Flyout
     {
-        public SettingView()
+        public SettingFlyout()
         {
             InitializeComponent();
         }
