@@ -24,5 +24,10 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
+        public Category GetCategory(int id)
+        {
+            return genericDataRepository.GetByID(id);
+        }
+
     }
 }

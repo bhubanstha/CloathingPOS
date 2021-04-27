@@ -26,6 +26,9 @@ namespace POSSystem.UI.ViewModel
         public int CategoryId { get; set; }
 
         public decimal PurchaseRate { get; set; }
+
+        public decimal RetailRate { get; set; }
+
         public int Quantity { get; set; }
         public DateTime FirstPurchaseDate { 
             get { return _purchaseDate; }
@@ -46,7 +49,7 @@ namespace POSSystem.UI.ViewModel
         public InventoryViewModel()
         {
             _window = Application.Current.MainWindow as MetroWindow;
-            InventoryBO = new InventoryBO();
+            
             CategoryBO = new CategoryBO();
            
 
@@ -62,9 +65,28 @@ namespace POSSystem.UI.ViewModel
             f.IsOpen = !f.IsOpen;
         }
 
-        private void SaveProduct()
+        private async void SaveProduct()
         {
-            _window.ShowMessageAsync("title", "message");
+            Inventory inventory = new Inventory
+            {
+                Id = this.Id,
+                CategoryId =  this.CategoryId,
+                Color = this.Color,
+                FirstPurchaseDate = this.FirstPurchaseDate,
+                Name = this.Name,
+                PurchaseRate = this.PurchaseRate,
+                Quantity = this.Quantity,
+                RetailRate = this.RetailRate,
+                Size = this.Size
+            };
+            InventoryBO = new InventoryBO();
+            int c = await InventoryBO.Save(inventory);
+            if(c>0)
+            {
+               await _window.ShowMessageAsync("Product Added", $"Product: {this.Name} added into inventory.", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
+                this.Size = "";
+                this.Id = 0;
+            }
         }
         private void SetCurrencyCulture()
         {

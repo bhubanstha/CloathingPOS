@@ -1,4 +1,6 @@
-﻿namespace POS.Model
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace POS.Model
 {
     public class Product
     {
@@ -6,6 +8,10 @@
         public string Name { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
-        public Category CategoryId { get; set; }
+
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
     }
 }

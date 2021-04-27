@@ -19,7 +19,13 @@ namespace POS.BusinessRule
             genericDataRepository = new DataRepository<Inventory>(new POSDataContext());
         }
 
+        public async Task<int> Save (Inventory inventory)
+        {
+            genericDataRepository.Insert(inventory);
+            return await genericDataRepository.SaveAsync();
+        }
 
-      
+
+
     }
 }

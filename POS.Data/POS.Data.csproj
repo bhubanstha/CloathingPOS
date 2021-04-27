@@ -58,6 +58,14 @@
     <Compile Include="Migrations\202104061107079_initialdatabase.designer.cs">
       <DependentUpon>202104061107079_initialdatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104260357595_inventorymodelchange.cs" />
+    <Compile Include="Migrations\202104260357595_inventorymodelchange.designer.cs">
+      <DependentUpon>202104260357595_inventorymodelchange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104260413432_inventorymodelchange1.cs" />
+    <Compile Include="Migrations\202104260413432_inventorymodelchange1.designer.cs">
+      <DependentUpon>202104260413432_inventorymodelchange1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +89,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104061107079_initialdatabase.resx">
       <DependentUpon>202104061107079_initialdatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104260357595_inventorymodelchange.resx">
+      <DependentUpon>202104260357595_inventorymodelchange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104260413432_inventorymodelchange1.resx">
+      <DependentUpon>202104260413432_inventorymodelchange1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

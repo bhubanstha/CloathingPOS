@@ -19,5 +19,20 @@ namespace POSSystem.UI.Service
 
         public static IDialogCoordinator DialogCoordinator { get; set; }
 
+        public static MetroDialogSettings DialogSettings{get ; private set;}
+
+        static StaticContainer()
+        {
+            DialogSettings = new MetroDialogSettings
+            {
+                AnimateShow = true,
+                AnimateHide = true,
+                DefaultButtonFocus = MessageDialogResult.Affirmative,
+                AffirmativeButtonText = "OK",
+                OwnerCanCloseWithDialog = true,
+                ColorScheme = MetroDialogColorScheme.Theme
+            };
+        }
+
     }
 }

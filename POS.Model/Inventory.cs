@@ -9,6 +9,7 @@ namespace POS.Model
     public class Inventory : Product
     {
         public decimal PurchaseRate { get; set; }
+        public decimal RetailRate { get; set; }
         public int Quantity { get; set; }
         public DateTime FirstPurchaseDate { get; set; }
 
