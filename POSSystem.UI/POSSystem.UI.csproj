@@ -364,6 +364,7 @@
     <Compile Include="Behaviours\KeyboardFocus.cs" />
     <Compile Include="Controls\AutoCompleteTextBox.cs" />
     <Compile Include="Converter\DateConverter.cs" />
+    <Compile Include="Converter\GridIndexConverter.cs" />
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
     <Compile Include="Interface\IAnimatablePoint.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
     <Compile Include="ViewModel\AnimationViewModelBase.cs" />
+    <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.linearbarseries.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.lineseries.cs" />

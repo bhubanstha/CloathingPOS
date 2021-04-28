@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using POSSystem.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,12 @@ namespace POSSystem.UI.Views.Flyouts
     /// </summary>
     public partial class AddCategoryFlyout : Flyout
     {
+        private CategoryViewModel model;
         public AddCategoryFlyout()
         {
             InitializeComponent();
+            model = new CategoryViewModel();
+            this.DataContext = model;
         }
     }
 }

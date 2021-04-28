@@ -29,5 +29,11 @@ namespace POS.BusinessRule
             return genericDataRepository.GetByID(id);
         }
 
+        public async Task<int> Save(Category category)
+        {
+            genericDataRepository.Insert(category);
+            return await genericDataRepository.SaveAsync();
+        }
+
     }
 }
