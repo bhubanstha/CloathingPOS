@@ -20,14 +20,11 @@ namespace POS.Data.Repository
         public void Delete(int id)
         {
             T existing = entity.Find(id);
-            if(existing != null)
+            if (existing != null)
             {
-                using (ctx)
-                {
-                    ctx.Entry<T>(existing).State = EntityState.Modified;
-                }
+                ctx.Entry<T>(existing).State = EntityState.Deleted;
             }
-            
+
         }
 
         public IQueryable<T> GetAll()
@@ -47,7 +44,7 @@ namespace POS.Data.Repository
 
         public int Save()
         {
-            using ( ctx )
+            using (ctx)
             {
                 return ctx.SaveChanges();
             }
@@ -55,7 +52,7 @@ namespace POS.Data.Repository
 
         public async Task<int> SaveAsync()
         {
-            using ( ctx )
+            using (ctx)
             {
                 return await ctx.SaveChangesAsync();
             }
@@ -64,10 +61,7 @@ namespace POS.Data.Repository
         public void Update(T obj)
         {
             entity.Attach(obj);
-            using ( ctx )
-            {
-                ctx.Entry<T>(obj).State = EntityState.Modified;
-            }
+            ctx.Entry<T>(obj).State = EntityState.Modified;
         }
     }
 }

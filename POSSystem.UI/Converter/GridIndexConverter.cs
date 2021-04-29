@@ -15,7 +15,8 @@ namespace POSSystem.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value as DataGridRow).GetIndex() + 1;
+            int index = (value as DataGridRow).GetIndex();
+            return index + 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

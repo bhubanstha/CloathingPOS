@@ -35,5 +35,17 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
         }
 
+        public async Task<int> Update(Category obj)
+        {
+            genericDataRepository.Update(obj);
+            return await genericDataRepository.SaveAsync();
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            genericDataRepository.Delete(id);
+            return  await genericDataRepository.SaveAsync();
+        }
+
     }
 }

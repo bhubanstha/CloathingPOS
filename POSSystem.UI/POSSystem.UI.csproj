@@ -364,6 +364,7 @@
     <Compile Include="Behaviours\KeyboardFocus.cs" />
     <Compile Include="Controls\AutoCompleteTextBox.cs" />
     <Compile Include="Converter\DateConverter.cs" />
+    <Compile Include="Converter\FlyoutGridHightCalculator.cs" />
     <Compile Include="Converter\GridIndexConverter.cs" />
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
