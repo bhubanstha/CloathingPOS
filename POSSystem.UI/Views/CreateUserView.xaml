@@ -24,6 +24,8 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"></ColumnDefinition>
@@ -116,14 +118,14 @@
                    Grid.Row="4"
                    Grid.Column="0"
                    Margin="10 5 0 5"
-                   />
+                   />-->
 
             <ctrl:AutoCompleteTextBox x:Name="txt" 
                                    AutoCompleteWidth="{Binding ElementName=txt, Path=ActualWidth}"
                                    AutoCompleteHeight="150"
                                    AutoCompletePlacementTarget="{Binding ElementName=txt}"
                                    AutoCompletePlacement="Bottom"
-                                   Grid.Row="4"
+                                   Grid.Row="7"
                                    Grid.Column="1"
                                    >
                 <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
@@ -132,7 +134,7 @@
                     <DataGridTextColumn Header="Contact" Width="150" Binding="{Binding Contact}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Salary" Width="100" Binding="{Binding Salary}"></DataGridTextColumn>
                 </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
-            </ctrl:AutoCompleteTextBox>-->
+            </ctrl:AutoCompleteTextBox>
 
            
             <Button Content="Create Account"

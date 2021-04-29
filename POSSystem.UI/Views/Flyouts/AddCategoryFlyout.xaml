@@ -226,12 +226,12 @@
                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                              Style="{DynamicResource MahApps.Styles.Button.Circle}">
-                                        <Button.ContentTemplate>
-                                            <DataTemplate>
-                                                <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, Brush=White}" Width="15" Height="15"/>
-                                            </DataTemplate>
-                                        </Button.ContentTemplate>
-                                    </Button>
+                                    <Button.ContentTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, Brush=White}" Width="15" Height="15"/>
+                                        </DataTemplate>
+                                    </Button.ContentTemplate>
+                                </Button>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

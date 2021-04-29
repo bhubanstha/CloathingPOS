@@ -1,4 +1,5 @@
-﻿using POS.Model;
+﻿using POS.Data.Conventions;
+using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -21,6 +22,7 @@ namespace POS.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
         }
 
         public DbSet<Category> Categories { get; set; }

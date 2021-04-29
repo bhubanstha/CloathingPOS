@@ -25,6 +25,11 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
         }
 
+        public List<Inventory> GetAll()
+        {
+            return genericDataRepository.GetAll().ToList();
+        }
+
 
 
     }

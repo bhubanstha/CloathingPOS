@@ -7,12 +7,15 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:conv="clr-namespace:POSSystem.UI.Converter"
              xmlns:local="clr-namespace:POSSystem.UI.Views"
+             xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:sc="clr-namespace:POSSystem.UI.Service"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <conv:TotalPriceConverter x:Key="TotalCalc"/>
         <conv:DateConverter x:Key="NepDateConverter"/>
+        <conv:ColorToBrushConverter x:Key="ColorConverter"/>
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource HeaderBorder}"/>
@@ -91,6 +94,69 @@
                 </Grid>
             </Border>
             <StackPanel Grid.Row="1" Grid.Column="1" Background="{DynamicResource MahApps.Brushes.Accent}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Item Name"
+                           Grid.Row="0"
+                           Grid.Column="0"/>
+                    <ctrl:AutoCompleteTextBox x:Name="txtProduct" 
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   AutoCompletePlacementTarget="{Binding ElementName=txtProduct}"
+                                   AutoCompleteWidth="600"
+                                   AutoCompleteHeight="150"
+                                   AutoCompletePlacement="Bottom"
+                                    OnTextChange="Txt_OnProductNameChange"
+                                    OnSelectedItemChange="Txt_ProductSelected"
+                                           >
+                        <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                            <DataGridTextColumn Header="Id" MinWidth="60" Width="Auto" Binding="{Binding Id}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Product Name" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Category.Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Size" Width="150" Binding="{Binding Size}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Colour">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Rectangle Fill="{Binding Color, Converter={StaticResource ColorConverter}}"></Rectangle>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Price" Width="100" Binding="{Binding RetailRate}"></DataGridTextColumn>
+                        </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                    </ctrl:AutoCompleteTextBox>
+                    
+                    <Label Content="Quantity"
+                           Grid.Row="1"
+                           Grid.Column="0"/>
+                    <TextBox Text="{Binding Quantity}"
+                             Grid.Row="1"
+                             Grid.Column="1"/>
+                    <Label Content="Discount"
+                           Grid.Row="2"
+                           Grid.Column="0"/>
+                    <TextBox Text="{Binding Discount}"
+                             Grid.Row="2"
+                             Grid.Column="1"/>
+
+                    <Button
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Content="Add To Cart">
+                        
+                    </Button>
+                </Grid>
             </StackPanel>
         </Grid>
     </StackPanel>

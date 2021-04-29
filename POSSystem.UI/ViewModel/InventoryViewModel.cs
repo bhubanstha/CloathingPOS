@@ -90,8 +90,8 @@ namespace POSSystem.UI.ViewModel
         }
         private void SetCurrencyCulture()
         {
-            string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
-            CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
+            //string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
+            CultureInfo = StaticContainer.CultureInfo;
         }
     }
 }

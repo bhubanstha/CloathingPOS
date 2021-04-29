@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
     <Compile Include="Migrations\202104061107079_initialdatabase.cs" />
     <Compile Include="Migrations\202104061107079_initialdatabase.designer.cs">
       <DependentUpon>202104061107079_initialdatabase.cs</DependentUpon>
@@ -65,6 +66,10 @@
     <Compile Include="Migrations\202104260413432_inventorymodelchange1.cs" />
     <Compile Include="Migrations\202104260413432_inventorymodelchange1.designer.cs">
       <DependentUpon>202104260413432_inventorymodelchange1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104290934035_datatypechanged.cs" />
+    <Compile Include="Migrations\202104290934035_datatypechanged.designer.cs">
+      <DependentUpon>202104290934035_datatypechanged.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
@@ -95,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104260413432_inventorymodelchange1.resx">
       <DependentUpon>202104260413432_inventorymodelchange1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104290934035_datatypechanged.resx">
+      <DependentUpon>202104290934035_datatypechanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POSSystem.UI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using POS.Model;
 
 namespace POSSystem.UI.Views
 {
@@ -20,9 +22,28 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class SalesView : UserControl
     {
+        private SalesViewModel model;
         public SalesView()
         {
             InitializeComponent();
+            model = new SalesViewModel();
+            this.DataContext = model;
+        }
+
+        private void Txt_OnProductNameChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox inp = sender as TextBox;
+            model.FilterProducts = model.Products.Where(p => p.Name.Contains(inp.Text)).ToList();
+            txtProduct.AutoCompleteItemSource = model.FilterProducts;
+        }
+
+        private void Txt_ProductSelected(object sender, EventArgs e)
+        {
+            if(txtProduct.SelectedItem != null)
+            {
+                //var pr = txtProduct.SelectedItem as Inventory;
+                //txtProduct.Text = pr.Name + " - " + pr.Size;
+            }
         }
     }
 }
