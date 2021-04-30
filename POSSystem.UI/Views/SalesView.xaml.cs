@@ -27,13 +27,15 @@ namespace POSSystem.UI.Views
         {
             InitializeComponent();
             model = new SalesViewModel();
+            model.CurrentProduct = new Sales();
             this.DataContext = model;
+            
         }
 
         private void Txt_OnProductNameChange(object sender, TextChangedEventArgs e)
         {
             TextBox inp = sender as TextBox;
-            model.FilterProducts = model.Products.Where(p => p.Name.Contains(inp.Text)).ToList();
+            model.FilterProducts = model.Products.Where(p => p.Name.ToLower().StartsWith(inp.Text.ToLower())).ToList();
             txtProduct.AutoCompleteItemSource = model.FilterProducts;
         }
 
@@ -41,7 +43,9 @@ namespace POSSystem.UI.Views
         {
             if(txtProduct.SelectedItem != null)
             {
-                //var pr = txtProduct.SelectedItem as Inventory;
+                var pr = txtProduct.SelectedItem as Inventory;                
+                model.CurrentProduct.Inventory = pr;
+
                 //txtProduct.Text = pr.Name + " - " + pr.Size;
             }
         }

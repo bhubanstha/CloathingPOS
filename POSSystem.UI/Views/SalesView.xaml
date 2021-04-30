@@ -30,70 +30,67 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0"
-                   Grid.Column="0"
+                        Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        xml:space="preserve">
-<Bold>Bill No.:</Bold> 123    &#x09;&#x09;&#x09;&#x09;  <Bold>Bill Date: </Bold><Run 
-    Text="{Binding Source={x:Static sys:DateTime.Now}, 
+                        <Bold>Bill No.:</Bold> 123    &#x09;&#x09;&#x09;&#x09;  <Bold>Bill Date: </Bold><Run 
+                            Text="{Binding Source={x:Static sys:DateTime.Now}, 
                             Mode=OneWay, 
                             StringFormat='yyyy/mm/dd', 
                             Converter={StaticResource NepDateConverter}}"></Run>
             </TextBlock>
-            <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="1px" Grid.Row="1" Grid.Column="0" Margin="0 0 10 0">
-                <Grid  Style="{StaticResource TabularGrid}">
+            
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.7*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="#SN" Grid.Row="0" Grid.Column="0" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Name" Grid.Row="0" Grid.Column="1" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Qty" Grid.Row="0" Grid.Column="2" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Rate" Grid.Row="0" Grid.Column="3" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Total" Grid.Row="0" Grid.Column="4" Style="{StaticResource TabularLabel}"/>
 
+                    
 
-                    <Label Content="1" Grid.Row="1" Grid.Column="0" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Product Name1" Grid.Row="1" Grid.Column="1" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="1" Grid.Row="1" Grid.Column="2" Style="{StaticResource TabularLabel}" x:Name="qty"/>
-                    <Label Content="200" Grid.Row="1" Grid.Column="3" Style="{StaticResource TabularLabel}" x:Name="rate"/>
-                    <Label  Grid.Row="1" Grid.Column="4" Style="{StaticResource TabularLabel}">
-                        <Label.Content>
-                            <MultiBinding Converter="{StaticResource TotalCalc}">
-                                <Binding ElementName="qty" Path="Content"/>
-                                <Binding ElementName="rate" Path="Content"/>
-                            </MultiBinding>
-                        </Label.Content>
-                    </Label>
+                    <DataGrid x:Name="CartGrid"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                        Grid.ColumnSpan="3"                              
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding Path=CurrentCart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      CanUserAddRows="False"
+                      CanUserReorderColumns="False"
+                      CanUserSortColumns="False"
+                      CanUserResizeColumns="False"
+                      IsReadOnly="True"
+                      BorderThickness="1"
+                      MaxHeight="500"
+                      Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
 
-                    <Label Content="#SN" Grid.Row="2" Grid.Column="0" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Name" Grid.Row="2" Grid.Column="1" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Qty" Grid.Row="2" Grid.Column="2" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Rate" Grid.Row="2" Grid.Column="3" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Total" Grid.Row="2" Grid.Column="4" Style="{StaticResource TabularLabel}"/>
-
-                    <Label Content="#SN" Grid.Row="3" Grid.Column="0" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Name" Grid.Row="3" Grid.Column="1" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Qty" Grid.Row="3" Grid.Column="2" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Rate" Grid.Row="3" Grid.Column="3" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Total" Grid.Row="3" Grid.Column="4" Style="{StaticResource TabularLabel}"/>
-
-                    <Label Content="#SN" Grid.Row="4" Grid.Column="0" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Name" Grid.Row="4" Grid.Column="1" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Qty" Grid.Row="4" Grid.Column="2" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Rate" Grid.Row="4" Grid.Column="3" Style="{StaticResource TabularLabel}"/>
-                    <Label Content="Total" Grid.Row="4" Grid.Column="4" Style="{StaticResource TabularLabel}"/>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Inventory.Category.Name}" Header="Category" Width="120"/>
+                            <DataGridTextColumn Binding="{Binding Inventory.Name}" Header="Name" Width="200"/>
+                            <DataGridTextColumn Binding="{Binding Inventory.Size}" Header="Size" Width="50"/>
+                            <DataGridTemplateColumn Header="Colour">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Rectangle Fill="{Binding Inventory.Color, Converter={StaticResource ColorConverter}}"></Rectangle>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Binding="{Binding Rate}" Header="Rate" Width="100"/>
+                            <DataGridTextColumn Binding="{Binding SalesQuantity}" Header="Qty" Width="40"/>
+                            <DataGridTextColumn Binding="{Binding Discount}" Header="Discount" Width="100"/>  
+                            <DataGridTextColumn Header="Total" Width="100"/>  
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
                 </Grid>
-            </Border>
-            <StackPanel Grid.Row="1" Grid.Column="1" Background="{DynamicResource MahApps.Brushes.Accent}">
+            </StackPanel>
+            
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0 0 0" Background="{DynamicResource MahApps.Brushes.Gray9}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -140,20 +137,23 @@
                     <Label Content="Quantity"
                            Grid.Row="1"
                            Grid.Column="0"/>
-                    <TextBox Text="{Binding Quantity}"
+                    <TextBox Text="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Grid.Row="1"
                              Grid.Column="1"/>
                     <Label Content="Discount"
                            Grid.Row="2"
                            Grid.Column="0"/>
-                    <TextBox Text="{Binding Discount}"
+                    <TextBox Text="{Binding CurrentProduct.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Grid.Row="2"
                              Grid.Column="1"/>
 
                     <Button
                         Grid.Row="3"
                         Grid.Column="1"
-                        Content="Add To Cart">
+                        Content="Add To Cart"
+                        Command="{Binding AddItemToCartCommand}"
+                        CommandParameter="{Binding ElementName=CartGrid}"
+                        >
                         
                     </Button>
                 </Grid>

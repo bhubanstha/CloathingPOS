@@ -30,6 +30,10 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
+        public Inventory GetById(int id)
+        {
+            return genericDataRepository.GetByID(id);
+        }
 
 
     }

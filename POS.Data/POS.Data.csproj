@@ -71,6 +71,14 @@
     <Compile Include="Migrations\202104290934035_datatypechanged.designer.cs">
       <DependentUpon>202104290934035_datatypechanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104300842235_modelchanges.cs" />
+    <Compile Include="Migrations\202104300842235_modelchanges.designer.cs">
+      <DependentUpon>202104300842235_modelchanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104300853358_modelchanges121.cs" />
+    <Compile Include="Migrations\202104300853358_modelchanges121.designer.cs">
+      <DependentUpon>202104300853358_modelchanges121.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,6 +111,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104290934035_datatypechanged.resx">
       <DependentUpon>202104290934035_datatypechanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104300842235_modelchanges.resx">
+      <DependentUpon>202104300842235_modelchanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104300853358_modelchanges121.resx">
+      <DependentUpon>202104300853358_modelchanges121.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
