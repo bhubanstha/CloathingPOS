@@ -16,6 +16,8 @@
         <conv:TotalPriceConverter x:Key="TotalCalc"/>
         <conv:DateConverter x:Key="NepDateConverter"/>
         <conv:ColorToBrushConverter x:Key="ColorConverter"/>
+
+        <Style x:Key="AutoCompleteBox" BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="ctrl:AutoCompleteTextBox"></Style>
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource HeaderBorder}"/>
@@ -89,10 +91,12 @@
                     </DataGrid>
                 </Grid>
             </StackPanel>
-            
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0 0 0" Background="{DynamicResource MahApps.Brushes.Gray9}">
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0 0 0" Height="700" Background="{StaticResource AccentBackground}">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -104,13 +108,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-
+                    <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ></StackPanel>
                     <Label Content="Item Name"
-                           Grid.Row="0"
-                           Grid.Column="0"/>
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
                     <ctrl:AutoCompleteTextBox x:Name="txtProduct" 
-                                   Grid.Row="0"
+                                   Grid.Row="1"
                                    Grid.Column="1"
+                                   Margin="5"
                                    AutoCompletePlacementTarget="{Binding ElementName=txtProduct}"
                                    AutoCompleteWidth="600"
                                    AutoCompleteHeight="150"
@@ -133,29 +139,66 @@
                             <DataGridTextColumn Header="Price" Width="100" Binding="{Binding RetailRate}"></DataGridTextColumn>
                         </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
                     </ctrl:AutoCompleteTextBox>
+
+
+                    <Label Content="Rate"
+                           Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Value="{Binding CurrentProduct.RetailRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Row="2"
+                             Grid.Column="1"
+                             Margin="5"
+                             IsEnabled="False"
+                                       HideUpDownButtons="True"
+                             StringFormat="C"
+                                      TextAlignment="Left"
+                                       NumericInputMode="Decimal"
+                                       Culture="{Binding CultureInfo}"
+                             mah:TextBoxHelper.SelectAllOnFocus="True"    
+                             Padding="{StaticResource ControlPadding}"
+                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"/>
+                    
                     
                     <Label Content="Quantity"
-                           Grid.Row="1"
-                           Grid.Column="0"/>
-                    <TextBox Text="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Grid.Row="1"
-                             Grid.Column="1"/>
+                           Grid.Row="3"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Value="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Row="3"
+                             Grid.Column="1"
+                                       Margin="5"
+                                       TextAlignment="Left"
+                             mah:TextBoxHelper.SelectAllOnFocus="True"   
+                                       Minimum="1"
+                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"/>
+                    
                     <Label Content="Discount"
-                           Grid.Row="2"
-                           Grid.Column="0"/>
-                    <TextBox Text="{Binding CurrentProduct.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             Grid.Row="2"
-                             Grid.Column="1"/>
+                           Grid.Row="4"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Value="{Binding CurrentProduct.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Row="4"
+                             Grid.Column="1"
+                             Margin="5"
+                                       TextAlignment="Left"
+                                       HideUpDownButtons="True"
+                                       StringFormat="C"
+                                       NumericInputMode="Decimal"
+                                       Culture="{Binding CultureInfo}"
+                             mah:TextBoxHelper.SelectAllOnFocus="True"   
+                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"/>
 
                     <Button
-                        Grid.Row="3"
+                        Grid.Row="5"
                         Grid.Column="1"
+                         Margin="5"
                         Content="Add To Cart"
                         Command="{Binding AddItemToCartCommand}"
                         CommandParameter="{Binding ElementName=CartGrid}"
-                        >
-                        
+                        >                        
                     </Button>
+                    <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 5"/>
                 </Grid>
             </StackPanel>
         </Grid>
