@@ -28,6 +28,7 @@ namespace POSSystem.UI.Views
             InitializeComponent();
             model = new SalesViewModel();
             model.CurrentProduct = new Sales();
+            model.CurrentProduct.SalesQuantity = 1;
             this.DataContext = model;
             
         }
@@ -45,7 +46,8 @@ namespace POSSystem.UI.Views
             {
                 var pr = txtProduct.SelectedItem as Inventory;                
                 model.CurrentProduct.Inventory = pr;
-
+                model.CurrentProduct.Rate = pr.RetailRate;
+                txtRetailRate.Value = (double) model.CurrentProduct.Rate;
                 //txtProduct.Text = pr.Name + " - " + pr.Size;
             }
         }

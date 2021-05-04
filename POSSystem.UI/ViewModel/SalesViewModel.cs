@@ -24,14 +24,20 @@ namespace POSSystem.UI.ViewModel
         private Bill _bill;
         private bool _generateBill = true;
         private ObservableCollection<Sales> _currentCart;
-
+        private Sales _currentProduct;
         public List<Inventory> Products { get; set; }
         public List<Inventory> FilterProducts { get; set; }
         public CultureInfo CultureInfo { get; set; }
 
         public List<Inventory> Cart { get; set; }
 
-        public Sales CurrentProduct { get; set; }
+        public Sales CurrentProduct { 
+            get { return _currentProduct; }
+            set { 
+                _currentProduct = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<Sales> CurrentCart {
             get { return _currentCart; }
             set
@@ -91,7 +97,6 @@ namespace POSSystem.UI.ViewModel
                 _generateBill = false;
             }
             _salesBo = new SalesBO();
-            bool _addItemToCart = false;
             Sales p = new Sales
             {
                 Bill = CurrentProduct.Bill,
@@ -104,16 +109,9 @@ namespace POSSystem.UI.ViewModel
                 SalesQuantity = CurrentProduct.SalesQuantity
             };
 
-            p = _salesBo.ManageCartItem(p, CurrentCart, ref _bill, out _addItemToCart);
-            if (_addItemToCart)
-            {
-                CurrentCart.Add(p);
-            }
-            else
-            {
-                OnPropertyChanged("CurrentCart");
-            }
-            //ClearProduct();
+            p = _salesBo.ManageCartItem(p, CurrentCart, ref _bill);
+            CurrentCart.Add(p);
+            ClearProduct();
             //grid.ItemsSource = CurrentCart;
             //grid.InvalidateVisual();
             // _window.ShowMessageAsync("title", "some message", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
@@ -135,7 +133,7 @@ namespace POSSystem.UI.ViewModel
             CurrentProduct.ProductId = 0;
             CurrentProduct.Inventory = new Inventory();
             CurrentProduct.Rate = 0;
-            CurrentProduct.SalesQuantity = 0;
+            CurrentProduct.SalesQuantity = 1;
         }
        
     }

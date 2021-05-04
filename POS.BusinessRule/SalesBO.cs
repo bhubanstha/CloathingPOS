@@ -19,24 +19,18 @@ namespace POS.BusinessRule
             genericDataRepository = new DataRepository<Sales>(new POSDataContext());
         }
 
-        public Sales ManageCartItem(Sales item, ObservableCollection<Sales> cart, ref Bill b, out bool addItemToCart)
+        public Sales ManageCartItem(Sales item, ObservableCollection<Sales> cart, ref Bill b)
         {
             Sales _existingItem = cart.Where(x => x.ProductId == item.Inventory.Id).FirstOrDefault();
-            if (_existingItem == null)
+            if (_existingItem != null)
             {
-                item.Rate = item.Inventory.RetailRate;
-                item.ProductId = item.Inventory.Id;
-                item.Bill = b;
-                addItemToCart = true;
-                return item;
+                cart.Remove(_existingItem);
             }
-            else
-            {
-                _existingItem.SalesQuantity = item.SalesQuantity;
-                _existingItem.Discount = item.Discount;
-                addItemToCart = false;
-                return _existingItem;
-            }
+
+            item.Rate = item.Inventory.RetailRate;
+            item.ProductId = item.Inventory.Id;
+            item.Bill = b;
+            return item;
         }
     }
 }
