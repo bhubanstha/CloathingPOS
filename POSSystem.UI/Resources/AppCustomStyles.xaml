@@ -9,4 +9,15 @@
         <GradientStop Color="{StaticResource MahApps.Colors.Accent3}" Offset="0.50"/>
         <GradientStop Color="{StaticResource MahApps.Colors.Accent4}" Offset="0.75"/>
     </LinearGradientBrush>
+
+    <Style x:Key="DataGridRow.Accent" TargetType="{x:Type DataGridRow}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource MahApps.Brushes.Accent}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource MahApps.Brushes.Accent4}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

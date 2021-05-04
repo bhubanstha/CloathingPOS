@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using POS.Model;
+using POS.BusinessRule;
 
 namespace POSSystem.UI.Views
 {
@@ -23,12 +24,19 @@ namespace POSSystem.UI.Views
     public partial class SalesView : UserControl
     {
         private SalesViewModel model;
+        private BillBO _billBo;
         public SalesView()
         {
             InitializeComponent();
+            _billBo = new BillBO();
             model = new SalesViewModel();
             model.CurrentProduct = new Sales();
             model.CurrentProduct.SalesQuantity = 1;
+            model.CurrentProduct.Bill = new Bill
+            {
+                BillNo = _billBo.GetNewBillNo(),
+                BillDate = DateTime.Now
+            };
             this.DataContext = model;
             
         }

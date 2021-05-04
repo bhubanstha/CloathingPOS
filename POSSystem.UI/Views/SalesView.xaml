@@ -43,12 +43,52 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0"
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Content="Bill No.:"/>
+                    <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Content="{Binding CurrentProduct.Bill.BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Grid.Row="0"
+                       Grid.Column="2"
+                       Content="Billing Date:"/>
+
+                    <Label Grid.Row="0"
+                       Grid.Column="3"
+                       Content="{Binding CurrentProduct.Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       ContentStringFormat="yyyy/MM/dd"/>
+
+                   
+
+
+                </Grid>
+
+                
+            </StackPanel>
+            
+            <!--<TextBlock Grid.Row="0"
                         Grid.Column="0"
                        Grid.ColumnSpan="2"
                        xml:space="preserve">
@@ -57,7 +97,7 @@
                             Mode=OneWay, 
                             StringFormat='yyyy/mm/dd', 
                             Converter={StaticResource NepDateConverter}}"></Run>
-            </TextBlock>
+            </TextBlock>-->
             
             <StackPanel Grid.Row="1" Grid.Column="0">
                 <Grid>
@@ -90,7 +130,7 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Inventory.Category.Name}" Header="Category" Width="120" />
-                            <DataGridTextColumn Binding="{Binding Inventory.Name}" Header="Name" Width="200"/>
+                            <DataGridTextColumn Binding="{Binding Inventory.Name}" Header="Name" Width="140"/>
                             <DataGridTextColumn Binding="{Binding Inventory.Size}" Header="Size" Width="50"/>
                             <DataGridTemplateColumn Header="Colour" >
                                 <DataGridTemplateColumn.CellTemplate>
@@ -117,13 +157,37 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Options" Width="65">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Grid.Column="1"
+                                            Margin="2 0" 
+                                             Width="25" 
+                                             Height="25"
+                                            Command="{Binding Path=DataContext.DeleteCartItemCommand, 
+                                                                RelativeSource = {RelativeSource FindAncestor,
+                                                                AncestorType={x:Type DataGrid}}}"
+                                             CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                             Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                                            <Button.ContentTemplate>
+                                                <DataTemplate>
+                                                    <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, 
+                                                        Brush={StaticResource MahApps.Brushes.Gray1}}" Width="15" Height="15"/>
+                                                </DataTemplate>
+                                            </Button.ContentTemplate>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
                         </DataGrid.Columns>
                         
                     </DataGrid>
                 </Grid>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0 0 0" Height="700" Background="{StaticResource AccentBackground}">
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5 0 0 0" Height="400" Background="{StaticResource AccentBackground}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10"/>
@@ -228,10 +292,51 @@
                          Margin="5"
                         Content="Add To Cart"
                         Command="{Binding AddItemToCartCommand}"
-                        CommandParameter="{Binding ElementName=CartGrid}"
+                        CommandParameter="{Binding ElementName=txtSalesVaT}"
                         >                        
                     </Button>
                     <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 0 5"/>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="0" Background="{StaticResource MahApps.Brushes.Accent4}" MinHeight="50">
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".37*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>                        
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Content="VAT Amount: "/>
+                    <mah:NumericUpDown 
+                        x:Name="txtSalesVaT"
+                        VerticalAlignment="Center"
+                        Value="{Binding CurrentProduct.Bill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="5"
+                        IsEnabled="False"
+                        HideUpDownButtons="True"
+                        StringFormat="C"
+                        TextAlignment="Left"
+                        NumericInputMode="Decimal"
+                        Culture="{Binding CultureInfo}"
+                        mah:TextBoxHelper.SelectAllOnFocus="True"    
+                        Padding="{StaticResource ControlPadding}"
+                        Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"/>
+
+                    <Button Grid.Row="0"
+                       Grid.Column="3"
+                       VerticalAlignment="Center"
+                       Content="Checkout"
+                       Width="90"
+                       Margin="5 0"
+                       HorizontalAlignment="Left"
+                       Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}"
+                            />
                 </Grid>
             </StackPanel>
         </Grid>
