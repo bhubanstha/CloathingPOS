@@ -114,7 +114,22 @@
                 ContentPadding="0 0 0 3"
                 IsOn="{Binding PromptForPasswordReset}"
                 OffContent="No"
-                OnContent="Yes" />
+                OnContent="Yes" 
+                >
+                <!--<mah:ToggleSwitch.Resources>
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.StrokeOff" Color="Red" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver" Color="DarkRed" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOff" Color="White" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOnPressed" Color="Red" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOffPointerOver" Color="White" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.FillOff" Color="Red" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.FillOffPointerOver" Color="DarkRed" />
+
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.FillOn" Color="Green" />
+                    <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.FillOnPointerOver" Color="DarkGreen" />
+
+                </mah:ToggleSwitch.Resources>-->
+            </mah:ToggleSwitch>
 
 
             <!--<TextBlock Text="Auto Compolete Text"
@@ -122,36 +137,6 @@
                    Grid.Column="0"
                    Margin="10 5 0 5"
                    />-->
-
-            <ctrl:AutoCompleteTextBox
-                x:Name="txt"
-                Grid.Row="7"
-                Grid.Column="1"
-                AutoCompleteHeight="150"
-                AutoCompletePlacement="Bottom"
-                AutoCompletePlacementTarget="{Binding ElementName=txt}"
-                AutoCompleteWidth="{Binding ElementName=txt, Path=ActualWidth}">
-                <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
-                    <DataGridTextColumn
-                        Width="Auto"
-                        MinWidth="60"
-                        Binding="{Binding EmployeeId}"
-                        Header="Id" />
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding FullName}"
-                        Header="Full Name" />
-                    <DataGridTextColumn
-                        Width="150"
-                        Binding="{Binding Contact}"
-                        Header="Contact" />
-                    <DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding Salary}"
-                        Header="Salary" />
-                </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
-            </ctrl:AutoCompleteTextBox>
-
 
             <Button
                 Grid.Row="6"

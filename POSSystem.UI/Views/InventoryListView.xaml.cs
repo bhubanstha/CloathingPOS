@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POSSystem.UI.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class InventoryListView : UserControl
     {
+        private InventoryListViewModel model;
         public InventoryListView()
         {
             InitializeComponent();
+            model = new InventoryListViewModel();
+            this.DataContext = model;
         }
     }
 }

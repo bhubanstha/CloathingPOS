@@ -273,8 +273,7 @@
             Visibility="Visible">
             <Grid
                 x:Name="PrimaryGrid"
-                Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}"
-                Margin="0,0,10,0">
+                Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -310,7 +309,7 @@
                             </mah:HamburgerMenuIconItem>
                             <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory History">
                                 <mah:HamburgerMenuIconItem.Tag>
-                                    <views:InventoryView />
+                                    <views:InventoryListView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
                             <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales">
@@ -377,31 +376,23 @@
                     </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
                     <mah:HamburgerMenu.ContentTemplate>
                         <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
-                            <Grid Margin="20,0,10,0">
+                            <Grid Margin="20,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
+                                    Grid.Column="0"
                                     Margin="0,15,0,5"
                                     Padding="0"
                                     FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                     FontSize="{DynamicResource MahApps.Font.Size.Header}"
                                     Text="{Binding Label}" />
-
-
-                                <ContentControl
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Content="{Binding Icon}"
-                                    Focusable="False"
-                                    FontSize="20"
-                                    IsTabStop="False" />
-
-                                <StackPanel Grid.Row="1" Focusable="False">
+                                <StackPanel Grid.Row="1" Grid.Column="0"  Focusable="False">
                                     <ContentControl
                                         xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
                                         Content="{Binding Tag}"
