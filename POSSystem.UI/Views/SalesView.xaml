@@ -167,11 +167,11 @@
                                                                 AncestorType={x:Type DataGrid}}}"
                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                                             Style="{DynamicResource Button.Circle.In.GridRow}">
                                             <Button.ContentTemplate>
                                                 <DataTemplate>
-                                                    <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, 
-                                                        Brush={StaticResource MahApps.Brushes.Gray1}}" Width="15" Height="15"/>
+                                                    <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="15" Height="15" 
+                                                                                  Style="{StaticResource row.option.icon}"/>
                                                 </DataTemplate>
                                             </Button.ContentTemplate>
                                         </Button>

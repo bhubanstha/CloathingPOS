@@ -15,6 +15,9 @@
     <UserControl.Resources>
 
         <conv:ColorToBrushConverter x:Key="ColorConverter"/>
+
+        
+        
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource HeaderBorder }" />
@@ -40,8 +43,9 @@
                       CanUserResizeColumns="False"
                       IsReadOnly="True"
                       BorderThickness="1"
-                      Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">                
-
+                      Margin="0 0 0 5"
+                      Style="{StaticResource MahApps.Styles.DataGrid.Azure}">
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Category.Name}" Header="Category" Width="200" />
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="345"/>
@@ -75,10 +79,11 @@
                                                                 AncestorType={x:Type DataGrid}}}"
                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                                             Style="{DynamicResource Button.Circle.In.GridRow}">
                                         <Button.ContentTemplate>
                                             <DataTemplate>
-                                                <Image Source="{iconPacks:BootstrapIconsImage Kind=PencilSquare}" Width="15" Height="15"/>
+                                                <iconPacks:PackIconBootstrapIcons Kind="PencilSquare" Width="15" Height="15" 
+                                                                                  Style="{StaticResource row.option.icon}"/>
                                             </DataTemplate>
                                         </Button.ContentTemplate>
                                     </Button>
@@ -92,11 +97,12 @@
                                                                 AncestorType={x:Type DataGrid}}}"
                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
+                                             Style="{DynamicResource Button.Circle.In.GridRow}">
                                         <Button.ContentTemplate>
                                             <DataTemplate>
-                                                <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, 
-                                                        Brush={StaticResource MahApps.Brushes.Gray1}}" Width="15" Height="15"/>
+                                                <iconPacks:PackIconBootstrapIcons Kind="Trash" Width="15" Height="15" 
+                                                                                  Style="{StaticResource row.option.icon}"/>
+
                                             </DataTemplate>
                                         </Button.ContentTemplate>
                                     </Button>
