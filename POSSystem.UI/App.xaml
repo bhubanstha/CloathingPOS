@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="Resources/DataGrid.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml"></ResourceDictionary>
                 <!--<ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
 

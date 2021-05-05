@@ -413,6 +413,9 @@
     <Compile Include="Views\GraphView.xaml.cs">
       <DependentUpon>GraphView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InventoryListView.xaml.cs">
+      <DependentUpon>InventoryListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InventoryView.xaml.cs">
       <DependentUpon>InventoryView.xaml</DependentUpon>
     </Compile>
@@ -478,6 +481,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\ScrollViewerStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\TextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -491,6 +498,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GraphView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InventoryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
