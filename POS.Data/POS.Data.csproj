@@ -79,6 +79,10 @@
     <Compile Include="Migrations\202104300853358_modelchanges121.designer.cs">
       <DependentUpon>202104300853358_modelchanges121.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105061140337_inventoryUpdate.cs" />
+    <Compile Include="Migrations\202105061140337_inventoryUpdate.designer.cs">
+      <DependentUpon>202105061140337_inventoryUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104300853358_modelchanges121.resx">
       <DependentUpon>202104300853358_modelchanges121.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105061140337_inventoryUpdate.resx">
+      <DependentUpon>202105061140337_inventoryUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

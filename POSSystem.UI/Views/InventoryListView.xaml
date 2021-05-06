@@ -74,7 +74,7 @@
                                             Margin="2 0" 
                                              Width="25" 
                                              Height="25"
-                                            Command="{Binding Path=DataContext.DeleteCartItemCommand, 
+                                            Command="{Binding Path=DataContext.EditInventoryItemCommand, 
                                                                 RelativeSource = {RelativeSource FindAncestor,
                                                                 AncestorType={x:Type DataGrid}}}"
                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
@@ -92,7 +92,7 @@
                                             Margin="2 0" 
                                              Width="25" 
                                              Height="25"
-                                            Command="{Binding Path=DataContext.DeleteCartItemCommand, 
+                                            Command="{Binding Path=DataContext.DeleteInventoryItemCommand, 
                                                                 RelativeSource = {RelativeSource FindAncestor,
                                                                 AncestorType={x:Type DataGrid}}}"
                                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"

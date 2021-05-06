@@ -18,6 +18,8 @@ namespace POS.Model
         [Column(TypeName = "Date")]
         public DateTime FirstPurchaseDate { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual List<InventoryHistory> InventoryHistories { get; set; }
 
         public override string ToString()

@@ -25,9 +25,9 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
         }
 
-        public List<Inventory> GetAll()
+        public List<Inventory> GetAllActiveProducts()
         {
-            return genericDataRepository.GetAll().ToList();
+            return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false).ToList();
         }
 
         public Inventory GetById(int id)
@@ -35,6 +35,22 @@ namespace POS.BusinessRule
             return genericDataRepository.GetByID(id);
         }
 
+        public async void RemoveItem(Inventory item)
+        {
+            item.IsDeleted = true;
+            genericDataRepository.Update(item);
+
+            await genericDataRepository.SaveAsync();
+
+            //Inventory itm = GetById(item.Id);
+            //if(itm != null)
+            //{
+            //    itm.IsDeleted = true;
+
+               
+            //}
+            
+        }
 
     }
 }

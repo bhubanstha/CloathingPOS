@@ -29,7 +29,7 @@ namespace POS.Data.Repository
 
         public IQueryable<T> GetAll()
         {
-            return entity.AsQueryable<T>();
+            return entity.AsQueryable<T>().AsNoTracking();
         }
 
         public T GetByID(int id)

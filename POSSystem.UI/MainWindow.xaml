@@ -174,15 +174,15 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
                 <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
                 <Setter Property="mah:ItemHelper.DisabledForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
                 <Setter Property="mah:ItemHelper.DisabledSelectedBackgroundBrush" Value="Transparent" />
                 <Setter Property="mah:ItemHelper.DisabledSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
-                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
+                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
+                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent3}" />
                 <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
-                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource MahApps.Brushes.Accent4}" />
                 <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.AccentBase}" />
             </Style>
 
@@ -298,7 +298,7 @@
                     <!--  Items  -->
                     <mah:HamburgerMenu.ItemsSource>
                         <mah:HamburgerMenuItemCollection>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Account}" Label="User">
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Account}" Label="User Management">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:CreateUserView />
                                 </mah:HamburgerMenuIconItem.Tag>

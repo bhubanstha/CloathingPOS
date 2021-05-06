@@ -135,7 +135,7 @@ namespace POSSystem.UI.ViewModel
         private void GetInventory()
         {
             inventoryBO = new InventoryBO();
-            Products = inventoryBO.GetAll();
+            Products = inventoryBO.GetAllActiveProducts();
         }
 
         private void ClearProduct()

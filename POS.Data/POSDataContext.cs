@@ -23,6 +23,7 @@ namespace POS.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
+
         }
 
         public DbSet<Category> Categories { get; set; }

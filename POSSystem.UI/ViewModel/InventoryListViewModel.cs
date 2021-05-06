@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using POS.BusinessRule;
 using POS.Model;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
@@ -25,17 +27,26 @@ namespace POSSystem.UI.ViewModel
         }
 
 
+        public ICommand DeleteInventoryItemCommand { get; }
 
         public InventoryListViewModel()
         {
-            _window = Application.Current.MainWindow as MetroWindow;            
+            _window = Application.Current.MainWindow as MetroWindow;
+            DeleteInventoryItemCommand = new DelegateCommand<Inventory>(DeleteInventoryItem);
+            LoadInventory();
+        }
+
+        private void DeleteInventoryItem(Inventory obj)
+        {
+            _inventoryBo = new InventoryBO();
+            _inventoryBo.RemoveItem(obj);
             LoadInventory();
         }
 
         private void LoadInventory()
         {
             _inventoryBo = new InventoryBO();
-            List<Inventory> items = _inventoryBo.GetAll();
+            List<Inventory> items = _inventoryBo.GetAllActiveProducts();
             
             Inventory = new ObservableCollection<Inventory>();
             for (int i = 0; i < 50; i++)
