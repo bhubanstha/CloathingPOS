@@ -267,7 +267,8 @@
         </Grid>
         <ScrollViewer
             x:Name="PrimaryScrollViewer"
-            Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}"
+            Width="{Binding ActualWidth,RelativeSource={RelativeSource 
+                           Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
             VerticalScrollBarVisibility="Auto"
             Visibility="Visible">

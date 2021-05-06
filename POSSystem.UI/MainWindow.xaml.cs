@@ -34,6 +34,7 @@ namespace POSSystem.UI
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;
             this.Loaded += MainWindow_Loaded;
+            
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
