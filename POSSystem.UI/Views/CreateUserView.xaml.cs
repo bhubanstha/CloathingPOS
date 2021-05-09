@@ -31,7 +31,7 @@ namespace POSSystem.UI.Views
             InitializeComponent();
 
             UserViewModel viewModel = new UserViewModel();
-
+            viewModel.PasswordTextBox = txtPassword;
             this.DataContext = viewModel;
 
         }

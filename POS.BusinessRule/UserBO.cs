@@ -34,5 +34,23 @@ namespace POS.BusinessRule
             genericDataRepository.Insert(u);
             return await genericDataRepository.SaveAsync();
         }
+
+        public async Task<int> UpdateUser(User u)
+        {
+            genericDataRepository.Update(u);
+            return await genericDataRepository.SaveAsync();
+        }
+
+        public async Task<string> DecryptPassword(string encryptedPassword)
+        {
+            string pwd = await bouncyCastleEncryption.DecryptAsAsync(encryptedPassword);
+            return pwd;
+        }
+
+        public async Task<string> EncryptPassword(string password)
+        {
+            string pwd = await bouncyCastleEncryption.EncryptAsAsync(password);
+            return pwd;
+        }
     }
 }
