@@ -18,7 +18,6 @@
 
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
-        <conv:ControlHightCal x:Key="HeightCalculator" />
 
     </UserControl.Resources>
     <StackPanel>

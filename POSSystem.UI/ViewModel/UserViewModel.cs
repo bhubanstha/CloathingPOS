@@ -7,6 +7,7 @@ using POS.Model;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,8 @@ namespace POSSystem.UI.ViewModel
             set { _changePasswordOnFirstLogin = value; } 
         }
 
+        public ObservableCollection<User> UsersList { get; set; }
+
         public MetroWindow  Window { get; set; }
 
         public ICommand CreateUserCommand { get;  }
@@ -38,6 +41,8 @@ namespace POSSystem.UI.ViewModel
         {
             this.Window = Application.Current.MainWindow as MetroWindow;
             CreateUserCommand = new DelegateCommand<PasswordBox>(CreateUser);
+
+            LoadAllUsers();
         }
 
         private async void CreateUser(PasswordBox obj)
@@ -67,6 +72,13 @@ namespace POSSystem.UI.ViewModel
                await Window.ShowMessageAsync("User Creation", $"User {u.UserName} created successfully.", MessageDialogStyle.Affirmative, settings);
             }
 
+        }
+
+        private void LoadAllUsers()
+        {
+            UserBO userBO = new UserBO();
+            List<User> _user = userBO.GetAllUser();
+            UsersList = new ObservableCollection<User>(_user);
         }
     }
 }

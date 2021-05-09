@@ -22,6 +22,12 @@ namespace POS.BusinessRule
             bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
         }
 
+        public List<User> GetAllUser()
+        {
+            List<User> users =  genericDataRepository.GetAll().ToList();
+            return users;
+        }
+
         public async Task<int> SaveUser(User u)
         {
             u.Password = await bouncyCastleEncryption.EncryptAsAsync(u.Password);
