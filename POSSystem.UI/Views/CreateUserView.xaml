@@ -57,7 +57,7 @@
                 mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                 SpellCheck.IsEnabled="True"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding UserName}" />
+                Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="1"
@@ -75,7 +75,7 @@
                 mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
                 SpellCheck.IsEnabled="True"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding DisplayName}" />
+                Text="{Binding DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -104,7 +104,7 @@
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 ContentPadding="0 0 0 3"
-                IsOn="{Binding IsAdmin}"
+                IsOn="{Binding IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 OffContent="No"
                 OnContent="Yes" />
 
@@ -118,7 +118,7 @@
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 ContentPadding="0 0 0 3"
-                IsOn="{Binding PromptForPasswordReset}"
+                IsOn="{Binding PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 OffContent="No"
                 OnContent="Yes">
                 <!--<mah:ToggleSwitch.Resources>
