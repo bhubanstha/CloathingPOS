@@ -365,6 +365,7 @@
     <Compile Include="Controls\AutoCompleteTextBox.cs" />
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\ControlHeightCalculator.cs" />
+    <Compile Include="Converter\ControlHightCal.cs" />
     <Compile Include="Converter\DateConverter.cs" />
     <Compile Include="Converter\FlyoutGridHightCalculator.cs" />
     <Compile Include="Converter\GridIndexConverter.cs" />

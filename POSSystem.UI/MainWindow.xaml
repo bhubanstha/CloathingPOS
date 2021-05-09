@@ -267,14 +267,11 @@
         </Grid>
         <ScrollViewer
             x:Name="PrimaryScrollViewer"
-            Width="{Binding ActualWidth,RelativeSource={RelativeSource 
-                           Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
+            Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
             VerticalScrollBarVisibility="Auto"
             Visibility="Visible">
-            <Grid
-                x:Name="PrimaryGrid"
-                Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
+            <Grid x:Name="PrimaryGrid" Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -308,7 +305,7 @@
                                     <views:InventoryView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory History">
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory List">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:InventoryListView />
                                 </mah:HamburgerMenuIconItem.Tag>
@@ -323,7 +320,7 @@
                                     <views:SalesView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ChartBox}" Label="Report">
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ChartBox}" Label="Graphs">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:GraphView />
                                 </mah:HamburgerMenuIconItem.Tag>
@@ -379,7 +376,7 @@
                         <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
                             <Grid Margin="20,0,0,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -393,7 +390,10 @@
                                     FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                     FontSize="{DynamicResource MahApps.Font.Size.Header}"
                                     Text="{Binding Label}" />
-                                <StackPanel Grid.Row="1" Grid.Column="0"  Focusable="False">
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Focusable="False">
                                     <ContentControl
                                         xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
                                         Content="{Binding Tag}"
