@@ -22,6 +22,7 @@
                 <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/AppValidation.xaml"></ResourceDictionary>
                 <!--<ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
 
@@ -126,8 +127,12 @@
             </Style>
 
 
-            <Thickness x:Key="ControlMargin">0 5 0 5</Thickness>
+            <Thickness x:Key="ControlMargin">0 5 0 15</Thickness>
             <Thickness x:Key="ControlPadding">5</Thickness>
+            <Style x:Key="Label.Validation.Container.Margin" TargetType="TextBlock">
+                <Setter Property="Margin" Value="10 10 0 0"/>
+            </Style>
+
 
             <Style x:Key="HeaderBorder" TargetType="Border">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent }"/>

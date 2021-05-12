@@ -4,10 +4,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using POS.Model;
+
 
 namespace POS.Data.Repository
 {
-    public class DataRepository<T> : IGenericDataRepository<T> where T : class
+    public class DataRepository<T> : IGenericDataRepository<T> where T : EntityBase
     {
         private POSDataContext ctx = null;
         private DbSet<T> entity = null;
@@ -17,7 +19,7 @@ namespace POS.Data.Repository
             entity = ctx.Set<T>();
         }
 
-        public void Delete(int id)
+        public void Delete(Int64 id)
         {
             T existing = entity.Find(id);
             if (existing != null)
@@ -34,7 +36,12 @@ namespace POS.Data.Repository
 
         public T GetByID(int id)
         {
-            return entity.Find(id);
+            return entity.Single(x=> x.Id == id);
+        }
+
+        public bool HasChanges()
+        {
+            return ctx.ChangeTracker.HasChanges();
         }
 
         public void Insert(T obj)

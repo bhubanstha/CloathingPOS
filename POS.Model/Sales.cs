@@ -3,15 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace POS.Model
 {
-    public class Sales 
+    public class Sales : EntityBase
     {
-        public int Id { get; set; }
         public int SalesQuantity { get; set; }
         public decimal Rate { get; set; }
         public decimal Discount { get; set; }
 
         [ForeignKey("Inventory")]
-        public int ProductId { get; set; }
+        public Int64 ProductId { get; set; }
 
         [ForeignKey("Bill")]
         public Int64 BillNo { get; set; }

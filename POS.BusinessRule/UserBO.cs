@@ -22,6 +22,12 @@ namespace POS.BusinessRule
             bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
         }
 
+        public bool HasChanges()
+        {
+            return true;
+            //return genericDataRepository.HasChanges();
+        }
+
         public List<User> GetAllUser()
         {
             List<User> users =  genericDataRepository.GetAll().ToList();

@@ -1,20 +1,29 @@
 ﻿using POS.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace POSSystem.UI.Wrapper
 {
-    public class LoginWrapper : WrapperBase<User>
+    public class CreateUserWrapper : WrapperBase<User>
     {
-        public LoginWrapper(User obj) : base(obj)
+       
+        public CreateUserWrapper(User model): base(model)
         {
+
         }
 
-        public Int64 Id { get { return Model.Id; } }
-
+        public Int64 Id
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
         public string UserName 
-        { 
+        {
             get { return GetValue<string>(); }
-            set { SetValue(value);}
+            set { SetValue(value); }
         }
 
         public string DisplayName
@@ -22,7 +31,6 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
-
 
         public string Password
         {

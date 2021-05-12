@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace POS.Model
 {
-    public class User
+    public class User : EntityBase
     {
-        public int Id { get; set; }
+
+        [Required(ErrorMessage = "User name is required")]
+        [StringLength(15, ErrorMessage = "User name can be upto 15 characters long")]
         public string UserName { get; set; }
         public string DisplayName { get; set; }
         public string Password { get; set; }

@@ -16,7 +16,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class CategoryViewModel : ViewModelBase
     {
-        private int _id;
+        private Int64 _id;
         private string _name;
         private CategoryBO categoryBO;
         private List<Category> categories;
@@ -24,7 +24,7 @@ namespace POSSystem.UI.ViewModel
         private MetroWindow _window;
 
 
-        public int Id { 
+        public Int64 Id { 
             get { return _id; }
             set { _id = value;
                 OnPropertyChanged();

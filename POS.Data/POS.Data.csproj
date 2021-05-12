@@ -83,6 +83,14 @@
     <Compile Include="Migrations\202105061140337_inventoryUpdate.designer.cs">
       <DependentUpon>202105061140337_inventoryUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105121341518_modelchanges1.cs" />
+    <Compile Include="Migrations\202105121341518_modelchanges1.designer.cs">
+      <DependentUpon>202105121341518_modelchanges1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105121431076_modelchanges-annotation.cs" />
+    <Compile Include="Migrations\202105121431076_modelchanges-annotation.designer.cs">
+      <DependentUpon>202105121431076_modelchanges-annotation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +132,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105061140337_inventoryUpdate.resx">
       <DependentUpon>202105061140337_inventoryUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105121341518_modelchanges1.resx">
+      <DependentUpon>202105121341518_modelchanges1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105121431076_modelchanges-annotation.resx">
+      <DependentUpon>202105121431076_modelchanges-annotation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

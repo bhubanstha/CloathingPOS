@@ -5,10 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace POS.Model
 {
-    public class Bill
+    public class Bill : EntityBase
     {
-        [Key]
-        public Int64 BillNo { get; set; }
         public DateTime BillDate { get; set; }
         public decimal VAT { get; set; }
 

@@ -5,10 +5,12 @@ using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POSSystem.UI.Service;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,74 +22,27 @@ namespace POSSystem.UI.ViewModel
 {
     public class UserViewModel: ViewModelBase
     {
-        private string _buttonText = "Create Account";
-        private bool _changePasswordOnFirstLogin = true;
-        private int _id;
-        private string _un;
-        private string _dn;
-        private string _pwd;
-        private bool _isadmin;
-        private ObservableCollection<User> _userList;
-
-
-        public int Id
-        {
-            get { return _id; }
-            set { 
-                _id = value;
-                OnPropertyChanged();
-            }
-        }
-        public string UserName
-        {
-            get { return _un; }
-            set
-            {
-                _un = value;
-                OnPropertyChanged();
-            }
-        }
-        public string DisplayName
-        {
-            get { return _dn; }
-            set
-            {
-                _dn = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Password
-        {
-            get { return _pwd; }
-            set
-            {
-                _pwd = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool IsAdmin
-        {
-            get { return _isadmin; }
-            set
-            {
-                _isadmin = value;
-                OnPropertyChanged();
-            }
-        }
-        public bool PromptForPasswordReset { 
-            get {
-                return _changePasswordOnFirstLogin; 
-            }
-            set { 
-                _changePasswordOnFirstLogin = value; 
-                OnPropertyChanged(); 
-            } 
-        }
-
-
+        private MetroWindow _window { get; set; }
+        private bool _hasChanges;
+        private string _buttonText = "Create Account";        
+        private ObservableCollection<User> _userList;        
+        private CreateUserWrapper _newUser;
         public PasswordBox PasswordTextBox { get; set; }
+        private UserBO _userBo;
 
-        
+        public ICommand CreateUserCommand { get; }
+        public ICommand EditUserCommand { get; }
+        public ICommand DeleteUserCommand { get; }
+        public ICommand ResetUserCommand { get; }
+
+        public CreateUserWrapper NewUser
+        {
+            get { return _newUser; }
+            set {
+                _newUser = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<User> UsersList
         {
@@ -97,33 +52,53 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        
-
         public string ButtonText
         {
             get { return _buttonText; }
             set { _buttonText = value; OnPropertyChanged(); }
         }
 
-
-
-        private MetroWindow  _window { get; set; }
-
-        public ICommand CreateUserCommand { get;  }
-        public ICommand EditUserCommand { get;  }
-        public ICommand DeleteUserCommand { get;  }
-        public ICommand ResetUserCommand { get;  }
+        public bool HasChanges
+        {
+            get { return _hasChanges; }
+            set
+            {
+                if(_hasChanges != value)
+                {
+                    _hasChanges = value;
+                    OnPropertyChanged();
+                    //((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
 
 
         public UserViewModel()
         {
             this._window = Application.Current.MainWindow as MetroWindow;
-            CreateUserCommand = new DelegateCommand<PasswordBox>(CreateUser);
+            _userBo = new UserBO();
+            NewUser = new CreateUserWrapper(new User());
+            NewUser.PromptForPasswordReset = true;
+
+            NewUser.PropertyChanged += NewUser_PropertyChanged;
+            CreateUserCommand = new DelegateCommand<PasswordBox>(OnCreateUserExecute).ObservesProperty(()=> HasChanges);
             EditUserCommand = new DelegateCommand<User>(EditUser);
             DeleteUserCommand = new DelegateCommand<User>(DeleteUser);
             ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
 
             LoadAllUsers();
+        }
+
+        private void NewUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(!HasChanges)
+            {
+                HasChanges = _userBo.HasChanges();
+            }
+            //if(e.PropertyName == nameof(NewUser.HasErrors))
+            //{
+            //    ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
+            //}
         }
 
         private void ResetUser(PasswordBox obj)
@@ -152,28 +127,32 @@ namespace POSSystem.UI.ViewModel
         private void EditUser(User obj)
         {
             UserBO userBO = new UserBO();
-
-            this.Id = obj.Id;
-            this.DisplayName = obj.DisplayName;
-            this.UserName = obj.UserName;
-            this.Password = userBO.DecryptPassword(obj.Password).Result;
-            this.IsAdmin = obj.IsAdmin;
-            this.PromptForPasswordReset = obj.PromptForPasswordReset;
-            this.PasswordTextBox.Password = this.Password;
+            this.NewUser.Id = obj.Id;
+            this.NewUser.DisplayName = obj.DisplayName;
+            this.NewUser.UserName = obj.UserName;
+            this.NewUser.Password = userBO.DecryptPassword(obj.Password).Result;
+            this.NewUser.IsAdmin = obj.IsAdmin;
+            this.NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
+            this.PasswordTextBox.Password = this.NewUser.Password;
             this.ButtonText = "Update User";
         }
 
-        private async void CreateUser(PasswordBox obj)
+        private bool OnCreateUserCanExecute(PasswordBox txtPwdBox)
+        {
+            return this.NewUser  != null && !this.NewUser.HasErrors && HasChanges && !string.IsNullOrEmpty(txtPwdBox.Password);
+        }
+
+        private async void OnCreateUserExecute(PasswordBox obj)
         {
             PasswordTextBox = obj;
             User u = new User
             {
-                Id = this.Id,
-                UserName = this.UserName,
-                DisplayName = this.DisplayName,
+                Id = this.NewUser.Id,
+                UserName = this.NewUser.UserName,
+                DisplayName = this.NewUser.DisplayName,
                 Password = obj.Password,
-                IsAdmin = this.IsAdmin,
-                PromptForPasswordReset = this.PromptForPasswordReset,
+                IsAdmin = this.NewUser.IsAdmin,
+                PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
                 IsActive = true,
                 CreatedDate = DateTime.Now
             };
@@ -216,14 +195,16 @@ namespace POSSystem.UI.ViewModel
         private void ClearAll()
         {
             this.ButtonText = "Create Account";
-            this.Id = 0;
-            this.UserName = "";
-            this.Password = "";
-            this.DisplayName = "";
-            this.IsAdmin = false;
-            this.PromptForPasswordReset = true;
+            this.NewUser.Id = 0;
+            this.NewUser.UserName = "";
+            this.NewUser.Password = "";
+            this.NewUser.DisplayName = "";
+            this.NewUser.IsAdmin = false;
+            this.NewUser.PromptForPasswordReset = true;
             this.PasswordTextBox.Password = "";
         }
+
+
     }
 }
 

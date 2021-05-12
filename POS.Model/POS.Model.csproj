@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Bill.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="EntityBase.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryHistory.cs" />
     <Compile Include="Product.cs" />

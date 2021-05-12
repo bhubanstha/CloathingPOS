@@ -28,7 +28,7 @@ namespace POS.BusinessRule
             //long? currentMax = genericDataRepository.GetAll().Max(b => b.BillNo);
 
             long? currentMax = (from bills in genericDataRepository.GetAll()
-                                select (long?)bills.BillNo).Max();
+                                select (long?)bills.Id).Max();
 
             return currentMax.HasValue ? currentMax.Value + 1 : 1;
         }

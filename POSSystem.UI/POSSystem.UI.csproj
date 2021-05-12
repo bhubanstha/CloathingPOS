@@ -435,6 +435,7 @@
       <DependentUpon>UserMenuPopupControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\LoginWrapper.cs" />
+    <Compile Include="Wrapper\CreateUserWrapper.cs" />
     <Compile Include="Wrapper\WrapperBase.cs" />
     <Page Include="Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -457,6 +458,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\AppCustomStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\AppValidation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -34,7 +34,7 @@ namespace POSSystem.UI.Views
             model.CurrentProduct.SalesQuantity = 1;
             model.CurrentProduct.Bill = new Bill
             {
-                BillNo = _billBo.GetNewBillNo(),
+                Id = _billBo.GetNewBillNo(),
                 BillDate = DateTime.Now
             };
             this.DataContext = model;

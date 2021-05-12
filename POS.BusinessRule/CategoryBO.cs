@@ -41,7 +41,7 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> Delete(Int64 id)
         {
             genericDataRepository.Delete(id);
             return  await genericDataRepository.SaveAsync();

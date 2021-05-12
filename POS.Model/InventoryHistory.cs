@@ -2,9 +2,8 @@
 
 namespace POS.Model
 {
-    public class InventoryHistory
+    public class InventoryHistory : EntityBase
     {
-        public int Id { get; set; }
         public int Quantity { get; set; }
         public decimal Rate { get; set; }
         public DateTime PurchaseDate { get; set; }
