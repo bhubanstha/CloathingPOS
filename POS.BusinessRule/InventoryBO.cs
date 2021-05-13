@@ -27,7 +27,7 @@ namespace POS.BusinessRule
 
         public List<Inventory> GetAllActiveProducts()
         {
-            return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false).ToList();
+            return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false && x.Quantity>0).ToList();
         }
 
         public Inventory GetById(int id)
@@ -50,6 +50,18 @@ namespace POS.BusinessRule
                
             //}
             
+        }
+
+        public void DeductQuantity(Int64 productId, int deductionQty)
+        {
+            Inventory itm = genericDataRepository.GetByID(productId);
+            if(itm!= null)
+            {
+                itm.Quantity -= deductionQty;
+                genericDataRepository.Update(itm);
+
+                genericDataRepository.Save();
+            }
         }
 
     }

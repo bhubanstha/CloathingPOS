@@ -245,7 +245,7 @@
     <mah:MetroWindow.Flyouts>
         <mah:FlyoutsControl x:Name="flyoutcontrol">
             <flyout:SettingFlyout x:Name="SettingsFlyout" />
-            <!--<flyout:AddCategoryFlyout x:Name="CategoryFlyout" />-->
+            <flyout:AddCategoryFlyout x:Name="CategoryFlyout" />
 
         </mah:FlyoutsControl>
 

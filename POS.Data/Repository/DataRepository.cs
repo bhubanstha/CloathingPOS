@@ -19,6 +19,12 @@ namespace POS.Data.Repository
             entity = ctx.Set<T>();
         }
 
+        public DbContextTransaction BeginTransaction()
+        {
+            DbContextTransaction tran = ctx.Database.BeginTransaction();
+            return tran;
+        }
+
         public void Delete(Int64 id)
         {
             T existing = entity.Find(id);
@@ -34,7 +40,7 @@ namespace POS.Data.Repository
             return entity.AsQueryable<T>().AsNoTracking();
         }
 
-        public T GetByID(int id)
+        public T GetByID(Int64 id)
         {
             return entity.Single(x=> x.Id == id);
         }

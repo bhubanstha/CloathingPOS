@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace POS.Data.Repository
     public interface IGenericDataRepository<T> where T : class
     {
         IQueryable<T> GetAll();
-        T GetByID(int id);
+        T GetByID(Int64 id);
         void Insert(T obj);
         void Update(T obj);
         void Delete(Int64 id);
@@ -16,5 +17,7 @@ namespace POS.Data.Repository
         Task<int> SaveAsync();
 
         bool HasChanges();
+
+        DbContextTransaction BeginTransaction();
     }
 }

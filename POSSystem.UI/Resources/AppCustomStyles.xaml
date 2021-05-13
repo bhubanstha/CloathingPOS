@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:POSSystem.UI.Resources"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
 
-    
+
 
     <LinearGradientBrush x:Key="AccentBackground" StartPoint="1,1" EndPoint="0,0">
         <GradientStop Offset="0.0" Color="{StaticResource MahApps.Colors.Accent}" />
@@ -75,7 +75,7 @@
             Style="{StaticResource row.option.icon}" />
     </DataTemplate>
 
-    
+
 
     <Style
         x:Key="col.Boolean.IsAdmin"

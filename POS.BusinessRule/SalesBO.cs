@@ -4,6 +4,7 @@ using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,11 @@ namespace POS.BusinessRule
             genericDataRepository = new DataRepository<Sales>(new POSDataContext());
         }
 
+
+        public DbContextTransaction BeginTransation()
+        {
+            return genericDataRepository.BeginTransaction();
+        }
         public Sales ManageCartItem(Sales item, ObservableCollection<Sales> cart, ref Bill b)
         {
             Sales _existingItem = cart.Where(x => x.ProductId == item.Inventory.Id).FirstOrDefault();
@@ -31,6 +37,25 @@ namespace POS.BusinessRule
             item.ProductId = item.Inventory.Id;
             item.Bill = b;
             return item;
+        }
+
+        public async Task<int> CheckoutSales(List<Sales> items, Bill bill)
+        {
+            InventoryBO inventoryBO = new InventoryBO();
+            foreach (Sales item in items)
+            {
+                item.BillNo = bill.Id;
+                item.ProductId = item.Inventory.Id;
+
+                item.Bill = null;
+                item.Inventory = null;
+
+                genericDataRepository.Insert(item);
+                inventoryBO.DeductQuantity(item.ProductId, item.SalesQuantity);
+            }
+
+            return await genericDataRepository.SaveAsync();
+
         }
     }
 }

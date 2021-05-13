@@ -32,5 +32,11 @@ namespace POS.BusinessRule
 
             return currentMax.HasValue ? currentMax.Value + 1 : 1;
         }
+
+        public int  CreateNewBill(ref Bill bill)
+        {
+            genericDataRepository.Insert(bill);
+            return genericDataRepository.Save();
+        }
     }
 }
