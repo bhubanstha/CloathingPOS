@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="POSSystem.UI.Views.Tiles.ServiceTile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:POSSystem.UI.Views.Tiles"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="250" Width="250">
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--<StackPanel Grid.Row="0">
+           
+            <StackPanel Grid.Row="1" Background="Black" Opacity="0.6" VerticalAlignment="Bottom" Height="30" Panel.ZIndex="1">
+                <Label HorizontalAlignment="Center" Opacity="1" Foreground="White" VerticalAlignment="Center" Height="30">
+                    <Bold>Web Site Designing</Bold>
+                </Label>
+            </StackPanel>
+            <Image Source="/Image/webDesigning.png" Width="250" Stretch="UniformToFill"/>
+        </StackPanel>-->
+            <Image  x:Name="imgServiceImage"  Width="250" Stretch="UniformToFill" Grid.Row="0"/>
+            <StackPanel Grid.Row="0" VerticalAlignment="Bottom" Background="Black" Opacity="0.6">
+            <Label HorizontalAlignment="Center" Opacity="1" Foreground="White" Height="30" VerticalContentAlignment="Center" x:Name="lblServiceTitle" FontWeight="Bold">
+            </Label>
+            </StackPanel>
+            <TextBlock Margin="5" TextAlignment="Justify" FontSize="12" Grid.Row="1" TextWrapping="WrapWithOverflow" x:Name="lblServiceDescription">
+           
+            </TextBlock>
+
+        </Grid>
+    
+   
+</UserControl>

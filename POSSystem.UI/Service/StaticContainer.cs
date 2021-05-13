@@ -7,11 +7,15 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace POSSystem.UI.Service
 {
     public static class StaticContainer
     {
+        public static string ApplicationName { get; set; }
+        public static BitmapImage AppScreenshot { get; set; }
+
         public static App ThisApp { get; set; }
         public static IContainer Container { get; set; }
 
@@ -36,6 +40,7 @@ namespace POSSystem.UI.Service
                 ColorScheme = MetroDialogColorScheme.Theme
             };
 
+            ApplicationName = ConfigurationReader.GetConfiguration <string>(AppSettingKey.AppName);
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
         }

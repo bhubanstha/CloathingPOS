@@ -19,6 +19,7 @@ namespace POSSystem.UI.Service
 
     public enum AppSettingKey
     {
-        CurrencyCulture
+        CurrencyCulture,
+        AppName
     }
 }

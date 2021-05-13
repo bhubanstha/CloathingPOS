@@ -7,6 +7,8 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="clr-namespace:POSSystem.UI.Views"
+    xmlns:tiles="clr-namespace:POSSystem.UI.Views.Tiles"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -14,44 +16,135 @@
         <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
 
 
-        <Grid Margin="{StaticResource ControlMargin}" ShowGridLines="True">
+        <Grid Margin="{StaticResource ControlMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
             </Grid.ColumnDefinitions>
-
-            <iconPacks:PackIconBootstrapIcons
-                Grid.Row="0"
-                Grid.Column="0"
-                Width="90"
-                Height="90"
-                FontSize="60"
-                Kind="Alarm"
-                RenderSize="60,60" />
-
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="0,10,0,0">
-                This is some<Bold>HTML</Bold>
-                <Italic>like</Italic>
-                <Underline>text for</Underline>
-                about page ASDF</TextBlock>
 
             <Image
                 x:Name="ThisWindowPic"
-                Grid.Row="1"
-                Grid.Column="0" />
+                Grid.Row="0"
+                Grid.Column="0" 
+                Grid.RowSpan="2"
+                Stretch="UniformToFill"/>
 
+            <TextBlock
+                FontSize="14"
+                Margin="10 0 30 -20"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow"
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2">
+                <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run> 
+                system is a complete package to handle your <Bold><Italic>User, Inventory and Sales</Italic></Bold>. 
+                 <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run> is design to remove your day to day manual work in stores.
+                <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Run> is best suitable for small stores without any branch.
+                Though <Run Text="POS {Binding AppName}"></Run> can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for.
+                
+                <LineBreak/>
+                <LineBreak/>
+                Some Features of <Run Text="{Binding AppName}"/>: <LineBreak/>
+            </TextBlock>
+            <TextBlock FontSize="14"
+                Margin="10 0 30 -20"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow"
+                Grid.Row="1"
+                Grid.Column="1">
+                
+                
+                1. User Management<LineBreak/>
+                2. Inventory Management<LineBreak/>
+                3. POS Integrated<LineBreak/>
+            </TextBlock>
+            <TextBlock FontSize="14"
+                Margin="10 0 30 -20"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow"
+                Grid.Row="1"
+                Grid.Column="2">
+                
+                4. Multiple Reports<LineBreak/>
+                5. Interactive Graphs <LineBreak/>
+                6. Modern UI and Interactive User Experience<LineBreak/>
+            </TextBlock>
+
+        </Grid>
+
+        <Separator Margin="0 -10 0 0" BorderBrush="{StaticResource MahApps.Brushes.ThemeBackground}" BorderThickness="2"/>
+        <Grid Margin="0 0 0 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="2" Grid.Column="0"  FontSize="20" VerticalAlignment="Center">
+                <Bold>Remember Me For</Bold>
+            </TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  FontSize="12" HorizontalAlignment="Right" Margin="0 0 30 0" VerticalAlignment="Center">
+                Email: <Hyperlink 
+                    NavigateUri="mailto:bhubanshrestha12@gmail.com?subject=I would like to know more about your services &amp;body=Hi Bhuban," RequestNavigate="OnNavigate"
+                    TextDecorations="None"
+                    Style="{StaticResource HyperLink.Contact.Me}">
+                    <Span>bhubanshrestha12@gmail.com</Span>
+                </Hyperlink>
+                <LineBreak/>
+                Contact: <Hyperlink 
+                    NavigateUri="tel:(+977)9823074545" 
+                    RequestNavigate="OnNavigate"
+                    TextDecorations="None"
+                    Style="{StaticResource HyperLink.Contact.Me}">
+                    <Span>9823-07-4545</Span>
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+        <Grid Margin="0 0 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <tiles:ServiceTile Grid.Row="0" 
+                               Grid.Column="0" 
+                               BorderBrush="{StaticResource RedNegative}" 
+                               BorderThickness="2" 
+                               ServiceTitle="Website Designing" 
+                               ImageSource="/Image/webDesigning.png" 
+                               Description=" A business's online presence, regardless of industry, can have a massive impact on its success. Having a strong online presence, particularly a website, can be make or break for generating more revenue. Without a website, people may question your legitimacy as a business. Having a website is an opportunity to make a great first impression and give people comfort that you're a real business. We help you to design greate website that align with your business values and represent your brand to the world."/>
+
+            <tiles:ServiceTile Grid.Row="0" 
+                               Grid.Column="1" 
+                               BorderBrush="{StaticResource HighlightBlue}"
+                               BorderThickness="2"
+                               ServiceTitle="Web Application Development" 
+                               ImageSource="/Image/webApp.png"
+                               Description=""/>
+            
+            <tiles:ServiceTile 
+                Grid.Row="0" 
+                Grid.Column="2"
+                BorderBrush="{StaticResource GreenPositive}"
+                BorderThickness="2"
+                ServiceTitle="Mobile Application Development" 
+                ImageSource="/Image/mobileApp.jpg"
+                Description=""/>
+            <tiles:ServiceTile 
+                Grid.Row="0" 
+                Grid.Column="3"
+                BorderBrush="{StaticResource HighlightYellowOccured}"
+                BorderThickness="2"
+                ServiceTitle="Desktop Application Development" 
+                ImageSource="/Image/desktopApp.jpg"
+                Description=""/>
         </Grid>
     </StackPanel>
 </UserControl>

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -24,15 +27,18 @@ namespace POSSystem.UI.Views
     public partial class AboutView : UserControl
     {
         BitmapImage bitmapImage = null;
+        AppDetails appDetails;
         public AboutView()
         {
             InitializeComponent();
+            appDetails = new AppDetails();
+            this.DataContext = appDetails;
             this.Loaded += AboutView_Loaded;
         }
 
         private void AboutView_Loaded(object sender, RoutedEventArgs e)
         {
-            bitmapImage = TakeScreenshot();
+            bitmapImage = StaticContainer.AppScreenshot;
             ThisWindowPic.Source = bitmapImage;
         }
 
@@ -40,7 +46,7 @@ namespace POSSystem.UI.Views
         {
             try
             {
-                
+
                 double screenLeft = SystemParameters.VirtualScreenLeft;
                 double screenTop = SystemParameters.VirtualScreenTop;
                 double screenWidth = SystemParameters.VirtualScreenWidth;
@@ -82,37 +88,27 @@ namespace POSSystem.UI.Views
             return null;
         }
 
-        private void newScreenshot()
+        private void OnNavigate(object sender, RequestNavigateEventArgs e)
         {
-            // Store the size of the map control
-            int Width = (int)MyMap.RenderSize.Width;
-            int Height = (int)MyMap.RenderSize.Height;
-            System.Windows.Point relativePoint = MyMap.TransformToAncestor(Application.Current.MainWindow).Transform(new System.Windows.Point(0, 0));
-            int X = (int)relativePoint.X;
-            int Y = (int)relativePoint.Y;
+            Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
+        }
+    }
 
-            Bitmap Screenshot = new Bitmap(Width, Height);
-            Graphics G = Graphics.FromImage(Screenshot);
-            // snip wanted area
-            G.CopyFromScreen(X, Y, 0, 0, new System.Drawing.Size(Width, Height), CopyPixelOperation.SourceCopy);
+    class AppDetails : ViewModelBase
+    {
+        private string _appName;
 
-            string fileName = "C:\\myCapture.bmp";
-            System.IO.FileStream fs = System.IO.File.Open(fileName, System.IO.FileMode.OpenOrCreate);
-            Screenshot.Save(fs, System.Drawing.Imaging.ImageFormat.Bmp);
-            fs.Close();
+        public string AppName
+        {
+            get { return _appName; }
+            set { _appName = value; OnPropertyChanged(); }
+        }
 
 
-            //Code Fixes
-
-            RenderTargetBitmap renderTargetBitmap =
-    new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
-            renderTargetBitmap.Render(yourMapControl);
-            PngBitmapEncoder pngImage = new PngBitmapEncoder();
-            pngImage.Frames.Add(BitmapFrame.Create(renderTargetBitmap));
-            using (Stream fileStream = File.Create(filePath))
-            {
-                pngImage.Save(fileStream);
-            }
+        public AppDetails()
+        {
+            AppName = StaticContainer.ApplicationName;
         }
     }
 }

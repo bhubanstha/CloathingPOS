@@ -434,6 +434,9 @@
     <Compile Include="Views\Flyouts\SettingFlyout.xaml.cs">
       <DependentUpon>SettingFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tiles\ServiceTile.xaml.cs">
+      <DependentUpon>ServiceTile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserMenuPopupControl.xaml.cs">
       <DependentUpon>UserMenuPopupControl.xaml</DependentUpon>
     </Compile>
@@ -536,6 +539,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Tiles\ServiceTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserMenuPopupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -605,6 +612,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\webDesigning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\webApp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\desktopApp.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\mobileApp.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
