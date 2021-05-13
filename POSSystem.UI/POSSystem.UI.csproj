@@ -407,6 +407,9 @@
     <Compile Include="ViewModel\Service\Pnl.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Views\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Flyouts\AddCategoryFlyout.xaml.cs">
       <DependentUpon>AddCategoryFlyout.xaml</DependentUpon>
     </Compile>
@@ -496,6 +499,10 @@
     <Page Include="Resources\TextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Flyouts\AddCategoryFlyout.xaml">
       <SubType>Designer</SubType>
