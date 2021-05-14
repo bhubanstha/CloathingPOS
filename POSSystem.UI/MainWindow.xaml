@@ -325,21 +325,6 @@
                                     <views:GraphView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Octicons Kind=Hubot}" Label="Inline Content">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <UserControl>
-                                        <StackPanel Orientation="Vertical">
-                                            <mah:ToggleSwitch Margin="0,0,0,5" Header="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
-                                            <mah:ToggleSwitch
-                                                Margin="0,0,0,5"
-                                                Header="Ut dictum arcu egestas aliquet elementum"
-                                                IsOn="True" />
-                                            <mah:ToggleSwitch Margin="0,0,0,5" Header="Pellentesque ultricies metus quis dui luctus, vel faucibus risus rhoncus" />
-                                        </StackPanel>
-                                    </UserControl>
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
                         </mah:HamburgerMenuItemCollection>
                     </mah:HamburgerMenu.ItemsSource>
 

@@ -23,11 +23,19 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class GraphView : UserControl
     {
+        LineSeriesViewModel model;
         public GraphView()
         {
             InitializeComponent();
-            LineSeriesViewModel model  = new LineSeriesViewModel(new ColorService());
+            model  = new LineSeriesViewModel(new ColorService());
             this.DataContext = model;
+
+            this.Loaded += GraphView_Loaded;
+        }
+
+        private void GraphView_Loaded(object sender, RoutedEventArgs e)
+        {
+            model.AnimateAsync();
         }
     }
 }

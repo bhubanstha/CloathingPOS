@@ -97,12 +97,21 @@
                     <Span>bhubanshrestha12@gmail.com</Span>
                 </Hyperlink>
                 <LineBreak/>
-                Contact: <Hyperlink 
+                Contact:
+                <Hyperlink 
                     NavigateUri="tel:(+977)9823074545" 
                     RequestNavigate="OnNavigate"
                     TextDecorations="None"
                     Style="{StaticResource HyperLink.Contact.Me}">
                     <Span>9823-07-4545</Span>
+                </Hyperlink>
+                 / 
+                <Hyperlink 
+                    NavigateUri="tel:(+977)9869064005" 
+                    RequestNavigate="OnNavigate"
+                    TextDecorations="None"
+                    Style="{StaticResource HyperLink.Contact.Me}">
+                    <Span>9869-06-4005</Span>
                 </Hyperlink>
             </TextBlock>
         </Grid>

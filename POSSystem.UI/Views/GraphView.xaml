@@ -9,17 +9,30 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <oxy:PlotView
-            Grid.Row="0"
-            Grid.Column="0"
-            Height="500"
-            Background="{DynamicResource MahApps.Brushes.Accent}"
-            Model="{Binding PlotModel}" />
-        <Label Grid.Column="1" Content="some content" />
-    </Grid>
+    <StackPanel>
+        <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 5 0">
+                <TextBlock HorizontalAlignment="Center" FontSize="18">
+                <Bold>Inventory Item Puchase/Sells Graph</Bold>
+                </TextBlock>
+                <ComboBox Margin="5">
+                    <ComboBoxItem>A</ComboBoxItem>
+                    <ComboBoxItem>B</ComboBoxItem>
+                    <ComboBoxItem>C</ComboBoxItem>
+                </ComboBox>
+                <Separator BorderThickness="2" BorderBrush="Red"/>
+                <oxy:PlotView
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Height="500"
+                    Background="Transparent"
+                    Model="{Binding PlotModel}" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+    
 </UserControl>

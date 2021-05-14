@@ -15,6 +15,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class LineSeriesViewModel : AnimationViewModelBase
     {
+
         private IColorService _colorService;
 
         public LineSeriesViewModel(IColorService colorService)
@@ -53,12 +54,12 @@ namespace POSSystem.UI.ViewModel
             var maximum = pnls.Max(x => x.Value);
 
             var plotModel = this.PlotModel;
-            plotModel.Title = "Line Series Animation Demo";
+            //plotModel.Title = "Line Series Animation Demo";
 
             string hex = _colorService.GetColorHex(_colorService.GetColor("Yellow"));
             var series = new LineSeries
             {
-                Title = "P & L",
+                Title = "Purchase",
                 ItemsSource = pnls,
                 DataFieldX = "Time",
                 DataFieldY = "Value",
@@ -68,39 +69,28 @@ namespace POSSystem.UI.ViewModel
                 MarkerStroke = OxyColor.Parse(hex),
                 MarkerStrokeThickness = 1.5,
                 MarkerType = MarkerType.Cross,
-                StrokeThickness = 1,
+                StrokeThickness = 2,
             };
 
-            var series1 = new AreaSeries
+            hex = _colorService.GetColorHex(_colorService.GetColor("Red"));
+            var series1 = new LineSeries
             {
-                Title = "P & L",
+                Title = "Sells",
                 ItemsSource = pnls1,
                 DataFieldX = "Time",
                 DataFieldY = "Value",
-                Color = OxyColor.Parse("#1d2bc2"),
+                Color = OxyColor.Parse(hex),
                 MarkerSize = 3,
                 MarkerFill = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStroke = OxyColor.Parse("#1d2bc2"),
+                MarkerStroke = OxyColor.Parse(hex),
                 MarkerStrokeThickness = 1.5,
                 MarkerType = MarkerType.Cross,
-                StrokeThickness = 1,
+                StrokeThickness = 2,
             };
 
-            var series2 = new LinearBarSeries
-            {
-                Title = "P & L",
-                ItemsSource = pnls2,
-                DataFieldX = "Time",
-                DataFieldY = "Value",
-                FillColor = OxyColor.Parse("#a13120"),
-                StrokeColor = OxyColor.Parse("#e3ba34"),
-                StrokeThickness = 1,
-                BarWidth = 5
-            };
 
             plotModel.Series.Add(series);
             plotModel.Series.Add(series1);
-            plotModel.Series.Add(series2);
             var annotation = new LineAnnotation
             {
                 Type = LineAnnotationType.Horizontal,
@@ -132,11 +122,20 @@ namespace POSSystem.UI.ViewModel
         public override async Task AnimateAsync(AnimationSettings animationSettings)
         {
             var plotModel = this.PlotModel;
-            var series = plotModel.Series.First() as LineSeries;
-            if (series != null)
+            foreach (var s in plotModel.Series)
             {
-                await plotModel.AnimateSeriesAsync(series, animationSettings);
+
+                if (s is LineSeries)
+                {
+                    await plotModel.AnimateSeriesAsync((LineSeries)s, animationSettings);
+                }
             }
+
+            //var series = plotModel.Series.First() as LineSeries;
+            //if (series != null)
+            //{
+            //    await plotModel.AnimateSeriesAsync(series, animationSettings);
+            //}
         }
     }
 }
