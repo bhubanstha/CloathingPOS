@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls.Dialogs;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
+using POSSystem.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,16 +30,27 @@ namespace POSSystem.UI
     {
         private MainWindowViewModel _model;
         public IDialogCoordinator DialogCoordinator;
-        public MainWindow(MainWindowViewModel model)
+        public MainWindow(MainWindowViewModel model, LoginWindow loginWindow)
         {
             InitializeComponent();
             _model = model;
             _model.Window = this;
             _model.SettingFlyout = this.SettingsFlyout;
+            _model.LoginWindow = loginWindow;
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;
             this.Loaded += MainWindow_Loaded;
+            this.Closed += MainWindow_Closed;   
 
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            if(!_model.IsLogout)
+            {
+                _model.LoginWindow.Close();
+            }
+            
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

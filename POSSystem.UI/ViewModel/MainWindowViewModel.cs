@@ -23,7 +23,7 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
         public IDialogCoordinator _dialogCoordinator;
-        private LoginWindow _loginWindow;
+        public LoginWindow LoginWindow { get; set; }
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -45,16 +45,16 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        public bool IsLogout { get; set; }
+
 
         public MainWindowViewModel(ICacheService cacheService, 
             IMessageDialogService messageDialogService,
-            IDialogCoordinator dialogCoordinator,
-            LoginWindow loginWindow)
+            IDialogCoordinator dialogCoordinator)
         {
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
             _dialogCoordinator = dialogCoordinator;
-            _loginWindow = loginWindow;
             User = cacheService.ReadCache<User>("LoginUser");
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
@@ -64,8 +64,9 @@ namespace POSSystem.UI.ViewModel
 
         private void OnUserLogout()
         {
+            IsLogout = true;
             Application.Current.MainWindow.Close();
-            Application.Current.MainWindow = _loginWindow;
+            Application.Current.MainWindow = LoginWindow;
             Application.Current.MainWindow.Show();
         }
 
