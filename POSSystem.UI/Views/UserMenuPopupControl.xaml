@@ -1,100 +1,214 @@
-﻿<UserControl x:Class="POSSystem.UI.Views.UserMenuPopupControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:local="clr-namespace:POSSystem.UI.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+﻿<UserControl
+    x:Class="POSSystem.UI.Views.UserMenuPopupControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:POSSystem.UI.Views"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <Style x:Key="MenuCotainer" TargetType="ListView">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+
+        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="{DynamicResource MahApps.Colors.Accent2}" />
+        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="{DynamicResource MahApps.Colors.Accent2}" />
+        <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#3DDADADA" />
+        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA" />
+        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="{DynamicResource MahApps.Colors.Accent2}" />
+        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="{DynamicResource MahApps.Colors.Accent2}" />
+
+        <Style x:Key="ListViewContainerStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <!--<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border
+                            x:Name="Bd"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Item.MouseOver.Background}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Item.MouseOver.Border}" />
+                                <Setter Property="Foreground" Value="{DynamicResource AppWhite}" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Item.SelectedInactive.Background}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Item.SelectedInactive.Border}" />
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Item.SelectedActive.Background}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Item.SelectedActive.Border}" />
+                                <Setter Property="Foreground" Value="{DynamicResource AppWhite}" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Width="200">
         <StackPanel x:Name="UserMenuPopup">
-            <Polygon Points="15,0 30,10, 0,10"  Margin="72 0 10 0">
+            <Polygon Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Points="105,0 90,10 0,10 0,150 200,150 200,10 120,10">
+
+                <Polygon.Effect>
+                    <DropShadowEffect
+                        BlurRadius="5"
+                        Direction="0"
+                        RenderingBias="Quality"
+                        ShadowDepth="0"
+                        Color="{DynamicResource MahApps.Colors.Gray.SemiTransparent}" />
+                </Polygon.Effect>
+            </Polygon>
+
+            <!--<Polygon
+                Margin="95,0,10,0"
+                Opacity="1"
+                Points="15,0 30,10, 0,10">
                 <Polygon.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#e1e3e1"/>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="{DynamicResource MahApps.Colors.Accent}" />
                     </LinearGradientBrush>
                 </Polygon.Fill>
                 <Polygon.Effect>
-                    <DropShadowEffect BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1" Color="#FFBBBBBB"/>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="0"
+                        RenderingBias="Quality"
+                        ShadowDepth="1"
+                        Color="{DynamicResource MahApps.Colors.Accent}" />
                 </Polygon.Effect>
             </Polygon>
-            <Rectangle Height="115" 
-                       VerticalAlignment="Top" 
-                       RadiusX="20" 
-                       RadiusY="10" 
-                       Margin="10 0 0 0">
+            <Rectangle
+                Height="215"
+                Margin="0,0,0,0"
+                VerticalAlignment="Top"
+                Fill="{DynamicResource MahApps.Brushes.Accent}"
+                Opacity="1"
+                RadiusX="10"
+                RadiusY="10">
 
-                <Rectangle.Fill>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#e1e3e1"/>
-                        <GradientStop Color="#dcdedc" Offset="1"/>
-                        <GradientStop Color="#ebebeb" Offset="0.546"/>
-                    </LinearGradientBrush>
-                </Rectangle.Fill>
                 <Rectangle.Effect>
-                    <DropShadowEffect BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1" Color="#FFBBBBBB"/>
+                    <DropShadowEffect
+                        BlurRadius="20"
+                        Direction="0"
+                        RenderingBias="Quality"
+                        ShadowDepth="1"
+                        Color="{DynamicResource MahApps.Colors.Accent2}" />
                 </Rectangle.Effect>
-            </Rectangle>
+            </Rectangle>-->
         </StackPanel>
-        <StackPanel  Margin="20 15 0 0">
-            <Grid Margin="0 20 10 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <StackPanel Margin="0,20,0,0">
+
+            <ListView Style="{StaticResource MenuCotainer}">
+                <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="AddressCardRegular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Manage Account" />
+                    </StackPanel>
+                    <ListViewItem.InputBindings>
+                        <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
+                    </ListViewItem.InputBindings>
+                </ListViewItem>
+
+                <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="CogsSolid" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Settings" />
+                    </StackPanel>
+                    <ListViewItem.InputBindings>
+                        <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick" />
+                    </ListViewItem.InputBindings>
+                </ListViewItem>
+                <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="SignOutAltSolid" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Logout" />
+                    </StackPanel>
+                    <ListViewItem.InputBindings>
+                        <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
+                    </ListViewItem.InputBindings>
+                </ListViewItem>
+
+            </ListView>
 
 
-                <Image Source="{iconPacks:FontAwesomeImage Kind=BookDeadSolid, Brush=Black}" 
-                   Grid.Row="0" 
-                   Grid.Column="0"
-                   Width="16"
-                   Height="16"/>
-                <Label Content="Manage account" 
-                       Grid.Row="0" 
-                       Grid.Column="1" 
-                       Margin="0 0 0 0"
-                       >
-                    <Label.InputBindings>
-                        <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick"/>
-                    </Label.InputBindings>
-                </Label>
 
-                <Border BorderThickness="0 0 0 1" BorderBrush="Red"/>
-                <Border BorderThickness="0 0 0 1" BorderBrush="Red" Grid.Column="1" />
-
-                <Image Source="{iconPacks:BootstrapIconsImage Kind=Gear, Brush=Black}" 
-                   Grid.Row="1" 
-                   Grid.Column="0"
-                   Width="16"
-                   Height="16"/>
-                <Label Content="Setting" 
-                       Grid.Row="1" 
-                       Grid.Column="1" 
-                       Margin="0 0 0 0"
-                       >
-                    <Label.InputBindings>
-                        <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick"/>
-                    </Label.InputBindings>
-                </Label>
-
-                <Image Source="{iconPacks:FontAwesomeImage Kind=AmazonPayBrands, Brush=Red}" 
-                   Grid.Row="2" 
-                   Grid.Column="0"
-                   Width="16"
-                   Height="16"                   
-                   />
-
-                <Label Content="Logout" Grid.Row="2" Grid.Column="1" x:Name="abc" Style="{StaticResource MouseOverForeGround}">
-                </Label>
-
-            </Grid>
         </StackPanel>
+
     </Grid>
+
+
 </UserControl>

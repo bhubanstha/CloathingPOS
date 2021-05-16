@@ -17,7 +17,7 @@
     Width="800"
     Height="450"
     MinWidth="800"
-    mah:DialogParticipation.Register="{Binding}"
+    GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon.png"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
@@ -197,6 +197,12 @@
                 <Setter Property="ShowSelectionIndicator" Value="True" />
             </Style>
 
+            <LinearGradientBrush x:Key="AccentBackgroundTest" StartPoint="1,1" EndPoint="0,0">
+                <GradientStop Offset="0.00" Color="{DynamicResource MahApps.Colors.Accent}" />
+                <GradientStop Offset="0.25" Color="{DynamicResource MahApps.Colors.Accent2}" />
+                <GradientStop Offset="0.50" Color="{DynamicResource MahApps.Colors.Accent3}" />
+                <GradientStop Offset="0.75" Color="{DynamicResource MahApps.Colors.Accent4}" />
+            </LinearGradientBrush>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -219,7 +225,7 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button
-                Command="{Binding TestCommand}"
+                Command="{Binding UserMenuCommand}"
                 CommandParameter="{Binding ElementName=UMenuPopup}"
                 Content="{Binding User.DisplayName}">
                 <Button.ContentTemplate>
@@ -254,17 +260,29 @@
     <Canvas
         x:Name="container"
         Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}"
-        Background="{DynamicResource AccentBackground}">
+        Background="{DynamicResource AccentBackgroundTest}">
         <Grid
             Canvas.Top="2"
-            Canvas.Right="80"
-            Panel.ZIndex="1">
-            <views:UserMenuPopupControl
+            Canvas.Right="267"
+            Panel.ZIndex="1"
+            Opacity="1">
+            <Popup
+                x:Name="UMenuPopup"
+                AllowsTransparency="True"
+                IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                StaysOpen="False">
+                <views:UserMenuPopupControl />
+            </Popup>
+            <!--<views:UserMenuPopupControl
                 x:Name="UMenuPopup"
                 Margin="100,0,0,0"
                 HorizontalAlignment="Right"
-                Visibility="Hidden" />
+                Visibility="Hidden" />-->
         </Grid>
+        <!--
+            Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
+            Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
+        -->
         <ScrollViewer
             x:Name="PrimaryScrollViewer"
             Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"

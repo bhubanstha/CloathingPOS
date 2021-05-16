@@ -188,8 +188,16 @@ namespace POSSystem.UI.ViewModel
         private void LoadAllUsers()
         {
             UserBO userBO = new UserBO();
-            List<User> _user = userBO.GetAllUser();
-            UsersList = new ObservableCollection<User>(_user);
+            List<User> _users = userBO.GetAllUser();
+            UsersList = new ObservableCollection<User>();
+            for (int i = 0; i < 20; i++)
+            {
+                foreach (User u in _users)
+                {
+                    UsersList.Add(u);
+                }
+            }
+           
         }
 
         private void ClearAll()

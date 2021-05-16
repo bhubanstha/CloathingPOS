@@ -49,13 +49,13 @@ namespace POSSystem.UI.ViewModel
             List<Inventory> items = _inventoryBo.GetAllActiveProducts();
             
             Inventory = new ObservableCollection<Inventory>();
-            //for (int i = 0; i < 50; i++)
-            //{
+            for (int i = 0; i < 50; i++)
+            {
                 foreach (Inventory item in items)
                 {
                     Inventory.Add(item);
                 }
-            //}
+            }
         }
     }
 }

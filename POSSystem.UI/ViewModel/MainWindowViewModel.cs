@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Shapes;
 
@@ -22,80 +23,77 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
         public IDialogCoordinator _dialogCoordinator;
-        private UserMenuPopupControl _popuMenu;
-        public ICommand TestCommand { get; }
+        private LoginWindow _loginWindow;
+
+        public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
         public ICommand SettingsCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public MetroWindow Window { get; set; }
         public Flyout SettingFlyout { get; set; }
         public User User { get; set; }
 
-        private Visibility _userManuVisibility = Visibility.Hidden;
 
-        public Visibility UserMenuVisibility
+        private bool _isUserMenuVisible = false;
+
+        public bool IsUserMenuVisible
         {
-            get { return _userManuVisibility; }
-            set { 
-                _userManuVisibility = value;
+            get { return _isUserMenuVisible ; }
+            set { _isUserMenuVisible  = value;
                 OnPropertyChanged();
             }
         }
 
+
         public MainWindowViewModel(ICacheService cacheService, 
             IMessageDialogService messageDialogService,
-            IDialogCoordinator dialogCoordinator)
+            IDialogCoordinator dialogCoordinator,
+            LoginWindow loginWindow)
         {
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
             _dialogCoordinator = dialogCoordinator;
+            _loginWindow = loginWindow;
             User = cacheService.ReadCache<User>("LoginUser");
-            TestCommand = new DelegateCommand<UserMenuPopupControl>(OnLoginExecute, OnLoginCanExecute);
-            ManageAccount = new DelegateCommand(OnManageAccountExecute, OnManageAccountCanExecute);
-            SettingsCommand = new DelegateCommand(OnSettingsCommandExecute, OnSettingsCommandCanExecute);
+            UserMenuCommand = new DelegateCommand(OnUserMenuClick);
+            ManageAccount = new DelegateCommand(OnManageAccountExecute);
+            SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
+            LogoutCommand = new DelegateCommand(OnUserLogout);
+        }
+
+        private void OnUserLogout()
+        {
+            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow = _loginWindow;
+            Application.Current.MainWindow.Show();
         }
 
         private void OnSettingsCommandExecute()
         {
             Flyout f = StaticContainer.SettingFlyout;
             f.IsOpen = !f.IsOpen;
-            //this.SettingFlyout.IsOpen = !SettingFlyout.IsOpen;
+            ManageMenuVisibility();
         }
 
-        private bool OnSettingsCommandCanExecute()
-        {
-            return true;
-        }
 
         private void OnManageAccountExecute()
         {
-            
-            _dialogCoordinator.ShowMessageAsync(this, "This is title", "This is message", MessageDialogStyle.Affirmative);
-            _messageDialogService.ShowDialog("Manage account clicked", Window);
+
+            Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
+            //_messageDialogService.ShowDialog("Manage account clicked", Window);
             ManageMenuVisibility(); 
         }
 
-        private bool OnManageAccountCanExecute()
-        {
-            return true;
-        }
 
-        private void OnLoginExecute(UserMenuPopupControl UserMenuPopup)
+        private void OnUserMenuClick()
         {
-            _popuMenu = UserMenuPopup;
             ManageMenuVisibility();
-            //_messageDialogService.ShowDialog(UserMenuVisibility.ToString(), Window);
-        }
-
-        private bool OnLoginCanExecute(UserMenuPopupControl UserMenuPopup)
-        {
-            return true;
         }
 
         private void ManageMenuVisibility()
         {
-            UserMenuVisibility = UserMenuVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            _popuMenu.Visibility = UserMenuVisibility;
+            IsUserMenuVisible = !_isUserMenuVisible ;
         }
     }
 }
