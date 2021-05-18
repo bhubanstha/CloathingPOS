@@ -23,7 +23,7 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class ForgetPasswordView : UserControl
     {
-        
+
         public bool ShowBackButton { get; set; }
 
 
@@ -31,7 +31,7 @@ namespace POSSystem.UI.Views
         {
             InitializeComponent();
             this.Loaded += ForgetPasswordView_Loaded;
-           
+
         }
 
         private void ForgetPasswordView_Loaded(object sender, RoutedEventArgs e)
@@ -53,12 +53,14 @@ namespace POSSystem.UI.Views
         {
             try
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Back to Login",
-                    Message = "Redirecting to Login windows",
-                    Type = NotificationType.Information
-                });
+
+                //StaticContainer.NotificationManager.Show(new NotificationContent
+                //{
+                //    Title = "Back to Login",
+                //    Message = "Redirecting to Login windows",
+                //    Type = NotificationType.Information
+                //});
+
                 LoginWindow loginWindow = StaticContainer.Container.Resolve<LoginWindow>();
                 Application.Current.MainWindow = loginWindow;
 

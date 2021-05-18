@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,9 @@ namespace POSSystem.UI.Views
             _viewModel.Window = this;
             DataContext = _viewModel;
 
-            Loaded += LoginWindow_Loaded;
 
         }
 
-        private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

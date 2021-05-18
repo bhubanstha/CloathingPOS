@@ -32,7 +32,7 @@ namespace POSSystem.UI
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
-
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             ApplyThemeConfig();
             window.Show();
 
