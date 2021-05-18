@@ -268,17 +268,13 @@
             Panel.ZIndex="1"
             Opacity="1">
             <Popup
+                
                 x:Name="UMenuPopup"
                 AllowsTransparency="True"
                 IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 StaysOpen="False">
                 <views:UserMenuPopupControl />
             </Popup>
-            <!--<views:UserMenuPopupControl
-                x:Name="UMenuPopup"
-                Margin="100,0,0,0"
-                HorizontalAlignment="Right"
-                Visibility="Hidden" />-->
         </Grid>
         <!--
             Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
@@ -342,6 +338,11 @@
                             <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ChartBox}" Label="Graphs">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:GraphView />
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FaceProfile}" Label="Profile" x:Name="menuUserProfile" IsVisible="False">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:UserProfileView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
                         </mah:HamburgerMenuItemCollection>

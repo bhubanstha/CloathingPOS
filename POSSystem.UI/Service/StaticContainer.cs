@@ -32,7 +32,7 @@ namespace POSSystem.UI.Service
         public static CultureInfo CultureInfo { get; set; }
         public static NotificationManager NotificationManager { get; set; }
         public static string SettingFile { get; set; }
-
+        public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         static StaticContainer()
         {
             DialogSettings = new MetroDialogSettings

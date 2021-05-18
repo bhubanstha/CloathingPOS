@@ -7,9 +7,11 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    d:DesignHeight="550"
     d:DesignWidth="800"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Width="210"
+    Height="400">
     <UserControl.Resources>
 
         <Style x:Key="MenuCotainer" TargetType="ListView">
@@ -86,58 +88,21 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Width="200">
+    <Grid Width="205" Margin="2">
         <StackPanel x:Name="UserMenuPopup">
-            <Polygon Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Points="105,0 90,10 0,10 0,150 200,150 200,10 120,10">
+            <Polygon Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}" Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Points="105,0 90,10 0,10 0,165 200,165 200,10 120,10">
 
                 <Polygon.Effect>
                     <DropShadowEffect
                         BlurRadius="5"
-                        Direction="0"
+                        Direction="1"
                         RenderingBias="Quality"
                         ShadowDepth="0"
-                        Color="{DynamicResource MahApps.Colors.Gray.SemiTransparent}" />
-                </Polygon.Effect>
-            </Polygon>
-
-            <!--<Polygon
-                Margin="95,0,10,0"
-                Opacity="1"
-                Points="15,0 30,10, 0,10">
-                <Polygon.Fill>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="{DynamicResource MahApps.Colors.Accent}" />
-                    </LinearGradientBrush>
-                </Polygon.Fill>
-                <Polygon.Effect>
-                    <DropShadowEffect
-                        BlurRadius="15"
-                        Direction="0"
-                        RenderingBias="Quality"
-                        ShadowDepth="1"
                         Color="{DynamicResource MahApps.Colors.Accent}" />
                 </Polygon.Effect>
             </Polygon>
-            <Rectangle
-                Height="215"
-                Margin="0,0,0,0"
-                VerticalAlignment="Top"
-                Fill="{DynamicResource MahApps.Brushes.Accent}"
-                Opacity="1"
-                RadiusX="10"
-                RadiusY="10">
-
-                <Rectangle.Effect>
-                    <DropShadowEffect
-                        BlurRadius="20"
-                        Direction="0"
-                        RenderingBias="Quality"
-                        ShadowDepth="1"
-                        Color="{DynamicResource MahApps.Colors.Accent2}" />
-                </Rectangle.Effect>
-            </Rectangle>-->
         </StackPanel>
-        <StackPanel Margin="0,20,0,0">
+        <StackPanel Margin="-2,20,3,5">
 
             <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
@@ -160,7 +125,11 @@
                         <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
+                
 
+            </ListView>
+            <Separator Margin="10"/>
+            <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome
@@ -201,13 +170,8 @@
                         <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
-
             </ListView>
-
-
-
         </StackPanel>
-
     </Grid>
 
 

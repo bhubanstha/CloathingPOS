@@ -38,13 +38,18 @@ namespace POSSystem.UI
             _model.SettingFlyout = this.SettingsFlyout;
             _model.LoginWindow = loginWindow;
             DialogCoordinator = _model._dialogCoordinator;
-            DataContext = _model;
+            DataContext = _model;            
+            this.Loaded += MainWindow_Loaded;
+            this.Closed += MainWindow_Closed;
+
+        }
+
+        private void GlobalElements()
+        {
             StaticContainer.SettingFlyout = this.SettingsFlyout;// container.Resolve<SettingView>();
             StaticContainer.AddCategoryFlyout = this.CategoryFlyout;
             StaticContainer.DialogCoordinator = this.DialogCoordinator;
-            this.Loaded += MainWindow_Loaded;
-            this.Closed += MainWindow_Closed;   
-
+            StaticContainer.UIHamburgerMenuControl = this.HamburgerMenuControl;
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -58,12 +63,12 @@ namespace POSSystem.UI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            GlobalElements();
             double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
             _model.PopupRightMargin =  265 + additionalWidth;
             System.Drawing.Size s = new System.Drawing.Size();
             s.Width = (int)container.RenderSize.Width;
             s.Height = (int)container.RenderSize.Height;
-
             Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
         }
 
@@ -121,5 +126,6 @@ namespace POSSystem.UI
             });
             
         }
+
     }
 }
