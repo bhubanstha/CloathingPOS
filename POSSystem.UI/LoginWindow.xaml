@@ -24,15 +24,16 @@
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
 
-    <StackPanel behaviors:KeyboardFocus.On="{Binding ElementName=txtUserName}" Background="#f0f2f1">
+    <StackPanel Background="#f5f5f5">
         <TextBlock
             Margin="0,20,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="30"
             FontWeight="Bold"
-            Foreground="Black"
+            Foreground="{DynamicResource MahApps.Brushes.Accent}"
             Text="POS Login" />
+            
         <Grid
             Margin="30,10,30,20"
             xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
@@ -57,7 +58,7 @@
                 </Image.Clip>
             </Image>
 
-            <Grid Grid.Row="2" Margin="10">
+            <Grid Grid.Row="2" Margin="10" behaviors:KeyboardFocus.On="{Binding ElementName=txtUserName}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -131,6 +132,8 @@
                 </TextBlock>
             </Grid>
         </Grid>
+        
+        
 
         <StackPanel Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
             <Grid Margin="5" ShowGridLines="True">

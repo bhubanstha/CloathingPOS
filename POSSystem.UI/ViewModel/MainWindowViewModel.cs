@@ -74,8 +74,8 @@ namespace POSSystem.UI.ViewModel
         private void OnUserLogout()
         {
             IsLogout = true;
-            Application.Current.MainWindow.Close();
             Application.Current.MainWindow = LoginWindow;
+            Window.Close();            
             Application.Current.MainWindow.Show();
         }
 
