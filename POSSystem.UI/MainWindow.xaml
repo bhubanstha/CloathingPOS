@@ -225,6 +225,7 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button
+                x:Name="btnCmdUserName"
                 Command="{Binding UserMenuCommand}"
                 CommandParameter="{Binding ElementName=UMenuPopup}"
                 Content="{Binding User.DisplayName}">
@@ -263,7 +264,7 @@
         Background="{DynamicResource AccentBackgroundTest}">
         <Grid
             Canvas.Top="2"
-            Canvas.Right="267"
+            Canvas.Right="{Binding PopupRightMargin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Panel.ZIndex="1"
             Opacity="1">
             <Popup

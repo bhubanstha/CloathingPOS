@@ -20,6 +20,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class MainWindowViewModel : NotifyPropertyChanged
     {
+        private double _popupRightMargin = 200;
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
         public IDialogCoordinator _dialogCoordinator;
@@ -33,6 +34,14 @@ namespace POSSystem.UI.ViewModel
         public MetroWindow Window { get; set; }
         public Flyout SettingFlyout { get; set; }
         public User User { get; set; }
+        public double PopupRightMargin {
+            get { return _popupRightMargin; }
+            set
+            {
+                _popupRightMargin = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         private bool _isUserMenuVisible = false;

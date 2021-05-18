@@ -60,8 +60,10 @@ namespace POSSystem.UI.ViewModel
                 
                 _cacheService.SetCache("LoginUser", u);
                 MainWindow newWindow = StaticContainer.Container.Resolve<MainWindow>();
+                Application.Current.MainWindow = newWindow;
                 Window.Close();
                 newWindow.Show();
+                               
                 StaticContainer.ThisApp.MainWindow = newWindow;
                
                 //_dialogService.ShowDialog("This is test", Window);
