@@ -37,5 +37,13 @@ namespace POSSystem.UI.Views
         private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
         {
         }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            ForgotPassword forgotPassword = new ForgotPassword();
+            Application.Current.MainWindow = forgotPassword;
+            this.Close();
+            forgotPassword.Show();
+        }
     }
 }

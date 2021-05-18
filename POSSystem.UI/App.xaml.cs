@@ -25,15 +25,14 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<MainWindow>();
+            var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
 
 
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
-            StaticContainer.SettingFlyout = window.SettingsFlyout;// container.Resolve<SettingView>();
-            StaticContainer.AddCategoryFlyout = window.CategoryFlyout;
-            StaticContainer.DialogCoordinator = window.DialogCoordinator;
+            StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
+
             ApplyThemeConfig();
             window.Show();
 

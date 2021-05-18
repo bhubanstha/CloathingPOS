@@ -57,11 +57,13 @@ namespace POSSystem.UI.ViewModel
                 .FirstOrDefault();
             if (u != null)
             {
+                
                 _cacheService.SetCache("LoginUser", u);
                 MainWindow newWindow = StaticContainer.Container.Resolve<MainWindow>();
+                Window.Close();
                 newWindow.Show();
                 StaticContainer.ThisApp.MainWindow = newWindow;
-                Window.Close();
+               
                 //_dialogService.ShowDialog("This is test", Window);
             }
         }

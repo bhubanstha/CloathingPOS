@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,7 +30,7 @@ namespace POSSystem.UI.Service
 
         public static MetroDialogSettings DialogSettings{get ; private set;}
         public static CultureInfo CultureInfo { get; set; }
-
+        public static NotificationManager NotificationManager { get; set; }
         public static string SettingFile { get; set; }
 
         static StaticContainer()

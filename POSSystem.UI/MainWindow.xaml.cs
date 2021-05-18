@@ -39,6 +39,9 @@ namespace POSSystem.UI
             _model.LoginWindow = loginWindow;
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;
+            StaticContainer.SettingFlyout = this.SettingsFlyout;// container.Resolve<SettingView>();
+            StaticContainer.AddCategoryFlyout = this.CategoryFlyout;
+            StaticContainer.DialogCoordinator = this.DialogCoordinator;
             this.Loaded += MainWindow_Loaded;
             this.Closed += MainWindow_Closed;   
 
