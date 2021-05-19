@@ -446,6 +446,9 @@
     <Compile Include="Views\Tiles\ServiceTile.xaml.cs">
       <DependentUpon>ServiceTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Tiles\UserStatTitle.xaml.cs">
+      <DependentUpon>UserStatTitle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserMenuPopupControl.xaml.cs">
       <DependentUpon>UserMenuPopupControl.xaml</DependentUpon>
     </Compile>
@@ -560,6 +563,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Tiles\ServiceTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tiles\UserStatTitle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

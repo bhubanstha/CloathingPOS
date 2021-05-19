@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="POSSystem.UI.Views.Tiles.UserStatTitle"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:POSSystem.UI.Views.Tiles"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
+    d:DesignHeight="100"
+    d:DesignWidth="170"
+    mc:Ignorable="d">
+    <Grid Background="{DynamicResource AccentBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            x:Name="txtTotalCount"
+            Grid.Row="0"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            xf:Animations.Primary="{StaticResource Grow}"
+            FontSize="40"
+            FontWeight="Bold">
+            500
+        </TextBlock>
+        <TextBlock
+            x:Name="txtStatName"
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            FontSize="14"
+            FontWeight="Bold">
+            Total Sales
+        </TextBlock>
+        <iconPacks:PackIconBootstrapIcons
+            x:Name="statIcon"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Width="60"
+            Height="60"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Kind="Cart" />
+
+    </Grid>
+</UserControl>

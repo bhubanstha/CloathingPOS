@@ -91,7 +91,7 @@ namespace POSSystem.UI.ViewModel
         {
             StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[6];
             StaticContainer.UIHamburgerMenuControl.SelectedIndex = -1;
-            Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
+            //Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
             //_messageDialogService.ShowDialog("Manage account clicked", Window);
             ManageMenuVisibility(); 
         }

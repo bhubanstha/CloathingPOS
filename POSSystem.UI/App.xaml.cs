@@ -72,12 +72,16 @@ namespace POSSystem.UI
                     while (!reader.EndOfStream)
                     {
                         string[] keyValue = reader.ReadLine().Split(new char[] { ':' });
-                        this.Properties[keyValue[0]] = keyValue[1];
+                        if (keyValue.Length > 1)
+                        {
+                            this.Properties[keyValue[0]] = keyValue[1];
+                        }
                     }
                 }
             }
             catch (FileNotFoundException ex)
             {
+                throw ex;
                 // Handle when file is not found in isolated storage:
                 // * When the first application session
                 // * When file has been deleted
