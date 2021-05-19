@@ -118,7 +118,6 @@
                     Margin="0,5,0,5"
                     HorizontalAlignment="Left"
                     Command="{Binding LoginCommand}"
-                    CommandParameter="{Binding ElementName=txtPassword}"
                     IsDefault="True"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}">
 

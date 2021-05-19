@@ -30,8 +30,6 @@ namespace POSSystem.UI.Views
             _viewModel = viewModel;
             _viewModel.Window = this;
             DataContext = _viewModel;
-
-
         }
 
 

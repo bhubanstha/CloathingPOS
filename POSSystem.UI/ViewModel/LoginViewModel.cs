@@ -55,29 +55,38 @@ namespace POSSystem.UI.ViewModel
                 {
                     _hasChanges = value;
                     OnPropertyChanged();
-                    //((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
+                    ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
                 }
             }
         }
 
         public LoginViewModel( ICacheService cacheService)
         {
-            LoginCommand = new DelegateCommand<object>(OnLoginExecute, OnLoginCanExecute);
+            
             _genericDataRepository = new DataRepository<User>(new POSDataContext());
             _bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
             _cacheService = cacheService;
             LoginUser = new LoginWrapper(new LoginModel());
-            LoginUser.Password = "abc";
+            LoginUser.UserName = "";
+            LoginUser.PropertyChanged += LoginUser_PropertyChanged;
+            LoginCommand = new DelegateCommand(OnLoginExecute, OnLoginCanExecute);
         }
 
-        private void OnLoginExecute(object parameter)
+        private void LoginUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var passwordBox = parameter as PasswordBox;
-            var password = passwordBox.Password;
+            ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
+            //if(e.PropertyName == nameof(LoginUser.HasErrors))
+            //{
+            //    ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
+            //}
+        }
+
+        private void OnLoginExecute()
+        {
             IEnumerable<User> users = _genericDataRepository.GetAll().ToList();
             User u = users
                 .Where(f => CompareString(f.UserName, LoginUser.UserName)
-                        && f.Password == _bouncyCastleEncryption.EncryptAsAsync(password).Result)
+                        && f.Password == _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result)
                 .FirstOrDefault();
             if (u != null)
             {
@@ -89,14 +98,12 @@ namespace POSSystem.UI.ViewModel
                 newWindow.Show();
                                
                 StaticContainer.ThisApp.MainWindow = newWindow;
-               
-                //_dialogService.ShowDialog("This is test", Window);
             }
         }
 
-        private bool OnLoginCanExecute(object parameter)
+        private bool OnLoginCanExecute()
         {
-            return true;
+            return !string.IsNullOrEmpty(LoginUser.UserName) && !string.IsNullOrEmpty(LoginUser.Password);
         }
 
         

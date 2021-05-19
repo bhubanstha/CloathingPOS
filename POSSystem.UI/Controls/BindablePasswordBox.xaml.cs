@@ -70,5 +70,15 @@ namespace POSSystem.UI.Controls
             }
             _isPasswordChanging = false;
         }
+
+        private void txtConfirmPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

@@ -98,7 +98,17 @@
             Style="{StaticResource row.option.icon}" />
     </DataTemplate>
 
-
+    <Style x:Key="Profile.IsAdmin" TargetType="iconPacks:PackIconBootstrapIcons">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsAdmin}" Value="True">
+                <Setter Property="Kind" Value="Check2Circle"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsAdmin}" Value="False">
+                <Setter Property="Kind" Value="X"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
 
     <Style
         x:Key="col.Boolean.IsAdmin"
