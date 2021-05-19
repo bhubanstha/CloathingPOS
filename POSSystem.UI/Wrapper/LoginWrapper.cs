@@ -1,15 +1,15 @@
 ﻿using POS.Model;
+using POSSystem.UI.UIModel;
 using System;
 
 namespace POSSystem.UI.Wrapper
 {
-    public class LoginWrapper : WrapperBase<User>
+    public class LoginWrapper : WrapperBase<LoginModel>
     {
-        public LoginWrapper(User obj) : base(obj)
+        public LoginWrapper(LoginModel obj) : base(obj)
         {
         }
 
-        public Int64 Id { get { return Model.Id; } }
 
         public string UserName 
         { 
@@ -17,48 +17,18 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value);}
         }
 
-        public string DisplayName
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-
         public string Password
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
 
-        public bool IsAdmin
+        public bool RememberMe
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
-        public bool IsActive
-        {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
-        }
-
-        public bool PromptForPasswordReset
-        {
-            get { return GetValue<bool>(); }
-            set { SetValue(value); }
-        }
-
-        public DateTime CreatedDate
-        {
-            get { return GetValue<DateTime>(); }
-            set { SetValue(value); }
-        }
-
-        public DateTime? DeactivationDate
-        {
-            get { return GetValue<DateTime?>(); }
-            set { SetValue(value); }
-        }
 
     }
 }
