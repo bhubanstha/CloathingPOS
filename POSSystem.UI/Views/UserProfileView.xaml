@@ -15,7 +15,7 @@
     <StackPanel>
         <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
 
-        <Grid Margin="{DynamicResource ControlMargin}" ShowGridLines="True">
+        <Grid Margin="{DynamicResource ControlMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition MaxHeight="100" />
                 <RowDefinition MaxHeight="20" />
