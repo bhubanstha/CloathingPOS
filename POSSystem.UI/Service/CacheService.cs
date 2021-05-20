@@ -35,10 +35,11 @@ namespace POSSystem.UI.Service
         public void SetCache<TValue>(string cacheKey, TValue value)
         {
             TValue val = ReadCache<TValue>(cacheKey);
-            if (val == null)
+            if(val != null)
             {
-                cache.Set(cacheKey, value, policy);
+                cache.Remove(cacheKey);
             }
+            cache.Set(cacheKey, value, policy);
         }
 
         public void RemoveCache(string cacheKey)

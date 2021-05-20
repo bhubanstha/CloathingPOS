@@ -395,12 +395,14 @@
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
+    <Compile Include="UIModel\ForgetPasswordModel.cs" />
     <Compile Include="UIModel\LoginModel.cs" />
     <Compile Include="ViewModel\AnimationViewModelBase.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.linearbarseries.cs" />
     <Compile Include="ViewModel\Extensions\AnimationExtensions.lineseries.cs" />
+    <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
@@ -460,6 +462,7 @@
     <Compile Include="Views\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
     <Compile Include="Wrapper\LoginWrapper.cs" />
     <Compile Include="Wrapper\CreateUserWrapper.cs" />
     <Compile Include="Wrapper\WrapperBase.cs" />

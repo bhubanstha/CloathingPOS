@@ -50,8 +50,8 @@
                 .<Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 is design to remove your day to day manual work in stores.<Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 is best suitable for small stores without any branch.
-                Though<Run Text="POS {Binding AppName}" />
-                can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for.<LineBreak />
+                Though<Run Text="{Binding AppName}" />
+                can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for. In such case please reach out to me in given contact information.<LineBreak />
                 <LineBreak />
                 Some Features of<Run Text="{Binding AppName}" />
                 :<LineBreak />
@@ -130,7 +130,7 @@
                 </Hyperlink>
             </TextBlock>
         </Grid>
-        <Grid Margin="0,0,0,0">
+        <Grid Margin="0,0,25,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -140,44 +140,60 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <tiles:ServiceTile
+            <Border
                 Grid.Row="0"
                 Grid.Column="0"
                 Margin="0,0,5,5"
-                BorderBrush="{StaticResource RedNegative}"
-                BorderThickness="2"
-                Description=" A business's online presence, regardless of industry, can have a massive impact on its success. Having a strong online presence, particularly a website, can be make or break for generating more revenue. Without a website, people may question your legitimacy as a business. Having a website is an opportunity to make a great first impression and give people comfort that you're a real business. We help you to design greate website that align with your business values and represent your brand to the world."
-                ImageSource="/Image/webDesigning.png"
-                ServiceTitle="Website Designing" />
+                BorderBrush="{DynamicResource RedNegative}"
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description=" A business's online presence, regardless of industry, can have a massive impact on its success. Having a strong online presence, particularly a website, can be make or break for generating more revenue. Without a website, people may question your legitimacy as a business. Having a website is an opportunity to make a great first impression and give people comfort that you're a real business. We help you to design greate website that align with your business values and represent your brand to the world."
+                    ImageSource="/Image/webDesigning.png"
+                    ServiceTitle="Website Designing" />
+            </Border>
 
-            <tiles:ServiceTile
+
+            <Border
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="5,0,0,5"
                 BorderBrush="{StaticResource HighlightBlue}"
-                BorderThickness="2"
-                Description=""
-                ImageSource="/Image/webApp.png"
-                ServiceTitle="Web Application Development" />
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="Web applications have become an essential component of business in today's world. By using the web applications, businesses can now develop and become simpler, and achieve its objectives much faster. These applications can help target numerous clientele and customers at a time. It is no longer possible for the businesses to see a growth in their market share unless they have a proper web application. Web applications can play a crucial role in the branding process. With their help, it is easier to maintain a proper communication channel between potential customers and the business organization."
+                    ImageSource="/Image/webApp.png"
+                    ServiceTitle="Web Application Development" />
+            </Border>
 
-            <tiles:ServiceTile
+
+            <Border
                 Grid.Row="1"
                 Grid.Column="0"
                 Margin="0,0,5,5"
                 BorderBrush="{StaticResource GreenPositive}"
-                BorderThickness="2"
-                Description=""
-                ImageSource="/Image/mobileApp.jpg"
-                ServiceTitle="Mobile Application Development" />
-            <tiles:ServiceTile
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="As consumer behaviour continues to evolve, businesses need to adapt their strategy to be 'where their customers are'. As a result, companies are moving rapidly toward making mobile apps commonplace as business tools and assets. One of the key questions in business is 'how you can give your brand a competitive edge'. The answer; mobile apps. It is important to understand that a native app isn't just a mobile version of your website but rather an engaging and experience-driven environment crucial for creating a cohesive customer journey. A mobile app can be used to build a strong mobile presence, that results in far better engagement for your investment."
+                    ImageSource="/Image/mobileApp.jpg"
+                    ServiceTitle="Mobile Application Development" />
+            </Border>
+
+            <Border
                 Grid.Row="1"
                 Grid.Column="2"
                 Margin="5,0,0,5"
                 BorderBrush="{StaticResource HighlightYellowOccured}"
-                BorderThickness="2"
-                Description=""
-                ImageSource="/Image/desktopApp.jpg"
-                ServiceTitle="Desktop Application Development" />
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="Creating a cohesive working environment for employees is one of the main requirements of business running. The onus is obviously on the management to generate a dynamic environment for their employees.Remember, this is a very clever approach in eliciting high performance from employees. Well-designed applications that improve enterprise co-ordination are the best tools that trigger quick completion of your projects.In addition to high levels of communication amongst members of different teams, the offline capabilities of these applications make sure that no updates go unaccounted for even in non-web scenarios."
+                    ImageSource="/Image/desktopApp.jpg"
+                    ServiceTitle="Desktop Application Development" />
+            </Border>
+
         </Grid>
     </StackPanel>
 </UserControl>

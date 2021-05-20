@@ -58,5 +58,10 @@ namespace POS.BusinessRule
             string pwd = await bouncyCastleEncryption.EncryptAsAsync(password);
             return pwd;
         }
+
+        public User GetUserFromUserName(string userName)
+        {
+            return genericDataRepository.GetAll().Where(x => x.UserName == userName).FirstOrDefault();
+        }
     }
 }

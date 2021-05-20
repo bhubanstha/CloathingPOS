@@ -30,8 +30,8 @@
         <StackPanel
             Grid.Row="0"
             VerticalAlignment="Bottom"
-            Background="Black"
-            Opacity="0.6">
+            Background="{DynamicResource MahApps.Brushes.SystemControlDisabledChromeDisabledLow}"
+            Opacity="0.85">
             <Label
                 x:Name="lblServiceTitle"
                 Height="30"

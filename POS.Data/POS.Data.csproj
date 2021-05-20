@@ -91,6 +91,10 @@
     <Compile Include="Migrations\202105121431076_modelchanges-annotation.designer.cs">
       <DependentUpon>202105121431076_modelchanges-annotation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105200627128_columnadded_inuser.cs" />
+    <Compile Include="Migrations\202105200627128_columnadded_inuser.designer.cs">
+      <DependentUpon>202105200627128_columnadded_inuser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105121431076_modelchanges-annotation.resx">
       <DependentUpon>202105121431076_modelchanges-annotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105200627128_columnadded_inuser.resx">
+      <DependentUpon>202105200627128_columnadded_inuser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

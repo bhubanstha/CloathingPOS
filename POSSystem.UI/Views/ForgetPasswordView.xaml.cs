@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Notifications.Wpf;
 using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,15 +24,27 @@ namespace POSSystem.UI.Views
     /// </summary>
     public partial class ForgetPasswordView : UserControl
     {
+        private bool _enableUserName = false;
 
+        public bool EnableUserName
+        {
+            get { return _enableUserName ; }
+            set { _enableUserName =  value; }
+        }
+
+
+        private ForgetPasswordViewModel _model;
         public bool ShowBackButton { get; set; }
 
 
         public ForgetPasswordView()
         {
             InitializeComponent();
+            ICacheService cacheService = StaticContainer.Container.Resolve<ICacheService>();
+            _model = new ForgetPasswordViewModel(cacheService);
+            _model.IsUserNameEditable = EnableUserName;
+            this.DataContext = _model;
             this.Loaded += ForgetPasswordView_Loaded;
-
         }
 
         private void ForgetPasswordView_Loaded(object sender, RoutedEventArgs e)

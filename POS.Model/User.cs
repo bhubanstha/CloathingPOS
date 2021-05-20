@@ -17,5 +17,7 @@ namespace POS.Model
 
         public DateTime CreatedDate { get; set; }
         public DateTime? DeactivationDate { get; set; }
+
+        public DateTime? LastPasswordChangeDate { get; set; }
     }
 }
