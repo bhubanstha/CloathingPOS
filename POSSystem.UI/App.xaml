@@ -16,15 +16,12 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
 
                 <ResourceDictionary Source="animations.xaml" />
-
                 <ResourceDictionary Source="Resources/Colors.xaml" />
-                <!--<ResourceDictionary Source="Resources/TextBox.xaml" />-->
-                <!--<ResourceDictionary Source="Resources/DataGrid.xaml"></ResourceDictionary>-->
                 <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml" />
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml" />
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml" />
                 <ResourceDictionary Source="Resources/AppValidation.xaml" />
-                <!--<ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>-->
+                <ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <Style
