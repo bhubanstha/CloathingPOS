@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro;
+using MahApps.Metro.Controls;
 
 namespace POSSystem.UI.Controls
 {
@@ -34,6 +36,40 @@ namespace POSSystem.UI.Controls
             DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox), 
                 new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, PasswordPropertyChanged, null, false,UpdateSourceTrigger.PropertyChanged));
 
+
+
+
+        public string WaterMarkText
+        {
+            get { return (string)GetValue(WaterMarkTextProperty); }
+            set { SetValue(WaterMarkTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WaterMark.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WaterMarkTextProperty =
+            DependencyProperty.Register("WaterMarkText", typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(WaterMarkPropertyChange));
+
+        public BindablePasswordBox()
+        {
+            InitializeComponent();
+        }
+
+
+        private static void WaterMarkPropertyChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if(d is BindablePasswordBox passwordBox)
+            {
+                passwordBox.UpdateWaterMark();
+            }
+        }
+
+        private void UpdateWaterMark()
+        {
+            txtPassword.SetValue(TextBoxHelper.WatermarkProperty, WaterMarkText);
+        }
+
+        
+
         private static void PasswordPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if(d is BindablePasswordBox passwordBox)
@@ -46,15 +82,12 @@ namespace POSSystem.UI.Controls
         {
             if (!_isPasswordChanging)
             {
+                
                 txtPassword.Password = Password;
             }
         }
 
-        public BindablePasswordBox()
-        {
-            InitializeComponent();
-        }
-
+        
         private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
             _isPasswordChanging = true;
