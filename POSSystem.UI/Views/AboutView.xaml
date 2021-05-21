@@ -8,14 +8,11 @@
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tiles="clr-namespace:POSSystem.UI.Views.Tiles"
-    xmlns:views="clr-namespace:POSSystem.UI.Views"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
         <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
-
-
         <Grid Margin="{StaticResource ControlMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -150,7 +147,7 @@
                 <tiles:ServiceTile
                     Description=" A business's online presence, regardless of industry, can have a massive impact on its success. Having a strong online presence, particularly a website, can be make or break for generating more revenue. Without a website, people may question your legitimacy as a business. Having a website is an opportunity to make a great first impression and give people comfort that you're a real business. We help you to design greate website that align with your business values and represent your brand to the world."
                     ImageSource="/Image/webDesigning.png"
-                    ServiceTitle="Website Designing" />
+                    ServiceTitle="Website Designing  &amp; Hosting" />
             </Border>
 
 
