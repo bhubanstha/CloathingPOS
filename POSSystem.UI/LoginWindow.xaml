@@ -84,7 +84,6 @@
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter user name"
-                    SpellCheck.IsEnabled="True"
                     Style="{DynamicResource App.TextBox.Validation}"
                     Text="{Binding LoginUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
