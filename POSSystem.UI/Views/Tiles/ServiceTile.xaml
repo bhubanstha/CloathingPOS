@@ -14,15 +14,6 @@
             <RowDefinition Height="150" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<StackPanel Grid.Row="0">
-
-            <StackPanel Grid.Row="1" Background="Black" Opacity="0.6" VerticalAlignment="Bottom" Height="30" Panel.ZIndex="1">
-                <Label HorizontalAlignment="Center" Opacity="1" Foreground="White" VerticalAlignment="Center" Height="30">
-                    <Bold>Web Site Designing</Bold>
-                </Label>
-            </StackPanel>
-            <Image Source="/Image/webDesigning.png" Width="250" Stretch="UniformToFill"/>
-        </StackPanel>-->
         <Image
             x:Name="imgServiceImage"
             Grid.Row="0"
