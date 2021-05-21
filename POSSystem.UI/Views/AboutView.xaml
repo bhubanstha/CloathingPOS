@@ -41,14 +41,14 @@
                 TextAlignment="Justify"
                 TextWrapping="WrapWithOverflow">
                 <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                system is a complete package to handle your<Bold>
-                    <Italic>User, Inventory and Sales</Italic>
+                system is a complete package to handle your <Bold>
+                    <Italic>User, Inventory and Sales.</Italic>
                 </Bold>
-                .<Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 is design to remove your day to day manual work in stores.<Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 is best suitable for small stores without any branch.
                 Though<Run Text="{Binding AppName}" />
-                can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for. In such case please reach out to me in given contact information.<LineBreak />
+                can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for. In such case please reach out to me through given contact information.<LineBreak />
                 <LineBreak />
                 Some Features of<Run Text="{Binding AppName}" />
                 :<LineBreak />
