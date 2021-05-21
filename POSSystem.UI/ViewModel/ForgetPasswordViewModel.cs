@@ -63,10 +63,17 @@ namespace POSSystem.UI.ViewModel
                    int i=  await userBO.UpdateUser(u);
                     if(i>0)
                     {
-                        _user.LastPasswordChangeDate = u.LastPasswordChangeDate;
-                        _cacheService.SetCache<User>("LoginUser", _user);
-                        CurrentUser.Password = string.Empty;
-                        CurrentUser.ConfirmPassword = string.Empty;
+                        if (_user != null)
+                        {
+                            _user.LastPasswordChangeDate = u.LastPasswordChangeDate;
+                            _cacheService.SetCache<User>("LoginUser", _user);
+                        }
+                        CurrentUser.Password = null;
+                        CurrentUser.ConfirmPassword = null;
+                        if(IsUserNameEditable)
+                        {
+                            CurrentUser.UserName = null;
+                        }
                         StaticContainer.NotificationManager.Show(new NotificationContent
                         {
                             Title="Password Changed",
