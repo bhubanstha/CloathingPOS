@@ -142,23 +142,23 @@
                 Grid.Row="6"
                 Grid.Column="1"
                 Width="150"
-                Margin="0,5,0,5"
+                Margin="0,5,0,15"
                 HorizontalAlignment="Left"
                 Command="{Binding CreateUserCommand}"
                 CommandParameter="{Binding ElementName=txtPassword}"
                 Content="{Binding ButtonText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
             <Button
                 Grid.Row="6"
                 Grid.Column="1"
                 Width="150"
-                Margin="160,5,0,5"
+                Margin="160,5,0,15"
                 HorizontalAlignment="Left"
                 Command="{Binding ResetUserCommand}"
                 CommandParameter="{Binding ElementName=txtPassword}"
                 Content="Reset"
-                Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
 
 
