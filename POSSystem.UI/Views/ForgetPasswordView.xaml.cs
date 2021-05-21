@@ -41,8 +41,7 @@ namespace POSSystem.UI.Views
         {
             InitializeComponent();
             ICacheService cacheService = StaticContainer.Container.Resolve<ICacheService>();
-            _model = new ForgetPasswordViewModel(cacheService);
-            _model.IsUserNameEditable = EnableUserName;
+            _model = new ForgetPasswordViewModel(cacheService);            
             this.DataContext = _model;
             this.Loaded += ForgetPasswordView_Loaded;
         }
@@ -50,6 +49,7 @@ namespace POSSystem.UI.Views
         private void ForgetPasswordView_Loaded(object sender, RoutedEventArgs e)
         {
             btnBackToLogin.Visibility = ShowBackButton ? Visibility.Visible : Visibility.Hidden;
+            _model.IsUserNameEditable = EnableUserName;
         }
 
         private void txtConfirmPassword_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
