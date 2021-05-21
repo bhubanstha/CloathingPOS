@@ -55,6 +55,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteCategoryCommand { get;  }
 
         public ICommand EditCategoryCommand { get; }
+        public ICommand ResetCommand { get; }
         public CategoryViewModel()
         {
             _window = Application.Current.MainWindow as MetroWindow;
@@ -62,6 +63,13 @@ namespace POSSystem.UI.ViewModel
             CreateCategoryCommand = new DelegateCommand(SaveCategory);
             DeleteCategoryCommand = new DelegateCommand<Category>(DeleteCategory);
             EditCategoryCommand = new DelegateCommand<Category>(EditCategory);
+            ResetCommand = new DelegateCommand(ResetEdit);
+        }
+
+        private void ResetEdit()
+        {
+            this.Name = "";
+            this.Id = 0;
         }
 
         private void EditCategory(Category obj)

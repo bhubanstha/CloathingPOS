@@ -5,32 +5,21 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-            xmlns:local="clr-namespace:POSSystem.UI.Views"
             xmlns:vm="clr-namespace:POSSystem.UI.ViewModel"
             xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
             xmlns:converter="clr-namespace:POSSystem.UI.Converter"
             xmlns:sys="clr-namespace:System;assembly=mscorlib"
             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-            CloseCommand="{Binding CloseCmd}"
             d:DesignHeight="450" d:DesignWidth="800"
             MinWidth="400"
             x:Name="AddCategoryFlyoutView"
-            Header="{Binding}"
             Position="Right"
-            Theme="Dark"            
+            Theme="Inverse"            
             mc:Ignorable="d">
     <mah:Flyout.Resources>
         <ResourceDictionary>
-            <ObjectDataProvider x:Key="FlyoutThemeEnumValues"
-                                MethodName="GetValues"
-                                ObjectType="{x:Type mah:FlyoutTheme}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="mah:FlyoutTheme" />
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
             <converter:GridIndexConverter x:Key="IndexConverter"/>
             <converter:FlyoutGridHightCalculator x:Key="GridHeightCalc"/>
-
             <sys:Int32 x:Key="GridHeight">500</sys:Int32>
         </ResourceDictionary>
         
@@ -144,18 +133,28 @@
                 <Button Content="Add Record"
                     Grid.Row="6"
                     Grid.Column="1"
-                    Width="150"
+                    Width="120"
                     Margin="0 5 0 5"
                     HorizontalAlignment="Left"
                     Command="{Binding CreateCategoryCommand}"
-                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" >
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" >
                 </Button>
+            <Button Content="Reset"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Width="50"
+                    Margin="0 5 0 5"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ResetCommand}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" >
+            </Button>
 
 
-            </Grid>
+        </Grid>
 
         <Separator Margin="0 10 0 15"></Separator>
-        <DataGrid x:Name="CategoryGrid"
+        <Grid>
+            <DataGrid x:Name="CategoryGrid"
                       AutoGenerateColumns="False"
                       ItemsSource="{Binding Path=Categories, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                       CanUserAddRows="False"
@@ -164,20 +163,19 @@
                       BorderThickness="1"
                       MaxHeight="500"
                       Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
-            
-            <!--<DataGrid.MaxHeight>
+
+                <!--<DataGrid.MaxHeight>
                 <MultiBinding Converter="{StaticResource GridHeightCalc}">
                     <Binding ElementName="AddCategoryFlyoutView" Path="ActualHeight"/>
                     <Binding Source="{StaticResource GridHeight}"/>
                 </MultiBinding>
             </DataGrid.MaxHeight>-->
-            
+
                 <DataGrid.Columns>
                     <DataGridTemplateColumn  Header="SN" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}},Converter={StaticResource IndexConverter}, Mode=OneTime}" 
-                                           Foreground="{DynamicResource MahApps.Brushes.Badged.Foreground}" 
                                            VerticalAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -187,57 +185,70 @@
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Badged.Foreground}"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Options" Width="100">
+
+                    <DataGridTemplateColumn Width="100" Header="Options">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30"></ColumnDefinition>
-                                        <ColumnDefinition Width="30"></ColumnDefinition>
-
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
-                                    <Button  Grid.Column="0" 
-                                             Margin="2 0" 
-                                             Width="25" 
-                                             Height="25"
-                                              Command="{Binding Path=DataContext.EditCategoryCommand, 
-                                                                RelativeSource = {RelativeSource FindAncestor,
-                                                                AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                             Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
+
+                                    <Button
+                                        Grid.Column="0"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="2,0"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}"
+                                        Command="{Binding Path=DataContext.EditCategoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}">
+
                                         <Button.ContentTemplate>
                                             <DataTemplate>
-                                                <Image Source="{iconPacks:BootstrapIconsImage Kind=PencilSquare, Brush=White}" Width="15" Height="15"/>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="PencilSquare"
+                                                    Style="{StaticResource row.option.icon}" />
                                             </DataTemplate>
                                         </Button.ContentTemplate>
                                     </Button>
-                                    <Button Grid.Column="1"
-                                            Margin="2 0" 
-                                             Width="25" 
-                                             Height="25"
-                                            Command="{Binding Path=DataContext.DeleteCategoryCommand, 
-                                                                RelativeSource = {RelativeSource FindAncestor,
-                                                                AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                             Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                             Style="{DynamicResource MahApps.Styles.Button.Circle}">
-                                    <Button.ContentTemplate>
-                                        <DataTemplate>
-                                            <Image Source="{iconPacks:BootstrapIconsImage Kind=Trash, Brush=White}" Width="15" Height="15"/>
-                                        </DataTemplate>
-                                    </Button.ContentTemplate>
-                                </Button>
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="2,0"
+                                        Command="{Binding Path=DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}">
+
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="Trash"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+
                                 </Grid>
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+        </Grid>
+       
     </StackPanel>
         
    
