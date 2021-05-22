@@ -89,7 +89,8 @@ namespace POSSystem.UI.ViewModel
 
         private void OnManageAccountExecute()
         {
-            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[6];
+            //StaticContainer.UIHamburgerMenuControl.Items.
+            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[7];
             StaticContainer.UIHamburgerMenuControl.SelectedIndex = -1;
             //Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
             //_messageDialogService.ShowDialog("Manage account clicked", Window);

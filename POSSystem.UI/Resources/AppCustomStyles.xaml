@@ -54,12 +54,16 @@
 
 
     <Style x:Key="row.option.icon" TargetType="iconPacks:PackIconBootstrapIcons">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -68,12 +72,16 @@
         x:Key="Button.Circle.In.GridRow"
         BasedOn="{StaticResource MahApps.Styles.Button.Circle}"
         TargetType="Button">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
-                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="False">
                 <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Text.MouseOver}" />
             </DataTrigger>
         </Style.Triggers>
 
@@ -101,14 +109,39 @@
     <Style x:Key="Profile.IsAdmin" TargetType="iconPacks:PackIconBootstrapIcons">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsAdmin}" Value="True">
-                <Setter Property="Kind" Value="Check2Circle"/>
+                <Setter Property="Kind" Value="Check2Circle" />
             </DataTrigger>
             <DataTrigger Binding="{Binding IsAdmin}" Value="False">
-                <Setter Property="Kind" Value="X"/>
+                <Setter Property="Kind" Value="X" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    
+
+    <Style x:Key="User.IsAdmin" TargetType="iconPacks:PackIconBootstrapIcons">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsAdmin}" Value="True">
+                <Setter Property="Kind" Value="Check" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsAdmin}" Value="False">
+                <Setter Property="Kind" Value="X" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="User.IsActive" TargetType="iconPacks:PackIconBootstrapIcons">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsActive}" Value="True">
+                <Setter Property="Kind" Value="Check" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsActive}" Value="False">
+                <Setter Property="Kind" Value="X" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
     <Style
         x:Key="col.Boolean.IsAdmin"

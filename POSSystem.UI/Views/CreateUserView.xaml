@@ -223,7 +223,8 @@
                     <DataGridTemplateColumn Width="90" Header="Is Admin">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.IsAdmin}" />
+                                <!--<Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -237,7 +238,7 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource col.Boolean.IsAdmin}" />
-                                </Grid>
+                                </Grid>-->
 
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -245,7 +246,8 @@
                     <DataGridTemplateColumn Width="90" Header="Is Active">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.IsActive}" />
+                                <!--<Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -257,7 +259,7 @@
                                         Margin="2,0"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource col.Boolean.IsActive}" />
-                                </Grid>
+                                </Grid>-->
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

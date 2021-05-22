@@ -57,5 +57,11 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
 
         }
+
+        public async Task<List<Sales>> GetSalesByBillNo(Int64 BillNo)
+        {
+            List<Sales> sales = await genericDataRepository.GetAll().Where(x => x.BillNo == BillNo).ToListAsync<Sales>();
+            return sales;
+        }
     }
 }

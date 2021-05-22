@@ -330,6 +330,11 @@
                                     <views:SalesView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
+                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales Return">
+                                <mah:HamburgerMenuIconItem.Tag>
+                                    <views:SalesReturnView />
+                                </mah:HamburgerMenuIconItem.Tag>
+                            </mah:HamburgerMenuIconItem>
                             <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FileDocument}" Label="Report">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:SalesView />

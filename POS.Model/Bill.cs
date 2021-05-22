@@ -9,6 +9,7 @@ namespace POS.Model
     {
         public DateTime BillDate { get; set; }
         public decimal VAT { get; set; }
+        public string BillTo { get; set; }
 
         public virtual List<Sales> Sales { get; set; }
     }
