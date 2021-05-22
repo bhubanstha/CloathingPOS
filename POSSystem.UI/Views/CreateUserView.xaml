@@ -176,7 +176,6 @@
             Background="Red">
             <DataGrid
                 x:Name="UserDataGrid"
-                MaxHeight="500"
                 HorizontalAlignment="Center"
                 HorizontalContentAlignment="Center"
                 AutoGenerateColumns="False"
@@ -193,7 +192,7 @@
                 Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
                 VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}">
 
-                <DataGrid.Height>
+                <DataGrid.MaxHeight>
                     <MultiBinding
                         Converter="{StaticResource HeightCalc}"
                         Mode="TwoWay"
@@ -204,7 +203,7 @@
                             </Binding.Source>
                         </Binding>
                     </MultiBinding>
-                </DataGrid.Height>
+                </DataGrid.MaxHeight>
 
                 <DataGrid.Columns>
                     <DataGridTextColumn

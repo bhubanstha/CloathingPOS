@@ -48,7 +48,7 @@
                 ItemsSource="{Binding Path=Inventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{StaticResource MahApps.Styles.DataGrid.Azure}">
 
-                <DataGrid.Height>
+                <DataGrid.MaxHeight>
                     <MultiBinding
                         Converter="{StaticResource HeightCalc}"
                         Mode="TwoWay"
@@ -59,7 +59,7 @@
                             </Binding.Source>
                         </Binding>
                     </MultiBinding>
-                </DataGrid.Height>
+                </DataGrid.MaxHeight>
 
                 <DataGrid.Columns>
                     <DataGridTextColumn
