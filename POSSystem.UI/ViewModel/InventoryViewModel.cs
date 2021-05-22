@@ -23,7 +23,7 @@ namespace POSSystem.UI.ViewModel
         public string Name { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }
-        public int CategoryId { get; set; }
+        public Int64 CategoryId { get; set; }
 
         public decimal PurchaseRate { get; set; }
 
