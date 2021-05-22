@@ -86,7 +86,8 @@ namespace POSSystem.UI.ViewModel
                         item.SalesQuantity -= salesReturn;
                         i = await salesBO.Update(item); 
                     }
-                    
+                    InventoryBO inventoryBO = new InventoryBO();
+                    await inventoryBO.Restock(item.Inventory, salesReturn);
                     LoadSales();
                     StaticContainer.NotificationManager.Show(new NotificationContent
                     {

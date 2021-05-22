@@ -16,6 +16,7 @@
 
     <UserControl.Resources>
         <conv:TotalPriceConverter x:Key="TotalCalc" />
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
     </UserControl.Resources>
     <Grid behaviors:KeyboardFocus.On="{Binding ElementName=txtBillNo}">
         <Grid.RowDefinitions>
@@ -122,11 +123,26 @@
                         Binding="{Binding Inventory.Name}"
                         Header="Name" />
                     <DataGridTextColumn
-                        Width="180"
+                        Width="90"
+                        Binding="{Binding Inventory.Size}"
+                        Header="Size" />
+                    <DataGridTemplateColumn Header="Colour">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Rectangle
+                                    Width="24"
+                                    Height="20"
+                                    VerticalAlignment="Top"
+                                    Fill="{Binding Inventory.Color, Converter={StaticResource ColorConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Width="80"
                         Binding="{Binding SalesQuantity}"
                         Header="Quantity" />
                     <DataGridTextColumn
-                        Width="180"
+                        Width="100"
                         Binding="{Binding Rate}"
                         Header="Rate" />
                     <DataGridTextColumn

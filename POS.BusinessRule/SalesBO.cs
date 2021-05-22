@@ -41,9 +41,10 @@ namespace POS.BusinessRule
 
         public async Task<int> CheckoutSales(List<Sales> items, Bill bill)
         {
-            InventoryBO inventoryBO = new InventoryBO();
+           
             foreach (Sales item in items)
             {
+                InventoryBO inventoryBO = new InventoryBO();
                 item.BillNo = bill.Id;
                 item.ProductId = item.Inventory.Id;
 

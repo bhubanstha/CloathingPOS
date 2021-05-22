@@ -25,12 +25,11 @@ namespace POS.BusinessRule
 
         public long GetNewBillNo()
         {
-            //long? currentMax = genericDataRepository.GetAll().Max(b => b.BillNo);
+            
+            long currentMax = (from bills in genericDataRepository.GetAll()
+                                select (long)bills.Id).DefaultIfEmpty(0).Max() + 1;
 
-            long? currentMax = (from bills in genericDataRepository.GetAll()
-                                select (long?)bills.Id).Max();
-
-            return currentMax.HasValue ? currentMax.Value + 1 : 1;
+            return currentMax;
         }
 
         public int  CreateNewBill(ref Bill bill)

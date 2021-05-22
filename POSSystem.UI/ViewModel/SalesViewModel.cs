@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
@@ -106,10 +107,12 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+                _window = Application.Current.MainWindow as MetroWindow;
                 Bill b = new Bill
                 {
                     BillDate = DateTime.Now,
-                    VAT = CurrentProduct.Bill.VAT
+                    VAT = CurrentProduct.Bill.VAT,
+                    BillTo = CurrentProduct.Bill.BillTo
                 };
 
                 _billBo = new BillBO();
@@ -118,14 +121,24 @@ namespace POSSystem.UI.ViewModel
 
                 if (i > 0)
                 {
+                    StaticContainer.NotificationManager.Show(new NotificationContent
+                    {
+                        Title= "Sales",
+                        Message = $"{CurrentCart.Count} items sold on Bill No. : {b.Id}",
+                        Type = NotificationType.Success
+                    });
                     CurrentCart.Clear();
                     ClearProduct(true);
-                    await _window.ShowMessageAsync("Sales", $"{CurrentCart.Count} items sold on Bill No. : {b.Id}", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
                 }
             }
             catch (Exception ex)
             {
-                await _window.ShowMessageAsync("Error", ex.Message, MessageDialogStyle.AffirmativeAndNegative, StaticContainer.DialogSettings);
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Error",
+                    Message = ex.Message,
+                    Type = NotificationType.Success
+                });
             }
         }
 

@@ -64,5 +64,11 @@ namespace POS.BusinessRule
             }
         }
 
+        public async Task<int> Restock(Inventory inventory, int salesReturn)
+        {
+            inventory.Quantity += salesReturn;
+            genericDataRepository.Update(inventory);
+            return await genericDataRepository.SaveAsync();
+        }
     }
 }
