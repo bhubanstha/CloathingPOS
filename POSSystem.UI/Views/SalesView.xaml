@@ -19,7 +19,7 @@
         <conv:DateConverter x:Key="NepDateConverter" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
 
-        
+
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource HeaderBorder}" />
@@ -243,7 +243,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Margin="5"
-                            AutoCompleteHeight="150"
+                            AutoCompleteHeight="200"
                             AutoCompletePlacement="Bottom"
                             AutoCompletePlacementTarget="{Binding ElementName=txtProduct}"
                             AutoCompleteWidth="600"
@@ -258,12 +258,12 @@
                                     Visibility="Hidden" />
                                 <DataGridTextColumn
                                     Width="*"
-                                    Binding="{Binding Name}"
-                                    Header="Product Name" />
-                                <DataGridTextColumn
-                                    Width="*"
                                     Binding="{Binding Category.Name}"
                                     Header="Category" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Name}"
+                                    Header="Product Name" />
                                 <DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding Size}"
@@ -271,7 +271,11 @@
                                 <DataGridTemplateColumn Header="Colour">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Rectangle Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                            <Rectangle
+                                                Width="24"
+                                                Height="20"
+                                                VerticalAlignment="Top"
+                                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -311,10 +315,12 @@
                             VerticalAlignment="Center"
                             Content="Quantity" />
                         <mah:NumericUpDown
+                            x:Name="txtSalesQty"
                             Grid.Row="3"
                             Grid.Column="1"
                             Margin="5"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
+                            Maximum="{Binding CurrentProduct.Inventory.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Minimum="1"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                             TextAlignment="Left"
@@ -355,80 +361,101 @@
                 </StackPanel>
             </Border>
 
-
-            <StackPanel
+            <Grid
                 Grid.Row="3"
                 Grid.Column="0"
-                Grid.ColumnSpan="2">
-                <Grid Margin="0,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".37*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                Grid.ColumnSpan="2"
+                Margin="0,10,300,0"
+                HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".6*" />
+                    <ColumnDefinition Width="300" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
 
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Content="VAT Amount: " />
-                    <mah:NumericUpDown
-                        x:Name="txtSalesVaT"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="{StaticResource ControlPadding}"
-                        VerticalAlignment="Center"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"
-                        Culture="{Binding CultureInfo}"
-                        HideUpDownButtons="True"
-                        IsEnabled="False"
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
-                        TextAlignment="Left"
-                        Value="{Binding CurrentProduct.Bill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="VAT Amount: " />
+                <mah:NumericUpDown
+                    x:Name="txtSalesVaT"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="0,5"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    Culture="{Binding CultureInfo}"
+                    HideUpDownButtons="True"
+                    IsEnabled="False"
+                    NumericInputMode="Decimal"
+                    StringFormat="C"
+                    Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
+                    TextAlignment="Left"
+                    Value="{Binding CurrentProduct.Bill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="Grand Total: " />
+
+                <mah:NumericUpDown
+                    x:Name="txtSalesTotal"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,5"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    Culture="{Binding CultureInfo}"
+                    HideUpDownButtons="True"
+                    IsEnabled="False"
+                    NumericInputMode="Decimal"
+                    StringFormat="C"
+                    Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
+                    TextAlignment="Left"
+                    Value="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Content="Billing To:  " />
+
+                <TextBox
+                    x:Name="txtBillingTo"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="{DynamicResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Purchaser Name"
+                    Style="{DynamicResource App.TextBox.Validation}"
+                    Text="{Binding CurrentProduct.Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left" />
+
+                <Button
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Width="90"
+                    Margin="{DynamicResource ControlMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding CheckoutCommand}"
+                    Content="Checkout"
+                    Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
+            </Grid>
 
 
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="3"
-                        Width="90"
-                        Margin="5,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Command="{Binding CheckoutCommand}"
-                        Content="Checkout"
-                        Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
-
-                    <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Content="Grand Total: " />
-
-                    <mah:NumericUpDown
-                        x:Name="txtSalesTotal"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="{StaticResource ControlPadding}"
-                        VerticalAlignment="Center"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"
-                        Culture="{Binding CultureInfo}"
-                        HideUpDownButtons="True"
-                        IsEnabled="False"
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
-                        TextAlignment="Left"
-                        Value="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-            </StackPanel>
         </Grid>
     </StackPanel>
 </UserControl>

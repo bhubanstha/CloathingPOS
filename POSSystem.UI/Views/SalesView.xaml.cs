@@ -56,6 +56,7 @@ namespace POSSystem.UI.Views
                 model.CurrentProduct.Inventory = pr;
                 model.CurrentProduct.Rate = pr.RetailRate;
                 txtRetailRate.Value = (double) model.CurrentProduct.Rate;
+                txtSalesQty.Maximum = (double)model.CurrentProduct.Inventory.Quantity;
                 //txtProduct.Text = pr.Name + " - " + pr.Size;
             }
         }
