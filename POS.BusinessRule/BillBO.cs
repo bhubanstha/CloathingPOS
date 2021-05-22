@@ -38,5 +38,11 @@ namespace POS.BusinessRule
             genericDataRepository.Insert(bill);
             return genericDataRepository.Save();
         }
+
+        public async Task<int> Remove(Int64 id)
+        {
+            genericDataRepository.Delete(id);
+            return await genericDataRepository.SaveAsync();
+        }
     }
 }

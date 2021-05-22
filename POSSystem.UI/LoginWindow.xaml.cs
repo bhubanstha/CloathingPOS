@@ -30,8 +30,13 @@ namespace POSSystem.UI.Views
             _viewModel = viewModel;
             _viewModel.Window = this;
             DataContext = _viewModel;
+            this.Closed += LoginWindow_Closed;
         }
 
+        private void LoginWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.MainWindow = null;
+        }
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

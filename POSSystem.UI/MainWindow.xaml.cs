@@ -40,8 +40,7 @@ namespace POSSystem.UI
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;            
             this.Loaded += MainWindow_Loaded;
-            this.Closed += MainWindow_Closed;
-
+            this.Closed += MainWindow_Closed;            
         }
 
         private void GlobalElements()
@@ -70,6 +69,8 @@ namespace POSSystem.UI
             s.Width = (int)container.RenderSize.Width;
             s.Height = (int)container.RenderSize.Height;
             Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+            Application.Current.MainWindow = this;
+            StaticContainer.ThisApp.MainWindow = this;
         }
 
         private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)

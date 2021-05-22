@@ -19,25 +19,7 @@
         <conv:DateConverter x:Key="NepDateConverter" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
 
-        <Style
-            x:Key="AutoCompleteBox"
-            BasedOn="{StaticResource MahApps.Styles.TextBox}"
-            TargetType="ctrl:AutoCompleteTextBox" />
-
-
-
-
-        <Style x:Key="GridNumericColumnLabel" TargetType="Label">
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Padding" Value="0" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
-                    <Setter Property="Foreground" Value="White" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+        
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource HeaderBorder}" />
@@ -181,7 +163,7 @@
                             <DataGridTemplateColumn Width="100" Header="Total">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label Style="{StaticResource GridNumericColumnLabel}">
+                                        <Label Style="{StaticResource Grid.Numeric.Column}">
                                             <Label.Content>
                                                 <MultiBinding Converter="{StaticResource TotalCalc}">
                                                     <Binding Path="SalesQuantity" />

@@ -57,6 +57,24 @@ namespace POS.BusinessRule
             return await genericDataRepository.SaveAsync();
 
         }
+        public async Task<int> Update(Sales item)
+        {
+            genericDataRepository.Update(item);
+            return await genericDataRepository.SaveAsync();
+        }
+
+        public async Task<int> Remove(Sales item)
+        {
+            genericDataRepository.Delete(item.Id);
+            List<Sales> remainingItems = genericDataRepository.GetAll().Where(x => x.BillNo == item.BillNo && x.Id != item.Id).ToList<Sales>();
+            int count = await genericDataRepository.SaveAsync();
+            if (count > 0 && (remainingItems == null || remainingItems.Count == 0))
+            {
+                BillBO billBO = new BillBO();
+                await billBO.Remove(item.BillNo);
+            }
+            return count;
+        }
 
         public async Task<List<Sales>> GetSalesByBillNo(Int64 BillNo)
         {

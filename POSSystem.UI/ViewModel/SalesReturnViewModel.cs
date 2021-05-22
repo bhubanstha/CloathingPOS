@@ -1,4 +1,7 @@
-﻿using Notifications.Wpf;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.ValueBoxes;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
@@ -9,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -19,6 +23,7 @@ namespace POSSystem.UI.ViewModel
         private Int64 _billNo;
         private ObservableCollection<Sales> _sales;
         private Bill _bill;
+        private MetroWindow _window;
 
         public Int64 BillNo
         {
@@ -42,11 +47,64 @@ namespace POSSystem.UI.ViewModel
         }
 
         public ICommand SearchCommand { get; }
+        public ICommand ReturnItemCommand { get; }
 
         public SalesReturnViewModel()
         {
+            _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
+            ReturnItemCommand = new DelegateCommand<Sales>(OnSalesReturn);
             Sales = new ObservableCollection<Sales>();
+        }
+
+        private async void OnSalesReturn(Sales item)
+        {
+            try
+            {
+                _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+                int salesReturn = item.SalesQuantity;
+                if (item.SalesQuantity > 1)
+                {
+                    salesReturn++;
+                    while (salesReturn > item.SalesQuantity)
+                    {
+                        var returnVal = await _window.ShowInputAsync("Sales Return", $"Enter sales return quantity (Max: {item.SalesQuantity} )", StaticContainer.DialogSettings);
+                        int.TryParse(returnVal, out salesReturn);
+                    }
+                }
+
+                if(salesReturn>0)
+                {
+                    SalesBO salesBO = new SalesBO();                   
+                    int i = 0;
+                    if (salesReturn == item.SalesQuantity)
+                    {
+                        i = await salesBO.Remove(item);
+                    }
+                    else
+                    {
+                        item.SalesQuantity -= salesReturn;
+                        i = await salesBO.Update(item); 
+                    }
+                    
+                    LoadSales();
+                    StaticContainer.NotificationManager.Show(new NotificationContent
+                    {
+                        Title = "Sales Return",
+                        Message = $"Item: {item.Inventory.Name} , Return Qty: {salesReturn} returned on {DateTime.Now.ToString("yyyy/MM/dd")}",
+                        Type = NotificationType.Success
+                    });
+                }                
+            }
+            catch (Exception ex)
+            {
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Error",
+                    Message = ex.Message,
+                    Type = NotificationType.Error
+                });
+            }
         }
 
         private void OnSearchExecute()
@@ -64,8 +122,7 @@ namespace POSSystem.UI.ViewModel
                 foreach (Sales item in _sales)
                 {
                     Bill = item.Bill;
-                    Sales.Add(item); Sales.Add(item);
-                    Sales.Add(item); Sales.Add(item);
+                    Sales.Add(item); 
                 }
             }
             catch (Exception ex)
@@ -83,5 +140,8 @@ namespace POSSystem.UI.ViewModel
         {
             return true;
         }
+
     }
+
+
 }
