@@ -1,229 +1,233 @@
-﻿<UserControl x:Class="POSSystem.UI.Views.InventoryView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:local="clr-namespace:POSSystem.UI.Views"
-             xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    
-    
-    <StackPanel>
-        <Border Style="{StaticResource HeaderBorder }" />
+﻿<UserControl
+    x:Class="POSSystem.UI.Views.InventoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:POSSystem.UI.Views"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
-        <Grid Style="{StaticResource ControlerMainGrid}" behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}">
+
+    <StackPanel>
+        <Border Style="{StaticResource HeaderBorder}" />
+
+        <Grid behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}" Style="{StaticResource ControlerMainGrid}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Category"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                       VerticalAlignment="Center"
-                   />
-            <ComboBox x:Name="cmbCategory"
-                      Grid.Row="0"
-                        Grid.Column="1"
-                        ItemsSource="{Binding Categories, Mode=TwoWay}"
-                        DisplayMemberPath="Name"
-                        SelectedValuePath="Id"
-                        SelectedValue="{Binding CategoryId}"                      
-                        mah:TextBoxHelper.ClearTextButton="True"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"    
-                        Margin="{StaticResource ControlMargin}"
-                        Padding="{StaticResource ControlPadding}"
-                      Style="{DynamicResource MahApps.Styles.ComboBox}">
-
-                </ComboBox>
-            <Button Style="{StaticResource MahApps.Styles.Button.Circle}"
-                    Width="26" 
-                    Height="26" 
-                    Margin="0 0 0 10"
-                    Grid.Row="0"
-                   Grid.Column="2"
-                    BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                    Command="{Binding AddCategoryCommand}">
-                <iconPacks:BootstrapIcons Kind="Plus"></iconPacks:BootstrapIcons>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Category" />
+            <ComboBox
+                x:Name="cmbCategory"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Categories, Mode=TwoWay}"
+                SelectedIndex="0"
+                SelectedValue="{Binding CategoryId}"
+                SelectedValuePath="Id"
+                Style="{DynamicResource MahApps.Styles.ComboBox}" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="2"
+                Width="26"
+                Height="26"
+                Margin="0,0,0,10"
+                BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                Command="{Binding AddCategoryCommand}"
+                Style="{StaticResource MahApps.Styles.Button.Circle}">
+                <iconPacks:BootstrapIcons Kind="Plus" />
             </Button>
 
 
-            <TextBlock Text="Product Name"
-                   Grid.Row="1"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                       VerticalAlignment="Center"
-                   />
-            <TextBox x:Name="ProductName"
-                        Text="{Binding Name, Mode=TwoWay}"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                     Grid.ColumnSpan="2"
-                        mah:TextBoxHelper.ClearTextButton="True"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"    
-                        mah:TextBoxHelper.Watermark="Enter Product Name"
-                        mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
-                        SpellCheck.IsEnabled="True"
-                        Margin="{StaticResource ControlMargin}"
-                        Padding="{StaticResource ControlPadding}"
-                        Style="{DynamicResource MahApps.Styles.TextBox.Button}"/>
-
-            <TextBlock Text="Size"
-                   Grid.Row="2"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                       VerticalAlignment="Center"
-                   />
-            <TextBox x:Name="Size"
-                 Text="{Binding Size, Mode=TwoWay}"
-                 Grid.Row="2"
-                 Grid.Column="1"
-                     Grid.ColumnSpan="2"
-                  mah:TextBoxHelper.ClearTextButton="True"
-                     mah:TextBoxHelper.SelectAllOnFocus="True"    
-                     mah:TextBoxHelper.Watermark="Enter Product Size"
-                     mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
-                     CharacterCasing="Upper"
-                     SpellCheck.IsEnabled="True"
-                     Margin="{StaticResource ControlMargin}"
-                     Padding="{StaticResource ControlPadding}"
-                     Style="{DynamicResource MahApps.Styles.TextBox.Button}"/>
-
-            <TextBlock Text="Colour"
-                   Grid.Row="3"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                   VerticalAlignment="Center"
-                   />
-            <mah:ColorPicker
-                    Grid.Row="3"
-                    Grid.Column="1"
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Product Name" />
+            <TextBox
+                x:Name="ProductName"
+                Grid.Row="1"
+                Grid.Column="1"
                 Grid.ColumnSpan="2"
-                    mah:BuildInColorPalettes.MaximumRecentColorsCount="10"
-                    SelectedColor="{Binding Color, Mode=TwoWay}"
-                    mah:TextBoxHelper.Watermark="Select a product colour"
-                    Style="{DynamicResource MahApps.Styles.ColorPicker}"
-                />
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Product Name"
+                SpellCheck.IsEnabled="True"
+                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Text="{Binding Name, Mode=TwoWay}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Size" />
+            <TextBox
+                x:Name="Size"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Product Size"
+                CharacterCasing="Upper"
+                SpellCheck.IsEnabled="True"
+                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Text="{Binding Size, Mode=TwoWay}" />
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Colour" />
+            <mah:ColorPicker
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                mah:BuildInColorPalettes.MaximumRecentColorsCount="10"
+                mah:TextBoxHelper.Watermark="Select a product colour"
+                SelectedColor="{Binding Color, Mode=TwoWay}"
+                Style="{DynamicResource MahApps.Styles.ColorPicker}" />
 
 
-            <TextBlock Text="Quantity"
-                   Grid.Row="4"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                   VerticalAlignment="Center"
-                   />
-            <mah:NumericUpDown x:Name="Quantity"
-                        Value="{Binding Quantity, Mode=TwoWay}"
-                        Grid.Row="4"
-                        Grid.Column="1"
-                               Grid.ColumnSpan="2"
-                        mah:TextBoxHelper.ClearTextButton="True"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"    
-                        mah:TextBoxHelper.Watermark="Enter Purchase Quantity"  
-                        HorizontalContentAlignment="Left"
-                        TextAlignment="Left" 
-                        Minimum="1"
-                        Maximum="10000"
-                        Margin="{StaticResource ControlMargin}"
-                        Padding="{StaticResource ControlPadding}"
-                               />
+            <TextBlock
+                Grid.Row="4"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Quantity" />
+            <mah:NumericUpDown
+                x:Name="Quantity"
+                Grid.Row="4"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                HorizontalContentAlignment="Left"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                Maximum="10000"
+                Minimum="1"
+                TextAlignment="Left"
+                Value="{Binding Quantity, Mode=TwoWay}" />
 
-            <TextBlock Text="Puchase Rate"
-                   Grid.Row="5"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                        VerticalAlignment="Center"
-                   />
-            <mah:NumericUpDown x:Name="Rate"
-                        Value="{Binding PurchaseRate, Mode=TwoWay}"
-                        Minimum="1"
-                        Maximum="10000"       
-                        Grid.Row="5"
-                        Grid.Column="1"
-                               Grid.ColumnSpan="2"
-                        mah:TextBoxHelper.ClearTextButton="True"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"    
-                        mah:TextBoxHelper.Watermark="Enter Purchase Quantity"  
-                        HorizontalContentAlignment="Left"
-                        TextAlignment="Left" 
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Culture="{Binding CultureInfo}"                       
-                        Margin="{StaticResource ControlMargin}"
-                        Padding="{StaticResource ControlPadding}"
-                               />
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Puchase Rate" />
+            <mah:NumericUpDown
+                x:Name="Rate"
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                HorizontalContentAlignment="Left"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                Culture="{Binding CultureInfo}"
+                Maximum="10000"
+                Minimum="1"
+                NumericInputMode="Decimal"
+                StringFormat="C"
+                TextAlignment="Left"
+                Value="{Binding PurchaseRate, Mode=TwoWay}" />
 
-            <TextBlock Text="Retail Rate"
-                   Grid.Row="6"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                        VerticalAlignment="Center"
-                   />
-            <mah:NumericUpDown x:Name="RetailRate"
-                        Value="{Binding RetailRate, Mode=TwoWay}"
-                        Minimum="1"
-                        Maximum="10000"       
-                        Grid.Row="6"
-                        Grid.Column="1"
-                               Grid.ColumnSpan="2"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"    
-                        mah:TextBoxHelper.Watermark="Enter Retail Rate"  
-                        HorizontalContentAlignment="Left"
-                        TextAlignment="Left" 
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Culture="{Binding CultureInfo}"                       
-                        Margin="{StaticResource ControlMargin}"
-                        Padding="{StaticResource ControlPadding}"
-                               />
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Retail Rate" />
+            <mah:NumericUpDown
+                x:Name="RetailRate"
+                Grid.Row="6"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                HorizontalContentAlignment="Left"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Retail Rate"
+                Culture="{Binding CultureInfo}"
+                Maximum="10000"
+                Minimum="1"
+                NumericInputMode="Decimal"
+                StringFormat="C"
+                TextAlignment="Left"
+                Value="{Binding RetailRate, Mode=TwoWay}" />
 
-            <TextBlock Text="Purchase Date"
-                   Grid.Row="7"
-                   Grid.Column="0"
-                   Margin="0 5 0 5"
-                        VerticalAlignment="Center"
-                   />
-            <DatePicker x:Name="PurchaseDate"
-                 Text="{Binding FirstPurchaseDate, Mode=TwoWay}"
-                 SelectedDateFormat="Short"
-                 Grid.Row="7"
-                 Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        IsTodayHighlighted="True"
-                     mah:TextBoxHelper.SelectAllOnFocus="True"    
-                     mah:TextBoxHelper.Watermark="asdfasdf"
-                     Margin="{StaticResource ControlMargin}"
-                     Padding="{StaticResource ControlPadding}"
-                        CalendarStyle="{StaticResource resizedCalendarItem}">
-            </DatePicker>
+            <TextBlock
+                Grid.Row="7"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Purchase Date" />
+            <DatePicker
+                x:Name="PurchaseDate"
+                Grid.Row="7"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="asdfasdf"
+                CalendarStyle="{StaticResource resizedCalendarItem}"
+                IsTodayHighlighted="True"
+                SelectedDateFormat="Short"
+                Text="{Binding FirstPurchaseDate, Mode=TwoWay}" />
 
 
-            <Button Content="Create Inventory"
-                    Grid.Row="8"
-                    Grid.Column="1"
-                    Width="150"
-                    Margin="0 5 0 5"
-                    HorizontalAlignment="Left"
-                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}"
-                    Command="{Binding SaveCommand}">
-            </Button>
+            <Button
+                Grid.Row="8"
+                Grid.Column="1"
+                Width="150"
+                Margin="0,5,0,5"
+                HorizontalAlignment="Left"
+                Command="{Binding SaveCommand}"
+                Content="Create Inventory"
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
 
 
         </Grid>
