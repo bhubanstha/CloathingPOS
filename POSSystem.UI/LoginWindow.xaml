@@ -9,15 +9,17 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
-    Title="LoginWindow"
+    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}}"
     Width="400"
     Height="565"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon_toolbar.png"
     ResizeMode="NoResize"
     ShowMaxRestoreButton="False"
+    TitleCharacterCasing="Normal"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.IconTemplate>
