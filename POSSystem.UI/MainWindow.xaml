@@ -324,7 +324,11 @@
                     <!--  Items  -->
                     <mah:HamburgerMenu.ItemsSource>
                         <mah:HamburgerMenuItemCollection>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Account}" Label="User Management">
+                            <mah:HamburgerMenuIconItem
+                                x:Name="menuUserMgmt"
+                                Icon="{iconPacks:Material Kind=Account}"
+                                IsVisible="{Binding IsAdminMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Label="User Management">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:CreateUserView />
                                 </mah:HamburgerMenuIconItem.Tag>

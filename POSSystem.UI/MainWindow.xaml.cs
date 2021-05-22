@@ -32,6 +32,7 @@ namespace POSSystem.UI
         public IDialogCoordinator DialogCoordinator;
         public MainWindow(MainWindowViewModel model, LoginWindow loginWindow)
         {
+            model.CheckUserIsAdmin();
             InitializeComponent();
             _model = model;
             _model.Window = this;
@@ -40,6 +41,7 @@ namespace POSSystem.UI
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;            
             this.Loaded += MainWindow_Loaded;
+           
             this.Closed += MainWindow_Closed;            
         }
 
@@ -52,18 +54,12 @@ namespace POSSystem.UI
             StaticContainer.UIHamburgerMenuControl = this.HamburgerMenuControl;
         }
 
-        private void MainWindow_Closed(object sender, EventArgs e)
-        {
-            if(!_model.IsLogout)
-            {
-                _model.LoginWindow.Close();
-            }
-            
-        }
+
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             GlobalElements();
+            
             double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
             _model.PopupRightMargin =  265 + additionalWidth;
             System.Drawing.Size s = new System.Drawing.Size();
@@ -72,11 +68,28 @@ namespace POSSystem.UI
             Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
+            menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            if(!_model.IsAdminMenuVisible)
+            {
+                HamburgerMenuControl.SelectedIndex = 1;
+            }
+
+
         }
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            if(!_model.IsLogout)
+            {
+                _model.LoginWindow.Close();
+            }
+            
+        }
+ 
 
         private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
         {
             HamburgerMenuControl.Content = args.InvokedItem;
+            //((MahApps.Metro.Controls.HamburgerMenuItemBase)args.InvokedItem).IsVisible = false;
         }
 
         private void Screenshot(System.Drawing.Size size, Canvas canvas, Window window)

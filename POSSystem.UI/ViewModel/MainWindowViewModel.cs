@@ -54,6 +54,16 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        private bool _isAdminMenuVisible = false;
+
+        public bool IsAdminMenuVisible
+        {
+            get { return _isAdminMenuVisible; }
+            set { _isAdminMenuVisible = value; 
+                OnPropertyChanged(); }
+        }
+
+
         public bool IsLogout { get; set; }
 
 
@@ -106,6 +116,15 @@ namespace POSSystem.UI.ViewModel
         private void ManageMenuVisibility()
         {
             IsUserMenuVisible = !_isUserMenuVisible ;
+        }
+
+        public void CheckUserIsAdmin()
+        {
+            var user = _cacheService.ReadCache<User>("LoginUser");
+            if(user != null)
+            {
+                IsAdminMenuVisible = user.IsAdmin;
+            }
         }
     }
 }
