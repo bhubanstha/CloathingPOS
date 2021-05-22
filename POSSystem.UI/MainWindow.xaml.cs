@@ -69,6 +69,8 @@ namespace POSSystem.UI
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
             menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            menuGraphs.IsVisible = _model.IsAdminMenuVisible;
+            menuReport.IsVisible = _model.IsAdminMenuVisible;
             if(!_model.IsAdminMenuVisible)
             {
                 HamburgerMenuControl.SelectedIndex = 1;

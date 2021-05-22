@@ -353,12 +353,18 @@
                                     <views:SalesReturnView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FileDocument}" Label="Report">
+                            <mah:HamburgerMenuIconItem
+                                x:Name="menuReport"
+                                Icon="{iconPacks:Material Kind=FileDocument}"
+                                Label="Report">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:SalesView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=ChartBox}" Label="Graphs">
+                            <mah:HamburgerMenuIconItem
+                                x:Name="menuGraphs"
+                                Icon="{iconPacks:Material Kind=ChartBox}"
+                                Label="Graphs">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:GraphView />
                                 </mah:HamburgerMenuIconItem.Tag>
