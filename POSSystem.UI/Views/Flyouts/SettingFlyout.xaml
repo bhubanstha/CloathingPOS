@@ -13,6 +13,7 @@
     MinWidth="250"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    IsPinned="False"
     Position="Right"
     Theme="Inverse"
     mc:Ignorable="d">

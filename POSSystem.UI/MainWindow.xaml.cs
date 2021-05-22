@@ -47,6 +47,7 @@ namespace POSSystem.UI
         {
             StaticContainer.SettingFlyout = this.SettingsFlyout;// container.Resolve<SettingView>();
             StaticContainer.AddCategoryFlyout = this.CategoryFlyout;
+            StaticContainer.NoSearchResultFlyout = this.NoSearchResultFlyout;
             StaticContainer.DialogCoordinator = this.DialogCoordinator;
             StaticContainer.UIHamburgerMenuControl = this.HamburgerMenuControl;
         }

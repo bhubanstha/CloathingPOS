@@ -253,7 +253,20 @@
         <mah:FlyoutsControl x:Name="flyoutcontrol">
             <flyout:SettingFlyout x:Name="SettingsFlyout" />
             <flyout:AddCategoryFlyout x:Name="CategoryFlyout" />
-
+            <mah:Flyout
+                x:Name="NoSearchResultFlyout"
+                Height="50"
+                CloseButtonVisibility="Collapsed"
+                IsPinned="False"
+                Position="Top"
+                Theme="Inverse"
+                TitleVisibility="Visible">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource NotificationRed}"
+                    Text="Search didn't return any result. Please try again" />
+            </mah:Flyout>
         </mah:FlyoutsControl>
 
     </mah:MetroWindow.Flyouts>
@@ -268,7 +281,6 @@
             Panel.ZIndex="1"
             Opacity="1">
             <Popup
-                
                 x:Name="UMenuPopup"
                 AllowsTransparency="True"
                 IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -345,7 +357,11 @@
                                     <views:GraphView />
                                 </mah:HamburgerMenuIconItem.Tag>
                             </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FaceProfile}" Label="Profile" x:Name="menuUserProfile" IsVisible="False">
+                            <mah:HamburgerMenuIconItem
+                                x:Name="menuUserProfile"
+                                Icon="{iconPacks:Material Kind=FaceProfile}"
+                                IsVisible="False"
+                                Label="Profile">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:UserProfileView />
                                 </mah:HamburgerMenuIconItem.Tag>

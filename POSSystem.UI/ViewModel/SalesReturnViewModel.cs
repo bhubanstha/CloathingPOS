@@ -110,6 +110,11 @@ namespace POSSystem.UI.ViewModel
         private void OnSearchExecute()
         {
             LoadSales();
+            if(Sales.Count==0)
+            {
+                Flyout f = StaticContainer.NoSearchResultFlyout;
+                f.IsOpen = !f.IsOpen;
+            }
         }
 
         private async void LoadSales()
