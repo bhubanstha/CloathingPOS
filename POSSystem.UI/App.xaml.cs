@@ -33,7 +33,7 @@ namespace POSSystem.UI
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            ApplyThemeConfig();
+            ReloadConfig();
             window.Show();
 
 
@@ -59,7 +59,7 @@ namespace POSSystem.UI
             }
         }
 
-        void ApplyThemeConfig()
+        void ReloadConfig()
         {
             // Restore application-scope property from isolated storage
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();

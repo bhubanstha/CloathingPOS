@@ -4,19 +4,12 @@ using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
-using POSSystem.UI.ViewModel.Service;
-using POSSystem.UI.Views;
 using Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Runtime.Caching;
 using POSSystem.UI.Service;
 using System.Windows;
 using Autofac;
@@ -35,7 +28,7 @@ namespace POSSystem.UI.ViewModel
         private IBouncyCastleEncryption _bouncyCastleEncryption;
         private ICacheService _cacheService;
 
-        public MetroWindow Window { get;  set; }
+        public MetroWindow LoginWindow { get;  set; }
 
 
         
@@ -90,14 +83,42 @@ namespace POSSystem.UI.ViewModel
                 .FirstOrDefault();
             if (u != null)
             {
+                if(LoginUser.RememberMe)
+                {
+                    Application.Current.Properties["UserName"] = LoginUser.UserName;
+                    Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
+                }
+                else
+                {
+                    Application.Current.Properties["UserName"] = "";
+                    Application.Current.Properties["RememberMe"] = false;
+                }
                 
                 _cacheService.SetCache("LoginUser", u);
-                MainWindow newWindow = StaticContainer.Container.Resolve<MainWindow>();
-                Application.Current.MainWindow = newWindow;
-                Window.Close();
-                newWindow.Show();
-                               
-                StaticContainer.ThisApp.MainWindow = newWindow;
+                
+                if(u.PromptForPasswordReset)
+                {
+                    LoginWindow.Hide();
+                    ForgotPasswordWindow forgetPasswindow = null;
+                    forgetPasswindow = GetPasswordResetWindow();
+                    ManageWindowVisibility(forgetPasswindow,  null);
+                    forgetPasswindow.IsUserNameEditable = false;
+                    forgetPasswindow.IsBackButtonVisible = false;
+                    forgetPasswindow.LookForPasswordChange = true;
+                    bool? result = forgetPasswindow.ShowDialog();
+                    if(result.HasValue && result.Value == true)
+                    {
+                        System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                        Application.Current.Shutdown();
+                        
+                    }
+                }
+                else
+                {
+                    MainWindow mainWindow = GetMainWindow();
+                    ManageWindowVisibility(mainWindow, LoginWindow, true);
+                }
+                
             }
         }
 
@@ -107,6 +128,31 @@ namespace POSSystem.UI.ViewModel
         }
 
         
+        private MainWindow GetMainWindow()
+        {
+            MainWindow window = StaticContainer.Container.Resolve<MainWindow>();
+            return window;
+        }
+        private ForgotPasswordWindow GetPasswordResetWindow()
+        {
+            ForgotPasswordWindow window = StaticContainer.Container.Resolve<ForgotPasswordWindow>();
+            return window;
+        }
+
+        private void ManageWindowVisibility(MetroWindow windowToSetMainWindow, MetroWindow windowToClose, bool show=false)
+        {
+            Application.Current.MainWindow = windowToSetMainWindow;
+            if (windowToClose != null)
+            {
+                windowToClose.Close();
+            }
+            if (show)
+            {
+                windowToSetMainWindow.Show();
+            }
+           
+            StaticContainer.ThisApp.MainWindow = windowToSetMainWindow;           
+        }
         
     }
 }

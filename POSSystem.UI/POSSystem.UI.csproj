@@ -377,8 +377,8 @@
     <Compile Include="Converter\GridIndexConverter.cs" />
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
-    <Compile Include="ForgotPassword.xaml.cs">
-      <DependentUpon>ForgotPassword.xaml</DependentUpon>
+    <Compile Include="ForgotPasswordWindow.xaml.cs">
+      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interface\IAnimatablePoint.cs" />
     <Compile Include="Interface\IEasingFunction.cs" />
@@ -482,7 +482,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ForgotPassword.xaml">
+    <Page Include="ForgotPasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

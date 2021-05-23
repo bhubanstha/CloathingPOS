@@ -60,6 +60,7 @@ namespace POSSystem.UI.ViewModel
                 {
                     u.Password = await userBO.EncryptPassword( CurrentUser.Password);
                     u.LastPasswordChangeDate = DateTime.Now;
+                    u.PromptForPasswordReset = false;
                    int i=  await userBO.UpdateUser(u);
                     if(i>0)
                     {
@@ -74,6 +75,7 @@ namespace POSSystem.UI.ViewModel
                         {
                             CurrentUser.UserName = null;
                         }
+                        StaticContainer.IsPasswordChanged = true;
                         StaticContainer.NotificationManager.Show(new NotificationContent
                         {
                             Title="Password Changed",
@@ -86,6 +88,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                StaticContainer.IsPasswordChanged = false;
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
                     Title = "Application Error",

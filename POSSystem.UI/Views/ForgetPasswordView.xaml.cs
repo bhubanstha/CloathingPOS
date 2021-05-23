@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +32,6 @@ namespace POSSystem.UI.Views
             get { return _enableUserName ; }
             set { _enableUserName =  value; }
         }
-
 
         private ForgetPasswordViewModel _model;
         public bool ShowBackButton { get; set; }

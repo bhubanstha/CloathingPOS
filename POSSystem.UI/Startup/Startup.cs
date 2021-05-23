@@ -32,12 +32,16 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<InventoryView>().AsSelf();
             builder.RegisterType<GraphView>().AsSelf();
             builder.RegisterType<SalesView>().AsSelf();
+            builder.RegisterType<SalesReturnView>().AsSelf();
+            builder.RegisterType<AboutView>().AsSelf();
+            builder.RegisterType<UserProfileView>().AsSelf();
             
             
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<ForgotPasswordWindow>().AsSelf();
 
 
 
@@ -55,6 +59,15 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<LineSeriesViewModel>().AsSelf();
             builder.RegisterType<UserViewModel>().AsSelf();
+            builder.RegisterType<ForgetPasswordViewModel>().AsSelf();
+            builder.RegisterType<InventoryListViewModel>().AsSelf();
+            builder.RegisterType<InventoryViewModel>().AsSelf();
+            builder.RegisterType<LineSeriesViewModel>().AsSelf();
+            builder.RegisterType<SalesViewModel>().AsSelf();
+            builder.RegisterType<SalesReturnViewModel>().AsSelf();
+            builder.RegisterType<SettingsViewModel>().AsSelf();
+            builder.RegisterType<UserProfileViewModel>().AsSelf();
+
 
 
             //Db Context Registration
