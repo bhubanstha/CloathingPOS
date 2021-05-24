@@ -364,7 +364,7 @@
                             <mah:HamburgerMenuIconItem
                                 x:Name="menuGraphs"
                                 Icon="{iconPacks:Material Kind=ChartBox}"
-                                Label="Graphs">
+                                Label="Graph">
                                 <mah:HamburgerMenuIconItem.Tag>
                                     <views:GraphView />
                                 </mah:HamburgerMenuIconItem.Tag>
@@ -412,6 +412,7 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
+                                    x:Name="lblHeaderText"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Margin="0,15,0,5"
@@ -419,15 +420,15 @@
                                     FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
                                     FontSize="{DynamicResource MahApps.Font.Size.Header}"
                                     Text="{Binding Label}" />
-                                <StackPanel
+                                <Grid
                                     Grid.Row="1"
                                     Grid.Column="0"
-                                    Focusable="False">
+                                    Focusable="True">
                                     <ContentControl
                                         xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
                                         Content="{Binding Tag}"
                                         Focusable="False" />
-                                </StackPanel>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </mah:HamburgerMenu.ContentTemplate>
