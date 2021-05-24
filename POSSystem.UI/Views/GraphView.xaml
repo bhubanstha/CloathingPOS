@@ -5,33 +5,77 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="clr-namespace:POSSystem.UI.Converter"
+    
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:oxy="http://oxyplot.org/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0 0 5 0">
-                <TextBlock HorizontalAlignment="Center" FontSize="18">
-                <Bold>Inventory Item Puchase/Sells Graph</Bold>
-                </TextBlock>
-                <ComboBox Margin="5">
-                    <ComboBoxItem>A</ComboBoxItem>
-                    <ComboBoxItem>B</ComboBoxItem>
-                    <ComboBoxItem>C</ComboBoxItem>
-                </ComboBox>
-                <Separator BorderThickness="2" BorderBrush="Red"/>
-                <oxy:PlotView
-                    Grid.Row="0"
+            <ctrl:AutoCompleteTextBox
+                            x:Name="txtProduct"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="42, 10 8 0"
+                            AutoCompleteHeight="200"
+                            AutoCompletePlacement="Bottom"
+                            AutoCompleteWidth="{Binding ElementName=txtProduct, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                            OnSelectedItemChange="Txt_ProductSelected"
+                            OnTextChange="Txt_OnProductNameChaange">
+                <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                    <DataGridTextColumn
+                                    Width="Auto"
+                                    MinWidth="60"
+                                    Binding="{Binding Id}"
+                                    Header="Id"
+                                    Visibility="Hidden" />
+                    <DataGridTextColumn
+                                    Width="0.5*"
+                                    Binding="{Binding Category.Name}"
+                                    Header="Category" />
+                    <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Name}"
+                                    Header="Product Name" />
+                    <DataGridTextColumn
+                                    Width="150"
+                                    Binding="{Binding Size}"
+                                    Header="Size" />
+                    <DataGridTemplateColumn Header="Colour">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Rectangle
+                                                Width="24"
+                                                Height="20"
+                                                VerticalAlignment="Top"
+                                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+            </ctrl:AutoCompleteTextBox>
+            <oxy:PlotView
+                    Grid.Row="2"
                     Grid.Column="0"
                     Height="500"
                     Background="Transparent"
-                    Model="{Binding PlotModel}" />
-            </StackPanel>
+                    Model="{Binding PlotModel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
     </StackPanel>
     

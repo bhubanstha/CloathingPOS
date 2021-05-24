@@ -27,15 +27,34 @@ namespace POSSystem.UI.Views
         public GraphView()
         {
             InitializeComponent();
-            model  = new LineSeriesViewModel(new ColorService());
+            model = new LineSeriesViewModel(new ColorService());
             this.DataContext = model;
-
             this.Loaded += GraphView_Loaded;
         }
 
         private void GraphView_Loaded(object sender, RoutedEventArgs e)
         {
-            model.AnimateAsync();
+            //model.AnimateAsync();
+        }
+
+        private void Txt_OnProductNameChaange(object sender, TextChangedEventArgs e)
+        {
+            //TextBox inp = sender as TextBox;
+            //model.FilterProducts = model.Products.Where(p => p.Name.ToLower().StartsWith(inp.Text.ToLower())).ToList();
+            //txtProduct.AutoCompleteItemSource = model.FilterProducts;
+        }
+
+        private void Txt_ProductSelected(object sender, EventArgs e)
+        {
+            //if (txtProduct.SelectedItem != null)
+            //{
+            //    var pr = txtProduct.SelectedItem as Inventory;
+            //    model.CurrentProduct.Inventory = pr;
+            //    model.CurrentProduct.Rate = pr.RetailRate;
+            //    txtRetailRate.Value = (double)model.CurrentProduct.Rate;
+            //    txtSalesQty.Maximum = (double)model.CurrentProduct.Inventory.Quantity;
+            //    //txtProduct.Text = pr.Name + " - " + pr.Size;
+            //}
         }
     }
 }
