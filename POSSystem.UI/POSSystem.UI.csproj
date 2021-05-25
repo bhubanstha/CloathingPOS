@@ -380,8 +380,6 @@
     <Compile Include="ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\IAnimatablePoint.cs" />
-    <Compile Include="Interface\IEasingFunction.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -397,11 +395,7 @@
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
     <Compile Include="UIModel\ForgetPasswordModel.cs" />
     <Compile Include="UIModel\LoginModel.cs" />
-    <Compile Include="ViewModel\AnimationViewModelBase.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
-    <Compile Include="ViewModel\Extensions\AnimationExtensions.cs" />
-    <Compile Include="ViewModel\Extensions\AnimationExtensions.linearbarseries.cs" />
-    <Compile Include="ViewModel\Extensions\AnimationExtensions.lineseries.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
@@ -409,19 +403,13 @@
     <Compile Include="ViewModel\SalesViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
-    <Compile Include="ViewModel\IAnimationViewModel.cs" />
-    <Compile Include="ViewModel\LineSeriesViewModel.cs" />
+    <Compile Include="ViewModel\GraphViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\NotifyPropertyChanged.cs" />
-    <Compile Include="ViewModel\Service\AnimationFrame.cs" />
-    <Compile Include="ViewModel\Service\AnimationPoint.cs" />
-    <Compile Include="ViewModel\Service\AnimationSettings.cs" />
-    <Compile Include="ViewModel\Service\CircleEase.cs" />
     <Compile Include="ViewModel\Service\IMessageDialogService.cs" />
     <Compile Include="ViewModel\Service\MessageDialogService.cs" />
-    <Compile Include="ViewModel\Service\NoEase.cs" />
-    <Compile Include="ViewModel\Service\Pnl.cs" />
+    <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -622,7 +610,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="ViewModel\Extensions\AnimationExtensions.datapointseries.cs" />
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -678,6 +665,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\profileImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\" />
+    <Folder Include="ViewModel\Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

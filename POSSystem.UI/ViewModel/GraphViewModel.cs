@@ -7,7 +7,7 @@ using OxyPlot.Series;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
-using POSSystem.UI.ViewModel.Service;
+using POSSystem.UI.UIModel;
 
 namespace POSSystem.UI.ViewModel
 {
@@ -47,9 +47,9 @@ namespace POSSystem.UI.ViewModel
         public void CreateGraphModel()
         {
             PlotModel = new PlotModel();
-            var pnls = new List<Pnl>();
-            var pnls1 = new List<Pnl>();
-            var pnls2 = new List<Pnl>();
+            var pnls = new List<GraphPoint>();
+            var pnls1 = new List<GraphPoint>();
+            var pnls2 = new List<GraphPoint>();
 
 
             pnls = MockPurchaseHistory();
@@ -145,17 +145,17 @@ namespace POSSystem.UI.ViewModel
             plotModel.InvalidatePlot(true);
         }
 
-        private List<Pnl> MockPurchaseHistory()
+        private List<GraphPoint> MockPurchaseHistory()
         {
-            List<Pnl> points = new List<Pnl>
+            List<GraphPoint> points = new List<GraphPoint>
             {
-                new Pnl{Time =new DateTime(2021,1, 1),  Value = 10},
-                new Pnl{Time =new DateTime(2021,1, 5),  Value = 16},
-                new Pnl{Time =new DateTime(2021,1, 17),  Value = 70},
+                new GraphPoint{Time =new DateTime(2021,1, 1),  Value = 10},
+                new GraphPoint{Time =new DateTime(2021,1, 5),  Value = 16},
+                new GraphPoint{Time =new DateTime(2021,1, 17),  Value = 70},
                 //new Pnl{Time =new DateTime(2021,2, 1),  Value= 5},
-                new Pnl{Time =new DateTime(2021,3, 1),  Value= 150},
-                new Pnl{Time =new DateTime(2021,4, 1),  Value= 106},
-                new Pnl{Time =new DateTime(2021,5, 1),  Value= 107},
+                new GraphPoint{Time =new DateTime(2021,3, 1),  Value= 150},
+                new GraphPoint{Time =new DateTime(2021,4, 1),  Value= 106},
+                new GraphPoint{Time =new DateTime(2021,5, 1),  Value= 107},
                 //new Pnl{Time =new DateTime(2021,6, 1),  Value= 130},
                 //new Pnl{Time =new DateTime(2021,7, 1),  Value= 170},
                 //new Pnl{Time =new DateTime(2021,8, 1),  Value= 120},
@@ -167,15 +167,15 @@ namespace POSSystem.UI.ViewModel
             return points;
         }
 
-        private List<Pnl> MockSalesHistory()
+        private List<GraphPoint> MockSalesHistory()
         {
-            List<Pnl> points = new List<Pnl>
+            List<GraphPoint> points = new List<GraphPoint>
             {
-                new Pnl{Time =new DateTime(2021,1, 1),  Value = 3},
-                new Pnl{Time =new DateTime(2021,2, 1),  Value = 0},
-                new Pnl{Time =new DateTime(2021,3, 1),  Value = 15},
-                new Pnl{Time =new DateTime(2021,4, 1),  Value = 100},
-                new Pnl{Time =new DateTime(2021,5, 1),  Value = 80},
+                new GraphPoint{Time =new DateTime(2021,1, 1),  Value = 3},
+                new GraphPoint{Time =new DateTime(2021,2, 1),  Value = 0},
+                new GraphPoint{Time =new DateTime(2021,3, 1),  Value = 15},
+                new GraphPoint{Time =new DateTime(2021,4, 1),  Value = 100},
+                new GraphPoint{Time =new DateTime(2021,5, 1),  Value = 80},
                 //new Pnl{Time =new DateTime(2021,6, 1),  Value = 100},
                 //new Pnl{Time =new DateTime(2021,7, 1),  Value = 130},
                 //new Pnl{Time =new DateTime(2021,8, 1),  Value = 80},
@@ -187,9 +187,9 @@ namespace POSSystem.UI.ViewModel
             return points;
         }
 
-        private List<Pnl> MockStock(int year, ref List<Pnl> purchaseHistory, ref List<Pnl> salesHistory)
+        private List<GraphPoint> MockStock(int year, ref List<GraphPoint> purchaseHistory, ref List<GraphPoint> salesHistory)
         {
-            List<Pnl> stock = new List<Pnl>();
+            List<GraphPoint> stock = new List<GraphPoint>();
             double totalPurchase = 0;
             double totalSales = 0;
             int maxMonth1 = purchaseHistory.Select(x => x.Time.Month).Max();
@@ -205,13 +205,13 @@ namespace POSSystem.UI.ViewModel
                 int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day: DateTime.DaysInMonth(year, month);
                 if(month==1)
                 {
-                    stock.Add(new Pnl
+                    stock.Add(new GraphPoint
                     {
                         Time = new DateTime(year, month,1),
                         Value = LastYearStock(year)
                     });
                 }
-                stock.Add(new Pnl
+                stock.Add(new GraphPoint
                 {
                     Time = new DateTime(year, month, maxDayInMonth),
                     Value = totalPurchase - totalSales
