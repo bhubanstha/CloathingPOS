@@ -6,43 +6,42 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 
 using OxyPlot.Axes;
-using POSSystem.UI.Interface;
 
-namespace POSSystem.UI.ViewModel.Service
+namespace POSSystem.UI.UIModel
 {
     [DebuggerDisplay("X: {X} => {FinalX} | Y: {Y} => {FinalY}")]
-    public class Pnl : IAnimatablePoint
+    public class GraphPoint
     {
         public double FinalX { get; set; }
         public double FinalY { get; set; }
-        public double X { get; set; }
-        public double Y { get; set; }
+        public double Date { get; set; }
+        public double Quantity { get; set; }
 
         public DateTime Time
         {
-            get { return DateTimeAxis.ToDateTime(this.X); }
+            get { return DateTimeAxis.ToDateTime(this.Date); }
             set
             {
                 var finalX = DateTimeAxis.ToDouble(value);
 
                 this.FinalX = finalX;
-                this.X = finalX;
+                this.Date = finalX;
             }
         }
 
         public double Value
         {
-            get { return this.Y; }
+            get { return this.Quantity; }
             set
             {
                 this.FinalY = value;
-                this.Y = value;
+                this.Quantity = value;
             }
         }
 
         public override string ToString()
         {
-            return String.Format("{0:HH:mm} {1:0.0}", this.Time, this.Value);
+            return String.Format("{0:yyyy/mm/dd} {1:0.0}", this.Time, this.Value);
         }
     }
 }
