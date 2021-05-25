@@ -1,41 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
 using OxyPlot;
-using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using POS.BusinessRule;
+using POS.Model;
 using POSSystem.UI.Service;
-using POSSystem.UI.ViewModel.Extensions;
 using POSSystem.UI.ViewModel.Service;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class LineSeriesViewModel : AnimationViewModelBase
+    public class GraphViewModel : ViewModelBase
     {
-
+        private PlotModel _plotModel = null;
         private IColorService _colorService;
-
-        public LineSeriesViewModel(IColorService colorService)
+        public PlotModel PlotModel 
         {
+            get { return _plotModel; }
+            set
+            {
+                _plotModel = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<Inventory> Products { get; set; }
+        public List<Inventory> FilterProducts { get; set; }
+
+
+
+        public GraphViewModel(IColorService colorService)
+        {
+            
             _colorService = colorService;
+            GetAllProducts();
+           
+            
+        }
+
+        private void GetAllProducts()
+        {
+            InventoryBO inventoryBO = new InventoryBO();
+            Products = inventoryBO.GetAllActiveProducts();
+        }
+
+        public void CreateGraphModel()
+        {
+            PlotModel = new PlotModel();
             var pnls = new List<Pnl>();
             var pnls1 = new List<Pnl>();
             var pnls2 = new List<Pnl>();
 
-            
+
             pnls = MockPurchaseHistory();
             pnls1 = MockSalesHistory();
             pnls2 = MockStock(2021, ref pnls, ref pnls1);
-            var min1 = pnls.Min(x => x.Value);
-            var min2 = pnls1.Min(x => x.Value);
+
             var max1 = pnls.Max(x => x.Value);
             var max2 = pnls1.Max(x => x.Value);
+            var max3 = pnls2.Max(x => x.Value);
 
-            var minimum = min1<min2? min1 : min2;
-            var maximum = max1>max2? max1: max2;
+            var minimum = 0;
+            var maximum = max1 > max2 && max1 > max3 ? max1 : (max2 > max1 && max2 > max3) ? max2 : max3;
+
             maximum += 10;
 
             var plotModel = this.PlotModel;
@@ -56,6 +83,7 @@ namespace POSSystem.UI.ViewModel
                 MarkerType = MarkerType.Cross,
                 StrokeThickness = 2,
             };
+
 
             hex = _colorService.GetColorHex(_colorService.GetColor("Red"));
             var series1 = new LineSeries
@@ -93,19 +121,13 @@ namespace POSSystem.UI.ViewModel
             plotModel.Series.Add(series);
             plotModel.Series.Add(series1);
             plotModel.Series.Add(series2);
-            var annotation = new LineAnnotation
-            {
-                Type = LineAnnotationType.Horizontal,
-                Y = 0
-            };
-            //plotModel.Annotations.Add(annotation);
 
             var dateTimeAxis = new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
                 IntervalType = DateTimeIntervalType.Months,
                 IntervalLength = 1,
-                StringFormat="MMM"
+                StringFormat = "MMM"
             };
             plotModel.Axes.Add(dateTimeAxis);
 
@@ -114,31 +136,13 @@ namespace POSSystem.UI.ViewModel
             var valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Minimum = minimum - margin,
+                Minimum = 0, //minimum - margin,
                 Maximum = maximum + margin,
             };
             plotModel.Axes.Add(valueAxis);
-        }
-
-        public override bool SupportsEasingFunction { get { return true; } }
-
-        public override async Task AnimateAsync(AnimationSettings animationSettings)
-        {
-            var plotModel = this.PlotModel;
-            foreach (var s in plotModel.Series)
-            {
-
-                if (s is LineSeries)
-                {
-                    await plotModel.AnimateSeriesAsync((LineSeries)s, animationSettings);
-                }
-            }
-
-            //var series = plotModel.Series.First() as LineSeries;
-            //if (series != null)
-            //{
-            //    await plotModel.AnimateSeriesAsync(series, animationSettings);
-            //}
+            plotModel.LegendTitle = "This is legend";
+            plotModel.LegendPosition = LegendPosition.LeftTop;
+            plotModel.InvalidatePlot(true);
         }
 
         private List<Pnl> MockPurchaseHistory()
@@ -152,13 +156,13 @@ namespace POSSystem.UI.ViewModel
                 new Pnl{Time =new DateTime(2021,3, 1),  Value= 150},
                 new Pnl{Time =new DateTime(2021,4, 1),  Value= 106},
                 new Pnl{Time =new DateTime(2021,5, 1),  Value= 107},
-                new Pnl{Time =new DateTime(2021,6, 1),  Value= 130},
-                new Pnl{Time =new DateTime(2021,7, 1),  Value= 170},
-                new Pnl{Time =new DateTime(2021,8, 1),  Value= 120},
-                new Pnl{Time =new DateTime(2021,9, 1),  Value= 10},
-                new Pnl{Time =new DateTime(2021,10, 1), Value = 90},
-                new Pnl{Time =new DateTime(2021,11, 1), Value = 50},
-                new Pnl{Time =new DateTime(2021,12, 1), Value = 40}
+                //new Pnl{Time =new DateTime(2021,6, 1),  Value= 130},
+                //new Pnl{Time =new DateTime(2021,7, 1),  Value= 170},
+                //new Pnl{Time =new DateTime(2021,8, 1),  Value= 120},
+                //new Pnl{Time =new DateTime(2021,9, 1),  Value= 10},
+                //new Pnl{Time =new DateTime(2021,10, 1), Value = 90},
+                //new Pnl{Time =new DateTime(2021,11, 1), Value = 50},
+                //new Pnl{Time =new DateTime(2021,12, 1), Value = 40}
             };
             return points;
         }
@@ -168,17 +172,17 @@ namespace POSSystem.UI.ViewModel
             List<Pnl> points = new List<Pnl>
             {
                 new Pnl{Time =new DateTime(2021,1, 1),  Value = 3},
-                new Pnl{Time =new DateTime(2021,2, 1),  Value = 2},
+                new Pnl{Time =new DateTime(2021,2, 1),  Value = 0},
                 new Pnl{Time =new DateTime(2021,3, 1),  Value = 15},
                 new Pnl{Time =new DateTime(2021,4, 1),  Value = 100},
                 new Pnl{Time =new DateTime(2021,5, 1),  Value = 80},
-                new Pnl{Time =new DateTime(2021,6, 1),  Value = 100},
-                new Pnl{Time =new DateTime(2021,7, 1),  Value = 130},
+                //new Pnl{Time =new DateTime(2021,6, 1),  Value = 100},
+                //new Pnl{Time =new DateTime(2021,7, 1),  Value = 130},
                 //new Pnl{Time =new DateTime(2021,8, 1),  Value = 80},
-                new Pnl{Time =new DateTime(2021,9, 1),  Value = 0},
-                new Pnl{Time =new DateTime(2021,10, 1), Value = 50},
-                new Pnl{Time =new DateTime(2021,11, 1), Value = 10},
-                new Pnl{Time =new DateTime(2021,12, 1), Value = 5}
+                //new Pnl{Time =new DateTime(2021,9, 1),  Value = 0},
+                //new Pnl{Time =new DateTime(2021,10, 1), Value = 50},
+                //new Pnl{Time =new DateTime(2021,11, 1), Value = 10},
+                //new Pnl{Time =new DateTime(2021,12, 1), Value = 5}
             };
             return points;
         }
@@ -186,19 +190,42 @@ namespace POSSystem.UI.ViewModel
         private List<Pnl> MockStock(int year, ref List<Pnl> purchaseHistory, ref List<Pnl> salesHistory)
         {
             List<Pnl> stock = new List<Pnl>();
-            for (int month = 1; month < 13; month++)
+            double totalPurchase = 0;
+            double totalSales = 0;
+            int maxMonth1 = purchaseHistory.Select(x => x.Time.Month).Max();
+            int maxMonth2 = salesHistory.Select(x => x.Time.Month).Max();
+            int maxMonth = maxMonth1 > maxMonth2 ? maxMonth1 : maxMonth2;
+
+            for (int month = 1; month <= maxMonth; month++)
             {
                 double purchase = purchaseHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
                 double sales = salesHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
-                int maxDayInMonth = DateTime.DaysInMonth(year, month);
+                totalPurchase += purchase;
+                totalSales += sales;
+                int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day: DateTime.DaysInMonth(year, month);
+                if(month==1)
+                {
+                    stock.Add(new Pnl
+                    {
+                        Time = new DateTime(year, month,1),
+                        Value = LastYearStock(year)
+                    });
+                }
                 stock.Add(new Pnl
                 {
                     Time = new DateTime(year, month, maxDayInMonth),
-                    Value = purchase-sales
+                    Value = totalPurchase - totalSales
                 });
             }
 
             return stock;
+        }
+
+        private int LastYearStock(int thisYear)
+        {
+            InventoryBO inventoryBO = new InventoryBO();
+            var qty = inventoryBO.GetAllActiveProducts().Where(x => x.FirstPurchaseDate.Year == thisYear - 1).Sum(x => x.Quantity);
+            return qty;
         }
     }
 
