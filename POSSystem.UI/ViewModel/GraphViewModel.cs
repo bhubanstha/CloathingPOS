@@ -14,8 +14,9 @@ namespace POSSystem.UI.ViewModel
     public class GraphViewModel : ViewModelBase
     {
         private PlotModel _plotModel = null;
+        private Inventory _selectedItem = null;
         private IColorService _colorService;
-        public PlotModel PlotModel 
+        public PlotModel PlotModel
         {
             get { return _plotModel; }
             set
@@ -26,16 +27,28 @@ namespace POSSystem.UI.ViewModel
         }
         public List<Inventory> Products { get; set; }
         public List<Inventory> FilterProducts { get; set; }
+       
+
+        public Inventory SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value; 
+                OnPropertyChanged();
+
+            }
+        }
 
 
 
         public GraphViewModel(IColorService colorService)
         {
-            
+
             _colorService = colorService;
             GetAllProducts();
-           
-            
+
+
         }
 
         private void GetAllProducts()
@@ -140,7 +153,7 @@ namespace POSSystem.UI.ViewModel
                 Maximum = maximum + margin,
             };
             plotModel.Axes.Add(valueAxis);
-            plotModel.LegendTitle = "This is legend";
+            plotModel.LegendTitle = $"This is legend for {SelectedItem.Name}";
             plotModel.LegendPosition = LegendPosition.LeftTop;
             plotModel.InvalidatePlot(true);
         }
@@ -202,12 +215,12 @@ namespace POSSystem.UI.ViewModel
                 double sales = salesHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
                 totalPurchase += purchase;
                 totalSales += sales;
-                int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day: DateTime.DaysInMonth(year, month);
-                if(month==1)
+                int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day : DateTime.DaysInMonth(year, month);
+                if (month == 1)
                 {
                     stock.Add(new GraphPoint
                     {
-                        Time = new DateTime(year, month,1),
+                        Time = new DateTime(year, month, 1),
                         Value = LastYearStock(year)
                     });
                 }

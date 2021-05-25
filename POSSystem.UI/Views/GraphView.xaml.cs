@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using POS.Model;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
@@ -48,6 +49,7 @@ namespace POSSystem.UI.Views
         {
             if (txtProduct.SelectedItem != null)
             {
+                model.SelectedItem = txtProduct.SelectedItem as Inventory;
                 model.CreateGraphModel();
                 graph.InvalidatePlot();
                 //var pr = txtProduct.SelectedItem as Inventory;
