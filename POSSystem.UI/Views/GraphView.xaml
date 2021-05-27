@@ -31,17 +31,15 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="5" />
                 <RowDefinition Height="500" />
-                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ctrl:AutoCompleteTextBox
                 x:Name="txtProduct"
                 Grid.Row="0"
-                Grid.Column="1"
-                Margin="2,10,8,0"
+                Grid.Column="0"
+                Margin="48,10,8,0"
                 AutoCompleteHeight="200"
                 AutoCompletePlacement="Bottom"
                 AutoCompleteWidth="{Binding ElementName=txtProduct, Path=ActualWidth, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -79,34 +77,14 @@
                     </DataGridTemplateColumn>
                 </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
             </ctrl:AutoCompleteTextBox>
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                Margin="-30,0,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontWeight="Bold">
-                <TextBlock.LayoutTransform>
-                    <RotateTransform Angle="-90" />
-                </TextBlock.LayoutTransform>
-                Quantity
-            </TextBlock>
             <oxy:PlotView
                 x:Name="graph"
                 Grid.Row="2"
-                Grid.Column="1"
-                Margin="-35,0,0,0"
+                Grid.Column="0"
+                Margin="0,0,0,0"
                 Background="Transparent"
                 Foreground="Red"
                 Model="{Binding PlotModel, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontWeight="Bold">
-                Time
-            </TextBlock>
         </Grid>
     </Grid>
 

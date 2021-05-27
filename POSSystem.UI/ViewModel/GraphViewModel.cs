@@ -27,14 +27,14 @@ namespace POSSystem.UI.ViewModel
         }
         public List<Inventory> Products { get; set; }
         public List<Inventory> FilterProducts { get; set; }
-       
+
 
         public Inventory SelectedItem
         {
             get { return _selectedItem; }
             set
             {
-                _selectedItem = value; 
+                _selectedItem = value;
                 OnPropertyChanged();
 
             }
@@ -51,184 +51,146 @@ namespace POSSystem.UI.ViewModel
 
         }
 
-        private void GetAllProducts()
-        {
-            InventoryBO inventoryBO = new InventoryBO();
-            Products = inventoryBO.GetAllActiveProducts();
-        }
-
+        
         public void CreateGraphModel()
         {
             PlotModel = new PlotModel();
-            var pnls = new List<GraphPoint>();
-            var pnls1 = new List<GraphPoint>();
-            var pnls2 = new List<GraphPoint>();
+            var purchasePoints = new List<GraphPoint>();
+            var salePoints = new List<GraphPoint>();
+            var stockPoints = new List<GraphPoint>();
 
 
-            pnls = MockPurchaseHistory();
-            pnls1 = MockSalesHistory();
-            pnls2 = MockStock(2021, ref pnls, ref pnls1);
+            purchasePoints = PurchaseHistory();
+            salePoints = SalesHistory();
+            stockPoints = Stock(2021, ref purchasePoints, ref salePoints);
 
-            var max1 = pnls.Max(x => x.Value);
-            var max2 = pnls1.Max(x => x.Value);
-            var max3 = pnls2.Max(x => x.Value);
+            var max1 = purchasePoints.Count == 0 ? 0 : purchasePoints.Max(x => x.Value);
+            var max2 = salePoints.Count == 0 ? 0 : salePoints.Max(x => x.Value);
+            var max3 = stockPoints.Count == 0 ? 0 : stockPoints.Max(x => x.Value);
 
             var minimum = 0;
             var maximum = max1 > max2 && max1 > max3 ? max1 : (max2 > max1 && max2 > max3) ? max2 : max3;
 
-            maximum += 10;
-
-            var plotModel = this.PlotModel;
-            //plotModel.Title = "Line Series Animation Demo";
-
-            string hex = _colorService.GetColorHex(_colorService.GetColor("Yellow"));
-            var series = new LineSeries
-            {
-                Title = "Purchase",
-                ItemsSource = pnls,
-                DataFieldX = "Time",
-                DataFieldY = "Value",
-                Color = OxyColor.Parse(hex),
-                MarkerSize = 3,
-                MarkerFill = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStroke = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStrokeThickness = 1.5,
-                MarkerType = MarkerType.Cross,
-                StrokeThickness = 2,
-            };
+            maximum += 5;
 
 
-            hex = _colorService.GetColorHex(_colorService.GetColor("Red"));
-            var series1 = new LineSeries
-            {
-                Title = "Sells",
-                ItemsSource = pnls1,
-                DataFieldX = "Time",
-                DataFieldY = "Value",
-                Color = OxyColor.Parse(hex),
-                MarkerSize = 3,
-                MarkerFill = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStroke = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStrokeThickness = 1.5,
-                MarkerType = MarkerType.Cross,
-                StrokeThickness = 2,
-            };
 
-            hex = _colorService.GetColorHex(_colorService.GetColor("Purple"));
-            var series2 = new LineSeries
-            {
-                Title = "Stock",
-                ItemsSource = pnls2,
-                DataFieldX = "Time",
-                DataFieldY = "Value",
-                Color = OxyColor.Parse(hex),
-                MarkerSize = 3,
-                MarkerFill = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStroke = OxyColor.Parse("#FFFFFFFF"),
-                MarkerStrokeThickness = 1.5,
-                MarkerType = MarkerType.Cross,
-                StrokeThickness = 2,
-            };
+            PlotModel.Series.Add(CreateSeries(purchasePoints, "Purchase", "Yellow", MarkerType.Plus));
+            PlotModel.Series.Add(CreateSeries(salePoints, "Sells", "Red", MarkerType.Star));
+            PlotModel.Series.Add(CreateSeries(stockPoints, "Stock", "Purple", MarkerType.Circle));
 
-
-            plotModel.Series.Add(series);
-            plotModel.Series.Add(series1);
-            plotModel.Series.Add(series2);
+            var margin = (maximum - minimum) * 0.05;
 
             var dateTimeAxis = new DateTimeAxis
             {
                 Position = AxisPosition.Bottom,
                 IntervalType = DateTimeIntervalType.Months,
                 IntervalLength = 1,
-                StringFormat = "MMM"
+                StringFormat = "MMM",
+                IsZoomEnabled = false,
+                MajorGridlineStyle = LineStyle.Dot,
+                MajorGridlineColor = OxyColor.Parse("#dedad9"),
+                MajorGridlineThickness = 2,
+                Title = "Time"
             };
-            plotModel.Axes.Add(dateTimeAxis);
-
-            var margin = (maximum - minimum) * 0.05;
 
             var valueAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Minimum = 0, //minimum - margin,
                 Maximum = maximum + margin,
+                IsZoomEnabled = false,
+                MajorGridlineStyle = LineStyle.Dot,
+                MajorGridlineColor = OxyColor.Parse("#dedad9"),
+                MajorGridlineThickness = 2,
+                Title = "Quantity"
             };
-            plotModel.Axes.Add(valueAxis);
-            plotModel.LegendTitle = $"This is legend for {SelectedItem.Name}";
-            plotModel.LegendPosition = LegendPosition.LeftTop;
-            plotModel.InvalidatePlot(true);
+
+            PlotModel.Axes.Add(dateTimeAxis);
+            PlotModel.Axes.Add(valueAxis);
+            PlotModel.LegendTitle = $"{SelectedItem.Name}-[{SelectedItem.Size}] History Graph";
+            PlotModel.LegendPosition = LegendPosition.LeftTop;
+            PlotModel.InvalidatePlot(true);
         }
 
-        private List<GraphPoint> MockPurchaseHistory()
+        #region Private Methods
+        private List<GraphPoint> PurchaseHistory()
         {
-            List<GraphPoint> points = new List<GraphPoint>
+
+            InventoryHistoryBO bO = new InventoryHistoryBO();
+            List<InventoryHistory> result = bO.GetHistory(SelectedItem.Id);
+
+            List<GraphPoint> points = new List<GraphPoint>();
+            foreach (InventoryHistory history in result)
             {
-                new GraphPoint{Time =new DateTime(2021,1, 1),  Value = 10},
-                new GraphPoint{Time =new DateTime(2021,1, 5),  Value = 16},
-                new GraphPoint{Time =new DateTime(2021,1, 17),  Value = 70},
-                //new Pnl{Time =new DateTime(2021,2, 1),  Value= 5},
-                new GraphPoint{Time =new DateTime(2021,3, 1),  Value= 150},
-                new GraphPoint{Time =new DateTime(2021,4, 1),  Value= 106},
-                new GraphPoint{Time =new DateTime(2021,5, 1),  Value= 107},
-                //new Pnl{Time =new DateTime(2021,6, 1),  Value= 130},
-                //new Pnl{Time =new DateTime(2021,7, 1),  Value= 170},
-                //new Pnl{Time =new DateTime(2021,8, 1),  Value= 120},
-                //new Pnl{Time =new DateTime(2021,9, 1),  Value= 10},
-                //new Pnl{Time =new DateTime(2021,10, 1), Value = 90},
-                //new Pnl{Time =new DateTime(2021,11, 1), Value = 50},
-                //new Pnl{Time =new DateTime(2021,12, 1), Value = 40}
-            };
+                points.Add(new GraphPoint
+                {
+                    Time = history.PurchaseDate,
+                    Value = history.Quantity
+                });
+            }
             return points;
         }
 
-        private List<GraphPoint> MockSalesHistory()
+        private List<GraphPoint> SalesHistory()
         {
-            List<GraphPoint> points = new List<GraphPoint>
+
+            SalesBO bO = new SalesBO();
+            List<Sales> results = bO.GetSalesHistory(SelectedItem.Id);
+            List<GraphPoint> points = new List<GraphPoint>();
+            foreach (Sales sale in results)
             {
-                new GraphPoint{Time =new DateTime(2021,1, 1),  Value = 3},
-                new GraphPoint{Time =new DateTime(2021,2, 1),  Value = 0},
-                new GraphPoint{Time =new DateTime(2021,3, 1),  Value = 15},
-                new GraphPoint{Time =new DateTime(2021,4, 1),  Value = 100},
-                new GraphPoint{Time =new DateTime(2021,5, 1),  Value = 80},
-                //new Pnl{Time =new DateTime(2021,6, 1),  Value = 100},
-                //new Pnl{Time =new DateTime(2021,7, 1),  Value = 130},
-                //new Pnl{Time =new DateTime(2021,8, 1),  Value = 80},
-                //new Pnl{Time =new DateTime(2021,9, 1),  Value = 0},
-                //new Pnl{Time =new DateTime(2021,10, 1), Value = 50},
-                //new Pnl{Time =new DateTime(2021,11, 1), Value = 10},
-                //new Pnl{Time =new DateTime(2021,12, 1), Value = 5}
-            };
+                points.Add(new GraphPoint
+                {
+                    Time = sale.Bill.BillDate,
+                    Value = sale.SalesQuantity
+                });
+            }
             return points;
         }
 
-        private List<GraphPoint> MockStock(int year, ref List<GraphPoint> purchaseHistory, ref List<GraphPoint> salesHistory)
+        private List<GraphPoint> Stock(int year, ref List<GraphPoint> purchaseHistory, ref List<GraphPoint> salesHistory)
         {
             List<GraphPoint> stock = new List<GraphPoint>();
-            double totalPurchase = 0;
-            double totalSales = 0;
-            int maxMonth1 = purchaseHistory.Select(x => x.Time.Month).Max();
-            int maxMonth2 = salesHistory.Select(x => x.Time.Month).Max();
-            int maxMonth = maxMonth1 > maxMonth2 ? maxMonth1 : maxMonth2;
 
-            for (int month = 1; month <= maxMonth; month++)
+            if (purchaseHistory.Count > 0 || salesHistory.Count > 0)
             {
-                double purchase = purchaseHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
-                double sales = salesHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
-                totalPurchase += purchase;
-                totalSales += sales;
-                int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day : DateTime.DaysInMonth(year, month);
-                if (month == 1)
+                double totalPurchase = 0;
+                double totalSales = 0;
+                int maxMonth1 = purchaseHistory.Count == 0 ? 0 : purchaseHistory.Select(x => x.Time.Month).Max();
+                int maxMonth2 = salesHistory.Count == 0 ? maxMonth1 : salesHistory.Select(x => x.Time.Month).Max();
+                int maxMonth = maxMonth1 > maxMonth2 ? maxMonth1 : maxMonth2;
+
+                int minMonth1 = purchaseHistory.Count == 0 ? 0 : purchaseHistory.Select(x => x.Time.Month).Min();
+                int minMonth2 = salesHistory.Count == 0 ? minMonth1 : salesHistory.Select(x => x.Time.Month).Min();
+                int minMonth = minMonth1 < minMonth2 ? minMonth1 : minMonth2;
+
+                minMonth = minMonth == 0 && maxMonth == 0 ? 0 : minMonth == 0 ? maxMonth : minMonth;
+
+
+
+                for (int month = minMonth; month <= maxMonth; month++)
                 {
+                    double purchase = purchaseHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
+                    double sales = salesHistory.Where(x => x.Time.Month == month).Sum(x => x.Value);
+                    totalPurchase += purchase;
+                    totalSales += sales;
+                    int maxDayInMonth = (month == DateTime.Now.Month && month == maxMonth) ? DateTime.Now.Day : DateTime.DaysInMonth(year, month);
+                    if (month == 1)
+                    {
+                        stock.Add(new GraphPoint
+                        {
+                            Time = new DateTime(year, month, 1),
+                            Value = LastYearStock(year)
+                        });
+                    }
+                    var stockQty = totalPurchase - totalSales;
                     stock.Add(new GraphPoint
                     {
-                        Time = new DateTime(year, month, 1),
-                        Value = LastYearStock(year)
-                    });
+                        Time = new DateTime(year, month, maxDayInMonth),
+                        Value = stockQty < 0 ? 0 : stockQty
+                    }); ;
                 }
-                stock.Add(new GraphPoint
-                {
-                    Time = new DateTime(year, month, maxDayInMonth),
-                    Value = totalPurchase - totalSales
-                });
             }
 
             return stock;
@@ -240,6 +202,36 @@ namespace POSSystem.UI.ViewModel
             var qty = inventoryBO.GetAllActiveProducts().Where(x => x.FirstPurchaseDate.Year == thisYear - 1).Sum(x => x.Quantity);
             return qty;
         }
+
+        private void GetAllProducts()
+        {
+            InventoryBO inventoryBO = new InventoryBO();
+            Products = inventoryBO.GetAllActiveProducts();
+        }
+
+
+
+        private LineSeries CreateSeries(List<GraphPoint> dataSource, string Title, string color, MarkerType markerType)
+        {
+            string hex = _colorService.GetColorHex(_colorService.GetColor(color));
+            LineSeries series = new LineSeries
+            {
+                Title = Title,
+                ItemsSource = dataSource,
+                DataFieldX = "Time",
+                DataFieldY = "Value",
+                Color = OxyColor.Parse(hex),
+                MarkerSize = 3,
+                MarkerFill = OxyColor.Parse("#FFFFFFFF"),
+                MarkerStroke = OxyColor.Parse("#FFFFFFFF"),
+                MarkerStrokeThickness = 1.5,
+                MarkerType = markerType,
+                StrokeThickness = 2,
+            };
+
+            return series;
+        } 
+        #endregion
     }
 
 }

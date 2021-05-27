@@ -82,5 +82,11 @@ namespace POS.BusinessRule
             List<Sales> sales = await genericDataRepository.GetAll().Where(x => x.BillNo == BillNo).ToListAsync<Sales>();
             return sales;
         }
+
+        public List<Sales> GetSalesHistory(Int64 itemId)
+        {
+            List<Sales> sales = genericDataRepository.GetAll().Where(x => x.Inventory.Id == itemId).OrderBy(x=>x.Bill.BillDate).ToList();
+            return sales;
+        }
     }
 }
