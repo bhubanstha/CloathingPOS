@@ -30,6 +30,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand ManageAccount { get; }
         public ICommand SettingsCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand OpenPdfViewerCommand { get; set; }
 
         public MetroWindow Window { get; set; }
         public Flyout SettingFlyout { get; set; }
@@ -79,6 +80,13 @@ namespace POSSystem.UI.ViewModel
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
             SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
             LogoutCommand = new DelegateCommand(OnUserLogout);
+            OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
+        }
+
+        private void OnOpenPdfViewerExecute()
+        {
+            MoonPdf.PDFViewerWindow window = new MoonPdf.PDFViewerWindow();
+            window.Show();
         }
 
         private void OnUserLogout()

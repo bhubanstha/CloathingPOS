@@ -7,11 +7,11 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="210"
+    Height="400"
     d:DesignHeight="550"
     d:DesignWidth="800"
-    mc:Ignorable="d"
-    Width="210"
-    Height="400">
+    mc:Ignorable="d">
     <UserControl.Resources>
 
         <Style x:Key="MenuCotainer" TargetType="ListView">
@@ -90,7 +90,10 @@
 
     <Grid Width="205" Margin="2">
         <StackPanel x:Name="UserMenuPopup">
-            <Polygon Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}" Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Points="105,0 90,10 0,10 0,165 200,165 200,10 120,10">
+            <Polygon
+                Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                Points="105,0 90,10 0,10 0,265 200,265 200,10 120,10"
+                Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}">
 
                 <Polygon.Effect>
                     <DropShadowEffect
@@ -125,10 +128,10 @@
                         <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
-                
+
 
             </ListView>
-            <Separator Margin="10"/>
+            <Separator Margin="10" />
             <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
@@ -170,6 +173,31 @@
                         <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
+            </ListView>
+            <Separator Margin="10" />
+            <ListView Style="{StaticResource MenuCotainer}">
+                <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="AddressCardRegular" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Open Pdf Viewer" />
+                    </StackPanel>
+                    <ListViewItem.InputBindings>
+                        <MouseBinding Command="{Binding OpenPdfViewerCommand}" MouseAction="LeftClick" />
+                    </ListViewItem.InputBindings>
+                </ListViewItem>
+
+
             </ListView>
         </StackPanel>
     </Grid>

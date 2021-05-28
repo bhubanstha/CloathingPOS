@@ -383,6 +383,26 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PDFViewer\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFViewer\BaseCommand.cs" />
+    <Compile Include="PDFViewer\Commands.cs" />
+    <Compile Include="PDFViewer\DelegateCommand.cs" />
+    <Compile Include="PDFViewer\FullscreenCommand.cs" />
+    <Compile Include="PDFViewer\GotoPageDialog.xaml.cs">
+      <DependentUpon>GotoPageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFViewer\IconExtension.cs" />
+    <Compile Include="PDFViewer\PDFViewerWindow.xaml.cs">
+      <DependentUpon>PDFViewerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFViewer\MainWindowDataContext.cs" />
+    <Compile Include="PDFViewer\MenuItemExtensions.cs" />
+    <Compile Include="PDFViewer\PdfPasswordDialog.xaml.cs">
+      <DependentUpon>PdfPasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFViewer\Resources.Designer.cs" />
     <Compile Include="Service\CacheService.cs" />
     <Compile Include="Service\ColorService.cs" />
     <Compile Include="Service\ConfigurationReader.cs" />
@@ -490,6 +510,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PDFViewer\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PDFViewer\GotoPageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PDFViewer\PDFViewerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PDFViewer\PdfPasswordDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\AppCustomStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -601,11 +637,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="PDFViewer\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="PDFViewer\headertemplate.json" />
+    <None Include="PDFViewer\MoonPdf.csproj" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -637,6 +678,10 @@
     <ProjectReference Include="..\POS.Utilities\POS.Utilities.csproj">
       <Project>{36e57be4-520f-4de1-b896-26f9c00e433d}</Project>
       <Name>POS.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThirdPartyUtility\MoonPdfLib\MoonPdfLib.csproj">
+      <Project>{e5c5a57c-e464-4402-ad62-d6119ea92a8d}</Project>
+      <Name>MoonPdfLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -690,4 +735,7 @@
   <Import Project="..\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('..\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
   <Import Project="..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(SolutionDir)ThirdPartyUtility\PdfRenderer\$(PlatformName)\libmupdf.dll $(TargetDir) /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
