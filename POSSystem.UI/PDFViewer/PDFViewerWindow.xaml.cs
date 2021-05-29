@@ -29,10 +29,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using iText.Layout;
 using MahApps.Metro.Controls;
 using MoonPdfLib;
 using MoonPdfLib.Helper;
 using MoonPdfLib.MuPdf;
+using POS.Utilities.PDF;
 
 namespace MoonPdf
 {
@@ -77,6 +79,10 @@ namespace MoonPdf
 
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
+			CreatePDF createPDF = new CreatePDF();
+			string pdfPath = createPDF.CreatePdfTable(1, "123");
+			//byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
+			MoonPdfPanel.OpenFile(pdfPath);
 			var args = Environment.GetCommandLineArgs();
 
 			// if a filename was given via command line

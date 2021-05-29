@@ -189,7 +189,7 @@ namespace MoonPdfLib.MuPdf
 		/// <summary>
 		/// Helper class for an easier disposing of unmanaged resources
 		/// </summary>
-		private sealed class PdfFileStream : IDisposable
+		public sealed class PdfFileStream : IDisposable
 		{
 			const uint FZ_STORE_DEFAULT = 256 << 20;
 
@@ -226,7 +226,7 @@ namespace MoonPdfLib.MuPdf
 			}
 		}
 
-		private static class NativeMethods
+		public static class NativeMethods
 		{
 			const string DLL = "libmupdf.dll";
 
@@ -295,7 +295,7 @@ namespace MoonPdfLib.MuPdf
 		}
 	}
 
-    internal struct Rectangle
+    public struct Rectangle
     {
         public float Left, Top, Right, Bottom;
 
@@ -310,7 +310,7 @@ namespace MoonPdfLib.MuPdf
 		public int Left, Top, Right, Bottom;
 	}
 
-    internal struct Matrix
+    public struct Matrix
     {
         public float A, B, C, D, E, F;
     }

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MoonPdf;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
@@ -42,6 +43,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<LoginWindow>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<ForgotPasswordWindow>().AsSelf();
+            builder.RegisterType<PDFViewerWindow>().AsSelf();
 
 
 

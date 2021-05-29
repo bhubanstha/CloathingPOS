@@ -33,6 +33,7 @@ using MoonPdfLib.Helper;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Diagnostics;
+using static MoonPdfLib.MuPdf.MuPdfWrapper;
 
 namespace MoonPdfLib
 {
@@ -190,9 +191,18 @@ namespace MoonPdfLib
 
 			this.Open(new FileSource(pdfFilename), password);
         }
+		public void OpenFile(byte[] pdfByte, string password = null)
+		{
+			if (pdfByte == null || pdfByte.Length == 0)
+			this.pdfFileName = "";
+
+			this.Open(new MemorySource(pdfByte), password);
+		}
 
 		public void Open(IPdfSource source, string password = null)
 		{
+
+			AskPassword:
             var pw = password;
 
             if (this.PasswordRequired != null && MuPdfWrapper.NeedsPassword(source) && pw == null)
@@ -204,7 +214,13 @@ namespace MoonPdfLib
                     return;
 
                 pw = e.Password;
-            }
+				int isAuthenticated = 0;
+				using (var stream = new PdfFileStream(source))
+				{
+					isAuthenticated = NativeMethods.AuthenticatePassword(stream.Document, pw);
+				}
+				if (isAuthenticated == 0) goto AskPassword;
+			}
 
             this.LoadPdf(source, pw);
 			this.CurrentSource = source;

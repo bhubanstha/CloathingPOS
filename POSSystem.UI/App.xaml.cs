@@ -12,6 +12,7 @@ using POSSystem.UI.Service;
 using ControlzEx.Theming;
 using System.IO.IsolatedStorage;
 using System.IO;
+using MoonPdf;
 
 namespace POSSystem.UI
 {
@@ -25,7 +26,7 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<LoginWindow>();
+            var window = container.Resolve<PDFViewerWindow>();
             this.MainWindow = window;
 
 
