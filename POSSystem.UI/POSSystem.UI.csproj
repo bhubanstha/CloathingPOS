@@ -748,6 +748,9 @@
     <Folder Include="Interface\" />
     <Folder Include="ViewModel\Extensions\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\InvoiceSample.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
