@@ -35,6 +35,7 @@ using MoonPdfLib;
 using MoonPdfLib.Helper;
 using MoonPdfLib.MuPdf;
 using POS.Utilities.PDF;
+using POSSystem.UI.Service;
 
 namespace MoonPdf
 {
@@ -80,7 +81,7 @@ namespace MoonPdf
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			CreatePDF createPDF = new CreatePDF();
-			string pdfPath = createPDF.CreatePdfTable(1, "123");
+			string pdfPath = createPDF.CreatePdfTable(1, StaticContainer.PdfPassword);
 			//byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
 			MoonPdfPanel.OpenFile(pdfPath);
 			var args = Environment.GetCommandLineArgs();

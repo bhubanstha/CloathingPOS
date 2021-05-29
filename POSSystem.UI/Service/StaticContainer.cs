@@ -33,6 +33,7 @@ namespace POSSystem.UI.Service
         public static CultureInfo CultureInfo { get; set; }
         public static NotificationManager NotificationManager { get; set; }
         public static string SettingFile { get; set; }
+        public static string PdfPassword { get; set; }
         public static bool IsPasswordChanged { get; set; }
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
@@ -51,6 +52,7 @@ namespace POSSystem.UI.Service
             SettingFile = "AppConfiguration.txt";// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppConfiguration.txt");
             ApplicationName = ConfigurationReader.GetConfiguration <string>(AppSettingKey.AppName);
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
+            PdfPassword = ConfigurationReader.GetConfiguration<string>(AppSettingKey.PdfPassword);
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
         }
 
