@@ -751,6 +751,11 @@
   <ItemGroup>
     <Resource Include="Image\InvoiceSample.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\companyLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -773,5 +778,9 @@
   <Import Project="..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.0.0\build\MaterialDesignThemes.targets')" />
   <PropertyGroup>
     <PostBuildEvent>xcopy $(SolutionDir)ThirdPartyUtility\PdfRenderer\$(PlatformName)\libmupdf.dll $(TargetDir) /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist DirToCreate mkdir $(TargetDir)Image
+copy $(ProjectDir)Image\* $(TargetDir)Image /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>

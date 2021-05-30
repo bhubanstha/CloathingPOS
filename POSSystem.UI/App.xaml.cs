@@ -26,7 +26,7 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<LoginWindow>();
+            var window = container.Resolve<PDFViewerWindow>();
             this.MainWindow = window;
 
 

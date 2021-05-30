@@ -77,10 +77,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NumToWord\NumberToWord.cs" />
     <Compile Include="ObjectFinder.cs" />
     <Compile Include="Encryption\BouncyCastleEncryption.cs" />
     <Compile Include="Encryption\IBouncyCastleEncryption.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
+    <Compile Include="PDF\PDFUtility.cs" />
+    <Compile Include="PDF\SalesMockData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,5 +91,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Image\companyLogo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
