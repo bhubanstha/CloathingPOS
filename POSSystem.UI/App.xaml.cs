@@ -82,7 +82,7 @@ namespace POSSystem.UI
             }
             catch (FileNotFoundException ex)
             {
-                throw ex;
+                //throw ex;
                 // Handle when file is not found in isolated storage:
                 // * When the first application session
                 // * When file has been deleted
