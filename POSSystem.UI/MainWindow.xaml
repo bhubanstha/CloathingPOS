@@ -292,12 +292,12 @@
             Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
         -->
-        <ScrollViewer
+        <!--<ScrollViewer
             x:Name="PrimaryScrollViewer"
             Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
             VerticalScrollBarVisibility="Auto"
-            Visibility="Visible">
+            Visibility="Visible">-->
             <Grid x:Name="PrimaryGrid" Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
 
                 <Grid.RowDefinitions>
@@ -435,7 +435,7 @@
 
 
             </Grid>
-        </ScrollViewer>
+        <!--</ScrollViewer>-->
 
     </Grid>
 
