@@ -192,12 +192,13 @@ namespace POSSystem.UI.ViewModel
         {
             UserBO userBO = new UserBO();
             List<User> _users = userBO.GetAllUser();
+            _users.AddRange(MockUser(15));
             UsersList = new ObservableCollection<User>();
             foreach (User u in _users)
             {
                 UsersList.Add(u);
             }
-
+            
         }
 
         private void ClearAll()
@@ -212,7 +213,26 @@ namespace POSSystem.UI.ViewModel
             this.PasswordTextBox.Password = "";
         }
 
-
+        private List<User> MockUser(int count)
+        {
+            List<User> UsersList = new List<User>();
+            Random random = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                
+                UsersList.Add(new User
+                {
+                    Id = i + 10,
+                    UserName = $"user{i}",
+                    DisplayName = $"User Name{i}",
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    IsAdmin = Convert.ToBoolean( random.Next(-1, 1)),
+                    PromptForPasswordReset = false
+                });
+            }
+            return UsersList;
+        }
     }
 }
 
