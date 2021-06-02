@@ -21,10 +21,10 @@
     </UserControl.Resources>
 
     <StackPanel>
-       
-        <Grid
+
+        <Expander Margin="0 5 3 5" Header="Create User" IsExpanded="True">
+            <Grid
             x:Name="MainGrid"
-            Margin="0,30,30,0"
             behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -163,17 +163,11 @@
 
 
         </Grid>
+        </Expander>
+        
 
-        <Separator
-            Margin="0,0,0,10"
-            BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-            BorderThickness="2" />
-        <Grid
-            Grid.Row="8"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="0,0,8,0"
-            Background="Red">
+        <Expander Margin="0 0 3 0" Header="User List" IsExpanded="False">
+            
             <DataGrid
                 x:Name="UserDataGrid"
                 HorizontalAlignment="Center"
@@ -191,7 +185,6 @@
                 SelectionMode="Single"
                 Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
                 VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}">
-
                 <DataGrid.MaxHeight>
                     <MultiBinding
                         Converter="{StaticResource HeightCalc}"
@@ -199,12 +192,11 @@
                         UpdateSourceTrigger="PropertyChanged">
                         <Binding>
                             <Binding.Source>
-                                <sys:Double>450</sys:Double>
+                                <sys:Double>500</sys:Double>
                             </Binding.Source>
                         </Binding>
                     </MultiBinding>
                 </DataGrid.MaxHeight>
-
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="180"
@@ -352,8 +344,8 @@
                 </DataGrid.Columns>
 
             </DataGrid>
-        </Grid>
 
+</Expander>
     </StackPanel>
 
 </UserControl>
