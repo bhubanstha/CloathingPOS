@@ -21,7 +21,7 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
+       
         <Grid
             x:Name="MainGrid"
             Margin="0,30,30,0"
