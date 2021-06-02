@@ -272,23 +272,22 @@
 
     </mah:MetroWindow.Flyouts>
 
-    <Canvas
-        x:Name="container"
-        Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}"
+    <!--Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}"-->
+    <Grid
+        x:Name="container"        
         Background="{DynamicResource AccentBackgroundTest}">
-        <Grid
-            Canvas.Top="2"
-            Canvas.Right="{Binding PopupRightMargin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Panel.ZIndex="1"
-            Opacity="1">
-            <Popup
+        <Popup
+            Placement="RelativePoint"
+            PlacementTarget="{Binding ElementName=btnCmdUserName}"
                 x:Name="UMenuPopup"
+            HorizontalOffset="120"
+            VerticalOffset="28"
                 AllowsTransparency="True"
                 IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                StaysOpen="False">
-                <views:UserMenuPopupControl />
-            </Popup>
-        </Grid>
+                StaysOpen="False"
+            >
+            <views:UserMenuPopupControl />
+        </Popup>
         <!--
             Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:MetroWindow}}"
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
@@ -438,7 +437,7 @@
             </Grid>
         </ScrollViewer>
 
-    </Canvas>
+    </Grid>
 
 
 </mah:MetroWindow>
