@@ -26,15 +26,14 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<PDFViewerWindow>();
-            this.MainWindow = window;
-
-
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             ReloadConfig();
+
+            var window = container.Resolve<MainWindow>();
+            this.MainWindow = window;
             window.Show();
 
 

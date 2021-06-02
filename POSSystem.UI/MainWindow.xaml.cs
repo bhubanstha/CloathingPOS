@@ -68,9 +68,9 @@ namespace POSSystem.UI
             Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
-            menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
-            menuGraphs.IsVisible = _model.IsAdminMenuVisible;
-            menuReport.IsVisible = _model.IsAdminMenuVisible;
+            //menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            //menuGraphs.IsVisible = _model.IsAdminMenuVisible;
+            //menuReport.IsVisible = _model.IsAdminMenuVisible;
             if(!_model.IsAdminMenuVisible)
             {
                 HamburgerMenuControl.SelectedIndex = 1;
@@ -94,7 +94,7 @@ namespace POSSystem.UI
             //((MahApps.Metro.Controls.HamburgerMenuItemBase)args.InvokedItem).IsVisible = false;
         }
 
-        private void Screenshot(System.Drawing.Size size, Canvas canvas, Window window)
+        private void Screenshot(System.Drawing.Size size, Panel canvas, Window window)
         {
 
             // Store the size of the map control

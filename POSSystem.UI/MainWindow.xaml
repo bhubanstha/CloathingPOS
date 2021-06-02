@@ -97,7 +97,7 @@
                                             Focusable="False"
                                             Opacity="0.0" />
                                     </Grid>
-                                    <materialDesign:Ripple
+                                    <ContentControl
                                         x:Name="ContentPresenter"
                                         Padding="{TemplateBinding Padding}"
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -105,7 +105,6 @@
                                         Content="{TemplateBinding Content}"
                                         ContentTemplate="{TemplateBinding ContentTemplate}"
                                         ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                                        Feedback="{DynamicResource MahApps.Brushes.Gray.MouseOver}"
                                         Focusable="False"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 </Grid>
