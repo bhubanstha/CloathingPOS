@@ -21,8 +21,7 @@
 
 
     </UserControl.Resources>
-    <StackPanel>
-        <Border Style="{StaticResource HeaderBorder}" />
+    <StackPanel Margin="0 5 3 5">
 
         <Grid Style="{StaticResource ControlerMainGrid}">
             <Grid.RowDefinitions>

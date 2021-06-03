@@ -11,8 +11,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
-        <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
+    <StackPanel Orientation="Vertical" Margin="0 5 3 5">
         <Grid Margin="{StaticResource ControlMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

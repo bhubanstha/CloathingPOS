@@ -13,10 +13,8 @@
     mc:Ignorable="d">
 
 
-    <StackPanel>
-        <Border Style="{StaticResource HeaderBorder}" />
-
-        <Grid behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}" Style="{StaticResource ControlerMainGrid}">
+    <StackPanel Margin="0 5 3 5">
+        <Grid behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

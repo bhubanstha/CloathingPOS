@@ -20,7 +20,7 @@
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
 
     </UserControl.Resources>
-    <StackPanel>
+    <StackPanel Margin="0 5 3 5">
         <Grid x:Name="MainGrid">
 
             <Grid.RowDefinitions>

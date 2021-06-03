@@ -32,7 +32,7 @@
         <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
             <DockPanel
                 x:Name="dpHeader"
-                Margin="0,15,0,0"
+                Margin="0,0,0,0"
                 VerticalAlignment="Center"
                 LastChildFill="True">
                 <Button

@@ -12,8 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <StackPanel>
-        <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
+    <StackPanel Margin="0 5 3 5">
 
         <Grid Margin="{DynamicResource ControlMargin}">
             <Grid.RowDefinitions>
@@ -46,14 +45,26 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
+                    <Border x:Name="mask" Background="{DynamicResource MahApps.Brushes.Accent}" CornerRadius="15 15 0 0"/>
+                    <StackPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
+
+                        <!-- Use a VisualBrush of 'mask' as the opacity mask -->
+                        <StackPanel.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=mask}"/>
+                        </StackPanel.OpacityMask>
+                        <Image
+                            Height="300"
+                            Source="/Image/profileImage.png"
+                            Stretch="Fill" />
+                    </StackPanel>
+                    <!--<DockPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
                         <Image
                             Grid.Row="0"
                             Height="300"
                             Margin="0,-15,0,0"
                             Source="/Image/profileImage.png"
                             Stretch="Fill" />
-                    </DockPanel>
+                    </DockPanel>-->
                     <StackPanel
                         Grid.Row="1"
                         Margin="0,0,0,30"

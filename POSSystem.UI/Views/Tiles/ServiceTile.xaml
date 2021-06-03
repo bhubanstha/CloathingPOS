@@ -14,10 +14,22 @@
             <RowDefinition Height="150" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image
+        <Border x:Name="mask" Background="White" CornerRadius="5 5 0 0"/>
+        <StackPanel Grid.Row="0">
+
+            <!-- Use a VisualBrush of 'mask' as the opacity mask -->
+            <StackPanel.OpacityMask>
+                <VisualBrush Visual="{Binding ElementName=mask}"/>
+            </StackPanel.OpacityMask>
+
+            <!-- Any content -->
+            <Image
             x:Name="imgServiceImage"
             Grid.Row="0"
             Stretch="UniformToFill" />
+
+        </StackPanel>
+       
         <StackPanel
             Grid.Row="0"
             VerticalAlignment="Bottom"
