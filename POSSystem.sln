@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoonPdfLib", "ThirdPartyUti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseKeyboardActivityMonitor", "ThirdPartyUtility\MouseKeyboardActivityMonitor\MouseKeyboardActivityMonitor.csproj", "{F52AA97E-180A-40ED-8F2B-09080171D6C7}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "POSSystem.UI.Installer", "POSSystem.Installer\POSSystem.UI.Installer.wixproj", "{0E8930E8-9C46-4BB3-B5AB-0A6B487C884B}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "POSSystem.UI.Installer", "POSSystem.UI.Installer\POSSystem.UI.Installer.wixproj", "{0E8930E8-9C46-4BB3-B5AB-0A6B487C884B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
