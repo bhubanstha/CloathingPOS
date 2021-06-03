@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <Fragment>
+    
+    <!--Product Components-->
+    <ComponentGroup Id="ProductComponents" >
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <!-- <Component Id="ProductComponent"> -->
+      <!-- TODO: Insert files, registry keys, and other resources here. -->
+      <!-- </Component> -->
+
+      <!--Shortcut-->
+      <ComponentRef Id="StartMenuAppShortcut" />
+      
+      
+      <!--Desktop Shortcut-->
+      <ComponentRef Id="ComponentDesktopShortcut" />
+      
+    </ComponentGroup>
+
+     
+    <!--Installed files-->
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\POSSystem.UI\bin\$(var.Platform)\Debug\">
+       
+      <Component Id="StartMenuAppShortcut" Guid="{BFB16C04-138C-4444-8CB4-2FB8BD125B9F}">
+        <Shortcut Id="StartMenuAppShortcut" 
+                  Name="!(loc.ProductName_$(var.Platform))" 
+                  Target="[INSTALLFOLDER]POSSystem.UI.exe" 
+                  Directory="POSSystemMenuFolder" 
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico"/>
+        
+        <!--Our unique key for this component/shortcut-->
+        <RegistryValue Id="RegShortcutKey" 
+                       Root="HKCU" 
+                       Key="SOFTWARE\$(loc.ProductNameFolder)" 
+                       Name="Shortcut" 
+                       Value="1" 
+                       Type="integer" 
+                       KeyPath="yes"/>
+        
+        <!--Remove start menu items-->
+        <RemoveFolder Id="RemoveStartMenu" Directory="POSSystemMenuFolder" On="uninstall"/>
+        
+      </Component>
+
+      <Component Id="ComponentDesktopShortcut" Guid="*" >
+        <Shortcut Id="AppDesktopShortcut"
+                  Name="!(loc.ProductName_$(var.Platform))"
+                  Description="!(loc.Description)"
+                  Directory="DesktopFolder"
+                  Target="[INSTALLFOLDER]POSSystem.UI.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico"/>
+        <!--Remove desktop shortcut on uninstall-->
+        <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+     
+      
+    </DirectoryRef>
+    
+    
+  </Fragment>
+  
+  
+  
+</Wix>

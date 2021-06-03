@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <!--Give product a unique ID per platform-->
   <?if $(var.Platform) = x64?>
-			<?define ProductCode = "{73BFBE1A-069E-4CF5-A107-2F29C47D998D}"?>
+			<?define ProductCode = "{74870D9D-DA77-4AEB-ABFB-8593755ED44C}"?>
   <?else?>
-			<?define ProductCode = "{F6B7AA4D-D504-4ADA-8456-F04CEFC4FC53}"?>
+			<?define ProductCode = "{218C1E2D-1C43-418E-9D3B-343CDAC55BED}"?>
   <?endif?>
   
+  <!--Fixed Upgrade Id-->
   <?define BuildVersion = 1.0.0.0?>
   <?define UpgradeCode = "{412A7F2B-3E9F-45F1-B0B2-01F81DE22EBD}"?>
   
+  <!--Define main product-->
 	<Product Id="$(var.ProductCode)" 
            Name="!(loc.ProductName_$(var.Platform))" 
            Language="!(loc.Language)" 
@@ -16,30 +20,52 @@
            Manufacturer="!(loc.Company)" 
            UpgradeCode="$(var.UpgradeCode)">
     
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <!--Provide package details-->
+		<Package 
+      InstallerVersion="200" 
+      Compressed="yes" 
+			InstallScope="perMachine"
+      Platform="$(var.Platform)"
+      Manufacturer="!(loc.Company)"
+      Description="!(loc.Description)"
+      Keywords="!(loc.Keywords)"
+      Comments="!(loc.Comments)"
+      Languages="!(loc.Language)"
+      />
+    
+    <!--Downgrade error message-->
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+    
+    <!--Include .cab file into .msi file-->
+		<MediaTemplate 
+      EmbedCab="yes"
+      />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+    <!--Define main app icon-->
+    <Icon Id="icon.ico" SourceFile="$(var.POSSystem.UI.ProjectDir)\Image\AppIcon.ico"/>
 
+    <!--Use the icon.ico icon for this installer (shows up in Add/Remove programs)-->
+    <Property Id="ARPPRODUCTICON">icon.ico</Property>
+    
+    <!--Help/Support website (shows in the Add/Remove programs-->
+    <Property Id="ARPURLINFOABOUT">https://www.facebook.com/BhubanStha</Property>
+    
+    <!--Change the installer UI background images-->
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp"/>
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\license.rtf"/>
+
+    <!--Create a basic UI for the installer-->      
+    <UIRef Id="WixUI_Minimal"/>
+    <!--Define components, shortcuts, files etc... for installer-->
 		<Feature Id="ProductFeature" Title="POSSystem.Installer" Level="1">
+      
 			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishComponents" />
 		</Feature>
 	</Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="POSSystem.Installer" />
-			</Directory>
-		</Directory>
-	</Fragment>
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
+
+
 </Wix>

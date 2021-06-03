@@ -5,5 +5,10 @@
 	<String Id="ProductName_x64">POS System (64bit)</String>
 	<String Id="Language">1033</String>
 	<String Id="Company">Bhuban Shrestha</String>
+	<String Id="Description">This is the description about POS System</String>
+	<String Id="Keywords">POS, .NET, Windows App</String>
+	<String Id="Comments">This is the comment</String>
+	<String Id="DowngradeErrorMessage">A newer version of POS System is already installed.</String>
+  <String Id="ProductNameFolder">POS System</String>
   
 </WixLocalization>
