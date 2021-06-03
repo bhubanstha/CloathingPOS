@@ -133,7 +133,7 @@
 >0 8 0 15</Thickness>
 
 
-            <Thickness x:Key="ControlMargin">0 8 0 15</Thickness>
+            <Thickness x:Key="ControlMargin">0 3 0 3</Thickness>
             <Thickness x:Key="ControlPadding">5</Thickness>
             <Style x:Key="Label.Validation.Container.Margin" TargetType="TextBlock">
                 <Setter Property="Margin" Value="10,10,0,0" />
