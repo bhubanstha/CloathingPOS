@@ -129,7 +129,7 @@ namespace POSSystem.UI.Views.Tiles
                 BitmapImage image = new BitmapImage();
 
                 image.BeginInit();
-                image.UriSource = new Uri("pack://application:,,,/POSSystem.UI;component/" + imageName);
+                image.UriSource = new Uri("pack://application:,,,/POSSystem;component/" + imageName);
                 image.EndInit();
 
                 return image;
