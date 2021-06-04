@@ -13,13 +13,15 @@ namespace POS.Data
     public class POSDataContext: DbContext
     {
         public POSDataContext():
-            base("ClothingPOSDb")
+            base("CloathingPOS")
         {
 
         }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
