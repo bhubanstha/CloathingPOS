@@ -3,7 +3,6 @@ using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
