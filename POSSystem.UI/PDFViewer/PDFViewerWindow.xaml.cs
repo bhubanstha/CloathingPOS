@@ -14,32 +14,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using iText.Layout;
 using MahApps.Metro.Controls;
 using MoonPdfLib;
-using MoonPdfLib.Helper;
 using MoonPdfLib.MuPdf;
 using POS.Utilities.PDF;
 using POSSystem.UI.Service;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
 
 namespace MoonPdf
 {
-	public partial class PDFViewerWindow : MetroWindow
+    public partial class PDFViewerWindow : MetroWindow
 	{
 		private static string appName;
 		private MainWindowDataContext dataContext;

@@ -15,15 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
 namespace MoonPdf
 {
-	public class FullscreenCommand : BaseCommand
+    public class FullscreenCommand : BaseCommand
 	{
 		private PDFViewerWindow wnd;
 		private FullscreenHandler fullscreenHandler;

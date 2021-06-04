@@ -15,15 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace MoonPdf
 {
-	public class Commands
+    public class Commands
 	{
 		public DelegateCommand OpenCommand { get; private set; }
 		public DelegateCommand ExitCommand { get; private set; }

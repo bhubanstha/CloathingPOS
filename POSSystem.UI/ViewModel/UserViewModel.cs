@@ -1,8 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
-using POS.Data;
-using POS.Data.Repository;
 using POS.Model;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
@@ -11,9 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

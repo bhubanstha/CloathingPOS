@@ -16,13 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace MoonPdf
 {
-	public abstract class BaseCommand : ICommand
+    public abstract class BaseCommand : ICommand
 	{
 		private static Dictionary<ModifierKeys, string> modifierText = new Dictionary<ModifierKeys, string>()
 		{

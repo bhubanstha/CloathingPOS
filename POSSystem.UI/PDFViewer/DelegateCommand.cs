@@ -15,14 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace MoonPdf
 {
-	public class DelegateCommand : BaseCommand
+    public class DelegateCommand : BaseCommand
 	{
 		private Action<object> executeAction;
 		private Predicate<object> canExecuteFunc;

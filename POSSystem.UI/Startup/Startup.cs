@@ -1,20 +1,12 @@
 ﻿using Autofac;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MoonPdf;
 using POS.Data;
-using POS.Data.Repository;
-using POS.Model;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using POSSystem.UI.Views.Flyouts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSSystem.UI.Startup
 {

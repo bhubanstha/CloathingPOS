@@ -24,10 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MoonPdf {
-    using System;
-    
-    
+namespace MoonPdf
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>

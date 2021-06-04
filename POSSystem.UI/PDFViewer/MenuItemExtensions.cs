@@ -19,14 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace MoonPdf
 {
-	public class MenuItemExtensions : DependencyObject
+    public class MenuItemExtensions : DependencyObject
 	{
 		public static Dictionary<MenuItem, String> ElementToGroupNames = new Dictionary<MenuItem, String>();
 

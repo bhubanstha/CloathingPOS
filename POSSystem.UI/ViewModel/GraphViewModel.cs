@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using OxyPlot;
+﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace POSSystem.UI.ViewModel
 {

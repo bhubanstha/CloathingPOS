@@ -1,20 +1,20 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
 using Org.BouncyCastle.Crypto.Engines;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
+using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
-using POSSystem.UI.Service;
 using System.Windows;
-using Autofac;
-using POSSystem.UI.Wrapper;
-using POSSystem.UI.UIModel;
+using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {

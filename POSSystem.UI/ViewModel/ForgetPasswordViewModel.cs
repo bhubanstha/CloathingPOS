@@ -1,17 +1,12 @@
-﻿using POS.Model;
-using POSSystem.UI.Service;
-using POSSystem.UI.Wrapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using POSSystem.UI.UIModel;
-using System.Windows.Input;
-using Prism.Commands;
+﻿using Notifications.Wpf;
 using POS.BusinessRule;
-using Notifications.Wpf.Controls;
-using Notifications.Wpf;
+using POS.Model;
+using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
+using POSSystem.UI.Wrapper;
+using Prism.Commands;
+using System;
+using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
