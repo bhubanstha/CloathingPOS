@@ -4,7 +4,6 @@ using iText.Kernel.Geom;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using Org.BouncyCastle.Asn1;
 using POS.Utilities.NumToWord;
 using System;
 using System.Collections.Generic;

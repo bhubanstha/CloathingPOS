@@ -1,24 +1,16 @@
-﻿using System;
+﻿using iText.Kernel.Colors;
+using iText.Kernel.Events;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using System.IO;
-using iText.Layout;
-using iText.Kernel.Pdf;
-using iText.Kernel.Geom;
-using iText.Layout.Element;
-using iText.Layout.Borders;
-using iText.Layout.Properties;
-using iText.IO.Image;
-using iText.Kernel.Colors;
-using iText.Kernel.Events;
-using iText.Layout.Renderer;
-using iText.Layout.Layout;
-using iText.Kernel.Pdf.Canvas;
-using iText.Kernel.Font;
-using iText.IO.Font.Constants;
 
 namespace POS.Utilities.PDF
 {
