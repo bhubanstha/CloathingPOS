@@ -408,6 +408,7 @@
                                 Margin="0,0,10,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
+                                Foreground="{DynamicResource MahApps.Brushes.AccentBase}"
                                 Kind="{Binding Icon.Kind}" />
                             <Border
                                 Grid.Row="1"
