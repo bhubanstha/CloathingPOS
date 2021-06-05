@@ -21,7 +21,7 @@
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml" />
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml" />
                 <ResourceDictionary Source="Resources/AppValidation.xaml" />
-                <ResourceDictionary Source="Resources/DatePicker.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Resources/DatePicker.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style
@@ -128,9 +128,7 @@
                 <Setter Property="FontFamily" Value="Verdana" />
                 <Setter Property="Padding" Value="5,0,5,0" />
             </Style>
-            <Thickness            x:Key="UserControl.StackPanel.TopMost"
-
->0 8 0 15</Thickness>
+            <Thickness x:Key="UserControl.StackPanel.TopMost">0 8 0 15</Thickness>
 
 
             <Thickness x:Key="ControlMargin">0 3 0 3</Thickness>

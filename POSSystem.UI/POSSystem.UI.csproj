@@ -504,7 +504,6 @@
     <Compile Include="PDFViewer\PdfPasswordDialog.xaml.cs">
       <DependentUpon>PdfPasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PDFViewer\Resources.Designer.cs" />
     <Compile Include="Service\CacheService.cs" />
     <Compile Include="Service\ColorService.cs" />
     <Compile Include="Service\ConfigurationReader.cs" />
@@ -739,16 +738,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="PDFViewer\Resources.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="PDFViewer\headertemplate.json" />
-    <None Include="PDFViewer\MoonPdf.csproj" />
     <None Include="POSSystem.UI_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

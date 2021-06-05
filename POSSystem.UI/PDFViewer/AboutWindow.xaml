@@ -1,7 +1,12 @@
-﻿<Window x:Class="MoonPdf.AboutWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="About" Height="72" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+﻿<Window
+    x:Class="POSSystem.UI.PDFViewer.AboutWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="About"
+    Width="400"
+    Height="72"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen">
     <StackPanel>
         <Label x:Name="lblInfo" FontSize="14" />
         <Label x:Name="lblCopyright" FontSize="10" />

@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls.Dialogs;
-using MoonPdf;
 using POS.Data;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;

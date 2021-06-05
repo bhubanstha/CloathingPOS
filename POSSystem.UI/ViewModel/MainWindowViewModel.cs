@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Model;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
@@ -77,7 +78,7 @@ namespace POSSystem.UI.ViewModel
 
         private void OnOpenPdfViewerExecute()
         {
-            MoonPdf.PDFViewerWindow window = new MoonPdf.PDFViewerWindow();
+            PDFViewerWindow window = new PDFViewerWindow();
             window.Show();
         }
 

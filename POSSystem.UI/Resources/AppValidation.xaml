@@ -9,16 +9,16 @@
         TargetType="TextBox">
         <Style.Resources>
             <Style TargetType="ToolTip">
-                <Setter Property="Background" Value="#d6bcd0"/>
-                <Setter Property="BorderBrush" Value="#d6bcd0"/>
-                
+                <Setter Property="Background" Value="#d6bcd0" />
+                <Setter Property="BorderBrush" Value="#d6bcd0" />
+
             </Style>
         </Style.Resources>
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <DockPanel>
-                        <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                        <TextBlock FontSize="20" Foreground="Red">!</TextBlock>
                         <AdornedElementPlaceholder x:Name="placeholder" Grid.Row="0" />
                     </DockPanel>
                     <!--<Grid>
@@ -27,12 +27,14 @@
                             <RowDefinition Height="45" />
                         </Grid.RowDefinitions>
                         <AdornedElementPlaceholder x:Name="placeholder" Grid.Row="0" />
-                        --><!--<TextBlock
+                    -->
+                    <!--<TextBlock
                             Grid.Row="1"
                             Margin="0,0,0,10"
                             FontSize="12"
                             Foreground="Red"
-                            Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />--><!--
+                            Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />-->
+                    <!--
 
                     </Grid>-->
                     <!--<StackPanel Height="150">
@@ -41,7 +43,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
                 <Setter Property="BorderBrush" Value="Red" />

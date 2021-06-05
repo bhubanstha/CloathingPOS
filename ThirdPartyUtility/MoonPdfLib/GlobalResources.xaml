@@ -1,20 +1,26 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
     <Style x:Key="moonPdfItems" TargetType="{x:Type ItemsControl}">
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Image Source="{Binding ImageSource}" Margin="{Binding Margin}" HorizontalAlignment="Center"
-                           UseLayoutRounding="True" RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="None" />
+                    <Image
+                        Margin="{Binding Margin}"
+                        HorizontalAlignment="Center"
+                        RenderOptions.BitmapScalingMode="NearestNeighbor"
+                        Source="{Binding ImageSource}"
+                        Stretch="None"
+                        UseLayoutRounding="True" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
