@@ -6,6 +6,7 @@ using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using Prism.Commands;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -24,6 +25,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand SettingsCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand OpenPdfViewerCommand { get; set; }
+        public ICommand ApplicationExitCommand { get; set; }
 
         public MetroWindow Window { get; set; }
         public Flyout SettingFlyout { get; set; }
@@ -74,6 +76,12 @@ namespace POSSystem.UI.ViewModel
             SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
             LogoutCommand = new DelegateCommand(OnUserLogout);
             OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
+            ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
+        }
+
+        private void OnApplicationExit()
+        {
+            Application.Current.Shutdown();
         }
 
         private void OnOpenPdfViewerExecute()

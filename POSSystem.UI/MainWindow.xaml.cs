@@ -52,7 +52,7 @@ namespace POSSystem.UI
             GlobalElements();
             
             double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
-            _model.PopupRightMargin =  265 + additionalWidth;
+            _model.PopupRightMargin = 120 + additionalWidth;
             System.Drawing.Size s = new System.Drawing.Size();
             s.Width = (int)container.RenderSize.Width;
             s.Height = (int)container.RenderSize.Height;

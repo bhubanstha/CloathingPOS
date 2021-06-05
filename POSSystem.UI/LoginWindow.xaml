@@ -11,7 +11,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
     Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}}"
     Width="400"
     Height="565"
@@ -28,8 +27,14 @@
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
 
-    <StackPanel Background="#dedace">
+    <Grid Background="#dedace">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
         <TextBlock
+            Grid.Row="0"
             Margin="0,20,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -39,8 +44,8 @@
             Text="POS Login" />
 
         <Grid
+            Grid.Row="1"
             Margin="30,10,30,20"
-            xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160" />
@@ -145,36 +150,33 @@
 
 
 
-        <StackPanel Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
-            <Grid Margin="5" ShowGridLines="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    TextAlignment="Center">
-                    <Run Text="©" />
-                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneTime, StringFormat='yyyy'}" />
-                </TextBlock>
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="15"
+                TextAlignment="Center">
+                <Run Text="©" />
+                <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneTime, StringFormat='yyyy'}" />
+            </TextBlock>
 
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    xf:Animations.IterationBehavior="Forever"
-                    xf:Animations.Primary="{StaticResource FadeInAndGrow}"
-                    FontSize="15"
-                    TextAlignment="Center">
-                    <Run Text="Developed By: " />
-                    <Run Text="Bhuban Shrestha" />
-                </TextBlock>
-            </Grid>
-        </StackPanel>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,5,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="15"
+                TextAlignment="Center">
+                <Run Text="Developed By: " />
+                <Run Text="Bhuban Shrestha" />
+            </TextBlock>
+        </Grid>
 
-    </StackPanel>
+    </Grid>
 </mah:MetroWindow>

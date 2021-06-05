@@ -128,11 +128,6 @@
                         <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
-
-
-            </ListView>
-            <Separator Margin="10" />
-            <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome
@@ -153,6 +148,11 @@
                         <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
+
+            </ListView>
+            <Separator Margin="10" />
+            <ListView Style="{StaticResource MenuCotainer}">
+
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconFontAwesome
@@ -171,6 +171,27 @@
                     </StackPanel>
                     <ListViewItem.InputBindings>
                         <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
+                    </ListViewItem.InputBindings>
+                </ListViewItem>
+
+                <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconBoxIcons
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="RegularExit" />
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Exit" />
+                    </StackPanel>
+                    <ListViewItem.InputBindings>
+                        <MouseBinding Command="{Binding ApplicationExitCommand}" MouseAction="LeftClick" />
                     </ListViewItem.InputBindings>
                 </ListViewItem>
             </ListView>
