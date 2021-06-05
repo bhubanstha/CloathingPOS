@@ -2,19 +2,15 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   
   <!--Give product a unique ID per platform-->
-  <?if $(var.Platform) = x64?>
-			<?define ProductCode = "{E340E5B0-C2CC-409A-8A91-88A39BC5CE85}"?>
-  <?else?>
-			<?define ProductCode = "{0BBC7EC8-94CF-467E-B4BB-DE390CD8855B}"?>
-  <?endif?>
+  <?define ProductCode = !(loc.ProductCode_$(var.Platform))?>
   
   <!--Fixed Upgrade Id-->
-  <?define BuildVersion = 1.0.0.0?>
+  <?define BuildVersion = !(bind.FileVersion.fil14E049FE822D48F0E0077BF257F1F344)?> <!--EXE FileID-->
   <?define UpgradeCode = "{412A7F2B-3E9F-45F1-B0B2-01F81DE22EBD}"?>
   
   <!--Define main product-->
 	<Product Id="$(var.ProductCode)" 
-           Name="!(loc.ProductName_$(var.Platform))" 
+           Name="!(loc.ProductName)" 
            Language="!(loc.Language)" 
            Version="$(var.BuildVersion)" 
            Manufacturer="!(loc.Company)" 
@@ -31,10 +27,11 @@
       Keywords="!(loc.Keywords)"
       Comments="!(loc.Comments)"
       Languages="!(loc.Language)"
+      AdminImage="yes"
       />
     
     <!--Downgrade error message-->
-		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" Schedule="afterInstallInitialize"  AllowSameVersionUpgrades="no"/>
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" Schedule="afterInstallInitialize"  AllowSameVersionUpgrades="yes"/>
     
     <!--Include .cab file into .msi file-->
 		<MediaTemplate 

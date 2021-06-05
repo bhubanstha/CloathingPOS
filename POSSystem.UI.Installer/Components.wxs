@@ -32,6 +32,29 @@
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="icon.ico"/>
         
+        <!--Uninstallation shortcut-->
+
+        <?if $(var.Platform) = x64?>
+            <Shortcut Id="UninstallProduct"
+                             Name="Uninstall !(loc.ProductNameFolder)"
+                             Description="Uninstalls !(loc.ProductName_$(var.Platform)) from the system."
+                             Target="[System64Folder]msiexec.exe"
+                             Directory="POSSystemMenuFolder"
+                             WorkingDirectory="INSTALLFOLDER"
+                             Icon="icon.ico"
+                             Arguments="/x !(loc.ProductCode_x64)"/>
+        <?else?>
+        <Shortcut Id="UninstallProduct"
+                         Name="Uninstall !(loc.ProductNameFolder)"
+                         Description="Uninstalls !(loc.ProductName_$(var.Platform)) from the system."
+                         Target="[SystemFolder]msiexec.exe"
+                         Directory="POSSystemMenuFolder"
+                         WorkingDirectory="INSTALLFOLDER"
+                         Icon="icon.ico"
+                         Arguments="/x !(loc.ProductCode_x86)"/>
+        <?endif?>
+       
+        
         <!--Our unique key for this component/shortcut-->
         <RegistryValue Id="RegShortcutKey" 
                        Root="HKCU" 
@@ -58,7 +81,6 @@
         <RemoveFolder Id="DesktopFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
-     
       
     </DirectoryRef>
     
