@@ -4,45 +4,7 @@
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
 
 
-    <SolidColorBrush x:Key="StandardBorderBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="StandardBackgroundBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="HoverBorderBrush" Color="{DynamicResource MahApps.Colors.Accent4}" />
-    <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="{DynamicResource MahApps.Colors.Accent2}" />
-    <SolidColorBrush x:Key="SelectedForegroundBrush" Color="{DynamicResource MahApps.Colors.Accent4}" />
-    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="NormalBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="NormalBorderBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="HorizontalNormalBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-    <SolidColorBrush x:Key="HorizontalNormalBorderBrush" Color="{DynamicResource MahApps.Colors.Accent}" />
-
-    <LinearGradientBrush x:Key="ListBoxBackgroundBrush" StartPoint="0,0" EndPoint="1,0.001">
-        <GradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Offset="0.0" Color="{DynamicResource MahApps.Colors.Accent4}" />
-                <GradientStop Offset="0.6" Color="White" />
-                <GradientStop Offset="1.2" Color="{DynamicResource MahApps.Colors.Accent}" />
-            </GradientStopCollection>
-        </GradientBrush.GradientStops>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="StandardBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Offset="0.0" Color="{DynamicResource MahApps.Colors.Accent}" />
-                <GradientStop Offset="1.0" Color="{DynamicResource MahApps.Colors.Accent}" />
-            </GradientStopCollection>
-        </GradientBrush.GradientStops>
-    </LinearGradientBrush>
     <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
-    <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Offset="0.0" Color="{DynamicResource MahApps.Colors.Accent}" />
-                <GradientStop Offset="0.1" Color="{DynamicResource MahApps.Colors.Accent2}" />
-                <GradientStop Offset="0.9" Color="{DynamicResource MahApps.Colors.Accent3}" />
-                <GradientStop Offset="1.0" Color="{DynamicResource MahApps.Colors.Accent4}" />
-            </GradientStopCollection>
-        </GradientBrush.GradientStops>
-    </LinearGradientBrush>
 
     <!--<! – SrollViewer ScrollBar Repeat Buttons (at each end) –>-->
     <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
@@ -55,8 +17,8 @@
                     <Border
                         Name="Border"
                         Margin="1"
-                        Background="{DynamicResource NormalBrush}"
-                        BorderBrush="{DynamicResource NormalBorderBrush}"
+                        Background="{DynamicResource MahApps.Brushes.Accent}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                         BorderThickness="1"
                         CornerRadius="2">
                         <Path
@@ -67,10 +29,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PressedBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent4}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource LightGray}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -103,6 +65,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border
+                        x:Name="Border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="0"
@@ -123,7 +86,7 @@
                 Grid.RowSpan="3"
                 Width="14"
                 HorizontalAlignment="Center"
-                Background="{DynamicResource MahApps.Brushes.Gray10}"
+                Background="{DynamicResource MahApps.Brushes.Transparent}"
                 CornerRadius="8" />
             <!--<RepeatButton
                 Grid.Row="0"
@@ -142,9 +105,10 @@
                 <Track.Thumb>
                     <Thumb
                         Margin="1,0,1,0"
-                        Background="{DynamicResource HorizontalNormalBrush}"
-                        BorderBrush="{DynamicResource HorizontalNormalBorderBrush}"
+                        Background="{DynamicResource MahApps.Brushes.Accent}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                         Style="{DynamicResource ScrollBarThumb}" />
+
                 </Track.Thumb>
                 <!--<Track.IncreaseRepeatButton>
                     <RepeatButton Command="ScrollBar.PageDownCommand" Style="{DynamicResource ScrollBarPageButton}" />
@@ -169,7 +133,7 @@
             <Border
                 Grid.ColumnSpan="3"
                 Height="15"
-                Background="#F0F0F0"
+                Background="{DynamicResource MahApps.Brushes.Transparent}"
                 CornerRadius="8" />
             <!--<RepeatButton
                 Grid.Column="0"
@@ -187,8 +151,8 @@
                 <Track.Thumb>
                     <Thumb
                         Margin="0,1,0,1"
-                        Background="{DynamicResource NormalBrush}"
-                        BorderBrush="{DynamicResource NormalBorderBrush}"
+                        Background="{DynamicResource MahApps.Brushes.Accent}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                         Style="{DynamicResource ScrollBarThumb}" />
                 </Track.Thumb>
                 <!--<Track.IncreaseRepeatButton>
