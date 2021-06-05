@@ -199,10 +199,10 @@
             </Style>
 
             <LinearGradientBrush x:Key="AccentBackgroundTest" StartPoint="1,1" EndPoint="0,0">
-                <GradientStop Offset="0.00" Color="{DynamicResource MahApps.Colors.Accent}" />
-                <GradientStop Offset="0.25" Color="{DynamicResource MahApps.Colors.Accent2}" />
-                <GradientStop Offset="0.50" Color="{DynamicResource MahApps.Colors.Accent3}" />
-                <GradientStop Offset="0.75" Color="{DynamicResource MahApps.Colors.Accent4}" />
+                <GradientStop Offset="1.00" Color="{DynamicResource MahApps.Colors.Accent2}" />
+                <GradientStop Offset="0.25" Color="{DynamicResource MahApps.Colors.Accent3}" />
+                <GradientStop Offset="0.50" Color="{DynamicResource MahApps.Colors.Accent4}" />
+
             </LinearGradientBrush>
         </ResourceDictionary>
     </Window.Resources>
