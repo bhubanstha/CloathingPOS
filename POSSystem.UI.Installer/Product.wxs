@@ -3,9 +3,9 @@
   
   <!--Give product a unique ID per platform-->
   <?if $(var.Platform) = x64?>
-			<?define ProductCode = "{74870D9D-DA77-4AEB-ABFB-8593755ED44C}"?>
+			<?define ProductCode = "{E340E5B0-C2CC-409A-8A91-88A39BC5CE85}"?>
   <?else?>
-			<?define ProductCode = "{218C1E2D-1C43-418E-9D3B-343CDAC55BED}"?>
+			<?define ProductCode = "{0BBC7EC8-94CF-467E-B4BB-DE390CD8855B}"?>
   <?endif?>
   
   <!--Fixed Upgrade Id-->
@@ -34,7 +34,7 @@
       />
     
     <!--Downgrade error message-->
-		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" Schedule="afterInstallInitialize"  AllowSameVersionUpgrades="no"/>
     
     <!--Include .cab file into .msi file-->
 		<MediaTemplate 

@@ -21,12 +21,13 @@
 
      
     <!--Installed files-->
-    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\POSSystem.UI\bin\$(var.Platform)\Debug\">
+    <DirectoryRef Id="INSTALLFOLDER" FileSource="..\POSSystem.UI\bin\$(var.Platform)\$(var.Configuration)\">
        
       <Component Id="StartMenuAppShortcut" Guid="{BFB16C04-138C-4444-8CB4-2FB8BD125B9F}">
+        <!--Directory="POSSystemMenuFolder"-->
         <Shortcut Id="StartMenuAppShortcut" 
-                  Name="!(loc.ProductName_$(var.Platform))" 
-                  Target="[INSTALLFOLDER]POSSystem.UI.exe" 
+                  Name="!(loc.ProductNameFolder)" 
+                  Target="[INSTALLFOLDER]POSSystem.exe"                  
                   Directory="POSSystemMenuFolder" 
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="icon.ico"/>
@@ -47,10 +48,10 @@
 
       <Component Id="ComponentDesktopShortcut" Guid="*" >
         <Shortcut Id="AppDesktopShortcut"
-                  Name="!(loc.ProductName_$(var.Platform))"
+                  Name="!(loc.ProductNameFolder)"
                   Description="!(loc.Description)"
                   Directory="DesktopFolder"
-                  Target="[INSTALLFOLDER]POSSystem.UI.exe"
+                  Target="[INSTALLFOLDER]POSSystem.exe"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="icon.ico"/>
         <!--Remove desktop shortcut on uninstall-->

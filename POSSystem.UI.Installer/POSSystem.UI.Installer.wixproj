@@ -75,7 +75,7 @@
   <Target Name="BeforeBuild">
     <!--<Exec Command=""-->
     <!--Get Assembly Version-->
-    <GetAssemblyIdentity AssemblyFiles="..\POSSystem.UI\bin\$(Platform)\$(Configuration)\POSSystem.UI.exe">
+    <GetAssemblyIdentity AssemblyFiles="..\POSSystem.UI\bin\$(Platform)\$(Configuration)\POSSystem.exe">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <!--Define some variables-->
