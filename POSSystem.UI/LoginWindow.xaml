@@ -11,9 +11,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}}"
+    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="400"
-    Height="565"
+    Height="550"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon_toolbar.png"
     ResizeMode="NoResize"
@@ -40,12 +40,15 @@
             VerticalAlignment="Center"
             FontSize="30"
             FontWeight="Bold"
-            Foreground="{DynamicResource MahApps.Brushes.Accent}"
-            Text="POS Login" />
+            Foreground="{DynamicResource MahApps.Brushes.Accent}">
+            <Run Text="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneTime}" />
+            <Run Text="Login"/>
+
+        </TextBlock>
 
         <Grid
             Grid.Row="1"
-            Margin="30,10,30,20"
+            Margin="30,10,30,30"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160" />
