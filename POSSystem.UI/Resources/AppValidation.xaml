@@ -18,7 +18,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <DockPanel>
-                        <TextBlock FontSize="20" Foreground="Red">!</TextBlock>
+                        <TextBlock FontSize="20" Foreground="{DynamicResource RedNegative}">!</TextBlock>
                         <AdornedElementPlaceholder x:Name="placeholder" Grid.Row="0" />
                     </DockPanel>
                     <!--<Grid>
