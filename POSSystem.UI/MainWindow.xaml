@@ -12,7 +12,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:views="clr-namespace:POSSystem.UI.Views"
-    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
     Name="MetroMainWindow"
     Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}}"
     Width="800"
