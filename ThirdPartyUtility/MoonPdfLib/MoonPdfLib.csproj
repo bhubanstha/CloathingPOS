@@ -153,8 +153,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(SolutionDir)ThirdPartyUtility\PdfRenderer\$(PlatformName)\libmupdf.dll $(TargetDir) /Y
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)ThirdPartyUtility\PdfRenderer\HeaderLicensePrepend\HeaderLicensePrepend.exe $(ProjectDir)headertemplate.json</PreBuildEvent>

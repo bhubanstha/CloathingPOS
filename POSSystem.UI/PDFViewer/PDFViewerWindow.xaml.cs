@@ -72,6 +72,7 @@ namespace POSSystem.UI.PDFViewer
                     MessageBox.Show(string.Format("An error occured: " + ex.Message));
                 }
             }
+			this.dataContext.Commands.FitHeightCommand.Execute(null);
 		}
 
 		void moonPdfPanel_PageDisplayChanged(object sender, EventArgs e)

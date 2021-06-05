@@ -272,20 +272,17 @@
 
     </mah:MetroWindow.Flyouts>
 
-    <!--Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}"-->
-    <Grid
-        x:Name="container"        
-        Background="{DynamicResource AccentBackgroundTest}">
+    <!--  Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay}"  -->
+    <DockPanel x:Name="container" Background="{DynamicResource AccentBackgroundTest}">
         <Popup
+            x:Name="UMenuPopup"
+            AllowsTransparency="True"
+            HorizontalOffset="120"
+            IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Placement="RelativePoint"
             PlacementTarget="{Binding ElementName=btnCmdUserName}"
-                x:Name="UMenuPopup"
-            HorizontalOffset="120"
-            VerticalOffset="28"
-                AllowsTransparency="True"
-                IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                StaysOpen="False"
-            >
+            StaysOpen="False"
+            VerticalOffset="28">
             <views:UserMenuPopupControl />
         </Popup>
         <!--
@@ -298,111 +295,111 @@
             Height="{Binding ElementName=MetroMainWindow, Path=ActualHeight, Mode=OneWay, Converter={StaticResource HeightConverter}}"
             VerticalScrollBarVisibility="Auto"
             Visibility="Visible">-->
-            <Grid x:Name="PrimaryGrid" Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
+        <Grid x:Name="PrimaryGrid" Width="{Binding ElementName=container, Path=ActualWidth, Mode=OneWay}">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <mah:HamburgerMenu
-                    x:Name="HamburgerMenuControl"
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    HamburgerWidth="48"
-                    IsPaneOpen="True"
-                    ItemInvoked="HamburgerMenuControl_ItemInvoked"
-                    ItemTemplate="{StaticResource MenuItemTemplate}"
-                    OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-                    SelectedIndex="0"
-                    Style="{StaticResource MahApps.Styles.HamburgerMenu.Ripple}"
-                    VerticalScrollBarOnLeftSide="False">
-                    <!--  Items  -->
-                    <mah:HamburgerMenu.ItemsSource>
-                        <mah:HamburgerMenuItemCollection>
-                            <mah:HamburgerMenuIconItem
-                                x:Name="menuUserMgmt"
-                                Icon="{iconPacks:Material Kind=Account}"
-                                IsVisible="{Binding IsAdminMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Label="User Management">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:CreateUserView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TshirtCrew}" Label="Inventory">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:InventoryView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory List">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:InventoryListView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:SalesView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales Return">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:SalesReturnView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem
-                                x:Name="menuReport"
-                                Icon="{iconPacks:Material Kind=FileDocument}"
-                                Label="Report">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:SalesView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem
-                                x:Name="menuGraphs"
-                                Icon="{iconPacks:Material Kind=ChartBox}"
-                                Label="Graph">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:GraphView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                            <mah:HamburgerMenuIconItem
-                                x:Name="menuUserProfile"
-                                Icon="{iconPacks:Material Kind=FaceProfile}"
-                                IsVisible="False"
-                                Label="Profile">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:UserProfileView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                        </mah:HamburgerMenuItemCollection>
-                    </mah:HamburgerMenu.ItemsSource>
+            <mah:HamburgerMenu
+                x:Name="HamburgerMenuControl"
+                Grid.Row="0"
+                Grid.Column="0"
+                HamburgerWidth="48"
+                IsPaneOpen="True"
+                ItemInvoked="HamburgerMenuControl_ItemInvoked"
+                ItemTemplate="{StaticResource MenuItemTemplate}"
+                OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+                SelectedIndex="0"
+                Style="{StaticResource MahApps.Styles.HamburgerMenu.Ripple}"
+                VerticalScrollBarOnLeftSide="False">
+                <!--  Items  -->
+                <mah:HamburgerMenu.ItemsSource>
+                    <mah:HamburgerMenuItemCollection>
+                        <mah:HamburgerMenuIconItem
+                            x:Name="menuUserMgmt"
+                            Icon="{iconPacks:Material Kind=Account}"
+                            IsVisible="{Binding IsAdminMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Label="User Management">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:CreateUserView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TshirtCrew}" Label="Inventory">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:InventoryView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory List">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:InventoryListView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:SalesView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales Return">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:SalesReturnView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem
+                            x:Name="menuReport"
+                            Icon="{iconPacks:Material Kind=FileDocument}"
+                            Label="Report">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:SalesView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem
+                            x:Name="menuGraphs"
+                            Icon="{iconPacks:Material Kind=ChartBox}"
+                            Label="Graph">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:GraphView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                        <mah:HamburgerMenuIconItem
+                            x:Name="menuUserProfile"
+                            Icon="{iconPacks:Material Kind=FaceProfile}"
+                            IsVisible="False"
+                            Label="Profile">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:UserProfileView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                    </mah:HamburgerMenuItemCollection>
+                </mah:HamburgerMenu.ItemsSource>
 
 
 
-                    <!--  Options  -->
-                    <mah:HamburgerMenu.OptionsItemsSource>
-                        <mah:HamburgerMenuItemCollection>
-                            <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Information}" Label="About">
-                                <mah:HamburgerMenuIconItem.Tag>
-                                    <views:AboutView />
-                                </mah:HamburgerMenuIconItem.Tag>
-                            </mah:HamburgerMenuIconItem>
-                        </mah:HamburgerMenuItemCollection>
-                    </mah:HamburgerMenu.OptionsItemsSource>
+                <!--  Options  -->
+                <mah:HamburgerMenu.OptionsItemsSource>
+                    <mah:HamburgerMenuItemCollection>
+                        <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Information}" Label="About">
+                            <mah:HamburgerMenuIconItem.Tag>
+                                <views:AboutView />
+                            </mah:HamburgerMenuIconItem.Tag>
+                        </mah:HamburgerMenuIconItem>
+                    </mah:HamburgerMenuItemCollection>
+                </mah:HamburgerMenu.OptionsItemsSource>
 
-                    <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Image Source="/Image/pos_company_logo.png" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Image Source="/Image/pos_company_logo.png" />
+                        </StackPanel>
+                    </DataTemplate>
+                </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
                 <mah:HamburgerMenu.ContentTemplate>
                     <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <Grid >
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
@@ -412,32 +409,35 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
-                                        x:Name="lblHeaderText"
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        Padding="0 0 0 5"
-                                    TextAlignment="Center"
-                                        FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
-                                        FontSize="{DynamicResource MahApps.Font.Size.Header}"
-                                        Text="{Binding Label}" />
-                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="3px" Grid.Row="1" />
+                                    x:Name="lblHeaderText"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Padding="0,0,0,5"
+                                    FontFamily="{DynamicResource MahApps.Fonts.Family.Header}"
+                                    FontSize="{DynamicResource MahApps.Font.Size.Header}"
+                                    Text="{Binding Label}"
+                                    TextAlignment="Center" />
+                                <Border
+                                    Grid.Row="1"
+                                    BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                                    BorderThickness="3px" />
                                 <ContentControl
-                                            Grid.Row="2"
-                                            Margin="10,0,0,0"
-                                            Content="{Binding Tag}"
-                                            Focusable="False" />
+                                    Grid.Row="2"
+                                    Margin="10,0,0,0"
+                                    Content="{Binding Tag}"
+                                    Focusable="False" />
                             </Grid>
                         </ScrollViewer>
                     </DataTemplate>
-                    </mah:HamburgerMenu.ContentTemplate>
+                </mah:HamburgerMenu.ContentTemplate>
 
-                </mah:HamburgerMenu>
+            </mah:HamburgerMenu>
 
 
-            </Grid>
+        </Grid>
         <!--</ScrollViewer>-->
 
-    </Grid>
+    </DockPanel>
 
 
 </mah:MetroWindow>
