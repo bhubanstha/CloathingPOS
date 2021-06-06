@@ -16,6 +16,7 @@ namespace POSSystem.UI.PDFViewer
 	{
 		private static string appName;
 		private MainWindowDataContext dataContext;
+		private string pdfFilePath;
 
 		internal MoonPdfPanel MoonPdfPanel { get { return this.moonPdfPanel; } }
 
@@ -41,7 +42,15 @@ namespace POSSystem.UI.PDFViewer
 			this.Loaded += MainWindow_Loaded;
 		}
 
-        void moonPdfPanel_PasswordRequired(object sender, PasswordRequiredEventArgs e)
+		public PDFViewerWindow(string pdfFilePath) : this()
+		{
+			InitializeComponent();
+			this.pdfFilePath = pdfFilePath;
+
+
+		}
+
+		void moonPdfPanel_PasswordRequired(object sender, PasswordRequiredEventArgs e)
         {
             var dlg = new PdfPasswordDialog();
 
@@ -51,13 +60,27 @@ namespace POSSystem.UI.PDFViewer
                 e.Cancel = true;
         }
 
+
+		private void OpenPdf(string pdfPath)
+		{
+			//string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
+			//CreatePDF createPDF = new CreatePDF();
+			//string pdfPath = createPDF.CreatePdfTable(1, StaticContainer.PdfPassword, imagePath);
+			////byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
+			MoonPdfPanel.OpenFile(pdfPath);
+		}
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
-			string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
-			CreatePDF createPDF = new CreatePDF();
-			string pdfPath = createPDF.CreatePdfTable(1, StaticContainer.PdfPassword, imagePath);
-			//byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
-			MoonPdfPanel.OpenFile(pdfPath);
+			//string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
+			//CreatePDF createPDF = new CreatePDF();
+			//string pdfPath = createPDF.CreatePdfTable(1, StaticContainer.PdfPassword, imagePath);
+			////byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
+			//MoonPdfPanel.OpenFile(pdfPath);
+			if(!string.IsNullOrEmpty(this.pdfFilePath))
+			{
+				OpenPdf(this.pdfFilePath);
+			}
+			
 			var args = Environment.GetCommandLineArgs();
 
 			// if a filename was given via command line
@@ -72,7 +95,6 @@ namespace POSSystem.UI.PDFViewer
                     MessageBox.Show(string.Format("An error occured: " + ex.Message));
                 }
             }
-			this.dataContext.Commands.FitHeightCommand.Execute(null);
 		}
 
 		void moonPdfPanel_PageDisplayChanged(object sender, EventArgs e)
