@@ -136,7 +136,7 @@
             </Grid.ColumnDefinitions>
             <Border
                 Grid.ColumnSpan="3"
-                Height="15"
+                Height="10"
                 Background="{DynamicResource MahApps.Brushes.Transparent}"
                 CornerRadius="8" />
             <!--<RepeatButton
@@ -148,13 +148,14 @@
             <Track
                 Name="PART_Track"
                 Grid.Column="1"
+                Height="10"
                 IsDirectionReversed="False">
                 <!--<Track.DecreaseRepeatButton>
                     <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{DynamicResource ScrollBarPageButton}" />
                 </Track.DecreaseRepeatButton>-->
                 <Track.Thumb>
                     <Thumb
-                        Background="{DynamicResource MahApps.Brushes.Accent}"
+                        Background="{DynamicResource MahApps.Brushes.Accent3}"
                         BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
                         Style="{DynamicResource ScrollBarThumb}" />
                 </Track.Thumb>
@@ -177,7 +178,7 @@
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto" />
-                <Setter Property="Height" Value="18" />
+                <Setter Property="Height" Value="10" />
                 <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
