@@ -12,6 +12,7 @@ using POSSystem.UI.Service;
 using ControlzEx.Theming;
 using System.IO.IsolatedStorage;
 using System.IO;
+using Notifications.Wpf;
 
 namespace POSSystem.UI
 {
@@ -40,7 +41,12 @@ namespace POSSystem.UI
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-
+            StaticContainer.NotificationManager.Show(new NotificationContent
+            {
+                Message = e.Exception.Message,
+                Title = "Error",
+                Type = NotificationType.Error
+            });
         }
 
         protected override void OnExit(ExitEventArgs e)
