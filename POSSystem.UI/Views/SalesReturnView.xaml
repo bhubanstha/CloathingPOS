@@ -18,7 +18,7 @@
         <conv:TotalPriceConverter x:Key="TotalCalc" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
     </UserControl.Resources>
-    <StackPanel Margin="0 5 3 5" behaviors:KeyboardFocus.On="{Binding ElementName=txtBillNo}">
+    <StackPanel Margin="0,5,3,5" behaviors:KeyboardFocus.On="{Binding ElementName=txtBillNo}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
@@ -26,17 +26,16 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="40" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Margin="0,0,0,10"
                 VerticalAlignment="Center"
-                Text="Bill No" />
+                Text="Bill No.:" />
 
             <mah:NumericUpDown
                 x:Name="txtBillNo"
@@ -56,7 +55,7 @@
                 Grid.Row="0"
                 Grid.Column="2"
                 Width="100"
-                Margin="20,5,0,15"
+                Margin="20,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding SearchCommand}"
@@ -73,14 +72,16 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Grid.ColumnSpan="2">
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Bottom">
                 <Run Text="Billing To: " />
                 <Run Text="{Binding Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </TextBlock>
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="3"
-                Grid.ColumnSpan="2">
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Bottom">
                 <Run Text="Billing Date: " />
                 <Run Text="{Binding Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:yyyy/MM/dd}'}" />
             </TextBlock>
@@ -186,6 +187,6 @@
             </DataGrid>
         </Grid>
     </StackPanel>
-    
+
 
 </UserControl>
