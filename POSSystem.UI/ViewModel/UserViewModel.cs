@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
@@ -142,43 +143,55 @@ namespace POSSystem.UI.ViewModel
 
         private async void OnCreateUserExecute(PasswordBox obj)
         {
-            PasswordTextBox = obj;
-            User u = new User
+            try
             {
-                Id = this.NewUser.Id,
-                UserName = this.NewUser.UserName,
-                DisplayName = this.NewUser.DisplayName,
-                Password = obj.Password,
-                IsAdmin = this.NewUser.IsAdmin,
-                PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
-                IsActive = true,
-                CreatedDate = DateTime.Now
-            };
+                PasswordTextBox = obj;
+                User u = new User
+                {
+                    Id = this.NewUser.Id,
+                    UserName = this.NewUser.UserName,
+                    DisplayName = this.NewUser.DisplayName,
+                    Password = obj.Password,
+                    IsAdmin = this.NewUser.IsAdmin,
+                    PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now
+                };
 
-            string title = "";
-            string msg = "";
-            UserBO userBO = new UserBO();
-            int id = 0;
-            if (u.Id > 0)
-            {
-                u.Password = await userBO.EncryptPassword(u.Password);
-                id = await userBO.UpdateUser(u);
-                ButtonText = "Create Account";
-                title = "User Updated";
-                msg = $"User {u.UserName} is updated successfully.";
-            }
-            else
-            {
-                id = await userBO.SaveUser(u);
-                title = "User Creation";
-                msg = $"User {u.UserName} is created successfully.";
-            }
+                string title = "";
+                string msg = "";
+                UserBO userBO = new UserBO();
+                int id = 0;
+                if (u.Id > 0)
+                {
+                    u.Password = await userBO.EncryptPassword(u.Password);
+                    id = await userBO.UpdateUser(u);
+                    ButtonText = "Create Account";
+                    title = "User Updated";
+                    msg = $"User {u.UserName} is updated successfully.";
+                }
+                else
+                {
+                    id = await userBO.SaveUser(u);
+                    title = "User Creation";
+                    msg = $"User {u.UserName} is created successfully.";
+                }
 
-            if (id > 0)
+                if (id > 0)
+                {
+                    ClearAll();
+                    LoadAllUsers();
+                    await _window.ShowMessageAsync(title, msg, MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
+                }
+            }
+            catch (Exception ex)
             {
-                ClearAll();
-                LoadAllUsers();
-                await _window.ShowMessageAsync(title, msg, MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Message = "Could not create user. Please provide all the required values.",
+                    Title = "Error",
+                    Type = NotificationType.Error
+                });
             }
 
         }

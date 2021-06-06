@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
@@ -63,25 +64,42 @@ namespace POSSystem.UI.ViewModel
 
         private async void SaveProduct()
         {
-            Inventory inventory = new Inventory
+            try
             {
-                Id = this.Id,
-                CategoryId =  this.CategoryId,
-                Color = this.Color,
-                FirstPurchaseDate = this.FirstPurchaseDate,
-                Name = this.Name,
-                PurchaseRate = this.PurchaseRate,
-                Quantity = this.Quantity,
-                RetailRate = this.RetailRate,
-                Size = this.Size
-            };
-            InventoryBO = new InventoryBO();
-            int c = await InventoryBO.Save(inventory);
-            if(c>0)
+                Inventory inventory = new Inventory
+                {
+                    Id = this.Id,
+                    CategoryId = this.CategoryId,
+                    Color = this.Color,
+                    FirstPurchaseDate = this.FirstPurchaseDate,
+                    Name = this.Name,
+                    PurchaseRate = this.PurchaseRate,
+                    Quantity = this.Quantity,
+                    RetailRate = this.RetailRate,
+                    Size = this.Size
+                };
+                InventoryBO = new InventoryBO();
+                int c = await InventoryBO.Save(inventory);
+                if (c > 0)
+                {
+                    StaticContainer.NotificationManager.Show(new NotificationContent
+                    {
+                        Message = $"Product: {this.Name} - {this.Size} purchased on {this.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.",
+                        Title = "Product Added",
+                        Type = NotificationType.Error
+                    });
+                    this.Size = "";
+                    this.Id = 0;
+                }
+            }
+            catch (Exception ex)
             {
-               await _window.ShowMessageAsync("Product Added", $"Product: {this.Name} - {this.Size} purchased on {this.FirstPurchaseDate} added into inventory.", MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
-                this.Size = "";
-                this.Id = 0;
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Message = "Could not create inventory. Please provide all the required item information.",
+                    Title = "Error",
+                    Type = NotificationType.Error
+                });
             }
         }
         private void SetCurrencyCulture()

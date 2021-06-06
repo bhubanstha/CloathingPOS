@@ -59,7 +59,7 @@
                     mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                     SpellCheck.IsEnabled="True"
                     Style="{DynamicResource App.TextBox.Validation}"
-                    Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
                 <TextBlock
                     Grid.Row="1"

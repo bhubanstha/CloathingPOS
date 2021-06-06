@@ -20,7 +20,6 @@
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml" />
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml" />
                 <ResourceDictionary Source="Resources/AppValidation.xaml" />
-                <ResourceDictionary Source="Resources/DatePicker.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style

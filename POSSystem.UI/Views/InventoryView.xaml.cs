@@ -19,7 +19,6 @@ namespace POSSystem.UI.Views
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
         }
     }
 }
