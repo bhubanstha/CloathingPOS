@@ -1,5 +1,6 @@
 ﻿using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace POSSystem.UI.Views
                 BillDate = DateTime.Now
             };
             this.DataContext = model;
+            OpenPdf();
             
         }
 
@@ -48,6 +50,18 @@ namespace POSSystem.UI.Views
                 txtSalesQty.Maximum = (double)model.CurrentProduct.Inventory.Quantity;
                 //txtProduct.Text = pr.Name + " - " + pr.Size;
             }
+        }
+
+        private void OpenPdf()
+        {
+            string pdfPath = @"D:\Download\pprotect.pdf";
+            moonPdfPanel.OpenFile(pdfPath);
+        }
+
+        private void PackIconBootstrapIcons_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            PDFViewerWindow window = new PDFViewerWindow(@"D:\Download\pprotect.pdf");
+            window.Show();
         }
     }
 }
