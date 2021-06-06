@@ -317,17 +317,17 @@
                             <views:InventoryView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=History}" Label="Inventory List">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FormatListNumbered}" Label="Inventory List">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:InventoryListView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartPlus}" Label="Sales">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=PrinterPos}" Label="Sales Return">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartMinus}" Label="Sales Return">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesReturnView />
                         </mah:HamburgerMenuIconItem.Tag>
@@ -342,7 +342,7 @@
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuGraphs"
-                        Icon="{iconPacks:Material Kind=ChartBox}"
+                        Icon="{iconPacks:Material Kind=ChartBellCurveCumulative}"
                         Label="Graph">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:GraphView />
