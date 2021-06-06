@@ -89,6 +89,7 @@
     <Compile Include="InventoryHistory.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Sales.cs" />
+    <Compile Include="Shop.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
