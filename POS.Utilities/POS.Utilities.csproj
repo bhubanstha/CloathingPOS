@@ -130,7 +130,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Model\POS.Model.csproj">
+      <Project>{0FD68EFA-224D-4D24-9A96-CB9D57DBC027}</Project>
+      <Name>POS.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\companyLogo.png" />
   </ItemGroup>

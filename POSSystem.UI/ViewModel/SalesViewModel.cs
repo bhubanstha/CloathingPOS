@@ -1,7 +1,9 @@
 ﻿using MahApps.Metro.Controls;
+using MoonPdfLib;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.PDF;
 using POSSystem.UI.Service;
 using Prism.Commands;
 using System;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -24,7 +27,7 @@ namespace POSSystem.UI.ViewModel
         private Sales _currentProduct;
         private NumericUpDown _vatTextBox;
         private decimal _grandTotal = 0;
-
+        public MoonPdfPanel PdfPanel { get; set; }
         public decimal GrandTotal
         {
             get { return _grandTotal; }
@@ -49,7 +52,7 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<Sales> CurrentCart
+        public  ObservableCollection<Sales> CurrentCart
         {
             get { return _currentCart; }
             set
@@ -59,6 +62,22 @@ namespace POSSystem.UI.ViewModel
             }
 
         }
+
+        private string _currentPdfFilePath="";
+
+        public string CurrentPdfFilePath
+        {
+            get { return _currentPdfFilePath; }
+            set {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _currentPdfFilePath = value;
+                    PdfPanel.OpenFile(value);
+                    //PdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
+                }
+            }
+        }
+
 
         private SalesBO _salesBo;
         private BillBO _billBo;
@@ -138,14 +157,15 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void RemoveItemFromCart(Sales obj)
+        private async void RemoveItemFromCart(Sales obj)
         {
             var item = CurrentCart.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
             CurrentCart.Remove(item);
             CalculateVAT(ref _vatTextBox);
+            await CreatePdfFromCurrentCartItem();
         }
 
-        private void AddItemToCart(NumericUpDown vatTxtBox)
+        private async void AddItemToCart(NumericUpDown vatTxtBox)
         {
             _vatTextBox = vatTxtBox;
             _salesBo = new SalesBO();
@@ -163,6 +183,7 @@ namespace POSSystem.UI.ViewModel
             CurrentCart.Add(p);
             ClearProduct();
             CalculateVAT(ref _vatTextBox);
+            await CreatePdfFromCurrentCartItem();
         }
 
         private void GetInventory()
@@ -189,7 +210,7 @@ namespace POSSystem.UI.ViewModel
             decimal totalDiscount = 0;
             foreach (var item in CurrentCart)
             {
-                decimal itemTotal = (item.Rate * item.SalesQuantity) - item.Discount;
+                decimal itemTotal = (item.Rate * item.SalesQuantity);
                 decimal discount = item.Discount;
                 total += itemTotal;
                 totalDiscount += discount;
@@ -200,6 +221,12 @@ namespace POSSystem.UI.ViewModel
             GrandTotal = total + vatAmount - totalDiscount;
 
             vatTxtBox.Value = (double)CurrentProduct.Bill.VAT;
+        }
+
+        private async Task  CreatePdfFromCurrentCartItem()
+        {
+                string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
+                CurrentPdfFilePath = await new CreatePDF().CreatePdfTable(CurrentProduct.BillNo, CurrentCart.ToList<Sales>(), "asdf", imagePath);
         }
 
     }

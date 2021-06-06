@@ -20,6 +20,7 @@ namespace POSSystem.UI.Views
             InitializeComponent();
             _billBo = new BillBO();
             model = new SalesViewModel();
+            model.PdfPanel = moonPdfPanel;
             model.CurrentProduct = new Sales();
             model.CurrentProduct.SalesQuantity = 1;
             model.CurrentProduct.Bill = new Bill
@@ -54,14 +55,14 @@ namespace POSSystem.UI.Views
 
         private void OpenPdf()
         {
-            string pdfPath = @"D:\Download\pprotect.pdf";
-            moonPdfPanel.OpenFile(pdfPath);
-            moonPdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
+            //string pdfPath = @"D:\Download\pprotect.pdf";
+            //moonPdfPanel.OpenFile(pdfPath);
+            //moonPdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
         }
 
         private void PackIconBootstrapIcons_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            PDFViewerWindow window = new PDFViewerWindow(@"D:\Download\pprotect.pdf");
+            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath);
             window.Show();
         }
     }

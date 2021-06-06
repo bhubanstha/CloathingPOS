@@ -6,18 +6,20 @@ using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace POS.Utilities.PDF
 {
     public class CreatePDF
     {
 
-        public string CreatePdfTable(Int64 billNo, string pdfPassword, string logoPath)
+        public async Task<string> CreatePdfTable(Int64 billNo, List<Sales> salesItem, string pdfPassword, string logoPath)
         {
             Document document;
             string pdfPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{billNo}.pdf");
@@ -56,10 +58,10 @@ namespace POS.Utilities.PDF
                 document.Add(CreateParagraph($"Customer PAN: ", TextAlignment.LEFT, 1.0f));
                 */
 
-                List<MockSales> mockSales = SalesMockData.GetMockSalesData(1);
+                List<Sales> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
 
                 int salesCount = mockSales.Count;
-                int totalPages = (int)Math.Ceiling(salesCount / 10.0);
+                int totalPages = salesCount>0?(int)Math.Ceiling(salesCount / 10.0):1;
                 int skipCount = 0;
 
 
@@ -76,8 +78,8 @@ namespace POS.Utilities.PDF
                     PDFUtility.CreateInvoiceTableHeader(ref table);
                     int sn = 1;
                    
-                    List<MockSales> workingItems = mockSales.Skip(skipCount).Take(10).ToList();
-                    foreach (MockSales item in workingItems)
+                    List<Sales> workingItems = mockSales.Skip(skipCount).Take(10).ToList();
+                    foreach (Sales item in workingItems)
                     {
                         PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
                         sn++;
