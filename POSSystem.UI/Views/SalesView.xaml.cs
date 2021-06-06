@@ -56,6 +56,7 @@ namespace POSSystem.UI.Views
         {
             string pdfPath = @"D:\Download\pprotect.pdf";
             moonPdfPanel.OpenFile(pdfPath);
+            moonPdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
         }
 
         private void PackIconBootstrapIcons_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)

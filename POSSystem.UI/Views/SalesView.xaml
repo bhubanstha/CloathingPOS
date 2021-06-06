@@ -441,7 +441,8 @@
                         Margin="0,5,15,0"
                         HorizontalAlignment="Right"
                         Panel.ZIndex="2"
-                        Kind="ArrowsFullscreen" MouseLeftButtonUp="PackIconBootstrapIcons_MouseLeftButtonUp">
+                        Kind="ArrowsFullscreen"
+                        MouseLeftButtonUp="PackIconBootstrapIcons_MouseLeftButtonUp">
                         <iconPacks:PackIconBootstrapIcons.Resources>
                             <Style TargetType="iconPacks:PackIconBootstrapIcons">
                                 <Style.Triggers>
