@@ -21,108 +21,109 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2px" />
-        <Grid
-            x:Name="MainGrid"
-            Margin="0,30,30,0"
-            behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="User Name" />
-            <TextBox
-                x:Name="UserName"
-                Grid.Row="0"
-                Grid.Column="01"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
-                SpellCheck.IsEnabled="True"
-                Style="{DynamicResource App.TextBox.Validation}"
-                Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Expander
+            Margin="0,5,3,5"
+            Header="Create User"
+            IsExpanded="True">
+            <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Display Name" />
-            <TextBox
-                x:Name="DisplayName"
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
-                SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding NewUser.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="User Name" />
+                <TextBox
+                    x:Name="UserName"
+                    Grid.Row="0"
+                    Grid.Column="01"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
+                    SpellCheck.IsEnabled="True"
+                    Style="{DynamicResource App.TextBox.Validation}"
+                    Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Password" />
-            <PasswordBox
-                x:Name="txtPassword"
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter simple password"
-                MaxLength="6"
-                Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="Display Name" />
+                <TextBox
+                    x:Name="DisplayName"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
+                    SpellCheck.IsEnabled="True"
+                    Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                    Text="{Binding NewUser.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Is Admin" />
-            <mah:ToggleSwitch
-                Grid.Row="3"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                ContentPadding="0 0 0 3"
-                IsOn="{Binding NewUser.IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                OffContent="No"
-                OnContent="Yes" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="Password" />
+                <PasswordBox
+                    x:Name="txtPassword"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter simple password"
+                    MaxLength="6"
+                    Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
 
-            <TextBlock
-                Grid.Row="4"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="For Password Change" />
-            <mah:ToggleSwitch
-                Grid.Row="4"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                ContentPadding="0 0 0 3"
-                IsOn="{Binding NewUser.PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                OffContent="No"
-                OnContent="Yes">
-                <!--<mah:ToggleSwitch.Resources>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="Is Admin" />
+                <mah:ToggleSwitch
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    ContentPadding="0 0 0 3"
+                    IsOn="{Binding NewUser.IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="No"
+                    OnContent="Yes" />
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="For Password Change" />
+                <mah:ToggleSwitch
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    ContentPadding="0 0 0 3"
+                    IsOn="{Binding NewUser.PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    OffContent="No"
+                    OnContent="Yes">
+                    <!--<mah:ToggleSwitch.Resources>
                     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.StrokeOff" Color="Red" />
                     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.StrokeOffPointerOver" Color="DarkRed" />
                     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.KnobFillOff" Color="White" />
@@ -135,48 +136,44 @@
                     <SolidColorBrush x:Key="MahApps.Brushes.ToggleSwitch.FillOnPointerOver" Color="DarkGreen" />
 
                 </mah:ToggleSwitch.Resources>-->
-            </mah:ToggleSwitch>
+                </mah:ToggleSwitch>
 
 
-            <Button
-                Grid.Row="6"
-                Grid.Column="1"
-                Width="150"
-                Margin="0,5,0,15"
-                HorizontalAlignment="Left"
-                Command="{Binding CreateUserCommand}"
-                CommandParameter="{Binding ElementName=txtPassword}"
-                Content="{Binding ButtonText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                <Button
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Width="150"
+                    Margin="0,5,0,15"
+                    HorizontalAlignment="Left"
+                    Command="{Binding CreateUserCommand}"
+                    CommandParameter="{Binding ElementName=txtPassword}"
+                    Content="{Binding ButtonText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
-            <Button
-                Grid.Row="6"
-                Grid.Column="1"
-                Width="150"
-                Margin="160,5,0,15"
-                HorizontalAlignment="Left"
-                Command="{Binding ResetUserCommand}"
-                CommandParameter="{Binding ElementName=txtPassword}"
-                Content="Reset"
-                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                <Button
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Width="150"
+                    Margin="160,5,0,15"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ResetUserCommand}"
+                    CommandParameter="{Binding ElementName=txtPassword}"
+                    Content="Reset"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
 
 
-        </Grid>
+            </Grid>
+        </Expander>
 
-        <Separator
-            Margin="0,0,0,10"
-            BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-            BorderThickness="2" />
-        <Grid
-            Grid.Row="8"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="0,0,8,0"
-            Background="Red">
+
+        <Expander
+            Margin="0,0,3,0"
+            Header="User List"
+            IsExpanded="False">
+
             <DataGrid
                 x:Name="UserDataGrid"
-                MaxHeight="500"
                 HorizontalAlignment="Center"
                 HorizontalContentAlignment="Center"
                 AutoGenerateColumns="False"
@@ -192,20 +189,18 @@
                 SelectionMode="Single"
                 Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
                 VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}">
-
-                <DataGrid.Height>
+                <DataGrid.MaxHeight>
                     <MultiBinding
                         Converter="{StaticResource HeightCalc}"
                         Mode="TwoWay"
                         UpdateSourceTrigger="PropertyChanged">
                         <Binding>
                             <Binding.Source>
-                                <sys:Double>450</sys:Double>
+                                <sys:Double>500</sys:Double>
                             </Binding.Source>
                         </Binding>
                     </MultiBinding>
-                </DataGrid.Height>
-
+                </DataGrid.MaxHeight>
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="180"
@@ -223,7 +218,8 @@
                     <DataGridTemplateColumn Width="90" Header="Is Admin">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.IsAdmin}" />
+                                <!--<Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -237,7 +233,7 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource col.Boolean.IsAdmin}" />
-                                </Grid>
+                                </Grid>-->
 
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -245,7 +241,8 @@
                     <DataGridTemplateColumn Width="90" Header="Is Active">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.IsActive}" />
+                                <!--<Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -257,7 +254,7 @@
                                         Margin="2,0"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource col.Boolean.IsActive}" />
-                                </Grid>
+                                </Grid>-->
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -351,8 +348,8 @@
                 </DataGrid.Columns>
 
             </DataGrid>
-        </Grid>
 
+        </Expander>
     </StackPanel>
 
 </UserControl>

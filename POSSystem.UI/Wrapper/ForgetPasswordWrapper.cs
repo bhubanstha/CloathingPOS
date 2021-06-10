@@ -1,9 +1,5 @@
-﻿using POSSystem.UI.UIModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using POS.Model.ViewModel;
+using POSSystem.UI.UIModel;
 
 namespace POSSystem.UI.Wrapper
 {

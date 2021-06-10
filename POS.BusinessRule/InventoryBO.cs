@@ -4,7 +4,6 @@ using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace POS.BusinessRule
@@ -28,6 +27,14 @@ namespace POS.BusinessRule
         public List<Inventory> GetAllActiveProducts()
         {
             return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false && x.Quantity>0).ToList();
+        }
+
+        public List<Inventory> GetAllActiveProducts(string productName)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.Name.ToLower().StartsWith(productName))
+                .ToList();
         }
 
         public Inventory GetById(int id)
@@ -64,5 +71,11 @@ namespace POS.BusinessRule
             }
         }
 
+        public async Task<int> Restock(Inventory inventory, int salesReturn)
+        {
+            inventory.Quantity += salesReturn;
+            genericDataRepository.Update(inventory);
+            return await genericDataRepository.SaveAsync();
+        }
     }
 }

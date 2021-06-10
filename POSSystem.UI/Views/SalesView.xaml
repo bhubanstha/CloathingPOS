@@ -9,6 +9,7 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mpp="clr-namespace:MoonPdfLib;assembly=MoonPdfLib"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"
@@ -19,35 +20,12 @@
         <conv:DateConverter x:Key="NepDateConverter" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
 
-        <Style
-            x:Key="AutoCompleteBox"
-            BasedOn="{StaticResource MahApps.Styles.TextBox}"
-            TargetType="ctrl:AutoCompleteTextBox" />
+        <SolidColorBrush x:Key="TransparentBlack" Color="{DynamicResource MahApps.Colors.Accent}" Opacity="0.3"/>
 
-
-
-
-        <Style x:Key="GridNumericColumnLabel" TargetType="Label">
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="Padding" Value="0" />
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Value="True">
-                    <Setter Property="Foreground" Value="White" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
-    <StackPanel>
-        <Border Style="{StaticResource HeaderBorder}" />
+    <StackPanel Margin="0,5,3,5">
 
-        <Grid Style="{StaticResource ControlerMainGrid}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Grid ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
@@ -55,188 +33,11 @@
 
             <StackPanel
                 Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="2">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="90" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Content="Bill No.:" />
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Content="{Binding CurrentProduct.Bill.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Content="Billing Date:" />
-
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="3"
-                        Content="{Binding CurrentProduct.Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ContentStringFormat="yyyy/MM/dd" />
-
-
-
-
-                </Grid>
-
-
-            </StackPanel>
-
-            <!--<TextBlock Grid.Row="0"
-                        Grid.Column="0"
-                       Grid.ColumnSpan="2"
-                       xml:space="preserve">
-                        <Bold>Bill No.:</Bold> 123    &#x09;&#x09;&#x09;&#x09;  <Bold>Bill Date: </Bold><Run
-                            Text="{Binding Source={x:Static sys:DateTime.Now},
-                            Mode=OneWay,
-                            StringFormat='yyyy/mm/dd',
-                            Converter={StaticResource NepDateConverter}}"></Run>
-            </TextBlock>-->
-
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-
-
-                    <DataGrid
-                        x:Name="CartGrid"
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3"
-                        MaxHeight="500"
-                        AutoGenerateColumns="False"
-                        BorderThickness="1"
-                        CanUserAddRows="False"
-                        CanUserReorderColumns="False"
-                        CanUserResizeColumns="False"
-                        CanUserSortColumns="False"
-                        IsReadOnly="True"
-                        ItemsSource="{Binding Path=CurrentCart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Width="120"
-                                Binding="{Binding Inventory.Category.Name}"
-                                Header="Category" />
-                            <DataGridTextColumn
-                                Width="140"
-                                Binding="{Binding Inventory.Name}"
-                                Header="Name" />
-                            <DataGridTextColumn
-                                Width="50"
-                                Binding="{Binding Inventory.Size}"
-                                Header="Size" />
-                            <DataGridTemplateColumn Header="Colour">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Rectangle
-                                            Width="24"
-                                            Height="20"
-                                            VerticalAlignment="Top"
-                                            Fill="{Binding Inventory.Color, Converter={StaticResource ColorConverter}}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTextColumn
-                                Width="100"
-                                Binding="{Binding Rate}"
-                                ElementStyle="{StaticResource GridNumericColumn}"
-                                Header="Rate" />
-                            <DataGridTextColumn
-                                Width="54"
-                                Binding="{Binding SalesQuantity}"
-                                ElementStyle="{StaticResource GridNumericColumn}"
-                                Header="Qty" />
-                            <DataGridTextColumn
-                                Width="100"
-                                Binding="{Binding Discount}"
-                                ElementStyle="{StaticResource GridNumericColumn}"
-                                Header="Discount" />
-                            <DataGridTemplateColumn Width="100" Header="Total">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Style="{StaticResource GridNumericColumnLabel}">
-                                            <Label.Content>
-                                                <MultiBinding Converter="{StaticResource TotalCalc}">
-                                                    <Binding Path="SalesQuantity" />
-                                                    <Binding Path="Rate" />
-                                                    <Binding Path="Discount" />
-                                                </MultiBinding>
-                                            </Label.Content>
-                                        </Label>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="65" Header="Options">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button
-                                            Grid.Column="1"
-                                            Width="25"
-                                            Height="25"
-                                            Margin="2,0"
-                                            Command="{Binding Path=DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                            Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                            Style="{DynamicResource Button.Circle.In.GridRow}">
-                                            <Button.ContentTemplate>
-                                                <DataTemplate>
-                                                    <iconPacks:PackIconBootstrapIcons
-                                                        Width="15"
-                                                        Height="15"
-                                                        Kind="Trash"
-                                                        Style="{StaticResource row.option.icon}" />
-                                                </DataTemplate>
-                                            </Button.ContentTemplate>
-                                        </Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-                </Grid>
-            </StackPanel>
-
-            <Border
-                Grid.Row="1"
                 Grid.Column="1"
-                Margin="5,0,0,0"
-                BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
-                BorderThickness="2">
-                <StackPanel>
+                Margin="5,0,0,0">
+                <Border BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="2">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="10" />
-                            <RowDefinition />
-                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
@@ -247,23 +48,18 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2" />
                         <Label
-                            Grid.Row="1"
+                            Grid.Row="0"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Item Name" />
                         <ctrl:AutoCompleteTextBox
-                            x:Name="txtProduct"
-                            Grid.Row="1"
+                            x:Name="txtProductName"
+                            Grid.Row="0"
                             Grid.Column="1"
-                            Margin="5"
-                            AutoCompleteHeight="150"
+                            Margin="0,5,5,0"
+                            AutoCompleteHeight="200"
                             AutoCompletePlacement="Bottom"
-                            AutoCompletePlacementTarget="{Binding ElementName=txtProduct}"
                             AutoCompleteWidth="600"
                             OnSelectedItemChange="Txt_ProductSelected"
                             OnTextChange="Txt_OnProductNameChange">
@@ -276,12 +72,12 @@
                                     Visibility="Hidden" />
                                 <DataGridTextColumn
                                     Width="*"
-                                    Binding="{Binding Name}"
-                                    Header="Product Name" />
-                                <DataGridTextColumn
-                                    Width="*"
                                     Binding="{Binding Category.Name}"
                                     Header="Category" />
+                                <DataGridTextColumn
+                                    Width="*"
+                                    Binding="{Binding Name}"
+                                    Header="Product Name" />
                                 <DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding Size}"
@@ -289,7 +85,11 @@
                                 <DataGridTemplateColumn Header="Colour">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Rectangle Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                            <Rectangle
+                                                Width="24"
+                                                Height="20"
+                                                VerticalAlignment="Top"
+                                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -302,15 +102,15 @@
 
 
                         <Label
-                            Grid.Row="2"
+                            Grid.Row="1"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Rate" />
                         <mah:NumericUpDown
                             x:Name="txtRetailRate"
-                            Grid.Row="2"
+                            Grid.Row="1"
                             Grid.Column="1"
-                            Margin="5"
+                            Margin="0,5,5,0"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
                             Culture="{Binding CultureInfo}"
@@ -320,18 +120,19 @@
                             StringFormat="C"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                             TextAlignment="Left"
-                            Value="{Binding CurrentProduct.Rate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Value="{Binding CurrentProduct.RetailRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
                         <Label
-                            Grid.Row="3"
+                            Grid.Row="2"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Quantity" />
                         <mah:NumericUpDown
-                            Grid.Row="3"
+                            x:Name="txtSalesQty"
+                            Grid.Row="2"
                             Grid.Column="1"
-                            Margin="5"
+                            Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
                             Minimum="1"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
@@ -339,14 +140,14 @@
                             Value="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Label
-                            Grid.Row="4"
+                            Grid.Row="3"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Discount" />
                         <mah:NumericUpDown
-                            Grid.Row="4"
+                            Grid.Row="3"
                             Grid.Column="1"
-                            Margin="5"
+                            Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
                             Culture="{Binding CultureInfo}"
                             HideUpDownButtons="True"
@@ -357,96 +158,343 @@
                             Value="{Binding CurrentProduct.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button
-                            Grid.Row="5"
+                            Grid.Row="4"
                             Grid.Column="1"
-                            Margin="5"
+                            Margin="0,5,5,5"
                             Command="{Binding AddItemToCartCommand}"
                             CommandParameter="{Binding ElementName=txtSalesVaT}"
                             Content="Add To Cart"
-                            Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
-                        <StackPanel
-                            Grid.Row="6"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="0,0,0,5" />
+                            Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
                     </Grid>
-                </StackPanel>
-            </Border>
-
-
-            <StackPanel
-                Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2">
-                <Grid Margin="0,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".37*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Content="VAT Amount: " />
-                    <mah:NumericUpDown
-                        x:Name="txtSalesVaT"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="{StaticResource ControlPadding}"
-                        VerticalAlignment="Center"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"
-                        Culture="{Binding CultureInfo}"
-                        HideUpDownButtons="True"
-                        IsEnabled="False"
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
-                        TextAlignment="Left"
-                        Value="{Binding CurrentProduct.Bill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="3"
-                        Width="90"
-                        Margin="5,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Command="{Binding CheckoutCommand}"
-                        Content="Checkout"
-                        Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
-
-                    <Label
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Content="Grand Total: " />
-
-                    <mah:NumericUpDown
-                        x:Name="txtSalesTotal"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Padding="{StaticResource ControlPadding}"
-                        VerticalAlignment="Center"
-                        mah:TextBoxHelper.SelectAllOnFocus="True"
-                        Culture="{Binding CultureInfo}"
-                        HideUpDownButtons="True"
-                        IsEnabled="False"
-                        NumericInputMode="Decimal"
-                        StringFormat="C"
-                        Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
-                        TextAlignment="Left"
-                        Value="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
+                </Border>
             </StackPanel>
+
+
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0">
+                    <Run Text="Bill No.: " />
+                    <Run Text="{Binding CurrentBill.BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </TextBlock>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
+                    <Run Text="Billing Date: " />
+                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='yyyy/MM/dd hh:mm tt'}"/>
+                </TextBlock>
+
+
+                <DataGrid
+                    x:Name="CartGrid"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    AutoGenerateColumns="False"
+                    BorderThickness="1"
+                    CanUserAddRows="False"
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserSortColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Path=CurrentCart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding CategoryName}"
+                            Header="Category" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding ProductName}"
+                            Header="Name" />
+                        <DataGridTextColumn
+                            Width="50"
+                            Binding="{Binding Size}"
+                            Header="Size" />
+                        <DataGridTemplateColumn Header="Colour">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Rectangle
+                                        Width="24"
+                                        Height="20"
+                                        VerticalAlignment="Top"
+                                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding RetailRate}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
+                            Header="Rate" />
+                        <DataGridTextColumn
+                            Width="54"
+                            Binding="{Binding SalesQuantity}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
+                            Header="Qty" />
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding Discount}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
+                            Header="Discount" />
+                        <DataGridTemplateColumn Width="100" Header="Total">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Style="{StaticResource Grid.Numeric.Column}" >
+                                        <Label.Content>
+                                            <MultiBinding Converter="{StaticResource TotalCalc}">
+                                                <Binding Path="SalesQuantity" />
+                                                <Binding Path="RetailRate" />
+                                                <Binding Path="Discount" />
+                                            </MultiBinding>
+                                        </Label.Content>
+                                    </Label>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="65" Header="Options">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="2,0"
+                                        Command="{Binding Path=DataContext.DeleteCartItemCommand, 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}">
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="Trash"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    Content="VAT Amount: " />
+                <mah:NumericUpDown
+                    x:Name="txtSalesVaT"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,5"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    Culture="{Binding CultureInfo}"
+                    HideUpDownButtons="True"
+                    IsEnabled="False"
+                    NumericInputMode="Decimal"
+                    StringFormat="C"
+                    Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
+                    TextAlignment="Left"
+                    Value="{Binding CurrentBill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    Content="Grand Total: " />
+
+                <mah:NumericUpDown
+                    x:Name="txtSalesTotal"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="0,5"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    Culture="{Binding CultureInfo}"
+                    HideUpDownButtons="True"
+                    IsEnabled="False"
+                    NumericInputMode="Decimal"
+                    StringFormat="C"
+                    Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
+                    TextAlignment="Left"
+                    Value="{Binding CurrentBill.GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    Content="Billing To:  " />
+
+                <TextBox
+                    x:Name="txtBillingTo"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"                    
+                    Margin="{DynamicResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Customer Name"
+                    Style="{DynamicResource App.TextBox.Validation}"
+                    Text="{Binding CurrentBill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left" 
+                    LostFocus="txCustInfo_LostFocus" />
+
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    Content="Billing Address:  " />
+
+                <TextBox
+                    x:Name="txtBillingAddress"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="{DynamicResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Customer Address"
+                    Style="{DynamicResource App.TextBox.Validation}"
+                    Text="{Binding CurrentBill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    LostFocus="txCustInfo_LostFocus" />
+
+                <Label
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Right"
+                    Content="PAN Number:  " />
+
+                <TextBox
+                    x:Name="txtPANNumber"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Margin="{DynamicResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Customer PAN Number"
+                    Style="{DynamicResource App.TextBox.Validation}"
+                    Text="{Binding CurrentBill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    LostFocus="txCustInfo_LostFocus" />
+
+
+                <Button
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Width="90"
+                    Margin="{DynamicResource ControlMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding CheckoutCommand}"
+                    Content="Checkout"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+
+                <Grid
+                    Grid.Row="2"
+                    Grid.RowSpan="6"
+                    Grid.Column="3"
+                    Margin="5,5,0,0"
+                    UseLayoutRounding="True">
+                    <Border Grid.Row="0" Grid.Column="0" Panel.ZIndex="2" Background="{DynamicResource TransparentBlack}" Width="35" Height="80" HorizontalAlignment="Right" Margin="0 0 15 0" Padding="0 10" CornerRadius="15" VerticalAlignment="Top" Visibility="Hidden" x:Name="pnlPdfOptions">
+                        <StackPanel>
+                            <iconPacks:PackIconBootstrapIcons         
+                                x:Name="icon_FullScreen"
+                        HorizontalAlignment="Center"
+                        Panel.ZIndex="3"
+                        Margin="0 0 0 10"
+                        Kind="ArrowsFullscreen"
+                        MouseLeftButtonUp="icon_FullScreen_MouseLeftButtonUp">
+                                <iconPacks:PackIconBootstrapIcons.Resources>
+                                    <Style TargetType="iconPacks:PackIconBootstrapIcons">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Height" Value="18" />
+                                                <Setter Property="Width" Value="18" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconBootstrapIcons.Resources>
+                            </iconPacks:PackIconBootstrapIcons>
+
+                            <iconPacks:PackIconBootstrapIcons                            
+                        HorizontalAlignment="Center"
+                                x:Name="icon_Printer"
+                        Panel.ZIndex="3"
+                        Kind="Printer"
+                                Margin="0 10 0 0"
+                        MouseLeftButtonUp="icon_Printer_MouseLeftButtonUp">
+                                <iconPacks:PackIconBootstrapIcons.Resources>
+                                    <Style TargetType="iconPacks:PackIconBootstrapIcons">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Height" Value="20" />
+                                                <Setter Property="Width" Value="20" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconBootstrapIcons.Resources>
+                            </iconPacks:PackIconBootstrapIcons>
+                        </StackPanel>
+                        
+                    </Border>
+                    
+                    <mpp:MoonPdfPanel
+                        x:Name="moonPdfPanel"
+                        Height="250"
+                        Panel.ZIndex="1"
+                        ViewType="SinglePage"
+                        />
+                </Grid>
+            </Grid>
         </Grid>
+
+
     </StackPanel>
 </UserControl>

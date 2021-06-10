@@ -2,15 +2,9 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
-using System;
-using System.Collections.Generic;
+using POS.Model;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace POSSystem.UI.Service
@@ -25,6 +19,7 @@ namespace POSSystem.UI.Service
 
         public static Flyout SettingFlyout { get; set; }
         public static Flyout AddCategoryFlyout { get; set; }
+        public static Flyout NoSearchResultFlyout { get; set; }
 
         public static IDialogCoordinator DialogCoordinator { get; set; }
 
@@ -32,6 +27,11 @@ namespace POSSystem.UI.Service
         public static CultureInfo CultureInfo { get; set; }
         public static NotificationManager NotificationManager { get; set; }
         public static string SettingFile { get; set; }
+        public static string PdfPassword { get; set; }
+        public static bool IsPasswordChanged { get; set; }
+        public static Shop Shop { get; set; }
+
+
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         static StaticContainer()
         {
@@ -48,6 +48,7 @@ namespace POSSystem.UI.Service
             SettingFile = "AppConfiguration.txt";// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppConfiguration.txt");
             ApplicationName = ConfigurationReader.GetConfiguration <string>(AppSettingKey.AppName);
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
+            PdfPassword = ConfigurationReader.GetConfiguration<string>(AppSettingKey.PdfPassword);
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
         }
 

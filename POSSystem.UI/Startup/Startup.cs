@@ -1,19 +1,12 @@
 ﻿using Autofac;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Data;
-using POS.Data.Repository;
-using POS.Model;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using POSSystem.UI.Views.Flyouts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSSystem.UI.Startup
 {
@@ -32,12 +25,17 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<InventoryView>().AsSelf();
             builder.RegisterType<GraphView>().AsSelf();
             builder.RegisterType<SalesView>().AsSelf();
+            builder.RegisterType<SalesReturnView>().AsSelf();
+            builder.RegisterType<AboutView>().AsSelf();
+            builder.RegisterType<UserProfileView>().AsSelf();
             
             
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
             builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<ForgotPasswordWindow>().AsSelf();
+            builder.RegisterType<PDFViewerWindow>().AsSelf();
 
 
 
@@ -53,8 +51,16 @@ namespace POSSystem.UI.Startup
             //View Model Registration
             builder.RegisterType<LoginViewModel>().AsSelf();
             builder.RegisterType<MainWindowViewModel>().AsSelf();
-            builder.RegisterType<LineSeriesViewModel>().AsSelf();
+            builder.RegisterType<GraphViewModel>().AsSelf();
             builder.RegisterType<UserViewModel>().AsSelf();
+            builder.RegisterType<ForgetPasswordViewModel>().AsSelf();
+            builder.RegisterType<InventoryListViewModel>().AsSelf();
+            builder.RegisterType<InventoryViewModel>().AsSelf();
+            builder.RegisterType<SalesViewModel>().AsSelf();
+            builder.RegisterType<SalesReturnViewModel>().AsSelf();
+            builder.RegisterType<SettingsViewModel>().AsSelf();
+            builder.RegisterType<UserProfileViewModel>().AsSelf();
+
 
 
             //Db Context Registration

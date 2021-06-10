@@ -9,15 +9,16 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
-    Title="LoginWindow"
+    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="400"
-    Height="565"
+    Height="550"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon_toolbar.png"
     ResizeMode="NoResize"
     ShowMaxRestoreButton="False"
+    TitleCharacterCasing="Normal"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.IconTemplate>
@@ -26,19 +27,28 @@
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
 
-    <StackPanel Background="#dedace">
+    <Grid Background="#dedace">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
         <TextBlock
+            Grid.Row="0"
             Margin="0,20,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="30"
             FontWeight="Bold"
-            Foreground="{DynamicResource MahApps.Brushes.Accent}"
-            Text="POS Login" />
+            Foreground="{DynamicResource MahApps.Brushes.Accent}">
+            <Run Text="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneTime}" />
+            <Run Text="Login"/>
+
+        </TextBlock>
 
         <Grid
-            Margin="30,10,30,20"
-            xf:Animations.Primary="{StaticResource FadeInAndSlideFromRight}"
+            Grid.Row="1"
+            Margin="30,10,30,30"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160" />
@@ -143,36 +153,33 @@
 
 
 
-        <StackPanel Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
-            <Grid Margin="5" ShowGridLines="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="15"
-                    TextAlignment="Center">
-                    <Run Text="©" />
-                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneTime, StringFormat='yyyy'}" />
-                </TextBlock>
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="15"
+                TextAlignment="Center">
+                <Run Text="©" />
+                <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneTime, StringFormat='yyyy'}" />
+            </TextBlock>
 
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    xf:Animations.IterationBehavior="Forever"
-                    xf:Animations.Primary="{StaticResource FadeInAndGrow}"
-                    FontSize="15"
-                    TextAlignment="Center">
-                    <Run Text="Developed By: " />
-                    <Run Text="Bhuban Shrestha" />
-                </TextBlock>
-            </Grid>
-        </StackPanel>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,5,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="15"
+                TextAlignment="Center">
+                <Run Text="Developed By: " />
+                <Run Text="Bhuban Shrestha" />
+            </TextBlock>
+        </Grid>
 
-    </StackPanel>
+    </Grid>
 </mah:MetroWindow>

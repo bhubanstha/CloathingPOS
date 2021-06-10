@@ -3,7 +3,6 @@ using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +29,7 @@ namespace POS.BusinessRule
 
         public List<User> GetAllUser()
         {
-            List<User> users =  genericDataRepository.GetAll().ToList();
+            List<User> users =  genericDataRepository.GetAll().Where(x => x.UserName != "sysadmin").ToList();
             return users;
         }
 

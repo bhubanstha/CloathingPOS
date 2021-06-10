@@ -1,17 +1,13 @@
-﻿using POS.Model;
-using POSSystem.UI.Service;
-using POSSystem.UI.Wrapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using POSSystem.UI.UIModel;
-using System.Windows.Input;
-using Prism.Commands;
+﻿using Notifications.Wpf;
 using POS.BusinessRule;
-using Notifications.Wpf.Controls;
-using Notifications.Wpf;
+using POS.Model;
+using POS.Model.ViewModel;
+using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
+using POSSystem.UI.Wrapper;
+using Prism.Commands;
+using System;
+using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
@@ -60,6 +56,7 @@ namespace POSSystem.UI.ViewModel
                 {
                     u.Password = await userBO.EncryptPassword( CurrentUser.Password);
                     u.LastPasswordChangeDate = DateTime.Now;
+                    u.PromptForPasswordReset = false;
                    int i=  await userBO.UpdateUser(u);
                     if(i>0)
                     {
@@ -74,6 +71,7 @@ namespace POSSystem.UI.ViewModel
                         {
                             CurrentUser.UserName = null;
                         }
+                        StaticContainer.IsPasswordChanged = true;
                         StaticContainer.NotificationManager.Show(new NotificationContent
                         {
                             Title="Password Changed",
@@ -86,6 +84,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                StaticContainer.IsPasswordChanged = false;
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
                     Title = "Application Error",

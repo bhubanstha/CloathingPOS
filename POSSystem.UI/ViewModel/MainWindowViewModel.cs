@@ -1,20 +1,14 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Model;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Shapes;
 
 namespace POSSystem.UI.ViewModel
 {
@@ -30,6 +24,8 @@ namespace POSSystem.UI.ViewModel
         public ICommand ManageAccount { get; }
         public ICommand SettingsCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand OpenPdfViewerCommand { get; set; }
+        public ICommand ApplicationExitCommand { get; set; }
 
         public MetroWindow Window { get; set; }
         public Flyout SettingFlyout { get; set; }
@@ -54,6 +50,16 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        private bool _isAdminMenuVisible = false;
+
+        public bool IsAdminMenuVisible
+        {
+            get { return _isAdminMenuVisible; }
+            set { _isAdminMenuVisible = value; 
+                OnPropertyChanged(); }
+        }
+
+
         public bool IsLogout { get; set; }
 
 
@@ -69,6 +75,19 @@ namespace POSSystem.UI.ViewModel
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
             SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
             LogoutCommand = new DelegateCommand(OnUserLogout);
+            OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
+            ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
+        }
+
+        private void OnApplicationExit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void OnOpenPdfViewerExecute()
+        {
+            PDFViewerWindow window = new PDFViewerWindow();
+            window.Show();
         }
 
         private void OnUserLogout()
@@ -89,8 +108,10 @@ namespace POSSystem.UI.ViewModel
 
         private void OnManageAccountExecute()
         {
-            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[6];
+            //StaticContainer.UIHamburgerMenuControl.Items.
+            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[7];
             StaticContainer.UIHamburgerMenuControl.SelectedIndex = -1;
+            StaticContainer.UIHamburgerMenuControl.SelectedOptionsIndex = -1;
             //Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
             //_messageDialogService.ShowDialog("Manage account clicked", Window);
             ManageMenuVisibility(); 
@@ -105,6 +126,15 @@ namespace POSSystem.UI.ViewModel
         private void ManageMenuVisibility()
         {
             IsUserMenuVisible = !_isUserMenuVisible ;
+        }
+
+        public void CheckUserIsAdmin()
+        {
+            var user = _cacheService.ReadCache<User>("LoginUser");
+            if(user != null)
+            {
+                IsAdminMenuVisible = user.IsAdmin;
+            }
         }
     }
 }

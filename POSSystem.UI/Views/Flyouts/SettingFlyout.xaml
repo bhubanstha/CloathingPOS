@@ -13,6 +13,7 @@
     MinWidth="250"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    IsPinned="False"
     Position="Right"
     Theme="Inverse"
     mc:Ignorable="d">
@@ -33,7 +34,6 @@
         <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
             <DockPanel
                 x:Name="dpHeader"
-                Margin="0,15,0,0"
                 VerticalAlignment="Center"
                 LastChildFill="True">
                 <Button
@@ -155,7 +155,7 @@
                     <Label MouseLeftButtonUp="DarkTheme">Black</Label>
                 </StackPanel>
             </Grid>
-
+            <Separator/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -521,6 +521,22 @@
                 </StackPanel>
 
             </Grid>
+
+            <Separator/>
+
+            <StackPanel Margin="0 5 0 0">
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}">
+                    Application Setting
+                </TextBlock>
+                <CheckBox Style="{DynamicResource MahApps.Styles.CheckBox.Win10}">Enable VAT Calculation on sale</CheckBox>
+                <CheckBox Style="{DynamicResource MahApps.Styles.CheckBox.Win10}">Enable Bill printing on sale</CheckBox>
+            </StackPanel>
         </StackPanel>
 
     </StackPanel>

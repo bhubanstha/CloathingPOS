@@ -6,7 +6,6 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:POSSystem.UI.Views.Tiles"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:xf="clr-namespace:XamlFlair;assembly=XamlFlair.WPF"
     d:DesignHeight="100"
     d:DesignWidth="170"
     mc:Ignorable="d">
@@ -25,7 +24,6 @@
             Grid.Column="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            xf:Animations.Primary="{StaticResource Grow}"
             FontSize="40"
             FontWeight="Bold">
             500

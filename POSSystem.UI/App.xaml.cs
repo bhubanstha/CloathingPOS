@@ -12,6 +12,10 @@ using POSSystem.UI.Service;
 using ControlzEx.Theming;
 using System.IO.IsolatedStorage;
 using System.IO;
+using Notifications.Wpf;
+using POS.Model;
+using POS.Data.Repository;
+using POS.Data;
 
 namespace POSSystem.UI
 {
@@ -25,23 +29,33 @@ namespace POSSystem.UI
             var startup = new Startup.Startup();
             var container = startup.BootstrapDependencies();
 
-            var window = container.Resolve<LoginWindow>();
-            this.MainWindow = window;
-
-
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
+           
+            ReloadConfig();
+            LoadCompanyInfo();
+            var window = container.Resolve<MainWindow>();
+            this.MainWindow = window;
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            ApplyThemeConfig();
             window.Show();
-
-
         }
 
+        private void LoadCompanyInfo()
+        {
+            IGenericDataRepository<Shop> genericDataRepository = new DataRepository<Shop>(new POSDataContext());
+            Shop shop = genericDataRepository.GetAll().FirstOrDefault();
+            StaticContainer.Shop = shop;
+            StaticContainer.Shop.LogoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", StaticContainer.Shop.LogoPath);
+        }
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-
+            StaticContainer.NotificationManager.Show(new NotificationContent
+            {
+                Message = e.Exception.Message,
+                Title = "Error",
+                Type = NotificationType.Error
+            });
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -59,7 +73,7 @@ namespace POSSystem.UI
             }
         }
 
-        void ApplyThemeConfig()
+        void ReloadConfig()
         {
             // Restore application-scope property from isolated storage
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForDomain();
@@ -81,7 +95,7 @@ namespace POSSystem.UI
             }
             catch (FileNotFoundException ex)
             {
-                throw ex;
+                //throw ex;
                 // Handle when file is not found in isolated storage:
                 // * When the first application session
                 // * When file has been deleted

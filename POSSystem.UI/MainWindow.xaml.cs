@@ -4,22 +4,13 @@ using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.Views;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace POSSystem.UI
 {
@@ -32,6 +23,7 @@ namespace POSSystem.UI
         public IDialogCoordinator DialogCoordinator;
         public MainWindow(MainWindowViewModel model, LoginWindow loginWindow)
         {
+            model.CheckUserIsAdmin();
             InitializeComponent();
             _model = model;
             _model.Window = this;
@@ -40,18 +32,43 @@ namespace POSSystem.UI
             DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;            
             this.Loaded += MainWindow_Loaded;
-            this.Closed += MainWindow_Closed;
-
+           
+            this.Closed += MainWindow_Closed;            
         }
 
         private void GlobalElements()
         {
             StaticContainer.SettingFlyout = this.SettingsFlyout;// container.Resolve<SettingView>();
             StaticContainer.AddCategoryFlyout = this.CategoryFlyout;
+            StaticContainer.NoSearchResultFlyout = this.NoSearchResultFlyout;
             StaticContainer.DialogCoordinator = this.DialogCoordinator;
             StaticContainer.UIHamburgerMenuControl = this.HamburgerMenuControl;
         }
 
+
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            GlobalElements();
+            
+            double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
+            _model.PopupRightMargin = 120 + additionalWidth;
+            System.Drawing.Size s = new System.Drawing.Size();
+            s.Width = (int)container.RenderSize.Width;
+            s.Height = (int)container.RenderSize.Height;
+            Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+            Application.Current.MainWindow = this;
+            StaticContainer.ThisApp.MainWindow = this;
+            //menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            //menuGraphs.IsVisible = _model.IsAdminMenuVisible;
+            //menuReport.IsVisible = _model.IsAdminMenuVisible;
+            if(!_model.IsAdminMenuVisible)
+            {
+                HamburgerMenuControl.SelectedIndex = 1;
+            }
+
+
+        }
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             if(!_model.IsLogout)
@@ -60,24 +77,15 @@ namespace POSSystem.UI
             }
             
         }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            GlobalElements();
-            double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
-            _model.PopupRightMargin =  265 + additionalWidth;
-            System.Drawing.Size s = new System.Drawing.Size();
-            s.Width = (int)container.RenderSize.Width;
-            s.Height = (int)container.RenderSize.Height;
-            Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
-        }
+ 
 
         private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
         {
             HamburgerMenuControl.Content = args.InvokedItem;
+            //((MahApps.Metro.Controls.HamburgerMenuItemBase)args.InvokedItem).IsVisible = false;
         }
 
-        private void Screenshot(System.Drawing.Size size, Canvas canvas, Window window)
+        private void Screenshot(System.Drawing.Size size, Panel canvas, Window window)
         {
 
             // Store the size of the map control

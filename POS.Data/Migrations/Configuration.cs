@@ -4,9 +4,7 @@
     using POS.Model;
     using POS.Utilities.Encryption;
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
     using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<POS.Data.POSDataContext>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
+  <!--Give product a unique ID per platform-->
+  <?define ProductCode = !(loc.ProductCode_$(var.Platform))?>
+  
+  <!--Fixed Upgrade Id-->
+  <?define BuildVersion = !(bind.FileVersion.fil14E049FE822D48F0E0077BF257F1F344)?> <!--EXE FileID-->
+  <?define UpgradeCode = "{412A7F2B-3E9F-45F1-B0B2-01F81DE22EBD}"?>
+  
+  <!--Define main product-->
+	<Product Id="$(var.ProductCode)" 
+           Name="!(loc.ProductName)" 
+           Language="!(loc.Language)" 
+           Version="$(var.BuildVersion)" 
+           Manufacturer="!(loc.Company)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+    <!--Provide package details-->
+		<Package 
+      InstallerVersion="200" 
+      Compressed="yes" 
+			InstallScope="perMachine"
+      Platform="$(var.Platform)"
+      Manufacturer="!(loc.Company)"
+      Description="!(loc.Description)"
+      Keywords="!(loc.Keywords)"
+      Comments="!(loc.Comments)"
+      Languages="!(loc.Language)"
+      AdminImage="yes"
+      />
+    
+    <!--Downgrade error message-->
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" Schedule="afterInstallInitialize"  AllowSameVersionUpgrades="yes"/>
+    
+    <!--Include .cab file into .msi file-->
+		<MediaTemplate 
+      EmbedCab="yes"
+      />
+
+    <!--Define main app icon-->
+    <Icon Id="icon.ico" SourceFile="$(var.POSSystem.UI.ProjectDir)\Image\AppIcon.ico"/>
+
+    <!--Use the icon.ico icon for this installer (shows up in Add/Remove programs)-->
+    <Property Id="ARPPRODUCTICON">icon.ico</Property>
+    
+    <!--Help/Support website (shows in the Add/Remove programs-->
+    <Property Id="ARPURLINFOABOUT">https://www.facebook.com/BhubanStha</Property>
+    
+    <!--Change the installer UI background images-->
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp"/>
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\license.rtf"/>
+
+    <!--Create a basic UI for the installer-->      
+    <UIRef Id="WixUI_Minimal"/>
+    <!--Define components, shortcuts, files etc... for installer-->
+		<Feature Id="ProductFeature" Title="POSSystem.Installer" Level="1">
+      
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="PublishComponents" />
+		</Feature>
+	</Product>
+
+
+
+
+</Wix>

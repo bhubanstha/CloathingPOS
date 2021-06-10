@@ -13,13 +13,15 @@ namespace POS.Data
     public class POSDataContext: DbContext
     {
         public POSDataContext():
-            base("ClothingPOSDb")
+            base("CloathingPOS")
         {
 
         }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
@@ -31,5 +33,6 @@ namespace POS.Data
         public DbSet<InventoryHistory> InventoryHistories { get; set; }
         public DbSet<Sales> Sales { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Shop> Shops { get; set; }
     }
 }

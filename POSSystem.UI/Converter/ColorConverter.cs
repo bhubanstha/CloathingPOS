@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Media;
+﻿using POSSystem.UI.Service;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace POSSystem.UI.Converter
 {
@@ -16,8 +13,9 @@ namespace POSSystem.UI.Converter
             string colorHex = value as string;
             Color? tempColor = MahApps.Metro.Controls.ColorHelper.ColorFromString(colorHex);
 
-            Color color = tempColor.HasValue ? tempColor.Value : Color.FromRgb(255, 255, 255);
+            Color color = tempColor.HasValue ? tempColor.Value : Color.FromScRgb(0, 255, 255, 255);
             SolidColorBrush brush = new SolidColorBrush(color);
+            //System.Drawing.Color.Transparent;
             return brush;
         }
 
