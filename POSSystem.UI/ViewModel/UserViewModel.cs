@@ -181,7 +181,12 @@ namespace POSSystem.UI.ViewModel
                 {
                     ClearAll();
                     LoadAllUsers();
-                    await _window.ShowMessageAsync(title, msg, MessageDialogStyle.Affirmative, StaticContainer.DialogSettings);
+                    StaticContainer.NotificationManager.Show(new NotificationContent
+                    {
+                        Message = "New user is added into the system successfully.",
+                        Title = "User Created",
+                        Type = NotificationType.Success
+                    });
                 }
             }
             catch (Exception ex)

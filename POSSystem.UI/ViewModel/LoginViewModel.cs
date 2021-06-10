@@ -4,6 +4,7 @@ using Org.BouncyCastle.Crypto.Engines;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
+using POS.Model.ViewModel;
 using POS.Utilities.Encryption;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;

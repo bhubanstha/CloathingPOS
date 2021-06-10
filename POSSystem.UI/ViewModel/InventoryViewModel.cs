@@ -86,7 +86,7 @@ namespace POSSystem.UI.ViewModel
                     {
                         Message = $"Product: {this.Name} - {this.Size} purchased on {this.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.",
                         Title = "Product Added",
-                        Type = NotificationType.Error
+                        Type = NotificationType.Success
                     });
                     this.Size = "";
                     this.Id = 0;

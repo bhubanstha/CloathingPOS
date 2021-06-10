@@ -1,6 +1,7 @@
 ﻿using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Model.ViewModel;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
 using POSSystem.UI.Wrapper;
