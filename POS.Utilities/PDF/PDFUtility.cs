@@ -5,6 +5,7 @@ using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using POS.Model;
+using POS.Model.ViewModel;
 using POS.Utilities.NumToWord;
 using System;
 using System.Collections.Generic;
@@ -64,23 +65,23 @@ namespace POS.Utilities.PDF
             CreateTableHeader(ref invoiceTable, headerItems);
         }
 
-        public static void CreateInoiceTableRecord(ref Table invoiceTable, Sales mockSales, int sn)
+        public static void CreateInoiceTableRecord(ref Table invoiceTable, SalesModel mockSales, int sn)
         {
             Cell c = CreateCell(sn.ToString(), TextAlignment.CENTER);
             invoiceTable.AddCell(c);
-            invoiceTable.AddCell(CreateCell(mockSales.Inventory.Name, TextAlignment.LEFT));
+            invoiceTable.AddCell(CreateCell(mockSales.ProductName, TextAlignment.LEFT));
             invoiceTable.AddCell(CreateCell(mockSales.SalesQuantity.ToString(), TextAlignment.CENTER));
-            invoiceTable.AddCell(CreateCell(mockSales.Rate.ToString(), TextAlignment.CENTER));
-            invoiceTable.AddCell(CreateCell($"{mockSales.SalesQuantity * mockSales.Rate}", TextAlignment.RIGHT));
+            invoiceTable.AddCell(CreateCell(mockSales.RetailRate.ToString(), TextAlignment.CENTER));
+            invoiceTable.AddCell(CreateCell($"{mockSales.SalesQuantity * mockSales.RetailRate}", TextAlignment.RIGHT));
 
         }
 
-        public static void CreateInvoiceTotal(ref Table inoiceTable, List<Sales> sales)
+        public static void CreateInvoiceTotal(ref Table inoiceTable, List<SalesModel> sales, Shop shop)
         {
 
-            decimal total = sales.Sum(x => x.SalesQuantity * x.Rate);
+            decimal total = sales.Sum(x => x.SalesQuantity * x.RetailRate);
             decimal totalDiscount = sales.Sum(x => x.Discount);
-            decimal vatAmount = Math.Ceiling((13 * total) / 100);
+            decimal vatAmount = shop.CalculateVATOnSales? Math.Ceiling((13 * total) / 100) : 0;
             decimal grandTotal = total + vatAmount - totalDiscount;
 
             string amountInWord = grandTotal>0?  NumberToWord.Parse($"{grandTotal}") : "";
@@ -90,10 +91,10 @@ namespace POS.Utilities.PDF
             inoiceTable.AddCell(CreateCell($"{(total>0?  total.ToString() : "" )}", TextAlignment.RIGHT));
 
             inoiceTable.AddCell(CreateCell("Discount", TextAlignment.LEFT, 1, 2));
-            inoiceTable.AddCell(CreateCell($"{(totalDiscount>0? totalDiscount.ToString() : "" )}", TextAlignment.RIGHT));
+            inoiceTable.AddCell(CreateCell($"{(totalDiscount>0? totalDiscount.ToString() : "-" )}", totalDiscount > 0 ? TextAlignment.RIGHT : TextAlignment.CENTER));
 
             inoiceTable.AddCell(CreateCell("VAT(13%)", TextAlignment.LEFT, 1, 2));
-            inoiceTable.AddCell(CreateCell($"{(vatAmount > 0? vatAmount.ToString() : "" )}", TextAlignment.RIGHT));
+            inoiceTable.AddCell(CreateCell($"{(vatAmount > 0 ? vatAmount.ToString() : "-" )}", vatAmount > 0 ? TextAlignment.RIGHT : TextAlignment.CENTER));
 
             inoiceTable.AddCell(CreateCell("Grand Total", TextAlignment.LEFT, 1, 2));
             inoiceTable.AddCell(CreateCell($"{(grandTotal>0? grandTotal.ToString() : "" ) }", TextAlignment.RIGHT));
