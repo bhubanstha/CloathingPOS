@@ -20,6 +20,7 @@
         <conv:DateConverter x:Key="NepDateConverter" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
 
+        <SolidColorBrush x:Key="TransparentBlack" Color="{DynamicResource MahApps.Colors.Accent}" Opacity="0.3"/>
 
     </UserControl.Resources>
     <StackPanel Margin="0,5,3,5">
@@ -53,13 +54,12 @@
                             VerticalAlignment="Center"
                             Content="Item Name" />
                         <ctrl:AutoCompleteTextBox
-                            x:Name="txtProduct"
+                            x:Name="txtProductName"
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             AutoCompleteHeight="200"
                             AutoCompletePlacement="Bottom"
-                            AutoCompletePlacementTarget="{Binding ElementName=txtProduct}"
                             AutoCompleteWidth="600"
                             OnSelectedItemChange="Txt_ProductSelected"
                             OnTextChange="Txt_OnProductNameChange">
@@ -120,7 +120,7 @@
                             StringFormat="C"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                             TextAlignment="Left"
-                            Value="{Binding CurrentProduct.Rate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Value="{Binding CurrentProduct.RetailRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
                         <Label
@@ -134,7 +134,6 @@
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
-                            Maximum="{Binding CurrentProduct.Inventory.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Minimum="1"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                             TextAlignment="Left"
@@ -165,7 +164,7 @@
                             Command="{Binding AddItemToCartCommand}"
                             CommandParameter="{Binding ElementName=txtSalesVaT}"
                             Content="Add To Cart"
-                            Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
+                            Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
                     </Grid>
                 </Border>
             </StackPanel>
@@ -193,7 +192,7 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0">
                     <Run Text="Bill No.: " />
-                    <Run Text="{Binding CurrentProduct.Bill.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Run Text="{Binding CurrentBill.BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </TextBlock>
 
                 <TextBlock
@@ -201,7 +200,7 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="2">
                     <Run Text="Billing Date: " />
-                    <Run Text="{Binding CurrentProduct.Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:yyyy/MM/dd hh:mm tt}'}" />
+                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='yyyy/MM/dd hh:mm tt'}"/>
                 </TextBlock>
 
 
@@ -223,15 +222,15 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Width="120"
-                            Binding="{Binding Inventory.Category.Name}"
+                            Binding="{Binding CategoryName}"
                             Header="Category" />
                         <DataGridTextColumn
                             Width="*"
-                            Binding="{Binding Inventory.Name}"
+                            Binding="{Binding ProductName}"
                             Header="Name" />
                         <DataGridTextColumn
                             Width="50"
-                            Binding="{Binding Inventory.Size}"
+                            Binding="{Binding Size}"
                             Header="Size" />
                         <DataGridTemplateColumn Header="Colour">
                             <DataGridTemplateColumn.CellTemplate>
@@ -240,33 +239,33 @@
                                         Width="24"
                                         Height="20"
                                         VerticalAlignment="Top"
-                                        Fill="{Binding Inventory.Color, Converter={StaticResource ColorConverter}}" />
+                                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn
                             Width="100"
-                            Binding="{Binding Rate}"
-                            ElementStyle="{StaticResource GridNumericColumn}"
+                            Binding="{Binding RetailRate}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Rate" />
                         <DataGridTextColumn
                             Width="54"
                             Binding="{Binding SalesQuantity}"
-                            ElementStyle="{StaticResource GridNumericColumn}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Qty" />
                         <DataGridTextColumn
                             Width="100"
                             Binding="{Binding Discount}"
-                            ElementStyle="{StaticResource GridNumericColumn}"
+                            ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Discount" />
                         <DataGridTemplateColumn Width="100" Header="Total">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Label Style="{StaticResource Grid.Numeric.Column}">
+                                    <Label Style="{StaticResource Grid.Numeric.Column}" >
                                         <Label.Content>
                                             <MultiBinding Converter="{StaticResource TotalCalc}">
                                                 <Binding Path="SalesQuantity" />
-                                                <Binding Path="Rate" />
+                                                <Binding Path="RetailRate" />
                                                 <Binding Path="Discount" />
                                             </MultiBinding>
                                         </Label.Content>
@@ -282,7 +281,8 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Command="{Binding Path=DataContext.DeleteCartItemCommand, 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource Button.Circle.In.GridRow}">
@@ -326,7 +326,7 @@
                     StringFormat="C"
                     Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                     TextAlignment="Left"
-                    Value="{Binding CurrentProduct.Bill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding CurrentBill.VAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label
                     Grid.Row="3"
@@ -351,7 +351,7 @@
                     StringFormat="C"
                     Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                     TextAlignment="Left"
-                    Value="{Binding GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Value="{Binding CurrentBill.GrandTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label
                     Grid.Row="4"
@@ -364,7 +364,7 @@
                     x:Name="txtBillingTo"
                     Grid.Row="4"
                     Grid.Column="1"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="2"                    
                     Margin="{DynamicResource ControlMargin}"
                     Padding="{StaticResource ControlPadding}"
                     VerticalAlignment="Center"
@@ -372,8 +372,9 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Name"
                     Style="{DynamicResource App.TextBox.Validation}"
-                    Text="{Binding CurrentProduct.Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
+                    Text="{Binding CurrentBill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left" 
+                    LostFocus="txCustInfo_LostFocus" />
 
                 <Label
                     Grid.Row="5"
@@ -394,8 +395,9 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Address"
                     Style="{DynamicResource App.TextBox.Validation}"
-                    Text="{Binding CurrentProduct.Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
+                    Text="{Binding CurrentBill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    LostFocus="txCustInfo_LostFocus" />
 
                 <Label
                     Grid.Row="6"
@@ -416,8 +418,9 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer PAN Number"
                     Style="{DynamicResource App.TextBox.Validation}"
-                    Text="{Binding CurrentProduct.Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
+                    Text="{Binding CurrentBill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    LostFocus="txCustInfo_LostFocus" />
 
 
                 <Button
@@ -429,7 +432,7 @@
                     VerticalAlignment="Center"
                     Command="{Binding CheckoutCommand}"
                     Content="Checkout"
-                    Style="{StaticResource MahApps.Styles.Button.Dialogs.Accent}" />
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
                 <Grid
                     Grid.Row="2"
@@ -437,29 +440,57 @@
                     Grid.Column="3"
                     Margin="5,5,0,0"
                     UseLayoutRounding="True">
-                    <iconPacks:PackIconBootstrapIcons
-                        Margin="0,5,15,0"
-                        HorizontalAlignment="Right"
-                        Panel.ZIndex="2"
+                    <Border Grid.Row="0" Grid.Column="0" Panel.ZIndex="2" Background="{DynamicResource TransparentBlack}" Width="35" Height="80" HorizontalAlignment="Right" Margin="0 0 15 0" Padding="0 10" CornerRadius="15" VerticalAlignment="Top" Visibility="Hidden" x:Name="pnlPdfOptions">
+                        <StackPanel>
+                            <iconPacks:PackIconBootstrapIcons         
+                                x:Name="icon_FullScreen"
+                        HorizontalAlignment="Center"
+                        Panel.ZIndex="3"
+                        Margin="0 0 0 10"
                         Kind="ArrowsFullscreen"
-                        MouseLeftButtonUp="PackIconBootstrapIcons_MouseLeftButtonUp">
-                        <iconPacks:PackIconBootstrapIcons.Resources>
-                            <Style TargetType="iconPacks:PackIconBootstrapIcons">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Height" Value="20" />
-                                        <Setter Property="Width" Value="20" />
-                                        <Setter Property="Background" Value="Transparent" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </iconPacks:PackIconBootstrapIcons.Resources>
-                    </iconPacks:PackIconBootstrapIcons>
+                        MouseLeftButtonUp="icon_FullScreen_MouseLeftButtonUp">
+                                <iconPacks:PackIconBootstrapIcons.Resources>
+                                    <Style TargetType="iconPacks:PackIconBootstrapIcons">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Height" Value="18" />
+                                                <Setter Property="Width" Value="18" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconBootstrapIcons.Resources>
+                            </iconPacks:PackIconBootstrapIcons>
+
+                            <iconPacks:PackIconBootstrapIcons                            
+                        HorizontalAlignment="Center"
+                                x:Name="icon_Printer"
+                        Panel.ZIndex="3"
+                        Kind="Printer"
+                                Margin="0 10 0 0"
+                        MouseLeftButtonUp="icon_Printer_MouseLeftButtonUp">
+                                <iconPacks:PackIconBootstrapIcons.Resources>
+                                    <Style TargetType="iconPacks:PackIconBootstrapIcons">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Height" Value="20" />
+                                                <Setter Property="Width" Value="20" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </iconPacks:PackIconBootstrapIcons.Resources>
+                            </iconPacks:PackIconBootstrapIcons>
+                        </StackPanel>
+                        
+                    </Border>
+                    
                     <mpp:MoonPdfPanel
                         x:Name="moonPdfPanel"
                         Height="250"
                         Panel.ZIndex="1"
-                        ViewType="SinglePage" />
+                        ViewType="SinglePage"
+                        />
                 </Grid>
             </Grid>
         </Grid>

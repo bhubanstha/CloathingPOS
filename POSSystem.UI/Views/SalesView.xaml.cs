@@ -4,6 +4,7 @@ using POSSystem.UI.PDFViewer;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace POSSystem.UI.Views
@@ -14,56 +15,55 @@ namespace POSSystem.UI.Views
     public partial class SalesView : UserControl
     {
         private SalesViewModel model;
-        private BillBO _billBo;
         public SalesView()
         {
             InitializeComponent();
-            _billBo = new BillBO();
-            model = new SalesViewModel();
+            model = new SalesViewModel(pnlPdfOptions, txtProductName);
             model.PdfPanel = moonPdfPanel;
-            model.CurrentProduct = new Sales();
             model.CurrentProduct.SalesQuantity = 1;
-            model.CurrentProduct.Bill = new Bill
-            {
-                Id = _billBo.GetNewBillNo(),
-                BillDate = DateTime.Now
-            };
-            this.DataContext = model;
-            OpenPdf();
-            
+            this.DataContext = model;            
         }
 
-        private void Txt_OnProductNameChange(object sender, TextChangedEventArgs e)
+        private async void Txt_OnProductNameChange(object sender, TextChangedEventArgs e)
         {
             TextBox inp = sender as TextBox;
-            model.FilterProducts = model.Products.Where(p => p.Name.ToLower().StartsWith(inp.Text.ToLower())).ToList();
-            txtProduct.AutoCompleteItemSource = model.FilterProducts;
+            //model.FilterProducts = model.Products.Where(p => p.Name.ToLower().StartsWith(inp.Text.ToLower())).ToList();
+            //txtProduct.AutoCompleteItemSource = model.FilterProducts;
+            model.FilterProducts = model.GetFilteredProduct(inp.Text.ToLower());
+            txtProductName.AutoCompleteItemSource = model.FilterProducts;
         }
 
         private void Txt_ProductSelected(object sender, EventArgs e)
         {
-            if(txtProduct.SelectedItem != null)
+            if(txtProductName.SelectedItem != null)
             {
-                var pr = txtProduct.SelectedItem as Inventory;                
-                model.CurrentProduct.Inventory = pr;
-                model.CurrentProduct.Rate = pr.RetailRate;
-                txtRetailRate.Value = (double) model.CurrentProduct.Rate;
-                txtSalesQty.Maximum = (double)model.CurrentProduct.Inventory.Quantity;
-                //txtProduct.Text = pr.Name + " - " + pr.Size;
+                var pr = txtProductName.SelectedItem as Inventory;
+                model.CurrentProduct.ProductId = pr.Id;
+                model.CurrentProduct.RetailRate = pr.RetailRate;
+                model.CurrentProduct.ProductName = pr.Name;
+                model.CurrentProduct.Color = pr.Color;
+                model.CurrentProduct.Size = pr.Size;
+                model.CurrentProduct.CategoryId = pr.Category.Id;
+                model.CurrentProduct.CategoryName = pr.Category.Name;
+                txtSalesQty.Maximum = (double)pr.Quantity;
             }
         }
 
-        private void OpenPdf()
-        {
-            //string pdfPath = @"D:\Download\pprotect.pdf";
-            //moonPdfPanel.OpenFile(pdfPath);
-            //moonPdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
-        }
 
-        private void PackIconBootstrapIcons_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void icon_FullScreen_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath);
             window.Show();
+        }
+
+        private void icon_Printer_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            moonPdfPanel.Print();
+        }
+
+        private async void txCustInfo_LostFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            await model.CreatePdfFromCurrentCartItem();
         }
     }
 }

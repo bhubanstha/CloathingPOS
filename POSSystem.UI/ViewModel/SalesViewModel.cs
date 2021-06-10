@@ -3,8 +3,11 @@ using MoonPdfLib;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Model.ViewModel;
 using POS.Utilities.PDF;
+using POSSystem.UI.Controls;
 using POSSystem.UI.Service;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -13,46 +16,37 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
     public class SalesViewModel : ViewModelBase
     {
+        //private Fields
+        private string _currentPdfFilePath = "";
         private InventoryBO inventoryBO;
-        private MetroWindow _window;
-        private Bill _bill;
-        private bool _generateBill = true;
-        private ObservableCollection<Sales> _currentCart;
-        private Sales _currentProduct;
-        private NumericUpDown _vatTextBox;
-        private decimal _grandTotal = 0;
+        private ObservableCollection<SalesModel> _currentCart;
+        private SalesWrapper _currentProduct;
+        private AutoCompleteTextBox _productName;
+
+
+        //Public Properties
         public MoonPdfPanel PdfPanel { get; set; }
-        public decimal GrandTotal
-        {
-            get { return _grandTotal; }
-            set
-            {
-                _grandTotal = value;
-                OnPropertyChanged();
-            }
-        }
-        public List<Inventory> Products { get; set; }
         public List<Inventory> FilterProducts { get; set; }
         public CultureInfo CultureInfo { get; set; }
-
-        public List<Inventory> Cart { get; set; }
-
-        public Sales CurrentProduct
+        public SalesWrapper CurrentProduct
         {
             get { return _currentProduct; }
             set
             {
                 _currentProduct = value;
                 OnPropertyChanged();
+                CanAdditemToCartExecute();
             }
         }
-        public  ObservableCollection<Sales> CurrentCart
+        public BillWrapper CurrentBill { get; set; }
+        public ObservableCollection<SalesModel> CurrentCart
         {
             get { return _currentCart; }
             set
@@ -62,13 +56,11 @@ namespace POSSystem.UI.ViewModel
             }
 
         }
-
-        private string _currentPdfFilePath="";
-
         public string CurrentPdfFilePath
         {
             get { return _currentPdfFilePath; }
-            set {
+            set
+            {
                 if (!string.IsNullOrEmpty(value))
                 {
                     _currentPdfFilePath = value;
@@ -77,74 +69,139 @@ namespace POSSystem.UI.ViewModel
                 }
             }
         }
+        public Border PdfOptionBorder { get; set; }
 
-
-        private SalesBO _salesBo;
-        private BillBO _billBo;
-
-
+        
+        //Delegate Commands
         public ICommand AddItemToCartCommand { get; }
         public ICommand DeleteCartItemCommand { get; }
         public ICommand CheckoutCommand { get; }
-        public SalesViewModel()
-        {
-            CurrentCart = new ObservableCollection<Sales>();
 
-            _window = Application.Current.MainWindow as MetroWindow;
+        //Constructor
+        public SalesViewModel(Border pdfPanel, AutoCompleteTextBox productName)
+        {
+            PdfOptionBorder = pdfPanel;
+            _productName = productName;
+
+            CurrentProduct = new SalesWrapper(new SalesModel());
+            CurrentCart = new ObservableCollection<SalesModel>();
+            CurrentBill = new BillWrapper(new BillModel());
             CultureInfo = StaticContainer.CultureInfo;
-            GetInventory();
-            AddItemToCartCommand = new DelegateCommand<NumericUpDown>(AddItemToCart);
-            DeleteCartItemCommand = new DelegateCommand<Sales>(RemoveItemFromCart);
-            CheckoutCommand = new DelegateCommand(OnSalesCheckout).ObservesProperty(() => CurrentCart);
-            //inventoryBO = new InventoryBO();
-            //CurrentCart = new List<Sales>
-            //{
-            //    new Sales
-            //    {
-            //        Discount = 100,
-            //        Rate= 2500,
-            //        SalesQuantity = 1,
-            //        ProductId = 3,
-            //        Inventory = inventoryBO.GetById(3)
-            //    },
-            //    new Sales
-            //    {
-            //        Discount = 300,
-            //        Rate= 1400,
-            //        SalesQuantity = 1,
-            //        ProductId = 2,
-            //        Inventory = inventoryBO.GetById(2)
-            //    }
-            //};
+
+
+            AddItemToCartCommand = new DelegateCommand(AddItemToCart, CanAdditemToCartExecute);
+            DeleteCartItemCommand = new DelegateCommand<SalesModel>(RemoveItemFromCart);
+            CheckoutCommand = new DelegateCommand(OnSalesCheckout, CanSalesCheckoutExecute);
+
+            CurrentProduct.PropertyChanged += CurrentProduct_PropertyChanged;
+            CurrentBill.PropertyChanged += CurrentBill_PropertyChanged;
+            CurrentCart.CollectionChanged += CurrentCart_CollectionChanged;
+
+
+            CreateNewBill();
+        }
+
+        # region Property Events
+        private void CurrentCart_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ((DelegateCommand)CheckoutCommand).RaiseCanExecuteChanged();
+        }
+
+        private void CurrentBill_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "BillTo")
+            {
+                ((DelegateCommand)CheckoutCommand).RaiseCanExecuteChanged();
+            };
+        }
+        private void CurrentProduct_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ProductName")
+            {
+                ((DelegateCommand)AddItemToCartCommand).RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
+
+        #region Can Execute Methods
+        private bool CanSalesCheckoutExecute()
+        {
+            return CurrentCart.Count > 0 && !string.IsNullOrEmpty(CurrentBill.BillTo);
+        }
+
+        public bool CanAdditemToCartExecute()
+        {
+            return !string.IsNullOrEmpty(CurrentProduct.ProductName);
+        }
+        #endregion
+
+
+        #region Command Execute Methods
+        private async void AddItemToCart()
+        {
+            try
+            {
+
+                ManageItemInCart();
+                ClearProduct();
+                await CreatePdfFromCurrentCartItem();
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Item Added",
+                    Message = "Item added into cart for checkout.",
+                    Type = NotificationType.Success
+                });
+            }
+            catch (Exception ex)
+            {
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Error",
+                    Message = "Something went wrong while trying to add item to cart.",
+                    Type = NotificationType.Error
+                });
+            }
+        }
+
+        private async void RemoveItemFromCart(SalesModel obj)
+        {
+            try
+            {
+
+                RemoveItemFromCurrentCart(obj);
+                CalculateVAT();
+                await CreatePdfFromCurrentCartItem();
+
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Item Removed",
+                    Message = "Selected item removed from the cart.",
+                    Type = NotificationType.Error
+                });
+            }
+            catch (Exception ex)
+            {
+                StaticContainer.NotificationManager.Show(new NotificationContent
+                {
+                    Title = "Error",
+                    Message = "Something went wrong while trying to remove item to cart.",
+                    Type = NotificationType.Error
+                });
+            }
         }
 
         private async void OnSalesCheckout()
         {
             try
             {
-                _window = Application.Current.MainWindow as MetroWindow;
-                Bill b = new Bill
-                {
-                    BillDate = DateTime.Now,
-                    VAT = CurrentProduct.Bill.VAT,
-                    BillTo = CurrentProduct.Bill.BillTo
-                };
+                CheckoutCart();
 
-                _billBo = new BillBO();
-                _billBo.CreateNewBill(ref b);
-                int i = await _salesBo.CheckoutSales(CurrentCart.ToList<Sales>(), b);
-
-                if (i > 0)
+                StaticContainer.NotificationManager.Show(new NotificationContent
                 {
-                    StaticContainer.NotificationManager.Show(new NotificationContent
-                    {
-                        Title= "Sales",
-                        Message = $"{CurrentCart.Count} items sold on Bill No. : {b.Id}",
-                        Type = NotificationType.Success
-                    });
-                    CurrentCart.Clear();
-                    ClearProduct(true);
-                }
+                    Title = "Checkout",
+                    Message = "Cart checkout. Items sold successfully",
+                    Type = NotificationType.Success
+                });
             }
             catch (Exception ex)
             {
@@ -152,82 +209,159 @@ namespace POSSystem.UI.ViewModel
                 {
                     Title = "Error",
                     Message = ex.Message,
-                    Type = NotificationType.Success
+                    Type = NotificationType.Error
                 });
+            }
+            finally
+            {
+                PdfPanel.Unload();
             }
         }
 
-        private async void RemoveItemFromCart(Sales obj)
-        {
-            var item = CurrentCart.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
-            CurrentCart.Remove(item);
-            CalculateVAT(ref _vatTextBox);
-            await CreatePdfFromCurrentCartItem();
-        }
+        #endregion
 
-        private async void AddItemToCart(NumericUpDown vatTxtBox)
+        #region Private Methods
+        private void CreateNewBill()
         {
-            _vatTextBox = vatTxtBox;
-            _salesBo = new SalesBO();
-            Sales p = new Sales
+            BillBO billBO = new BillBO();
+            CurrentBill.BillNo = billBO.GetNewBillNo();
+        }
+        private void PdfOptionVisibility()
+        {
+            if (this.CurrentCart.Count > 0)
             {
-                Discount = CurrentProduct.Discount,
-                Id = CurrentProduct.Id,
-                ProductId = CurrentProduct.ProductId,
-                Inventory = CurrentProduct.Inventory,
-                Rate = CurrentProduct.Rate,
-                SalesQuantity = CurrentProduct.SalesQuantity
-            };
-
-            p = _salesBo.ManageCartItem(p, CurrentCart, ref _bill);
-            CurrentCart.Add(p);
-            ClearProduct();
-            CalculateVAT(ref _vatTextBox);
-            await CreatePdfFromCurrentCartItem();
+                PdfOptionBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PdfOptionBorder.Visibility = Visibility.Hidden;
+                PdfPanel.Unload();
+            }
         }
 
-        private void GetInventory()
+        private void ClearProduct(bool clearAfterCheckout = false)
         {
-            inventoryBO = new InventoryBO();
-            Products = inventoryBO.GetAllActiveProducts();
-        }
-
-        private void ClearProduct(bool resetGrandTotal = false)
-        {
-
-            CurrentProduct.BillNo = 0;
+            CurrentProduct.RetailRate = 0;
             CurrentProduct.Discount = 0;
-            CurrentProduct.Id = 0;
-            CurrentProduct.ProductId = 0;
-            CurrentProduct.Rate = 0;
             CurrentProduct.SalesQuantity = 1;
-            if (resetGrandTotal) GrandTotal = 0;
+            CurrentProduct.ProductId = -1;
+            CurrentProduct.Size = "";
+            CurrentProduct.Color = "";
+            CurrentProduct.CategoryName = "";
+            CurrentProduct.CategoryId = -1;
+            CurrentProduct.ProductName = "";
+            _productName.SelectedItem = null;
+            if (clearAfterCheckout)
+            {
+                CurrentBill.BillNo = CurrentBill.BillNo + 1;
+                CurrentBill.BillingAddress = "";
+                CurrentBill.BillingPAN = "";
+                CurrentBill.BillTo = "";
+                CurrentBill.VAT = 0;
+                CurrentBill.GrandTotal = 0;
+
+                while (CurrentCart.Count > 0)
+                {
+                    CurrentCart.RemoveAt(0);
+                }
+
+            }
         }
 
-        private void CalculateVAT(ref NumericUpDown vatTxtBox)
+        private void CalculateVAT()
         {
+
             decimal total = 0;
             decimal totalDiscount = 0;
             foreach (var item in CurrentCart)
             {
-                decimal itemTotal = (item.Rate * item.SalesQuantity);
+                decimal itemTotal = (item.RetailRate * item.SalesQuantity);
                 decimal discount = item.Discount;
                 total += itemTotal;
                 totalDiscount += discount;
             }
 
-            decimal vatAmount = Math.Ceiling((13 * total) / 100);
-            CurrentProduct.Bill.VAT = vatAmount;
-            GrandTotal = total + vatAmount - totalDiscount;
+            decimal vatAmount = StaticContainer.Shop.CalculateVATOnSales == true ? Math.Ceiling((13 * total) / 100) : 0;
+            CurrentBill.VAT = vatAmount;
+            CurrentBill.GrandTotal = total + vatAmount - totalDiscount;
 
-            vatTxtBox.Value = (double)CurrentProduct.Bill.VAT;
         }
 
-        private async Task  CreatePdfFromCurrentCartItem()
+        private void ManageItemInCart()
         {
-                string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
-                CurrentPdfFilePath = await new CreatePDF().CreatePdfTable(CurrentProduct.BillNo, CurrentCart.ToList<Sales>(), "asdf", imagePath);
+            RemoveItemFromCurrentCart(CurrentProduct.Model);
+            SalesWrapper saleitem = new SalesWrapper(new SalesModel());
+            saleitem.Copy(CurrentProduct);
+            CurrentCart.Add(saleitem.Model);
+            CalculateVAT();
         }
 
+        private async void CheckoutCart()
+        {
+            try
+            {
+
+                BillBO billBO = new BillBO();
+
+                Bill b = new Bill
+                {
+                    BillDate = DateTime.Now,
+                    BillingAddress = CurrentBill.BillingAddress,
+                    BillingPAN = CurrentBill.BillingPAN,
+                    BillTo = CurrentBill.BillTo,
+                    VAT = CurrentBill.VAT
+                };
+                Int64 billNo = billBO.CreateNewBill(ref b);
+                foreach (var item in CurrentCart)
+                {
+                    SalesBO salesBO = new SalesBO();
+                    Sales s = new Sales
+                    {
+                        SalesQuantity = item.SalesQuantity,
+                        Rate = item.RetailRate,
+                        Discount = item.Discount,
+                        ProductId = item.ProductId,
+                        BillNo = billNo
+                    };
+                    await salesBO.CheckoutSales(s);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                ClearProduct(true);
+            }
+        }
+
+        private void RemoveItemFromCurrentCart(SalesModel obj)
+        {
+            var item = CurrentCart.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
+            if (item != null)
+            {
+                CurrentCart.Remove(item);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+        public async Task CreatePdfFromCurrentCartItem()
+        {
+            CurrentPdfFilePath = await new CreatePDF()
+                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop, StaticContainer.PdfPassword);
+            PdfOptionVisibility();
+        }
+
+        public List<Inventory> GetFilteredProduct(string productName)
+        {
+            inventoryBO = new InventoryBO();
+            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName);
+            return filteredInventory;
+        }
+
+        #endregion
     }
 }
