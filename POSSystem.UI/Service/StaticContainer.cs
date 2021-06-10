@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
+using POS.Model;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media.Imaging;
@@ -28,6 +29,8 @@ namespace POSSystem.UI.Service
         public static string SettingFile { get; set; }
         public static string PdfPassword { get; set; }
         public static bool IsPasswordChanged { get; set; }
+        public static Shop Shop { get; set; }
+
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         static StaticContainer()
