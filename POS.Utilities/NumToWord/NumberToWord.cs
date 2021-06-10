@@ -223,7 +223,7 @@ namespace POS.Utilities.NumToWord
         public static String Parse(String numb)
         {
             String val = "", wholeNo = numb, points = "", andStr = "", pointStr = "";
-            String endStr = "Only";
+            String endStr = "Rupees Only";
             try
             {
                 int decimalPlace = numb.IndexOf(".");
