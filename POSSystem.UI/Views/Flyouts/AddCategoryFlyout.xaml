@@ -239,11 +239,11 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Command="{Binding Path=DataContext.DeleteCategoryCommand, 
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource Button.Circle.In.GridRow}">
-
                                         <Button.ContentTemplate>
                                             <DataTemplate>
                                                 <iconPacks:PackIconBootstrapIcons
@@ -254,7 +254,6 @@
                                             </DataTemplate>
                                         </Button.ContentTemplate>
                                     </Button>
-
                                 </Grid>
 
                             </DataTemplate>
