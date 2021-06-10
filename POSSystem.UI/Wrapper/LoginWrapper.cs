@@ -1,4 +1,5 @@
-﻿using POSSystem.UI.UIModel;
+﻿using POS.Model.ViewModel;
+using POSSystem.UI.UIModel;
 
 namespace POSSystem.UI.Wrapper
 {
