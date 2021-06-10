@@ -30,10 +30,14 @@ namespace POS.BusinessRule
             return currentMax;
         }
 
-        public int  CreateNewBill(ref Bill bill)
+        public Int64  CreateNewBill(ref Bill bill)
         {
             genericDataRepository.Insert(bill);
-            return genericDataRepository.Save();
+            if (genericDataRepository.Save() > 0)
+            {
+                return  bill.Id;
+            }
+            return 1;
         }
 
         public async Task<int> Remove(Int64 id)

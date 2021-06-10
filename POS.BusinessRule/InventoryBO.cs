@@ -29,6 +29,14 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false && x.Quantity>0).ToList();
         }
 
+        public List<Inventory> GetAllActiveProducts(string productName)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.Name.ToLower().StartsWith(productName))
+                .ToList();
+        }
+
         public Inventory GetById(int id)
         {
             return genericDataRepository.GetByID(id);
