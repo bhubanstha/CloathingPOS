@@ -107,13 +107,16 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -502,8 +505,7 @@
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
-    <Compile Include="UIModel\ForgetPasswordModel.cs" />
-    <Compile Include="UIModel\LoginModel.cs" />
+    <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
@@ -518,7 +520,6 @@
     <Compile Include="ViewModel\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\Service\IMessageDialogService.cs" />
     <Compile Include="ViewModel\Service\MessageDialogService.cs" />
-    <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
@@ -564,8 +565,10 @@
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
+    <Compile Include="Wrapper\InventoryWrapper.cs" />
     <Compile Include="Wrapper\LoginWrapper.cs" />
     <Compile Include="Wrapper\CreateUserWrapper.cs" />
+    <Compile Include="Wrapper\SalesWrapper.cs" />
     <Compile Include="Wrapper\WrapperBase.cs" />
     <Page Include="Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -719,7 +722,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="POSSystem.UI_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

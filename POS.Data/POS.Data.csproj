@@ -116,6 +116,10 @@
     <Compile Include="Migrations\202106061134021_billinginfo_added.designer.cs">
       <DependentUpon>202106061134021_billinginfo_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106080900138_addshop.cs" />
+    <Compile Include="Migrations\202106080900138_addshop.designer.cs">
+      <DependentUpon>202106080900138_addshop.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106061134021_billinginfo_added.resx">
       <DependentUpon>202106061134021_billinginfo_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106080900138_addshop.resx">
+      <DependentUpon>202106080900138_addshop.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
