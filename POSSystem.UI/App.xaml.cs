@@ -13,6 +13,9 @@ using ControlzEx.Theming;
 using System.IO.IsolatedStorage;
 using System.IO;
 using Notifications.Wpf;
+using POS.Model;
+using POS.Data.Repository;
+using POS.Data;
 
 namespace POSSystem.UI
 {
@@ -29,16 +32,22 @@ namespace POSSystem.UI
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
-            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+           
             ReloadConfig();
-
+            LoadCompanyInfo();
             var window = container.Resolve<MainWindow>();
             this.MainWindow = window;
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             window.Show();
-
-
         }
 
+        private void LoadCompanyInfo()
+        {
+            IGenericDataRepository<Shop> genericDataRepository = new DataRepository<Shop>(new POSDataContext());
+            Shop shop = genericDataRepository.GetAll().FirstOrDefault();
+            StaticContainer.Shop = shop;
+            StaticContainer.Shop.LogoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", StaticContainer.Shop.LogoPath);
+        }
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             StaticContainer.NotificationManager.Show(new NotificationContent
