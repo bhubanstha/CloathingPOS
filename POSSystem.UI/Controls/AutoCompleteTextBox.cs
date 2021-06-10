@@ -78,7 +78,10 @@ namespace POSSystem.UI.Controls
                     TXT_SEARCHINPUT.Text = value.ToString();
                     TXT_SEARCHINPUT.Select(TXT_SEARCHINPUT.Text.Length, 0);
                 }
-
+                else
+                {
+                    TXT_SEARCHINPUT.Text = "";
+                }
                 if (this.OnSelectedItemChange != null)
                     this.OnSelectedItemChange.Invoke(this, new EventArgs());
             }
@@ -157,6 +160,7 @@ namespace POSSystem.UI.Controls
             foreach (DataGridColumn column in AutoCompleteColumns)
                 DG_AC.Columns.Add(column);
         }
+
 
         //Select Item From List On Mouse Click
         private void DG_AC_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
