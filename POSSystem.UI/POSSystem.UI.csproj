@@ -512,6 +512,7 @@
     <Compile Include="ViewModel\InventoryViewModel.cs" />
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
+    <Compile Include="ViewModel\ShopViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
@@ -552,6 +553,9 @@
     <Compile Include="Views\Flyouts\SettingFlyout.xaml.cs">
       <DependentUpon>SettingFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShopView.xaml.cs">
+      <DependentUpon>ShopView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tiles\ServiceTile.xaml.cs">
       <DependentUpon>ServiceTile.xaml</DependentUpon>
     </Compile>
@@ -569,6 +573,7 @@
     <Compile Include="Wrapper\LoginWrapper.cs" />
     <Compile Include="Wrapper\CreateUserWrapper.cs" />
     <Compile Include="Wrapper\SalesWrapper.cs" />
+    <Compile Include="Wrapper\ShopWrapper.cs" />
     <Compile Include="Wrapper\WrapperBase.cs" />
     <Page Include="Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -683,6 +688,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Flyouts\SettingFlyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShopView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
