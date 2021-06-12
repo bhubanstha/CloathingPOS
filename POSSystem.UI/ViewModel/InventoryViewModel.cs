@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.Extension;
 using POSSystem.UI.Service;
 using Prism.Commands;
 using System;
@@ -13,13 +14,42 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class InventoryViewModel
+    public class InventoryViewModel : NotifyPropertyChanged
     {
         private DateTime _purchaseDate = DateTime.Now;
+
+        private string _colorName="";
+        private bool _ColorNameEntryEnabled = false;
+        private string _color;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Size { get; set; }
-        public string Color { get; set; }
+        public string Color { 
+            get { return _color; }
+            set
+            {
+                _color = value;
+                GetKnownColorName();
+                OnPropertyChanged();
+            }
+        }
+
+        private void GetKnownColorName()
+        {
+            string colorName = Color.ToKnownColourName();
+            if(string.IsNullOrEmpty(colorName))
+            {
+                ColorNameEntryEnabled = true;
+                ColorName = "";
+            }
+            else
+            {
+                ColorNameEntryEnabled = false;
+                ColorName = colorName;
+            }
+        }
+
         public Int64 CategoryId { get; set; }
 
         public decimal PurchaseRate { get; set; }
@@ -31,6 +61,39 @@ namespace POSSystem.UI.ViewModel
             get { return _purchaseDate; }
             set { _purchaseDate = value; }
         }
+
+       
+
+        public string ColorName
+        {
+            get { return _colorName; }
+            set {
+                _colorName = value;
+                OnPropertyChanged("ColorName");
+
+                //_colorName = _color.ToKnownColourName(); 
+                
+                //if(string.IsNullOrEmpty(_colorName))
+                //{
+                //    ColorNameEntryEnabled = true;
+                //    _colorName = value;
+                //}
+                //else
+                //{
+                //    ColorNameEntryEnabled = false;
+                //}
+            }
+        }
+
+
+        
+
+        public bool ColorNameEntryEnabled
+        {
+            get { return _ColorNameEntryEnabled; }
+            set { _ColorNameEntryEnabled = value; OnPropertyChanged(); }
+        }
+
 
         public CultureInfo CultureInfo { get; set; }
 
@@ -76,7 +139,8 @@ namespace POSSystem.UI.ViewModel
                     PurchaseRate = this.PurchaseRate,
                     Quantity = this.Quantity,
                     RetailRate = this.RetailRate,
-                    Size = this.Size
+                    Size = this.Size,
+                    ColorName = this.ColorName
                 };
                 InventoryBO = new InventoryBO();
                 int c = await InventoryBO.Save(inventory);
@@ -106,6 +170,14 @@ namespace POSSystem.UI.ViewModel
         {
             //string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
             CultureInfo = StaticContainer.CultureInfo;
+        }
+
+
+        private string GetColorName()
+        {
+            //string nameOfTheColor = MahApps.Metro.Controls.ColorHelper.DefaultInstance.GetColorName(myColor, theDictionaryToUse);
+
+            return "";
         }
     }
 }
