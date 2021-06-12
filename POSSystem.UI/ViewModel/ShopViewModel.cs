@@ -2,6 +2,7 @@
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -89,6 +90,10 @@ namespace POSSystem.UI.ViewModel
             {
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
+            finally
+            {
+                StaticContainer.Shop = ShopWrapper.Model;
+            }
         }
 
         private void OnFilePickCommandExecute()
@@ -122,7 +127,7 @@ namespace POSSystem.UI.ViewModel
                     CalculateVATOnSales = StaticContainer.Shop.CalculateVATOnSales,
                     PrintInvoice = StaticContainer.Shop.PrintInvoice
                 };
-                LogoFullPathName = LogoPath(ShopWrapper.LogoPath);
+                LogoFullPathName = FilePath.GetLogoFullPath(ShopWrapper.LogoPath);
                 LogoName = $".....\\{ShopWrapper.LogoPath}";
                 ButtonText = "Update";
             }
@@ -137,7 +142,7 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                string logoPath = LogoPath("");// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "CompanyLogo");
+                string logoPath = FilePath.GetLogoFullPath("");// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "CompanyLogo");
                 CleanupDirectory(logoPath);
                 if (!Directory.Exists(logoPath))
                 {
@@ -170,12 +175,6 @@ namespace POSSystem.UI.ViewModel
 
                 throw;
             }
-        }
-
-        string LogoPath(string logoName)
-        {
-            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "CompanyLogo", logoName);
-            return logoPath;
         }
     }
 }
