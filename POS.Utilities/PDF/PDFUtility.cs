@@ -6,6 +6,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using POS.Model;
 using POS.Model.ViewModel;
+using POS.Utilities.Extension;
 using POS.Utilities.NumToWord;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,10 @@ namespace POS.Utilities.PDF
             c.SetBorderBottom(b);
             return c;
         }
-        public static Image CreateLogoAtPoint(string logoPath, Point point)
+        public static Image CreateLogoAtPoint(string logoName, Point point)
         {
-            ImageData imageData = ImageDataFactory.Create(logoPath);
+            string logoFullPath = FilePath.GetLogoFullPath(logoName);
+            ImageData imageData = ImageDataFactory.Create(logoFullPath);
             Image logo = new Image(imageData);
             logo.SetFixedPosition((float)point.x, ((float)point.y));
             logo.ScaleAbsolute(55, 55);
@@ -69,7 +71,7 @@ namespace POS.Utilities.PDF
         {
             Cell c = CreateCell(sn.ToString(), TextAlignment.CENTER);
             invoiceTable.AddCell(c);
-            invoiceTable.AddCell(CreateCell(mockSales.ProductName, TextAlignment.LEFT));
+            invoiceTable.AddCell(CreateCell($"{mockSales.ProductName} - {mockSales.Size}({mockSales.Color.ToKnownColourName()})", TextAlignment.LEFT));
             invoiceTable.AddCell(CreateCell(mockSales.SalesQuantity.ToString(), TextAlignment.CENTER));
             invoiceTable.AddCell(CreateCell(mockSales.RetailRate.ToString(), TextAlignment.CENTER));
             invoiceTable.AddCell(CreateCell($"{mockSales.SalesQuantity * mockSales.RetailRate}", TextAlignment.RIGHT));
