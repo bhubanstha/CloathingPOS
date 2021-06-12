@@ -357,6 +357,14 @@
                             <views:UserProfileView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
+                    <mah:HamburgerMenuIconItem
+                        x:Name="ShopView"
+                        Icon="{iconPacks:Material Kind=Store}"
+                        Label="Company">
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:ShopView />
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
                 </mah:HamburgerMenuItemCollection>
             </mah:HamburgerMenu.ItemsSource>
 
