@@ -30,7 +30,7 @@ namespace POSSystem.UI.Service
         public static string PdfPassword { get; set; }
         public static bool IsPasswordChanged { get; set; }
         public static Shop Shop { get; set; }
-
+        public static string ErrorMessage { get; private set; } = "Something went wrong. Please contact system admin for support.";
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         static StaticContainer()
@@ -50,6 +50,16 @@ namespace POSSystem.UI.Service
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
             PdfPassword = ConfigurationReader.GetConfiguration<string>(AppSettingKey.PdfPassword);
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
+        }
+
+        public static void ShowNotification(string title, string message, NotificationType type)
+        {
+            NotificationManager.Show(new NotificationContent
+            {
+                Title = title,
+                Message = message,
+                Type = type
+            });
         }
 
     }
