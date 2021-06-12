@@ -120,6 +120,14 @@
     <Compile Include="Migrations\202106080900138_addshop.designer.cs">
       <DependentUpon>202106080900138_addshop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106121306150_inventory_column_added.cs" />
+    <Compile Include="Migrations\202106121306150_inventory_column_added.designer.cs">
+      <DependentUpon>202106121306150_inventory_column_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106121309595_test.cs" />
+    <Compile Include="Migrations\202106121309595_test.designer.cs">
+      <DependentUpon>202106121309595_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +157,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106080900138_addshop.resx">
       <DependentUpon>202106080900138_addshop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106121306150_inventory_column_added.resx">
+      <DependentUpon>202106121306150_inventory_column_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106121309595_test.resx">
+      <DependentUpon>202106121309595_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
