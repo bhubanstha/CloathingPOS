@@ -16,6 +16,7 @@ using Notifications.Wpf;
 using POS.Model;
 using POS.Data.Repository;
 using POS.Data;
+using POS.BusinessRule;
 
 namespace POSSystem.UI
 {
@@ -43,10 +44,19 @@ namespace POSSystem.UI
 
         private void LoadCompanyInfo()
         {
-            IGenericDataRepository<Shop> genericDataRepository = new DataRepository<Shop>(new POSDataContext());
-            Shop shop = genericDataRepository.GetAll().FirstOrDefault();
-            StaticContainer.Shop = shop;
-            StaticContainer.Shop.LogoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", StaticContainer.Shop.LogoPath);
+            try
+            {
+                ShopBO bO = new ShopBO();
+                Shop shop = bO.GetShop();
+                if (shop != null)
+                {
+                    StaticContainer.Shop = shop;
+                }
+            }
+            catch
+            {
+                throw;
+            }
         }
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
