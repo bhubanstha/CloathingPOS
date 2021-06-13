@@ -472,6 +472,7 @@
     <Compile Include="Converter\WindowHeightConverter.cs" />
     <Compile Include="Event\CategoryChangedEvent.cs" />
     <Compile Include="Event\InventoryChangedEvent.cs" />
+    <Compile Include="Event\InventoryUpdatePopupOpenEvent.cs" />
     <Compile Include="ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
@@ -518,6 +519,7 @@
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
     <Compile Include="ViewModel\ShopViewModel.cs" />
+    <Compile Include="ViewModel\InventoryHistoryViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
@@ -530,6 +532,9 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\UpdateInventoryDialog.xaml.cs">
+      <DependentUpon>UpdateInventoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Flyouts\AddCategoryFlyout.xaml.cs">
       <DependentUpon>AddCategoryFlyout.xaml</DependentUpon>
@@ -575,6 +580,7 @@
     </Compile>
     <Compile Include="Wrapper\CategoryWrapper.cs" />
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
+    <Compile Include="Wrapper\InventoryHistoryWrapper.cs" />
     <Compile Include="Wrapper\InventoryWrapper.cs" />
     <Compile Include="Wrapper\LoginWrapper.cs" />
     <Compile Include="Wrapper\CreateUserWrapper.cs" />
@@ -658,6 +664,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\UpdateInventoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -132,6 +132,10 @@
     <Compile Include="Migrations\202106130715373_inventory_model_changes.designer.cs">
       <DependentUpon>202106130715373_inventory_model_changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106131111330_inventory_history_changes.cs" />
+    <Compile Include="Migrations\202106131111330_inventory_history_changes.designer.cs">
+      <DependentUpon>202106131111330_inventory_history_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106130715373_inventory_model_changes.resx">
       <DependentUpon>202106130715373_inventory_model_changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106131111330_inventory_history_changes.resx">
+      <DependentUpon>202106131111330_inventory_history_changes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
