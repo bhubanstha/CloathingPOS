@@ -470,6 +470,7 @@
     <Compile Include="Converter\GridIndexConverter.cs" />
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
+    <Compile Include="Event\CategoryChangedEvent.cs" />
     <Compile Include="ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
@@ -505,6 +506,7 @@
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
+    <Compile Include="UIModel\CategoryChangedEventArgs.cs" />
     <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
@@ -568,6 +570,7 @@
     <Compile Include="Views\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wrapper\CategoryWrapper.cs" />
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
     <Compile Include="Wrapper\InventoryWrapper.cs" />
     <Compile Include="Wrapper\LoginWrapper.cs" />
