@@ -36,7 +36,7 @@ namespace POSSystem.UI
            
             ReloadConfig();
             LoadCompanyInfo();
-            var window = container.Resolve<MainWindow>();
+            var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             window.Show();
