@@ -28,12 +28,25 @@ namespace POS.BusinessRule
             InventoryHistory inventoryHistory = new InventoryHistory
             {
                 Quantity = inventory.Quantity,
-                Rate = inventory.PurchaseRate,
+                PurchaseRate = inventory.PurchaseRate,
+                RetailRate = inventory.RetailRate,
                 PurchaseDate = inventory.FirstPurchaseDate,
                 InventoryId = inventory.Id
             };
             genericDataRepository.Insert(inventoryHistory);
             await genericDataRepository.SaveAsync();
         }
+
+        public async void AddToHistory(InventoryHistory history)
+        {
+            if(history.Inventory != null)
+            {
+                history.Inventory = null;
+            }
+            genericDataRepository.Insert(history);
+            await genericDataRepository.SaveAsync();
+        }
+
+
     }
 }

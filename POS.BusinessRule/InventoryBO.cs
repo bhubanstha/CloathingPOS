@@ -44,7 +44,7 @@ namespace POS.BusinessRule
                 .ToList();
         }
 
-        public Inventory GetById(int id)
+        public Inventory GetById(Int64 id)
         {
             return genericDataRepository.GetByID(id);
         }
@@ -76,6 +76,14 @@ namespace POS.BusinessRule
 
                 genericDataRepository.Save();
             }
+        }
+
+        public async Task<int> UpdateInventory(Inventory inventory, InventoryHistory history)
+        {
+            genericDataRepository.Update(inventory);
+            InventoryHistoryBO inventoryHistoryBO = new InventoryHistoryBO();
+            inventoryHistoryBO.AddToHistory(history);
+            return await genericDataRepository.SaveAsync();
         }
 
         public async Task<int> Restock(Inventory inventory, int salesReturn)
