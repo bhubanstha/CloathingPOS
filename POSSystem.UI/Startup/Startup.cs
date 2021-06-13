@@ -6,6 +6,7 @@ using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
+using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Views.Flyouts;
 using Prism.Events;
 
@@ -16,6 +17,9 @@ namespace POSSystem.UI.Startup
         public IContainer BootstrapDependencies()
         {
             var builder = new ContainerBuilder();
+            //Dialog Registration
+            builder.RegisterType<UpdateInventoryDialog>().AsSelf();
+
 
             //Flyout Registration
             builder.RegisterType<SettingFlyout>().AsSelf();
@@ -62,6 +66,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<SettingsViewModel>().AsSelf();
             builder.RegisterType<UserProfileViewModel>().AsSelf();
             builder.RegisterType<CategoryViewModel>().AsSelf();
+            builder.RegisterType<InventoryHistoryViewModel>().AsSelf();
 
 
 
