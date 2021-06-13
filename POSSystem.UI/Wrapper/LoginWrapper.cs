@@ -1,5 +1,7 @@
-﻿using POS.Model.ViewModel;
+﻿using iText.Layout.Properties;
+using POS.Model.ViewModel;
 using POSSystem.UI.UIModel;
+using System.Collections.Generic;
 
 namespace POSSystem.UI.Wrapper
 {
@@ -28,6 +30,15 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        //protected override IEnumerable<string> ValidateProperty(string propertyName)
+        //{
+        //    List<string> errors = new List<string>();
+        //    if (propertyName == "UserName")
+        //    {
+        //        errors.Add("User name already exists");
+        //    }
+        //    return errors;
+        //}
 
     }
 }
