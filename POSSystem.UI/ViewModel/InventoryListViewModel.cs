@@ -1,11 +1,15 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Event;
+using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
+using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,6 +21,8 @@ namespace POSSystem.UI.ViewModel
     public class InventoryListViewModel : ViewModelBase
     {
         private InventoryBO _inventoryBo;
+        MetroWindow _window;
+        private UpdateInventoryDialog _updateInventoryDialog;
         private IEventAggregator _eventAggregator;
 
         private ObservableCollection<InventoryWrapper> _inventory;
@@ -33,13 +39,34 @@ namespace POSSystem.UI.ViewModel
 
 
         public ICommand DeleteInventoryItemCommand { get; }
+        public ICommand AddInventoryItemStockCommand { get; }
 
-        public InventoryListViewModel(IEventAggregator eventAggregator)
+        public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator)
         {
+            _updateInventoryDialog = updateInventoryDialog;
             _eventAggregator = eventAggregator;
+            _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             DeleteInventoryItemCommand = new DelegateCommand<InventoryWrapper>(DeleteInventoryItem);
+            AddInventoryItemStockCommand = new DelegateCommand<InventoryWrapper>(OnAddInventoryItemStock);
             eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(ReloadInventory);
             LoadInventory();
+        }
+
+        private void OnAddInventoryItemStock(InventoryWrapper obj)
+        {
+            try
+            {
+                _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+                StaticContainer.InventoryUpdateDialog = _updateInventoryDialog;
+                _eventAggregator.GetEvent<InventoryUpdatePopupOpenEvent>().Publish(obj.Model);
+                _window.ShowMetroDialogAsync(_updateInventoryDialog);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         }
 
         private void DeleteInventoryItem(InventoryWrapper obj)
@@ -74,6 +101,14 @@ namespace POSSystem.UI.ViewModel
                 InventoryWrapper wrapper = new InventoryWrapper(args.Inventory);
                 wrapper.CategoryName = c.Name;
                 Inventory.Add(wrapper);
+            }
+            else if(args.Action == EventAction.Update)
+            {
+                var item = Inventory.Where(x => x.Id == args.Inventory.Id).FirstOrDefault();
+                item.Quantity = args.Inventory.Quantity;
+                item.RetailRate = args.Inventory.RetailRate;
+                item.PurchaseRate = args.Inventory.PurchaseRate;
+                item.FirstPurchaseDate = args.Inventory.FirstPurchaseDate;
             }
         }
 
