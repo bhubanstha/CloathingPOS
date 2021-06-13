@@ -81,6 +81,7 @@ namespace POSSystem.UI.ViewModel
                 int c = await InventoryBO.Save(inventory);
                 if (c > 0)
                 {
+                    ResetInventory();
                     StaticContainer.ShowNotification("Product Added", $"Product: {inventory.Name} - {inventory.Size} purchased on {inventory.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.", NotificationType.Success);
 
                 }
@@ -121,6 +122,20 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged("Categories");
             }
 
+        }
+
+        private void ResetInventory()
+        {
+            Inventory.Id = 0;
+            Inventory.CategoryId = 0;
+            Inventory.Color = "";
+            Inventory.FirstPurchaseDate = DateTime.Now;
+            Inventory.Name = "";
+            Inventory.PurchaseRate = 1;
+            Inventory.Quantity = 1;
+            Inventory.RetailRate = 1;
+            Inventory.Size = "";
+            Inventory.ColorName = "";
         }
     }
 }
