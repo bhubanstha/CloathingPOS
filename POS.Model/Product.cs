@@ -6,18 +6,36 @@ namespace POS.Model
 {
     public class Product : EntityBase
     {
+
+        [Required(ErrorMessage = "Item Name is required.")]
+        [MaxLength(50, ErrorMessage = "Item name can be upto 50 character long.")]
         public string Name { get; set; }
 
-        [MaxLength(5)]
+
+
+        [Required(ErrorMessage = "Item size is required.")]
+        [MaxLength(5, ErrorMessage = "Size should be upto 5 character long.")]
         public string Size { get; set; }
 
-        [MaxLength(10)]
+
+
+
+        [Required(ErrorMessage = "Item colour is required.")]
+        [MaxLength(9, ErrorMessage = "Color value should be upto 9 character long")]
         public string Color { get; set; }
 
-        [MaxLength(30)]
+
+
+        [Required(ErrorMessage = "Color name is required.")]
+        [MaxLength(20, ErrorMessage = "Color name can be upto 20 characters long only.")]
         public string ColorName { get; set; }
 
+
+
+
         [ForeignKey("Category")]
+        [Required(ErrorMessage = "Category is required")]
+        [Range(1, (double)Int64.MaxValue, ErrorMessage = "Category should be a valid value.")]
         public Int64 CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
