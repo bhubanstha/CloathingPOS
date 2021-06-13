@@ -23,7 +23,7 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
-        public Category GetCategory(int id)
+        public Category GetCategory(Int64 id)
         {
             return genericDataRepository.GetByID(id);
         }
