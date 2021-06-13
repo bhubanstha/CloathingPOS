@@ -7,6 +7,7 @@ using POSSystem.UI.ViewModel;
 using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using POSSystem.UI.Views.Flyouts;
+using Prism.Events;
 
 namespace POSSystem.UI.Startup
 {
@@ -45,7 +46,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<NepDateConverter>().AsImplementedInterfaces();
             builder.RegisterType<NepDate>().AsSelf();
             builder.RegisterType<ColorService>().As<IColorService>();
-            
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
 
             //View Model Registration
@@ -60,6 +61,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<SalesReturnViewModel>().AsSelf();
             builder.RegisterType<SettingsViewModel>().AsSelf();
             builder.RegisterType<UserProfileViewModel>().AsSelf();
+            builder.RegisterType<CategoryViewModel>().AsSelf();
 
 
 
