@@ -20,7 +20,7 @@
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
 
     </UserControl.Resources>
-    <StackPanel Margin="0 5 3 5">
+    <StackPanel Margin="0,5,3,5">
         <Grid x:Name="MainGrid">
 
             <Grid.RowDefinitions>
@@ -80,7 +80,9 @@
                                     Width="24"
                                     Height="20"
                                     VerticalAlignment="Top"
-                                    Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                    Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
+                                    Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                    StrokeThickness="0.5" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -22,5 +22,18 @@ namespace POS.BusinessRule
             return records;
 
         }
+
+        public async void AddToHistory(Inventory inventory)
+        {
+            InventoryHistory inventoryHistory = new InventoryHistory
+            {
+                Quantity = inventory.Quantity,
+                Rate = inventory.PurchaseRate,
+                PurchaseDate = inventory.FirstPurchaseDate,
+                InventoryId = inventory.Id
+            };
+            genericDataRepository.Insert(inventoryHistory);
+            await genericDataRepository.SaveAsync();
+        }
     }
 }

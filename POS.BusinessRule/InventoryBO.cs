@@ -21,7 +21,14 @@ namespace POS.BusinessRule
         public async Task<int> Save (Inventory inventory)
         {
             genericDataRepository.Insert(inventory);
-            return await genericDataRepository.SaveAsync();
+            int i =  await genericDataRepository.SaveAsync();
+            if(i>0)
+            {
+                InventoryHistoryBO inventoryHistory = new InventoryHistoryBO();
+                inventoryHistory.AddToHistory(inventory);
+
+            }
+            return i;
         }
 
         public List<Inventory> GetAllActiveProducts()
