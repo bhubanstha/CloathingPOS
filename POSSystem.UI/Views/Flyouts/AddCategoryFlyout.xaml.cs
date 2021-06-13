@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
+using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 
 namespace POSSystem.UI.Views.Flyouts
@@ -12,7 +14,7 @@ namespace POSSystem.UI.Views.Flyouts
         public AddCategoryFlyout()
         {
             InitializeComponent();
-            model = new CategoryViewModel();
+            model = StaticContainer.Container.Resolve<CategoryViewModel>();// new CategoryViewModel();
             this.DataContext = model;
         }
     }

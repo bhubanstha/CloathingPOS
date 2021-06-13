@@ -8,11 +8,14 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+    </UserControl.Resources>
 
     <StackPanel Margin="0,5,3,5">
         <Grid behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}">
@@ -53,7 +56,7 @@
                 DisplayMemberPath="Name"
                 ItemsSource="{Binding Categories, Mode=TwoWay}"
                 SelectedIndex="0"
-                SelectedValue="{Binding CategoryId}"
+                SelectedValue="{Binding Inventory.CategoryId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                 SelectedValuePath="Id"
                 Style="{DynamicResource MahApps.Styles.ComboBox}" />
             <Button
@@ -88,7 +91,7 @@
                 mah:TextBoxHelper.Watermark="Enter Product Name"
                 SpellCheck.IsEnabled="True"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding Name, Mode=TwoWay}" />
+                Text="{Binding Inventory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -110,7 +113,7 @@
                 CharacterCasing="Upper"
                 SpellCheck.IsEnabled="True"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding Size, Mode=TwoWay}" />
+                Text="{Binding Inventory.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="3"
@@ -125,7 +128,7 @@
                 Padding="{StaticResource ControlPadding}"
                 mah:ColorPalettesTabHeader="Standard Colours"
                 mah:TextBoxHelper.Watermark="Select a product colour"
-                SelectedColor="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedColor="{Binding Inventory.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                 Style="{DynamicResource MahApps.Styles.ColorPicker}" />
             <TextBox
                 x:Name="txtColorName"
@@ -139,9 +142,9 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Known Colour Name"
                 CharacterCasing="Normal"
-                IsEnabled="{Binding ColorNameEntryEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                IsEnabled="{Binding Inventory.ColorNameEntryEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding ColorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Inventory.ColorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
 
             <TextBlock
@@ -161,10 +164,9 @@
                 mah:TextBoxHelper.ClearTextButton="True"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
-                Maximum="10000"
                 Minimum="1"
                 TextAlignment="Left"
-                Value="{Binding Quantity, Mode=TwoWay}" />
+                Value="{Binding Inventory.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="5"
@@ -183,13 +185,13 @@
                 mah:TextBoxHelper.ClearTextButton="True"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
-                Culture="{Binding CultureInfo}"
+                Culture="{Binding Source={x:Static sc:StaticContainer.CultureInfo}}"
                 Maximum="10000"
                 Minimum="1"
                 NumericInputMode="Decimal"
                 StringFormat="C"
                 TextAlignment="Left"
-                Value="{Binding PurchaseRate, Mode=TwoWay}" />
+                Value="{Binding Inventory.PurchaseRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="6"
@@ -207,13 +209,13 @@
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Retail Rate"
-                Culture="{Binding CultureInfo}"
+                Culture="{Binding Source={x:Static sc:StaticContainer.CultureInfo}}"
                 Maximum="10000"
                 Minimum="1"
                 NumericInputMode="Decimal"
                 StringFormat="C"
                 TextAlignment="Left"
-                Value="{Binding RetailRate, Mode=TwoWay}" />
+                Value="{Binding Inventory.RetailRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="7"
@@ -230,24 +232,12 @@
                 Padding="{StaticResource ControlPadding}"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter a product purchase date"
-                DisplayDate="{Binding FirstPurchaseDate, Mode=TwoWay}"
+                DisplayDate="{Binding Inventory.FirstPurchaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                 IsHitTestVisible="True"
                 IsTodayHighlighted="True"
                 SelectedDateFormat="Short"
-                SelectedTimeFormat="Short">
-                <mah:DateTimePicker.Resources>
-                    <Style x:Key="asdf" TargetType="mah:DateTimePicker">
-                        <Style.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter Property="BorderBrush" Value="Yellow" />
-                                <Setter Property="Background" Value="Red" />
-                                <Setter Property="IsDropDownOpen" Value="True" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-
-                </mah:DateTimePicker.Resources>
-            </mah:DateTimePicker>
+                SelectedDateTime="{Binding Inventory.FirstPurchaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                SelectedTimeFormat="Short" />
 
 
             <Button

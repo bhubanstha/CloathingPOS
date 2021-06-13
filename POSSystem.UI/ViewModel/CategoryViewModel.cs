@@ -2,8 +2,11 @@
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -13,6 +16,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class CategoryViewModel : ViewModelBase
     {
+        private IEventAggregator _eventAggregator;
         private Int64 _id;
         private string _name;
         private CategoryBO categoryBO;
@@ -53,8 +57,9 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand EditCategoryCommand { get; }
         public ICommand ResetCommand { get; }
-        public CategoryViewModel()
+        public CategoryViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _window = Application.Current.MainWindow as MetroWindow;
             LoadCategories();
             CreateCategoryCommand = new DelegateCommand(SaveCategory);
@@ -89,6 +94,12 @@ namespace POSSystem.UI.ViewModel
                     if (i > 0)
                     {
                         LoadCategories();
+                        CategoryChangedEventArgs categoryChangedEventArgs = new CategoryChangedEventArgs
+                        {
+                            Category = obj,
+                            Action = EventAction.Remove
+                        };
+                        _eventAggregator.GetEvent<CategoryChangedEvent>().Publish(categoryChangedEventArgs);
                     }
                 }
             }
@@ -100,6 +111,7 @@ namespace POSSystem.UI.ViewModel
 
         private async void SaveCategory()
         {
+            EventAction action;
             categoryBO = new CategoryBO();
             Category c = new Category
             {
@@ -111,10 +123,12 @@ namespace POSSystem.UI.ViewModel
             if(this.Id>0)
             {
                 i = await categoryBO.Update(c);
+                action = EventAction.Update;
             }
             else
             {
                 i = await categoryBO.Save(c);
+                action = EventAction.Add;
             }
             
             if (i > 0)
@@ -123,6 +137,13 @@ namespace POSSystem.UI.ViewModel
                 this.Name = "";
                 LoadCategories();
             }
+
+            CategoryChangedEventArgs categoryChangedEventArgs = new CategoryChangedEventArgs
+            {
+                Category = c,
+                Action = action
+            };
+            _eventAggregator.GetEvent<CategoryChangedEvent>().Publish(categoryChangedEventArgs);
         }
 
         private void LoadCategories()

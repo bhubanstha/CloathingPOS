@@ -1,4 +1,6 @@
-﻿using POSSystem.UI.ViewModel;
+﻿using Autofac;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -13,7 +15,7 @@ namespace POSSystem.UI.Views
         public InventoryView()
         {
             InitializeComponent();
-            model = new InventoryViewModel();
+            model = StaticContainer.Container.Resolve<InventoryViewModel>();// new InventoryViewModel();
             this.DataContext = model;
         }
 

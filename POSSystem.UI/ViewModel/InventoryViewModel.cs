@@ -1,122 +1,57 @@
 ﻿using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
-using POS.Utilities.Extension;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Windows;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
     public class InventoryViewModel : NotifyPropertyChanged
     {
-        private DateTime _purchaseDate = DateTime.Now;
-
-        private string _colorName="";
-        private bool _ColorNameEntryEnabled = false;
-        private string _color;
-
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Size { get; set; }
-        public string Color { 
-            get { return _color; }
-            set
+        private ObservableCollection<CategoryWrapper> _categories = null;
+        public virtual ObservableCollection<CategoryWrapper> Categories 
+        { 
+            get { return _categories; }
+            set 
             {
-                _color = value;
-                GetKnownColorName();
+                _categories = value;
                 OnPropertyChanged();
             }
         }
-
-        private void GetKnownColorName()
-        {
-            string colorName = Color.ToKnownColourName();
-            if(string.IsNullOrEmpty(colorName))
-            {
-                ColorNameEntryEnabled = true;
-                ColorName = "";
-            }
-            else
-            {
-                ColorNameEntryEnabled = false;
-                ColorName = colorName;
-            }
-        }
-
-        public Int64 CategoryId { get; set; }
-
-        public decimal PurchaseRate { get; set; }
-
-        public decimal RetailRate { get; set; }
-
-        public int Quantity { get; set; }
-        public DateTime FirstPurchaseDate { 
-            get { return _purchaseDate; }
-            set { _purchaseDate = value; }
-        }
-
-       
-
-        public string ColorName
-        {
-            get { return _colorName; }
-            set {
-                _colorName = value;
-                OnPropertyChanged("ColorName");
-
-                //_colorName = _color.ToKnownColourName(); 
-                
-                //if(string.IsNullOrEmpty(_colorName))
-                //{
-                //    ColorNameEntryEnabled = true;
-                //    _colorName = value;
-                //}
-                //else
-                //{
-                //    ColorNameEntryEnabled = false;
-                //}
-            }
-        }
-
-
-        
-
-        public bool ColorNameEntryEnabled
-        {
-            get { return _ColorNameEntryEnabled; }
-            set { _ColorNameEntryEnabled = value; OnPropertyChanged(); }
-        }
-
-
-        public CultureInfo CultureInfo { get; set; }
-
-        public virtual List<Category> Categories { get; set; }
+        public InventoryWrapper Inventory { get; set; }
 
         private InventoryBO InventoryBO;
         private CategoryBO CategoryBO;
-        private MetroWindow _window;
 
-        public ICommand SaveCommand { get;  }
+
+        public ICommand SaveCommand { get; }
         public ICommand AddCategoryCommand { get; }
 
-        public InventoryViewModel()
+        public InventoryViewModel(IEventAggregator eventAggregator)
         {
-            _window = Application.Current.MainWindow as MetroWindow;
-            
-            CategoryBO = new CategoryBO();
-           
 
-            Categories = CategoryBO.GetCategories();
+            CategoryBO = new CategoryBO();
+            Inventory = new InventoryWrapper(new Inventory())
+            {
+                ColorNameEntryEnabled = false,
+                FirstPurchaseDate = DateTime.Now
+            };
+            LoadCategories();
             SaveCommand = new DelegateCommand(SaveProduct);
             AddCategoryCommand = new DelegateCommand(OpenAddCategoryFlyout);
-            SetCurrencyCulture();
+
+            eventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(ReLoadCategories);
         }
 
         private void OpenAddCategoryFlyout()
@@ -131,53 +66,61 @@ namespace POSSystem.UI.ViewModel
             {
                 Inventory inventory = new Inventory
                 {
-                    Id = this.Id,
-                    CategoryId = this.CategoryId,
-                    Color = this.Color,
-                    FirstPurchaseDate = this.FirstPurchaseDate,
-                    Name = this.Name,
-                    PurchaseRate = this.PurchaseRate,
-                    Quantity = this.Quantity,
-                    RetailRate = this.RetailRate,
-                    Size = this.Size,
-                    ColorName = this.ColorName
+                    Id = this.Inventory.Id,
+                    CategoryId = this.Inventory.CategoryId,
+                    Color = this.Inventory.Color,
+                    FirstPurchaseDate = this.Inventory.FirstPurchaseDate,
+                    Name = this.Inventory.Name,
+                    PurchaseRate = this.Inventory.PurchaseRate,
+                    Quantity = this.Inventory.Quantity,
+                    RetailRate = this.Inventory.RetailRate,
+                    Size = this.Inventory.Size,
+                    ColorName = this.Inventory.ColorName
                 };
                 InventoryBO = new InventoryBO();
                 int c = await InventoryBO.Save(inventory);
                 if (c > 0)
                 {
-                    StaticContainer.NotificationManager.Show(new NotificationContent
-                    {
-                        Message = $"Product: {this.Name} - {this.Size} purchased on {this.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.",
-                        Title = "Product Added",
-                        Type = NotificationType.Success
-                    });
-                    this.Size = "";
-                    this.Id = 0;
+                    StaticContainer.ShowNotification("Product Added", $"Product: {inventory.Name} - {inventory.Size} purchased on {inventory.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.", NotificationType.Success);
+
                 }
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Message = "Could not create inventory. Please provide all the required item information.",
-                    Title = "Error",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", "Could not create inventory. Please provide all the required item information.", NotificationType.Error);
             }
         }
-        private void SetCurrencyCulture()
+
+        private void LoadCategories()
         {
-            //string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
-            CultureInfo = StaticContainer.CultureInfo;
+            List<Category> categories = CategoryBO.GetCategories();
+            Categories = new ObservableCollection<CategoryWrapper>();
+            foreach (Category item in categories)
+            {
+                CategoryWrapper wrapper = new CategoryWrapper(item);
+                Categories.Add(wrapper);
+            }
         }
 
-
-        private string GetColorName()
+        private void ReLoadCategories(CategoryChangedEventArgs args)
         {
-            //string nameOfTheColor = MahApps.Metro.Controls.ColorHelper.DefaultInstance.GetColorName(myColor, theDictionaryToUse);
+            if(args.Action == EventAction.Add)
+            {
+                CategoryWrapper wrapper = new CategoryWrapper(args.Category);
+                Categories.Add(wrapper);
+            }
+            else if (args.Action == EventAction.Remove)
+            {
+                var itemToRemove = Categories.Where(x => x.Id == args.Category.Id).FirstOrDefault();
+                Categories.Remove(itemToRemove);
+            }
+            else if (args.Action == EventAction.Update)
+            {
+                var itm = Categories.Where(x => x.Id == args.Category.Id).FirstOrDefault();
+                itm.Name = args.Category.Name;
+                OnPropertyChanged("Categories");
+            }
 
-            return "";
         }
     }
 }
