@@ -33,6 +33,7 @@ namespace POSSystem.UI.Service
         public static string ErrorMessage { get; private set; } = "Something went wrong. Please contact system admin for support.";
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
+        public static CustomDialog InventoryUpdateDialog { get; set; }
         static StaticContainer()
         {
             DialogSettings = new MetroDialogSettings
