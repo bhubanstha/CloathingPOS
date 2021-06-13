@@ -19,6 +19,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class InventoryViewModel : NotifyPropertyChanged
     {
+        private IEventAggregator _eventAggregator;
         private ObservableCollection<CategoryWrapper> _categories = null;
         public virtual ObservableCollection<CategoryWrapper> Categories 
         { 
@@ -40,7 +41,7 @@ namespace POSSystem.UI.ViewModel
 
         public InventoryViewModel(IEventAggregator eventAggregator)
         {
-
+            _eventAggregator = eventAggregator;
             CategoryBO = new CategoryBO();
             Inventory = new InventoryWrapper(new Inventory())
             {
@@ -81,7 +82,14 @@ namespace POSSystem.UI.ViewModel
                 int c = await InventoryBO.Save(inventory);
                 if (c > 0)
                 {
+                    InventoryChangedEventArgs args = new InventoryChangedEventArgs
+                    {
+                        Inventory = inventory,
+                        Action = EventAction.Add
+                    };
+                    _eventAggregator.GetEvent<InventoryChangedEvent>().Publish(args);
                     ResetInventory();
+
                     StaticContainer.ShowNotification("Product Added", $"Product: {inventory.Name} - {inventory.Size} purchased on {inventory.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.", NotificationType.Success);
 
                 }

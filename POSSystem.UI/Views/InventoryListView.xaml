@@ -62,7 +62,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="0.5*"
-                        Binding="{Binding Category.Name}"
+                        Binding="{Binding CategoryName}"
                         Header="Category" />
                     <DataGridTextColumn
                         Width="*"

@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace POSSystem.UI.UIModel
 {
-    public enum EventAction
-    {
-        Add,
-        Remove,
-        Update
-    }
     public class CategoryChangedEventArgs
     {
         public Category Category { get; set; }
