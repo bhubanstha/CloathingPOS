@@ -20,7 +20,10 @@
         <conv:DateConverter x:Key="NepDateConverter" />
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
 
-        <SolidColorBrush x:Key="TransparentBlack" Color="{DynamicResource MahApps.Colors.Accent}" Opacity="0.3"/>
+        <SolidColorBrush
+            x:Key="TransparentBlack"
+            Opacity="0.3"
+            Color="{DynamicResource MahApps.Colors.Accent}" />
 
     </UserControl.Resources>
     <StackPanel Margin="0,5,3,5">
@@ -89,7 +92,9 @@
                                                 Width="24"
                                                 Height="20"
                                                 VerticalAlignment="Top"
-                                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
+                                                Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                                StrokeThickness="1" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -200,7 +205,7 @@
                     Grid.Column="1"
                     Grid.ColumnSpan="2">
                     <Run Text="Billing Date: " />
-                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='yyyy/MM/dd hh:mm tt'}"/>
+                    <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='yyyy/MM/dd hh:mm tt'}" />
                 </TextBlock>
 
 
@@ -239,7 +244,9 @@
                                         Width="24"
                                         Height="20"
                                         VerticalAlignment="Top"
-                                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
+                                        Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                        StrokeThickness="1" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -261,7 +268,7 @@
                         <DataGridTemplateColumn Width="100" Header="Total">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Label Style="{StaticResource Grid.Numeric.Column}" >
+                                    <Label Style="{StaticResource Grid.Numeric.Column}">
                                         <Label.Content>
                                             <MultiBinding Converter="{StaticResource TotalCalc}">
                                                 <Binding Path="SalesQuantity" />
@@ -281,8 +288,7 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.DeleteCartItemCommand, 
-                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Command="{Binding Path=DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource Button.Circle.In.GridRow}">
@@ -364,17 +370,17 @@
                     x:Name="txtBillingTo"
                     Grid.Row="4"
                     Grid.Column="1"
-                    Grid.ColumnSpan="2"                    
+                    Grid.ColumnSpan="2"
                     Margin="{DynamicResource ControlMargin}"
                     Padding="{StaticResource ControlPadding}"
                     VerticalAlignment="Center"
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Name"
+                    LostFocus="txCustInfo_LostFocus"
                     Style="{DynamicResource App.TextBox.Validation}"
                     Text="{Binding CurrentBill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" 
-                    LostFocus="txCustInfo_LostFocus" />
+                    TextAlignment="Left" />
 
                 <Label
                     Grid.Row="5"
@@ -394,10 +400,10 @@
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Address"
+                    LostFocus="txCustInfo_LostFocus"
                     Style="{DynamicResource App.TextBox.Validation}"
                     Text="{Binding CurrentBill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
-                    LostFocus="txCustInfo_LostFocus" />
+                    TextAlignment="Left" />
 
                 <Label
                     Grid.Row="6"
@@ -417,10 +423,10 @@
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer PAN Number"
+                    LostFocus="txCustInfo_LostFocus"
                     Style="{DynamicResource App.TextBox.Validation}"
                     Text="{Binding CurrentBill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
-                    LostFocus="txCustInfo_LostFocus" />
+                    TextAlignment="Left" />
 
 
                 <Button
@@ -440,15 +446,28 @@
                     Grid.Column="3"
                     Margin="5,5,0,0"
                     UseLayoutRounding="True">
-                    <Border Grid.Row="0" Grid.Column="0" Panel.ZIndex="2" Background="{DynamicResource TransparentBlack}" Width="35" Height="80" HorizontalAlignment="Right" Margin="0 0 15 0" Padding="0 10" CornerRadius="15" VerticalAlignment="Top" Visibility="Hidden" x:Name="pnlPdfOptions">
+                    <Border
+                        x:Name="pnlPdfOptions"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Width="35"
+                        Height="80"
+                        Margin="0,0,15,0"
+                        Padding="0,10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Panel.ZIndex="2"
+                        Background="{DynamicResource TransparentBlack}"
+                        CornerRadius="15"
+                        Visibility="Hidden">
                         <StackPanel>
-                            <iconPacks:PackIconBootstrapIcons         
+                            <iconPacks:PackIconBootstrapIcons
                                 x:Name="icon_FullScreen"
-                        HorizontalAlignment="Center"
-                        Panel.ZIndex="3"
-                        Margin="0 0 0 10"
-                        Kind="ArrowsFullscreen"
-                        MouseLeftButtonUp="icon_FullScreen_MouseLeftButtonUp">
+                                Margin="0,0,0,10"
+                                HorizontalAlignment="Center"
+                                Panel.ZIndex="3"
+                                Kind="ArrowsFullscreen"
+                                MouseLeftButtonUp="icon_FullScreen_MouseLeftButtonUp">
                                 <iconPacks:PackIconBootstrapIcons.Resources>
                                     <Style TargetType="iconPacks:PackIconBootstrapIcons">
                                         <Style.Triggers>
@@ -462,13 +481,13 @@
                                 </iconPacks:PackIconBootstrapIcons.Resources>
                             </iconPacks:PackIconBootstrapIcons>
 
-                            <iconPacks:PackIconBootstrapIcons                            
-                        HorizontalAlignment="Center"
+                            <iconPacks:PackIconBootstrapIcons
                                 x:Name="icon_Printer"
-                        Panel.ZIndex="3"
-                        Kind="Printer"
-                                Margin="0 10 0 0"
-                        MouseLeftButtonUp="icon_Printer_MouseLeftButtonUp">
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Center"
+                                Panel.ZIndex="3"
+                                Kind="Printer"
+                                MouseLeftButtonUp="icon_Printer_MouseLeftButtonUp">
                                 <iconPacks:PackIconBootstrapIcons.Resources>
                                     <Style TargetType="iconPacks:PackIconBootstrapIcons">
                                         <Style.Triggers>
@@ -482,15 +501,14 @@
                                 </iconPacks:PackIconBootstrapIcons.Resources>
                             </iconPacks:PackIconBootstrapIcons>
                         </StackPanel>
-                        
+
                     </Border>
-                    
+
                     <mpp:MoonPdfPanel
                         x:Name="moonPdfPanel"
                         Height="250"
                         Panel.ZIndex="1"
-                        ViewType="SinglePage"
-                        />
+                        ViewType="SinglePage" />
                 </Grid>
             </Grid>
         </Grid>
