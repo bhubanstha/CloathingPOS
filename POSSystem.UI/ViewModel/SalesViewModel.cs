@@ -64,7 +64,7 @@ namespace POSSystem.UI.ViewModel
                 if (!string.IsNullOrEmpty(value))
                 {
                     _currentPdfFilePath = value;
-                    PdfPanel.OpenFile(value);
+                    PdfPanel.OpenFile(value,StaticContainer.PdfPassword);
                     //PdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
                 }
             }

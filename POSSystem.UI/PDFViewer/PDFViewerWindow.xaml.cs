@@ -17,6 +17,7 @@ namespace POSSystem.UI.PDFViewer
 		private static string appName;
 		private MainWindowDataContext dataContext;
 		private string pdfFilePath;
+		private string pdfPassword;
 
 		internal MoonPdfPanel MoonPdfPanel { get { return this.moonPdfPanel; } }
 
@@ -50,6 +51,13 @@ namespace POSSystem.UI.PDFViewer
 
 		}
 
+		public PDFViewerWindow(string pdfFilePath, string password) : this()
+		{
+			InitializeComponent();
+			this.pdfFilePath = pdfFilePath;
+			this.pdfPassword = password;
+		}
+
 		void moonPdfPanel_PasswordRequired(object sender, PasswordRequiredEventArgs e)
         {
             var dlg = new PdfPasswordDialog();
@@ -69,6 +77,11 @@ namespace POSSystem.UI.PDFViewer
 			////byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
 			MoonPdfPanel.OpenFile(pdfPath);
 		}
+
+		private void OpenPdf(string pdfPath, string password)
+		{
+			MoonPdfPanel.OpenFile(pdfPath, password);
+		}
 		void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			//string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "companyLogo1.png");
@@ -76,25 +89,30 @@ namespace POSSystem.UI.PDFViewer
 			//string pdfPath = createPDF.CreatePdfTable(1, StaticContainer.PdfPassword, imagePath);
 			////byte[] pdfbyte = createPDF.CreatePdfTableInMemory();
 			//MoonPdfPanel.OpenFile(pdfPath);
-			if(!string.IsNullOrEmpty(this.pdfFilePath))
+
+			if (!string.IsNullOrEmpty(this.pdfFilePath) && !string.IsNullOrEmpty(this.pdfPassword))
+			{
+				OpenPdf(this.pdfFilePath, this.pdfPassword);
+			}
+			else if (!string.IsNullOrEmpty(this.pdfFilePath))
 			{
 				OpenPdf(this.pdfFilePath);
 			}
 			
-			var args = Environment.GetCommandLineArgs();
+			//var args = Environment.GetCommandLineArgs();
 
-			// if a filename was given via command line
-            if (args.Length > 1 && File.Exists(args[1]))
-            {
-                try
-                {
-                    this.moonPdfPanel.OpenFile(args[1]);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(string.Format("An error occured: " + ex.Message));
-                }
-            }
+			//// if a filename was given via command line
+   //         if (args.Length > 1 && File.Exists(args[1]))
+   //         {
+   //             try
+   //             {
+   //                 this.moonPdfPanel.OpenFile(args[1]);
+   //             }
+   //             catch (Exception ex)
+   //             {
+   //                 MessageBox.Show(string.Format("An error occured: " + ex.Message));
+   //             }
+   //         }
 		}
 
 		void moonPdfPanel_PageDisplayChanged(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.PDFViewer;
+using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace POSSystem.UI.Views
 
         private void icon_FullScreen_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath);
+            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath, StaticContainer.PdfPassword);
             window.Show();
         }
 
