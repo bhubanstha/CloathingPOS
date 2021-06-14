@@ -21,7 +21,6 @@ namespace POSSystem.UI.Views
             _viewModel.LoginWindow = this;
             DataContext = _viewModel;
             this.Loaded += LoginWindow_Loaded;
-            this.Closed += LoginWindow_Closed;
         }
 
         private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
@@ -31,12 +30,12 @@ namespace POSSystem.UI.Views
 
             _viewModel.LoginUser.UserName = userName;
             _viewModel.LoginUser.RememberMe = rememberMe;
+            Application.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+            Application.Current.MainWindow = this;
+            StaticContainer.ThisApp.MainWindow = this;
         }
 
-        private void LoginWindow_Closed(object sender, EventArgs e)
-        {
-            Application.Current.MainWindow = null;
-        }
+
 
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {

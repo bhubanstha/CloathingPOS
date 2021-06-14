@@ -56,7 +56,6 @@ namespace POSSystem.UI.ViewModel
 
         public LoginViewModel( ICacheService cacheService)
         {
-            
             _genericDataRepository = new DataRepository<User>(new POSDataContext());
             _bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
             _cacheService = cacheService;
@@ -101,17 +100,23 @@ namespace POSSystem.UI.ViewModel
                 {
                     LoginWindow.Hide();
                     ForgotPasswordWindow forgetPasswindow = null;
-                    forgetPasswindow = GetPasswordResetWindow();
+                    forgetPasswindow =  GetPasswordResetWindow() ;
                     ManageWindowVisibility(forgetPasswindow,  null);
                     forgetPasswindow.IsUserNameEditable = false;
                     forgetPasswindow.IsBackButtonVisible = false;
                     forgetPasswindow.LookForPasswordChange = true;
                     bool? result = forgetPasswindow.ShowDialog();
-                    if(result.HasValue && result.Value == true)
+
+                    if (result.HasValue && result.Value == true)
                     {
-                        System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                        LoginWindow.Show();
+                        //System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                        //Application.Current.Shutdown();
+
+                    }
+                    else
+                    {
                         Application.Current.Shutdown();
-                        
                     }
                 }
                 else

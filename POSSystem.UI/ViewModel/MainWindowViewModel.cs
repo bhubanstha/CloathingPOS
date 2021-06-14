@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Model;
 using POSSystem.UI.PDFViewer;
@@ -17,8 +18,6 @@ namespace POSSystem.UI.ViewModel
         private double _popupRightMargin = 200;
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
-        public IDialogCoordinator _dialogCoordinator;
-        public LoginWindow LoginWindow { get; set; }
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -27,7 +26,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand OpenPdfViewerCommand { get; set; }
         public ICommand ApplicationExitCommand { get; set; }
 
-        public MetroWindow Window { get; set; }
+        public MainWindow MainWindow { get; set; }
         public Flyout SettingFlyout { get; set; }
         public User User { get; set; }
         public double PopupRightMargin {
@@ -64,12 +63,10 @@ namespace POSSystem.UI.ViewModel
 
 
         public MainWindowViewModel(ICacheService cacheService, 
-            IMessageDialogService messageDialogService,
-            IDialogCoordinator dialogCoordinator)
+            IMessageDialogService messageDialogService)
         {
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
-            _dialogCoordinator = dialogCoordinator;
             User = cacheService.ReadCache<User>("LoginUser");
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
@@ -92,10 +89,12 @@ namespace POSSystem.UI.ViewModel
 
         private void OnUserLogout()
         {
-            IsLogout = true;
-            Application.Current.MainWindow = LoginWindow;
-            Window.Close();            
-            Application.Current.MainWindow.Show();
+            LoginWindow window = StaticContainer.Container.Resolve<LoginWindow>();
+            MainWindow.Hide();
+            window.Show();
+            MainWindow.Close();
+           
+            
         }
 
         private void OnSettingsCommandExecute()
