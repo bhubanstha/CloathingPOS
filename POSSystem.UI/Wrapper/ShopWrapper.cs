@@ -58,5 +58,11 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public string PdfPassword
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
     }
 }

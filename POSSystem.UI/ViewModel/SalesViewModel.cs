@@ -64,7 +64,7 @@ namespace POSSystem.UI.ViewModel
                 if (!string.IsNullOrEmpty(value))
                 {
                     _currentPdfFilePath = value;
-                    PdfPanel.OpenFile(value,StaticContainer.PdfPassword);
+                    PdfPanel.OpenFile(value,StaticContainer.Shop.PdfPassword);
                     //PdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
                 }
             }
@@ -351,7 +351,7 @@ namespace POSSystem.UI.ViewModel
         public async Task CreatePdfFromCurrentCartItem()
         {
             CurrentPdfFilePath = await new CreatePDF()
-                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop, StaticContainer.PdfPassword);
+                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
             PdfOptionVisibility();
         }
 

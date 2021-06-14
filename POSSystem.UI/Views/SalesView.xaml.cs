@@ -55,7 +55,7 @@ namespace POSSystem.UI.Views
 
         private void icon_FullScreen_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath, StaticContainer.PdfPassword);
+            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath, StaticContainer.Shop.PdfPassword);
             window.Show();
         }
 

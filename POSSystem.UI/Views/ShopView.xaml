@@ -230,7 +230,7 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter password to protect bills"
                 SpellCheck.IsEnabled="True"
-                Text="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{Binding ShopWrapper.PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
                 Grid.Row="7"
