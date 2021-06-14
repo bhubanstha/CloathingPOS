@@ -254,6 +254,7 @@
         <mah:FlyoutsControl x:Name="flyoutcontrol">
             <flyout:SettingFlyout x:Name="SettingsFlyout" />
             <flyout:AddCategoryFlyout x:Name="CategoryFlyout" />
+            <flyout:AddBrandFlyout x:Name="BrandFlyout" />
             <mah:Flyout
                 x:Name="NoSearchResultFlyout"
                 Height="50"
