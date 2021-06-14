@@ -522,6 +522,7 @@
     <Compile Include="ViewModel\InventoryViewModel.cs" />
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
+    <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ShopViewModel.cs" />
     <Compile Include="ViewModel\InventoryHistoryViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />

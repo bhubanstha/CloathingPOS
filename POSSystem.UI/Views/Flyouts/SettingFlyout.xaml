@@ -8,6 +8,7 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:vm="clr-namespace:POSSystem.UI.ViewModel"
     x:Name="ThisView"
     MinWidth="250"
@@ -534,8 +535,30 @@
                     Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}">
                     Application Setting
                 </TextBlock>
-                <CheckBox Style="{DynamicResource MahApps.Styles.CheckBox.Win10}">Enable VAT Calculation on sale</CheckBox>
-                <CheckBox Style="{DynamicResource MahApps.Styles.CheckBox.Win10}">Enable Bill printing on sale</CheckBox>
+                <CheckBox 
+                    IsChecked="{Binding CalculateVAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" 
+                    Content="Enable VAT Calculation on sale"/>
+
+                <CheckBox
+                    IsChecked="{Binding PrintInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" 
+                    Content="Enable Bill printing on sale"/>
+
+                <TextBox 
+                    Text="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{DynamicResource MahApps.Styles.TextBox}" 
+                    mah:TextBoxHelper.ClearTextButton="True" 
+                    mah:TextBoxHelper.SelectAllOnFocus="True"/>
+                <Button x:Name="btnSaveShopSettings" 
+                        Content="Save Setting" 
+                        HorizontalAlignment="Left"
+                        Command="{Binding SaveSettingCommand}"
+                        Width="100"
+                        Margin="{StaticResource ControlMargin}"
+                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}">
+                    
+                </Button>
             </StackPanel>
         </StackPanel>
 
