@@ -109,6 +109,10 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="0.5*"
+                        Binding="{Binding Inventory.Brand.Name}"
+                        Header="Brand" />
+                    <DataGridTextColumn
+                        Width="0.5*"
                         Binding="{Binding Inventory.Category.Name}"
                         Header="Category" />
                     <DataGridTextColumn
