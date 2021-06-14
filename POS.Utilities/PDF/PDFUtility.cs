@@ -30,9 +30,9 @@ namespace POS.Utilities.PDF
             c.SetWidth(width);
             Paragraph p = CreateParagraph(text, textAlignment);
             c.Add(p);
-            Border b = new SolidBorder(ColorConstants.LIGHT_GRAY, 1);
             c.SetTextAlignment(textAlignment);
-            c.SetBorderBottom(b);
+            //Border b = new SolidBorder(ColorConstants.LIGHT_GRAY, 1);
+            // c.SetBorderBottom(b);
             return c;
         }
         public static Image CreateLogoAtPoint(string logoName, Point point)
