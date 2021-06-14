@@ -127,6 +127,20 @@
                         Name = "Nike"
                     }
                  );
+
+            context.Shops.AddOrUpdate(
+                    s => s.Id,
+                    new Shop
+                    {
+                        Id = 1,
+                        Name = "Give Your Shop Name",
+                        Address = "Your Shop Address",
+                        LogoPath = "companyLogo1.png",
+                        PANNumber = "123456",
+                        CalculateVATOnSales = true,
+                        PrintInvoice = false
+                    }
+                );
         }
     }
 }
