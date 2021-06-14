@@ -45,6 +45,8 @@ namespace POSSystem.UI.Views
                 model.CurrentProduct.Size = pr.Size;
                 model.CurrentProduct.CategoryId = pr.Category.Id;
                 model.CurrentProduct.CategoryName = pr.Category.Name;
+                model.CurrentProduct.BrandId = pr.Brand.Id;
+                model.CurrentProduct.BrandName = pr.Brand.Name;
                 txtSalesQty.Maximum = (double)pr.Quantity;
             }
         }

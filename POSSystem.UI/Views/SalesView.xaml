@@ -75,6 +75,10 @@
                                     Visibility="Hidden" />
                                 <DataGridTextColumn
                                     Width="*"
+                                    Binding="{Binding Brand.Name}"
+                                    Header="Brand" />
+                                <DataGridTextColumn
+                                    Width="*"
                                     Binding="{Binding Category.Name}"
                                     Header="Category" />
                                 <DataGridTextColumn
@@ -225,6 +229,10 @@
                     Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
 
                     <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding BrandName}"
+                            Header="Brand" />
                         <DataGridTextColumn
                             Width="120"
                             Binding="{Binding CategoryName}"

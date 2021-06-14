@@ -11,6 +11,7 @@ namespace POS.Model.ViewModel
     {
         public Int64 ProductId { get; set; }
         public Int64 CategoryId { get; set; }
+        public Int64 BrandId { get; set; }
 
         public int SalesQuantity { get; set; }
         public decimal Discount { get; set; }
@@ -20,6 +21,7 @@ namespace POS.Model.ViewModel
         public string Size { get; set; }
         public string Color { get; set; }        
         public string CategoryName { get; set; }
+        public string BrandName { get; set; }
     }
 
     public class BillModel
