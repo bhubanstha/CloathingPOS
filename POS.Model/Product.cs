@@ -38,6 +38,15 @@ namespace POS.Model
         [Range(1, (double)Int64.MaxValue, ErrorMessage = "Category should be a valid value.")]
         public Int64 CategoryId { get; set; }
 
+
+        [ForeignKey("Brand")]
+        [Required(ErrorMessage = "Brand is required")]
+        [Range(1, (double)Int64.MaxValue, ErrorMessage = "Category should be a valid value.")]
+        public Int64 BrandId { get; set; }
+
+
+
         public virtual Category Category { get; set; }
+        public virtual Brand Brand{ get; set; }
     }
 }
