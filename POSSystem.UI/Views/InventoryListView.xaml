@@ -62,6 +62,10 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="0.5*"
+                        Binding="{Binding BrandName}"
+                        Header="Brand" />
+                    <DataGridTextColumn
+                        Width="0.5*"
                         Binding="{Binding CategoryName}"
                         Header="Category" />
                     <DataGridTextColumn

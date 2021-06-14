@@ -86,6 +86,7 @@ namespace POSSystem.UI.ViewModel
             {
                 InventoryWrapper wrapper = new InventoryWrapper(item);
                 wrapper.CategoryName = item.Category.Name;
+                wrapper.BrandName = item.Brand.Name;
                 Inventory.Add(wrapper);
             }
         }
@@ -98,8 +99,13 @@ namespace POSSystem.UI.ViewModel
                 Category c = categoryBO.GetCategory(args.Inventory.CategoryId);
                 args.Inventory.Category = c;
 
+                BrandBO brandBo = new BrandBO();
+                Brand b = brandBo.GetBrand(args.Inventory.BrandId);
+                args.Inventory.Brand = b;
+
                 InventoryWrapper wrapper = new InventoryWrapper(args.Inventory);
                 wrapper.CategoryName = c.Name;
+                wrapper.BrandName = b.Name;
                 Inventory.Add(wrapper);
             }
             else if(args.Action == EventAction.Update)
