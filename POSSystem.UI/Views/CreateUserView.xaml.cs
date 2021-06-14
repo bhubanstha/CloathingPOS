@@ -1,4 +1,6 @@
-﻿using POSSystem.UI.ViewModel;
+﻿using Autofac;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System.Windows.Controls;
 
 namespace POSSystem.UI.Views
@@ -12,7 +14,7 @@ namespace POSSystem.UI.Views
         {
             InitializeComponent();
 
-            UserViewModel viewModel = new UserViewModel();
+            UserViewModel viewModel = StaticContainer.Container.Resolve<UserViewModel>();
             viewModel.PasswordTextBox = txtPassword;
             this.DataContext = viewModel;
 

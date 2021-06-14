@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.Enum;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,20 +20,22 @@ namespace POSSystem.UI.ViewModel
 {
     public class UserViewModel : ViewModelBase
     {
-        private MetroWindow _window { get; set; }
         private bool _hasChanges;
         private string _buttonText = "Create Account";
-        private ObservableCollection<User> _userList;
-        private CreateUserWrapper _newUser;
+        private ObservableCollection<UserWrapper> _userList;
+        private UserWrapper _newUser;
         public PasswordBox PasswordTextBox { get; set; }
+
+        private ICacheService _cacheService;
         private UserBO _userBo;
 
         public ICommand CreateUserCommand { get; }
         public ICommand EditUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
         public ICommand ResetUserCommand { get; }
+        public ICommand RestoreUserCommand { get; }
 
-        public CreateUserWrapper NewUser
+        public UserWrapper NewUser
         {
             get { return _newUser; }
             set
@@ -41,7 +45,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public ObservableCollection<User> UsersList
+        public ObservableCollection<UserWrapper> UsersList
         {
             get { return _userList; }
             set
@@ -72,20 +76,38 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        public UserViewModel()
+        public UserViewModel(ICacheService cacheService)
         {
-            this._window = Application.Current.MainWindow as MetroWindow;
+            _cacheService = cacheService;
             _userBo = new UserBO();
-            NewUser = new CreateUserWrapper(new User());
+            NewUser = new UserWrapper(new User(), cacheService);
             NewUser.PromptForPasswordReset = true;
 
             NewUser.PropertyChanged += NewUser_PropertyChanged;
             CreateUserCommand = new DelegateCommand<PasswordBox>(OnCreateUserExecute).ObservesProperty(() => HasChanges);
-            EditUserCommand = new DelegateCommand<User>(EditUser);
-            DeleteUserCommand = new DelegateCommand<User>(DeleteUser);
+            EditUserCommand = new DelegateCommand<UserWrapper>(EditUser);
+            DeleteUserCommand = new DelegateCommand<UserWrapper>(DeleteUser);
             ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
-
+            RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
             LoadAllUsers();
+        }
+
+        private async void OnUserRestoreExecute(UserWrapper obj)
+        {
+            if (obj != null && obj.Id > 0)
+            {
+                obj.DeactivationDate = null;
+                obj.PromptForPasswordReset = true;
+                obj.IsActive = false;
+                UserBO userBO = new UserBO();
+                int i = await userBO.UpdateUser(obj.Model);
+                if (i > 0)
+                {
+                    ManageUserInCollection(obj.Model);
+                    //LoadAllUsers();
+                    StaticContainer.ShowNotification("User Activated", $"User {obj.DisplayName} is re activated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
+                }
+            }
         }
 
         private void NewUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -106,7 +128,7 @@ namespace POSSystem.UI.ViewModel
             ClearAll();
         }
 
-        private async void DeleteUser(User obj)
+        private async void DeleteUser(UserWrapper obj)
         {
             if (obj != null && obj.Id > 0)
             {
@@ -114,16 +136,17 @@ namespace POSSystem.UI.ViewModel
                 obj.PromptForPasswordReset = false;
                 obj.IsActive = false;
                 UserBO userBO = new UserBO();
-                int i = await userBO.UpdateUser(obj);
+                int i = await userBO.UpdateUser(obj.Model);
                 if (i > 0)
                 {
-                    LoadAllUsers();
-                    await _window.ShowMessageAsync("User Removed", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}");
+                    ManageUserInCollection(obj.Model);
+                    //LoadAllUsers();
+                    StaticContainer.ShowNotification("User Removed", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
                 }
             }
         }
 
-        private void EditUser(User obj)
+        private void EditUser(UserWrapper obj)
         {
             UserBO userBO = new UserBO();
             this.NewUser.Id = obj.Id;
@@ -205,12 +228,24 @@ namespace POSSystem.UI.ViewModel
         {
             UserBO userBO = new UserBO();
             List<User> _users = userBO.GetAllUser();
-            UsersList = new ObservableCollection<User>();
+            UsersList = new ObservableCollection<UserWrapper>();
             foreach (User u in _users)
             {
-                UsersList.Add(u);
+                UserWrapper userWrapper = new UserWrapper(u);
+                UsersList.Add(userWrapper);
             }
-            
+            _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
+        }
+
+        private void ManageUserInCollection(User obj)
+        {
+            UserWrapper u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
+            if(u != null)
+            {
+                u.IsActive = obj.IsActive;
+                u.DeactivationDate = obj.DeactivationDate;
+                u.PromptForPasswordReset = obj.PromptForPasswordReset;
+            }
         }
 
         private void ClearAll()

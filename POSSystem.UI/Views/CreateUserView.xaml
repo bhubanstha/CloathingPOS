@@ -58,7 +58,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                     SpellCheck.IsEnabled="True"
-                    Style="{DynamicResource App.TextBox.Validation}"
+                    Style="{DynamicResource MahApps.Styles.TextBox}"
                     Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
                 <TextBlock
@@ -273,10 +273,9 @@
                     <DataGridTemplateColumn Width="*" Header="Options">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid HorizontalAlignment="Center">
+                                <Grid HorizontalAlignment="Center" ShowGridLines="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
                                     <Button
@@ -284,6 +283,7 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
+                                        ToolTip="Edit User"
                                         Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}">
@@ -310,10 +310,11 @@
                                     </Button>
 
                                     <Button
-                                        Grid.Column="1"
+                                        Grid.Column="0"
                                         Width="25"
                                         Height="25"
-                                        Margin="2,0"
+                                        Margin="60,0 0 0"
+                                        ToolTip="Deactivate User"
                                         Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}">
@@ -332,6 +333,37 @@
                                             <Style BasedOn="{StaticResource Button.Circle.In.GridRow}" TargetType="Button">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding DeactivationDate, Converter={StaticResource UserDeactivation}}" Value="True">
+                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="0"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="30 0 0 0"
+                                        ToolTip="Reactivate User"
+                                        Command="{Binding Path=DataContext.RestoreUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}">
+
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="ArrowCounterclockwise"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource Button.Circle.In.GridRow}" TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DeactivationDate, Converter={StaticResource UserDeactivation}}" Value="False">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

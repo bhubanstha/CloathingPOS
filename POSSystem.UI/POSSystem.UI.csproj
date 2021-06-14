@@ -470,6 +470,7 @@
     <Compile Include="Converter\GridIndexConverter.cs" />
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
+    <Compile Include="Enum\CacheKey.cs" />
     <Compile Include="Event\CategoryChangedEvent.cs" />
     <Compile Include="Event\InventoryChangedEvent.cs" />
     <Compile Include="Event\InventoryUpdatePopupOpenEvent.cs" />
@@ -583,7 +584,7 @@
     <Compile Include="Wrapper\InventoryHistoryWrapper.cs" />
     <Compile Include="Wrapper\InventoryWrapper.cs" />
     <Compile Include="Wrapper\LoginWrapper.cs" />
-    <Compile Include="Wrapper\CreateUserWrapper.cs" />
+    <Compile Include="Wrapper\UserWrapper.cs" />
     <Compile Include="Wrapper\SalesWrapper.cs" />
     <Compile Include="Wrapper\ShopWrapper.cs" />
     <Compile Include="Wrapper\WrapperBase.cs" />
