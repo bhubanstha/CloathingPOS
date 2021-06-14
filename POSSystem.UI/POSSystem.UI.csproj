@@ -869,7 +869,7 @@ if $(ConfigurationName) == Release del $(TargetDir)*.xml
 if $(ConfigurationName) == Release del $(TargetDir)*.pdb</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if not exist DirToCreate mkdir $(TargetDir)Image
-copy $(ProjectDir)Image\* $(TargetDir)Image /Y</PreBuildEvent>
+    <PreBuildEvent>if not exist DirToCreate mkdir $(TargetDir)Image\CompanyLogo
+copy $(ProjectDir)Image\companyLogo1.png $(TargetDir)Image\CompanyLogo /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>
