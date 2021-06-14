@@ -2,7 +2,6 @@
 using MahApps.Metro.Controls.Dialogs;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
-using POSSystem.UI.Views;
 using System;
 using System.Drawing;
 using System.IO;
