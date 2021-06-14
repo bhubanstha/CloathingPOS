@@ -66,6 +66,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<SettingsViewModel>().AsSelf();
             builder.RegisterType<UserProfileViewModel>().AsSelf();
             builder.RegisterType<CategoryViewModel>().AsSelf();
+            builder.RegisterType<BrandViewModel>().AsSelf();
             builder.RegisterType<InventoryHistoryViewModel>().AsSelf();
 
 
