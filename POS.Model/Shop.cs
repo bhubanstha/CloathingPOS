@@ -27,5 +27,7 @@ namespace POS.Model
         public bool CalculateVATOnSales { get; set; }
         public bool PrintInvoice { get; set; }
 
+        [MaxLength(10)]
+        public string PdfPassword { get; set; }
     }
 }

@@ -138,7 +138,8 @@
                         LogoPath = "companyLogo1.png",
                         PANNumber = "123456",
                         CalculateVATOnSales = true,
-                        PrintInvoice = false
+                        PrintInvoice = false,
+                        PdfPassword = "123"
                     }
                 );
         }
