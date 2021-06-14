@@ -8,6 +8,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -15,7 +16,7 @@ namespace POSSystem.UI.ViewModel
     public class SalesReturnViewModel : NotifyPropertyChanged
     {
 
-        private Int64 _billNo;
+        private Int64 _billNo = 1;
         private ObservableCollection<Sales> _sales;
         private Bill _bill;
         private MetroWindow _window;
@@ -103,9 +104,9 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void OnSearchExecute()
+        private async void OnSearchExecute()
         {
-            LoadSales();
+            await LoadSales();
             if(Sales.Count==0)
             {
                 Flyout f = StaticContainer.NoSearchResultFlyout;
@@ -113,7 +114,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private async void LoadSales()
+        private async Task<int> LoadSales()
         {
             try
             {
@@ -135,6 +136,7 @@ namespace POSSystem.UI.ViewModel
                     Type = NotificationType.Error
                 });
             }
+            return 1;
         }
 
         private bool OnSearchCanExecute()
