@@ -21,6 +21,7 @@ namespace POSSystem.UI.ViewModel
     {
         private IEventAggregator _eventAggregator;
         private ObservableCollection<CategoryWrapper> _categories = null;
+        private ObservableCollection<BrandWrapper> _brands = null;
         public virtual ObservableCollection<CategoryWrapper> Categories 
         { 
             get { return _categories; }
@@ -30,6 +31,18 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public virtual ObservableCollection<BrandWrapper> Brands
+        {
+            get { return _brands; }
+            set
+            {
+                _brands = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public InventoryWrapper Inventory { get; set; }
 
         private InventoryBO InventoryBO;
@@ -50,10 +63,12 @@ namespace POSSystem.UI.ViewModel
                 FirstPurchaseDate = DateTime.Now
             };
             LoadCategories();
+            LoadBrands();
             SaveCommand = new DelegateCommand(OnSaveProduct);
             AddCategoryCommand = new DelegateCommand(OnOpenAddCategoryFlyout);
             AddBrandCommand = new DelegateCommand(OnOpenAddBrandFlyout);
             eventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(ReLoadCategories);
+            eventAggregator.GetEvent<BrandChangedEvent>().Subscribe(ReLoadBrands);
         }
 
         private void OnOpenAddCategoryFlyout()
@@ -76,6 +91,7 @@ namespace POSSystem.UI.ViewModel
                 {
                     Id = this.Inventory.Id,
                     CategoryId = this.Inventory.CategoryId,
+                    BrandId = this.Inventory.BrandId,
                     Color = this.Inventory.Color,
                     FirstPurchaseDate = this.Inventory.FirstPurchaseDate,
                     Name = this.Inventory.Name,
@@ -118,6 +134,18 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        private void LoadBrands()
+        {
+            BrandBO brandBo = new BrandBO();
+            List<Brand> brands = brandBo.GetBrands();
+            Brands = new ObservableCollection<BrandWrapper>();
+            foreach (Brand item in brands)
+            {
+                BrandWrapper wrapper = new BrandWrapper(item);
+                Brands.Add(wrapper);
+            }
+        }
+
         private void ReLoadCategories(CategoryChangedEventArgs args)
         {
             if(args.Action == EventAction.Add)
@@ -134,6 +162,27 @@ namespace POSSystem.UI.ViewModel
             {
                 var itm = Categories.Where(x => x.Id == args.Category.Id).FirstOrDefault();
                 itm.Name = args.Category.Name;
+                OnPropertyChanged("Categories");
+            }
+
+        }
+
+        private void ReLoadBrands(BrandChangedEventArgs args)
+        {
+            if (args.Action == EventAction.Add)
+            {
+                BrandWrapper wrapper = new BrandWrapper(args.Brand);
+                Brands.Add(wrapper);
+            }
+            else if (args.Action == EventAction.Remove)
+            {
+                var itemToRemove = Brands.Where(x => x.Id == args.Brand.Id).FirstOrDefault();
+                Brands.Remove(itemToRemove);
+            }
+            else if (args.Action == EventAction.Update)
+            {
+                var itm = Brands.Where(x => x.Id == args.Brand.Id).FirstOrDefault();
+                itm.Name = args.Brand.Name;
                 OnPropertyChanged("Categories");
             }
 

@@ -88,9 +88,9 @@
                 mah:TextBoxHelper.ClearTextButton="True"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 DisplayMemberPath="Name"
-                ItemsSource="{Binding Categories, Mode=TwoWay}"
+                ItemsSource="{Binding Brands, Mode=TwoWay}"
                 SelectedIndex="0"
-                SelectedValue="{Binding Inventory.CategoryId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                SelectedValue="{Binding Inventory.BrandId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                 SelectedValuePath="Id"
                 Style="{DynamicResource MahApps.Styles.ComboBox}" />
             <Button

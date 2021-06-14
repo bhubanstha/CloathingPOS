@@ -10,6 +10,7 @@ namespace POSSystem.UI.Wrapper
 
         private bool _colorNameEntryEnabled = false;
         private string _categoryName;
+        private string _brandName;
 
         public InventoryWrapper(Inventory obj) : base(obj)
         {
@@ -95,6 +96,7 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+
         public string CategoryName
         {
             get { return _categoryName; }
@@ -102,6 +104,22 @@ namespace POSSystem.UI.Wrapper
             {
                 _categoryName = value; 
                 OnPropertyChanged(); 
+            }
+        }
+
+        public Int64 BrandId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
+        public string BrandName
+        {
+            get { return _brandName; }
+            set
+            {
+                _brandName = value;
+                OnPropertyChanged();
             }
         }
 
