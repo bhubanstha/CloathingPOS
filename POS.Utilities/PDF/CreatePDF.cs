@@ -31,16 +31,18 @@ namespace POS.Utilities.PDF
             }
             using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+
+                //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
                 byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
                 WriterProperties props = new WriterProperties()
                     .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                             EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
-                //PdfWriter writer = new PdfWriter(stream, props);
-                PdfWriter writer = new PdfWriter(stream);
+                PdfWriter writer = new PdfWriter(stream, props);
+                //PdfWriter writer = new PdfWriter(stream);
                 PdfDocument pdf = new PdfDocument(writer);
-                document = new Document(pdf, new PageSize(rectangle));
+                //document = new Document(pdf, new PageSize(rectangle));
+                document = new Document(pdf, StandardPaperSize.C6);
                 document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);
 
                 //List<SalesModel> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
