@@ -10,11 +10,11 @@ namespace POSSystem.UI.Views.Flyouts
     /// </summary>
     public partial class AddBrandFlyout : Flyout
     {
-        private CategoryViewModel model;
+        private BrandViewModel model;
         public AddBrandFlyout()
         {
             InitializeComponent();
-            model = StaticContainer.Container.Resolve<CategoryViewModel>();// new CategoryViewModel();
+            model = StaticContainer.Container.Resolve<BrandViewModel>();// new CategoryViewModel();
             this.DataContext = model;
         }
     }

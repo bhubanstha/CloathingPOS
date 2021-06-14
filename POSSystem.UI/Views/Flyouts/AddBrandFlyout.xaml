@@ -123,9 +123,9 @@
                 Grid.Column="0"
                 Margin="10,5,0,5"
                 VerticalAlignment="Center"
-                Text="Category Name" />
+                Text="Brand Name" />
             <TextBox
-                x:Name="CategoryName"
+                x:Name="BrandName"
                 Grid.Row="0"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
@@ -136,7 +136,7 @@
                 mah:TextBoxHelper.Watermark="Enter Category Name"
                 SpellCheck.IsEnabled="True"
                 Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding NewCategory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding NewBrand.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
                 Grid.Row="6"
@@ -144,7 +144,7 @@
                 Width="120"
                 Margin="0,5,0,5"
                 HorizontalAlignment="Left"
-                Command="{Binding CreateCategoryCommand}"
+                Command="{Binding CreateBrandCommand}"
                 Content="Add Record"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
             <Button
@@ -170,7 +170,7 @@
                 CanUserAddRows="False"
                 CanUserReorderColumns="False"
                 CanUserSortColumns="False"
-                ItemsSource="{Binding Path=Categories, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding Brands, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
 
                 <!--<DataGrid.MaxHeight>
@@ -218,7 +218,7 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.EditCategoryCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Command="{Binding Path=DataContext.EditBrandCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource Button.Circle.In.GridRow}">
@@ -239,7 +239,7 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.DeleteCategoryCommand, 
+                                        Command="{Binding Path=DataContext.DeleteBrandCommand, 
                                         RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"

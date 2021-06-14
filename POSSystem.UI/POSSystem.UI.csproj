@@ -471,6 +471,7 @@
     <Compile Include="Converter\TotalPriceConverter.cs" />
     <Compile Include="Converter\WindowHeightConverter.cs" />
     <Compile Include="Enum\CacheKey.cs" />
+    <Compile Include="Event\BrandChangedEvent.cs" />
     <Compile Include="Event\CategoryChangedEvent.cs" />
     <Compile Include="Event\InventoryChangedEvent.cs" />
     <Compile Include="Event\InventoryUpdatePopupOpenEvent.cs" />
@@ -509,10 +510,12 @@
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="Startup\Startup.cs" />
     <Compile Include="UIHelpers\AlphabetsOnly.cs" />
+    <Compile Include="UIModel\BrandChangedEventArgs.cs" />
     <Compile Include="UIModel\CategoryChangedEventArgs.cs" />
     <Compile Include="UIModel\EventAction.cs" />
     <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="UIModel\InventoryChangedEventArgs.cs" />
+    <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
@@ -582,6 +585,7 @@
     <Compile Include="Views\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Wrapper\BrandWrapper.cs" />
     <Compile Include="Wrapper\CategoryWrapper.cs" />
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
     <Compile Include="Wrapper\InventoryHistoryWrapper.cs" />
