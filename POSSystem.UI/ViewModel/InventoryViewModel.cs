@@ -38,6 +38,7 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand SaveCommand { get; }
         public ICommand AddCategoryCommand { get; }
+        public ICommand AddBrandCommand { get; }
 
         public InventoryViewModel(IEventAggregator eventAggregator)
         {
@@ -49,19 +50,25 @@ namespace POSSystem.UI.ViewModel
                 FirstPurchaseDate = DateTime.Now
             };
             LoadCategories();
-            SaveCommand = new DelegateCommand(SaveProduct);
-            AddCategoryCommand = new DelegateCommand(OpenAddCategoryFlyout);
-
+            SaveCommand = new DelegateCommand(OnSaveProduct);
+            AddCategoryCommand = new DelegateCommand(OnOpenAddCategoryFlyout);
+            AddBrandCommand = new DelegateCommand(OnOpenAddBrandFlyout);
             eventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(ReLoadCategories);
         }
 
-        private void OpenAddCategoryFlyout()
+        private void OnOpenAddCategoryFlyout()
         {
             Flyout f = StaticContainer.AddCategoryFlyout;
             f.IsOpen = !f.IsOpen;
         }
 
-        private async void SaveProduct()
+        private void OnOpenAddBrandFlyout()
+        {
+            Flyout f = StaticContainer.AddBrandFlyout;
+            f.IsOpen = !f.IsOpen;
+        }
+
+        private async void OnSaveProduct()
         {
             try
             {

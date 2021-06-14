@@ -30,6 +30,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150" />
@@ -71,16 +72,49 @@
                 <iconPacks:BootstrapIcons Kind="Plus" />
             </Button>
 
-
             <TextBlock
                 Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,5,0,5"
+                VerticalAlignment="Center"
+                Text="Brand" />
+            <ComboBox
+                x:Name="cmbBrand"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding Categories, Mode=TwoWay}"
+                SelectedIndex="0"
+                SelectedValue="{Binding Inventory.CategoryId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                SelectedValuePath="Id"
+                Style="{DynamicResource MahApps.Styles.ComboBox}" />
+            <Button
+                Grid.Row="1"
+                Grid.Column="3"
+                Width="26"
+                Height="26"
+                Margin="0,0,0,10"
+                BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                Command="{Binding AddBrandCommand}"
+                Style="{StaticResource MahApps.Styles.Button.Circle}">
+                <iconPacks:BootstrapIcons Kind="Plus" />
+            </Button>
+
+
+            <TextBlock
+                Grid.Row="2"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Product Name" />
             <TextBox
                 x:Name="ProductName"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -94,14 +128,14 @@
                 Text="{Binding Inventory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Size" />
             <TextBox
                 x:Name="Size"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -116,13 +150,13 @@
                 Text="{Binding Inventory.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Colour" />
             <mah:ColorPicker
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
@@ -132,7 +166,7 @@
                 Style="{DynamicResource MahApps.Styles.ColorPicker}" />
             <TextBox
                 x:Name="txtColorName"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Margin="{StaticResource ControlMargin}"
@@ -148,14 +182,14 @@
 
 
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Quantity" />
             <mah:NumericUpDown
                 x:Name="Quantity"
-                Grid.Row="4"
+                Grid.Row="5"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -169,14 +203,14 @@
                 Value="{Binding Inventory.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Puchase Rate" />
             <mah:NumericUpDown
                 x:Name="Rate"
-                Grid.Row="5"
+                Grid.Row="6"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -194,14 +228,14 @@
                 Value="{Binding Inventory.PurchaseRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
-                Grid.Row="6"
+                Grid.Row="7"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Retail Rate" />
             <mah:NumericUpDown
                 x:Name="RetailRate"
-                Grid.Row="6"
+                Grid.Row="7"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -218,14 +252,14 @@
                 Value="{Binding Inventory.RetailRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
-                Grid.Row="7"
+                Grid.Row="8"
                 Grid.Column="0"
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Purchase Date" />
             <mah:DateTimePicker
                 x:Name="PurchaseDate"
-                Grid.Row="7"
+                Grid.Row="8"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Margin="{StaticResource ControlMargin}"
@@ -241,7 +275,7 @@
 
 
             <Button
-                Grid.Row="8"
+                Grid.Row="9"
                 Grid.Column="1"
                 Width="150"
                 Margin="0,5,0,5"

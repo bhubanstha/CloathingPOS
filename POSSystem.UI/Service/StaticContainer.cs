@@ -19,6 +19,7 @@ namespace POSSystem.UI.Service
 
         public static Flyout SettingFlyout { get; set; }
         public static Flyout AddCategoryFlyout { get; set; }
+        public static Flyout AddBrandFlyout { get; set; }
         public static Flyout NoSearchResultFlyout { get; set; }
 
         public static IDialogCoordinator DialogCoordinator { get; set; }

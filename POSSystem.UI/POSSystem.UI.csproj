@@ -537,6 +537,9 @@
     <Compile Include="Views\Dialog\UpdateInventoryDialog.xaml.cs">
       <DependentUpon>UpdateInventoryDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Flyouts\AddBrandFlyout.xaml.cs">
+      <DependentUpon>AddBrandFlyout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Flyouts\AddCategoryFlyout.xaml.cs">
       <DependentUpon>AddCategoryFlyout.xaml</DependentUpon>
     </Compile>
@@ -671,6 +674,10 @@
     <Page Include="Views\Dialog\UpdateInventoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Flyouts\AddBrandFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Flyouts\AddCategoryFlyout.xaml">
       <SubType>Designer</SubType>
