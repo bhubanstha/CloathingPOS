@@ -77,7 +77,56 @@
                         Name = "Children"
                     }
 
-                ); 
+                );
+
+            context.Brands.AddOrUpdate(
+                    b=>b.Id,
+                    new Brand
+                    {
+                        Id=1,
+                        Name="Adidas"
+                    },
+                    new Brand
+                    {
+                        Id = 2,
+                        Name = "Armani"
+                    },
+                    new Brand
+                    {
+                        Id = 3,
+                        Name = "Ralpha Lauren"
+                    },
+                    new Brand
+                    {
+                        Id = 4,
+                        Name = "Chanel"
+                    },
+                    new Brand
+                    {
+                        Id = 5,
+                        Name = "Prada"
+                    },
+                    new Brand
+                    {
+                        Id = 6,
+                        Name = "Hermes"
+                    },
+                    new Brand
+                    {
+                        Id = 7,
+                        Name = "Gucci"
+                    },
+                    new Brand
+                    {
+                        Id = 8,
+                        Name = "Louis Vuitton"
+                    },
+                    new Brand
+                    {
+                        Id = 9,
+                        Name = "Nike"
+                    }
+                 );
         }
     }
 }
