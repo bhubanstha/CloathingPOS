@@ -127,6 +127,7 @@
     <Compile Include="PDF\CreatePDF.cs" />
     <Compile Include="PDF\PDFUtility.cs" />
     <Compile Include="PDF\SalesMockData.cs" />
+    <Compile Include="PDF\StandardPaperSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
