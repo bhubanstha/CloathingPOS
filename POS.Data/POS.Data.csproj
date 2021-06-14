@@ -108,33 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
-    <Compile Include="Migrations\202106041042313_init.cs" />
-    <Compile Include="Migrations\202106041042313_init.designer.cs">
-      <DependentUpon>202106041042313_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106061134021_billinginfo_added.cs" />
-    <Compile Include="Migrations\202106061134021_billinginfo_added.designer.cs">
-      <DependentUpon>202106061134021_billinginfo_added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106080900138_addshop.cs" />
-    <Compile Include="Migrations\202106080900138_addshop.designer.cs">
-      <DependentUpon>202106080900138_addshop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106121306150_inventory_column_added.cs" />
-    <Compile Include="Migrations\202106121306150_inventory_column_added.designer.cs">
-      <DependentUpon>202106121306150_inventory_column_added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106121309595_test.cs" />
-    <Compile Include="Migrations\202106121309595_test.designer.cs">
-      <DependentUpon>202106121309595_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106130715373_inventory_model_changes.cs" />
-    <Compile Include="Migrations\202106130715373_inventory_model_changes.designer.cs">
-      <DependentUpon>202106130715373_inventory_model_changes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106131111330_inventory_history_changes.cs" />
-    <Compile Include="Migrations\202106131111330_inventory_history_changes.designer.cs">
-      <DependentUpon>202106131111330_inventory_history_changes.cs</DependentUpon>
+    <Compile Include="Migrations\202106141059358_init.cs" />
+    <Compile Include="Migrations\202106141059358_init.designer.cs">
+      <DependentUpon>202106141059358_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
@@ -157,26 +133,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106041042313_init.resx">
-      <DependentUpon>202106041042313_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106061134021_billinginfo_added.resx">
-      <DependentUpon>202106061134021_billinginfo_added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106080900138_addshop.resx">
-      <DependentUpon>202106080900138_addshop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106121306150_inventory_column_added.resx">
-      <DependentUpon>202106121306150_inventory_column_added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106121309595_test.resx">
-      <DependentUpon>202106121309595_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106130715373_inventory_model_changes.resx">
-      <DependentUpon>202106130715373_inventory_model_changes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106131111330_inventory_history_changes.resx">
-      <DependentUpon>202106131111330_inventory_history_changes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106141059358_init.resx">
+      <DependentUpon>202106141059358_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

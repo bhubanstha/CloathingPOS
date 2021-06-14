@@ -28,6 +28,7 @@ namespace POS.Data
 
         }
 
+        public DbSet<Brand> Brands{ get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<InventoryHistory> InventoryHistories { get; set; }
