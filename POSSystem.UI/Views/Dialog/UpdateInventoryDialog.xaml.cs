@@ -25,6 +25,12 @@ namespace POSSystem.UI.Views.Dialog
             {
                 MessageBox.Show(ex.Message);
             }
+            this.Loaded += UpdateInventoryDialog_Loaded;
+        }
+
+        private void UpdateInventoryDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            txtQuantity.SelectAll();
         }
     }
 }

@@ -14,8 +14,8 @@
     mc:Ignorable="d">
 
 
-    <StackPanel>
-        <Grid behaviors:KeyboardFocus.On="{Binding ElementName=txtPurchaseRate}">
+    <StackPanel behaviors:KeyboardFocus.On="{Binding ElementName=txtQuantity}">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -77,7 +77,7 @@
                 Padding="{StaticResource ControlPadding}"
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                mah:TextBoxHelper.Watermark="Enter Purchase Rate"
                 Culture="{Binding Source={x:Static sc:StaticContainer.CultureInfo}}"
                 Interval="100"
                 Minimum="100"
@@ -100,7 +100,7 @@
                 Padding="{StaticResource ControlPadding}"
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                mah:TextBoxHelper.Watermark="Enter Retail Rate"
                 Culture="{Binding Source={x:Static sc:StaticContainer.CultureInfo}}"
                 Interval="100"
                 Minimum="100"
@@ -126,6 +126,7 @@
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                ForceCursor="True"
                 Maximum="10000"
                 Minimum="1"
                 NumericInputMode="Decimal"
