@@ -348,7 +348,7 @@
                         Icon="{iconPacks:Material Kind=FileDocument}"
                         Label="Report">
                         <mah:HamburgerMenuIconItem.Tag>
-                            <views:SalesView />
+                            <views:ReportView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
