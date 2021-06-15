@@ -11,5 +11,11 @@ namespace POS.Utilities
             string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "CompanyLogo", logoName);
             return logoPath;
         }
+
+        public static string GetProfileImageFullPath(string profileImageName)
+        {
+            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "Profile", profileImageName);
+            return logoPath;
+        }
     }
 }

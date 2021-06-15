@@ -43,6 +43,11 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
+        public string ProfileImage
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
         public bool IsAdmin
         {

@@ -1,8 +1,10 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities;
 using POSSystem.UI.Enum;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
@@ -11,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,6 +27,11 @@ namespace POSSystem.UI.ViewModel
         private string _buttonText = "Create Account";
         private ObservableCollection<UserWrapper> _userList;
         private UserWrapper _newUser;
+        private string _logoFullPathName;
+        private string _logoName;
+        private bool _isLogoChanged = false;
+
+
         public PasswordBox PasswordTextBox { get; set; }
 
         private ICacheService _cacheService;
@@ -34,6 +42,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteUserCommand { get; }
         public ICommand ResetUserCommand { get; }
         public ICommand RestoreUserCommand { get; }
+        public ICommand FilePickCommand { get; }
 
         public UserWrapper NewUser
         {
@@ -53,6 +62,23 @@ namespace POSSystem.UI.ViewModel
                 _userList = value;
                 OnPropertyChanged();
             }
+        }
+        public string LogoFullPathName
+        {
+            get { return _logoFullPathName; }
+            set
+            {
+                _logoFullPathName = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        public string LogoName
+        {
+            get { return _logoName; }
+            set { _logoName = value; OnPropertyChanged(); }
         }
 
         public string ButtonText
@@ -89,7 +115,23 @@ namespace POSSystem.UI.ViewModel
             DeleteUserCommand = new DelegateCommand<UserWrapper>(DeleteUser);
             ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
             RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
+            FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             LoadAllUsers();
+        }
+        private void OnFilePickCommandExecute()
+        {
+            OpenFileDialog opfd = new OpenFileDialog();
+            opfd.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
+            opfd.FilterIndex = 1;
+            opfd.RestoreDirectory = true;
+            if (opfd.ShowDialog() == true)
+            {
+                string fileName = opfd.FileName;
+                NewUser.ProfileImage = Path.GetFileName(fileName);
+                LogoName = $".....\\{NewUser.ProfileImage}";
+                LogoFullPathName = fileName;
+                _isLogoChanged = true;
+            }
         }
 
         private async void OnUserRestoreExecute(UserWrapper obj)
@@ -169,6 +211,11 @@ namespace POSSystem.UI.ViewModel
             try
             {
                 PasswordTextBox = obj;
+                if (_isLogoChanged)
+                {
+                    SaveProfileFile();
+                }
+
                 User u = new User
                 {
                     Id = this.NewUser.Id,
@@ -178,7 +225,8 @@ namespace POSSystem.UI.ViewModel
                     IsAdmin = this.NewUser.IsAdmin,
                     PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
                     IsActive = true,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    ProfileImage = this.NewUser.ProfileImage
                 };
 
                 string title = "";
@@ -258,6 +306,24 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.IsAdmin = false;
             this.NewUser.PromptForPasswordReset = true;
             this.PasswordTextBox.Password = "";
+        }
+
+        void SaveProfileFile()
+        {
+            try
+            {
+                string logoPath = FilePath.GetProfileImageFullPath("");
+                if (!Directory.Exists(logoPath))
+                {
+                    Directory.CreateDirectory(logoPath);
+                }
+                File.Copy(LogoFullPathName, Path.Combine(logoPath, NewUser.ProfileImage));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
     }

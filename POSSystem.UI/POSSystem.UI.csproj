@@ -465,6 +465,8 @@
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\ControlHeightCalculator.cs" />
     <Compile Include="Converter\FileToImageSourceConverter.cs" />
+    <Compile Include="Converter\IconVisibilityConverter.cs" />
+    <Compile Include="Converter\ImageVisibilityConverter.cs" />
     <Compile Include="Converter\QuantityLowStock.cs" />
     <Compile Include="Converter\UserDeactivationConverter.cs" />
     <Compile Include="Converter\DateConverter.cs" />
