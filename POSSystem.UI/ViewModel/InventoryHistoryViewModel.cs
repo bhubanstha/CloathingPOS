@@ -84,8 +84,8 @@ namespace POSSystem.UI.ViewModel
         {
             Inventory.PurchaseDate = DateTime.Now;
             Inventory.Quantity = 1;
-            Inventory.PurchaseRate = 1;
-            Inventory.RetailRate = 1;
+            Inventory.PurchaseRate = obj.PurchaseRate;
+            Inventory.RetailRate = obj.RetailRate;
             Inventory.InventoryId = obj.Id;
             Inventory.Model.Inventory = obj;
             Inventory.Heading = $"{obj.Category.Name}-{obj.Name}";
