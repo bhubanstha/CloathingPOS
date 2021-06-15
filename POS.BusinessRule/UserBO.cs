@@ -27,9 +27,12 @@ namespace POS.BusinessRule
             //return genericDataRepository.HasChanges();
         }
 
-        public List<User> GetAllUser()
+        public List<User> GetAllUser(string myUserName)
         {
-            List<User> users =  genericDataRepository.GetAll().Where(x => x.UserName != "sysadmin").ToList();
+            List<User> users =  genericDataRepository
+                .GetAll()
+                .Where(x => x.UserName != "sysadmin" && x.UserName != myUserName)
+                .ToList();
             return users;
         }
 
