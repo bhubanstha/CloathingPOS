@@ -50,12 +50,23 @@ namespace POSSystem.UI.ViewModel
         }
 
         private bool _isAdminMenuVisible = false;
+        private bool _isSysAdminMenuVisible = false;
 
         public bool IsAdminMenuVisible
         {
             get { return _isAdminMenuVisible; }
             set { _isAdminMenuVisible = value; 
                 OnPropertyChanged(); }
+        }
+
+        public bool IsSysAdminMenuVisible
+        {
+            get { return _isSysAdminMenuVisible; }
+            set
+            {
+                _isSysAdminMenuVisible = value;
+                OnPropertyChanged();
+            }
         }
 
 
@@ -133,7 +144,17 @@ namespace POSSystem.UI.ViewModel
             if(user != null)
             {
                 IsAdminMenuVisible = user.IsAdmin;
+
+                if(string.Equals(user.UserName, "SysAdmin", StringComparison.OrdinalIgnoreCase))
+                {
+                    IsSysAdminMenuVisible = true;
+                }
+                else
+                {
+                    IsSysAdminMenuVisible = false;
+                }
             }
+
         }
     }
 }

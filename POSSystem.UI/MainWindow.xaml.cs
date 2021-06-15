@@ -58,10 +58,12 @@ namespace POSSystem.UI
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
-            //menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
-            //menuGraphs.IsVisible = _model.IsAdminMenuVisible;
-            //menuReport.IsVisible = _model.IsAdminMenuVisible;
-            if(!_model.IsAdminMenuVisible)
+            menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            menuGraphs.IsVisible = _model.IsAdminMenuVisible;
+            menuReport.IsVisible = _model.IsAdminMenuVisible;
+            ShopView.IsVisible = _model.IsSysAdminMenuVisible;
+
+            if (!_model.IsAdminMenuVisible)
             {
                 HamburgerMenuControl.SelectedIndex = 1;
             }
