@@ -74,7 +74,7 @@ namespace POSSystem.UI.ViewModel
                 ShopBO bo = new ShopBO();
                 if(_isLogoChanged)
                 {
-                    SaveLogoFile();
+                    FileUtility.SaveLogoFile(LogoFullPathName, ShopWrapper.LogoPath);
                 }
                 if (ShopWrapper.Id > 0)
                 {
@@ -98,13 +98,9 @@ namespace POSSystem.UI.ViewModel
 
         private void OnFilePickCommandExecute()
         {
-            OpenFileDialog opfd = new OpenFileDialog();
-            opfd.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
-            opfd.FilterIndex = 1;
-            opfd.RestoreDirectory = true;
-            if (opfd.ShowDialog() == true)
+            string fileName = FileUtility.OpenImageFilePicker();
+            if(!string.IsNullOrEmpty(fileName))
             {
-                string fileName = opfd.FileName;
                 ShopWrapper.LogoPath = Path.GetFileName(fileName);
                 LogoName = $".....\\{ShopWrapper.LogoPath}";
                 LogoFullPathName = fileName;
@@ -138,43 +134,8 @@ namespace POSSystem.UI.ViewModel
 
         }
 
-        void SaveLogoFile()
-        {
-            try
-            {
-                string logoPath = FilePath.GetLogoFullPath("");// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "CompanyLogo");
-                CleanupDirectory(logoPath);
-                if (!Directory.Exists(logoPath))
-                {
-                    Directory.CreateDirectory(logoPath);
-                }
-                File.Copy(LogoFullPathName, Path.Combine(logoPath, ShopWrapper.LogoPath));
-            }
-            catch (Exception ex)
-            {
+        
 
-                throw;
-            }
-        }
-
-        void CleanupDirectory(string directoryPath)
-        {
-            try
-            {
-                if (Directory.Exists(directoryPath))
-                {
-                    string[] files = Directory.GetFiles(directoryPath);
-                    foreach (string file in files)
-                    {
-                        File.Delete(file);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
+        
     }
 }

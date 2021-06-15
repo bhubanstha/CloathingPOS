@@ -120,13 +120,9 @@ namespace POSSystem.UI.ViewModel
         }
         private void OnFilePickCommandExecute()
         {
-            OpenFileDialog opfd = new OpenFileDialog();
-            opfd.Filter = "Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG";
-            opfd.FilterIndex = 1;
-            opfd.RestoreDirectory = true;
-            if (opfd.ShowDialog() == true)
+            string fileName = FileUtility.OpenImageFilePicker();
+            if(!string.IsNullOrEmpty(fileName))
             {
-                string fileName = opfd.FileName;
                 NewUser.ProfileImage = Path.GetFileName(fileName);
                 LogoName = $".....\\{NewUser.ProfileImage}";
                 LogoFullPathName = fileName;
@@ -213,7 +209,7 @@ namespace POSSystem.UI.ViewModel
                 PasswordTextBox = obj;
                 if (_isLogoChanged)
                 {
-                    SaveProfileFile();
+                    FileUtility.SaveProfileFile(LogoFullPathName, NewUser.ProfileImage);
                 }
 
                 User u = new User
@@ -274,8 +270,9 @@ namespace POSSystem.UI.ViewModel
 
         private void LoadAllUsers()
         {
+            User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             UserBO userBO = new UserBO();
-            List<User> _users = userBO.GetAllUser();
+            List<User> _users = userBO.GetAllUser(me.UserName);
             UsersList = new ObservableCollection<UserWrapper>();
             foreach (User u in _users)
             {
@@ -308,23 +305,7 @@ namespace POSSystem.UI.ViewModel
             this.PasswordTextBox.Password = "";
         }
 
-        void SaveProfileFile()
-        {
-            try
-            {
-                string logoPath = FilePath.GetProfileImageFullPath("");
-                if (!Directory.Exists(logoPath))
-                {
-                    Directory.CreateDirectory(logoPath);
-                }
-                File.Copy(LogoFullPathName, Path.Combine(logoPath, NewUser.ProfileImage));
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
+        
 
     }
 }
