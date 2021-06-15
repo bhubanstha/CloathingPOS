@@ -116,6 +116,14 @@
     <Compile Include="Migrations\202106141438359_pdfPassword_in_shop.designer.cs">
       <DependentUpon>202106141438359_pdfPassword_in_shop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106151129262_userimage.cs" />
+    <Compile Include="Migrations\202106151129262_userimage.designer.cs">
+      <DependentUpon>202106151129262_userimage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106151133006_userPassword.cs" />
+    <Compile Include="Migrations\202106151133006_userPassword.designer.cs">
+      <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +150,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106141438359_pdfPassword_in_shop.resx">
       <DependentUpon>202106141438359_pdfPassword_in_shop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106151129262_userimage.resx">
+      <DependentUpon>202106151129262_userimage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106151133006_userPassword.resx">
+      <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
