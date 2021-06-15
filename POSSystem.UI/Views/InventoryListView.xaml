@@ -42,9 +42,11 @@
                 CanUserReorderColumns="False"
                 CanUserResizeColumns="False"
                 CanUserSortColumns="False"
+                CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
                 IsReadOnly="True"
                 ItemsSource="{Binding Inventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Style="{StaticResource MahApps.Styles.DataGrid.Azure}">
+                RowStyle="{StaticResource DataGrid.Inventory.List.Row}"
+                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
 
                 <DataGrid.MaxHeight>
                     <MultiBinding
