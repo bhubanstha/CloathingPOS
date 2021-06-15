@@ -108,6 +108,7 @@
       <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.svg.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="FilePath.cs" />
+    <Compile Include="FileUtility.cs" />
     <Compile Include="ImageUtility.cs" />
     <Compile Include="NumToWord\NumberToWord.cs" />
     <Compile Include="ObjectFinder.cs" />
