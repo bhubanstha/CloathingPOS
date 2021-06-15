@@ -1,5 +1,9 @@
-﻿using ControlzEx.Theming;
+﻿using Autofac;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
+using POS.Model;
+using POSSystem.UI.Enum;
+using POSSystem.UI.Service;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -13,10 +17,13 @@ namespace POSSystem.UI.Views.Flyouts
     {
         private string _currentBaseColor = "";
         private string _currentColorScheme = "";
-        
+        private ICacheService _cacheService;
+
         public SettingFlyout()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            _cacheService = StaticContainer.Container.Resolve<ICacheService>();
+            ManageShopSetting();
             this.Loaded += SettingFlyout_Loaded;
         }
 
@@ -54,6 +61,15 @@ namespace POSSystem.UI.Views.Flyouts
                 ThemeManager.Current.ChangeThemeColorScheme(Application.Current, colorScheme);
                 _currentColorScheme = colorScheme;
                 Application.Current.Properties["ColorScheme"] = _currentColorScheme;
+            }
+        }
+
+        void ManageShopSetting()
+        {
+            User u = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
+            if(u!= null)
+            {
+                shopSetting.Visibility = u.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }
