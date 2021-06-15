@@ -230,11 +230,11 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Width="120"
+                            Width="100"
                             Binding="{Binding BrandName}"
                             Header="Brand" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="100"
                             Binding="{Binding CategoryName}"
                             Header="Category" />
                         <DataGridTextColumn
@@ -242,7 +242,7 @@
                             Binding="{Binding ProductName}"
                             Header="Name" />
                         <DataGridTextColumn
-                            Width="50"
+                            Width="40"
                             Binding="{Binding Size}"
                             Header="Size" />
                         <DataGridTemplateColumn Header="Colour">
@@ -264,7 +264,7 @@
                             ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Rate" />
                         <DataGridTextColumn
-                            Width="54"
+                            Width="40"
                             Binding="{Binding SalesQuantity}"
                             ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Qty" />
