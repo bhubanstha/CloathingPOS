@@ -26,6 +26,9 @@
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
+            <conv:FileToImageSourceConverter x:Key="ImageConverter"/>
+            <conv:ImageVisibilityConverter x:Key="ImageVisibility"/>
+            <conv:IconVisibilityConverter x:Key="IconVisibility"/>
             <conv:WindowHeightConverter x:Key="HeightConverter" />
             <!--  This is the template for the menu items.  -->
             <DataTemplate x:Key="MenuItemTemplate" DataType="{x:Type mah:HamburgerMenuIconItem}">
@@ -229,11 +232,18 @@
                 x:Name="btnCmdUserName"
                 Command="{Binding UserMenuCommand}"
                 CommandParameter="{Binding ElementName=UMenuPopup}"
-                Content="{Binding User.DisplayName}">
+                Content="{Binding User}">
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="25" Height="25" Visibility="{Binding ProfileImage, Converter={StaticResource ImageVisibility}}">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding ProfileImage, Converter={StaticResource ImageConverter}}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
                             <iconPacks:PackIconFontAwesome
+                                x:Name="icnUserImage"
+                                Visibility="{Binding ProfileImage, Converter={StaticResource IconVisibility}}"
                                 Width="22"
                                 Height="22"
                                 VerticalAlignment="Center"
@@ -241,7 +251,7 @@
                             <TextBlock
                                 Margin="4,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{Binding}" />
+                                Text="{Binding DisplayName}" />
                         </StackPanel>
 
                     </DataTemplate>

@@ -1,5 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.IconPacks;
+using POS.Utilities;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
@@ -63,8 +65,7 @@ namespace POSSystem.UI
             {
                 HamburgerMenuControl.SelectedIndex = 1;
             }
-
-
+            //App.Current.Resources["UserImage"] = ImageUtility.GetImageSource(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "InvoiceSample.png"));
         }
 
         private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
@@ -122,6 +123,5 @@ namespace POSSystem.UI
             });
             
         }
-
     }
 }
