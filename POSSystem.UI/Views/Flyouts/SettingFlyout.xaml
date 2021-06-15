@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:POSSystem.UI.ViewModel"
     x:Name="ThisView"
     MinWidth="250"
@@ -156,7 +156,7 @@
                     <Label MouseLeftButtonUp="DarkTheme">Black</Label>
                 </StackPanel>
             </Grid>
-            <Separator/>
+            <Separator />
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -523,42 +523,10 @@
 
             </Grid>
 
-            <Separator/>
+            <Separator />
 
-            <StackPanel Margin="0 5 0 0">
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Center"
-                    FontSize="20"
-                    Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}">
-                    Application Setting
-                </TextBlock>
-                <CheckBox 
-                    IsChecked="{Binding CalculateVAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" 
-                    Content="Enable VAT Calculation on sale"/>
-
-                <CheckBox
-                    IsChecked="{Binding PrintInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" 
-                    Content="Enable Bill printing on sale"/>
-
-                <TextBox 
-                    Text="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{DynamicResource MahApps.Styles.TextBox}" 
-                    mah:TextBoxHelper.ClearTextButton="True" 
-                    mah:TextBoxHelper.SelectAllOnFocus="True"/>
-                <Button x:Name="btnSaveShopSettings" 
-                        Content="Save Setting" 
-                        HorizontalAlignment="Left"
-                        Command="{Binding SaveSettingCommand}"
-                        Width="100"
-                        Margin="{StaticResource ControlMargin}"
-                        Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}">
-                    
-                </Button>
+            <StackPanel Margin="0,5,0,0">
+                <local:PartialShopView />
             </StackPanel>
         </StackPanel>
 

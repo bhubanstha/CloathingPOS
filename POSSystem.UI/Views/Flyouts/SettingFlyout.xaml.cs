@@ -1,6 +1,5 @@
 ﻿using ControlzEx.Theming;
 using MahApps.Metro.Controls;
-using POSSystem.UI.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -14,12 +13,10 @@ namespace POSSystem.UI.Views.Flyouts
     {
         private string _currentBaseColor = "";
         private string _currentColorScheme = "";
-        private SettingViewModel model;
+        
         public SettingFlyout()
         {
-            InitializeComponent();
-            model = new SettingViewModel();
-            this.DataContext = model;
+            InitializeComponent();            
             this.Loaded += SettingFlyout_Loaded;
         }
 
