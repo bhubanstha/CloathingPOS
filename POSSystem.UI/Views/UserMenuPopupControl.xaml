@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="210"
-    Height="400"
+    Width="230"
+    MinHeight="200"
     d:DesignHeight="550"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -34,8 +34,6 @@
             <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="1" />
             <!--<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -88,11 +86,117 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Width="205" Margin="2">
-        <StackPanel x:Name="UserMenuPopup">
+    <Grid Margin="0 3 0 0" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Grid.Row="0" Height="20" >-->
+            <Polyline Points="0,20 0,10 100,10 115,0 130,10 229,10 229,20" Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}" StrokeThickness="1" Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Grid.Row="0" />
+        <!--</StackPanel>-->
+        
+            <Border BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"  Grid.Row="1" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
+                <StackPanel >
+                <ListView Style="{StaticResource MenuCotainer}">
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="AddressCardRegular" />
+                            <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Manage Account" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="CogsSolid" />
+                            <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Settings" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>
+
+                </ListView>
+                <Separator Margin="0 5" />
+                <ListView Style="{StaticResource MenuCotainer}">
+
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="SignOutAltSolid" />
+                            <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Logout" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>
+
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBoxIcons
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="RegularExit" />
+                            <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Exit" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding ApplicationExitCommand}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>                    
+                </ListView>
+            </StackPanel>
+            </Border>
+            
+
+        
+  
+       
+       
+        <!--<StackPanel x:Name="UserMenuPopup">
             <Polygon
                 Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
-                Points="105,0 90,10 0,10 0,265 200,265 200,10 120,10"
+                Points="105,0 90,10 0,10 0,200 200,200 200,10 120,10"
                 Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}">
 
                 <Polygon.Effect>
@@ -104,8 +208,8 @@
                         Color="{DynamicResource MahApps.Colors.Accent}" />
                 </Polygon.Effect>
             </Polygon>
-        </StackPanel>
-        <StackPanel Margin="-2,20,3,5">
+        </StackPanel>-->
+        <!--<StackPanel Margin="-2,20,3,5">
 
             <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
@@ -195,7 +299,7 @@
                     </ListViewItem.InputBindings>
                 </ListViewItem>
             </ListView>
-            <Separator Margin="10" />
+            --><!--<Separator Margin="10" />
             <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
@@ -219,8 +323,8 @@
                 </ListViewItem>
 
 
-            </ListView>
-        </StackPanel>
+            </ListView>--><!--
+        </StackPanel>-->
     </Grid>
 
 
