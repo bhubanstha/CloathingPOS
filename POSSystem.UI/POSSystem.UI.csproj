@@ -464,6 +464,7 @@
     </Compile>
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\ControlHeightCalculator.cs" />
+    <Compile Include="Converter\QuantityLowStock.cs" />
     <Compile Include="Converter\UserDeactivationConverter.cs" />
     <Compile Include="Converter\DateConverter.cs" />
     <Compile Include="Converter\FlyoutGridHightCalculator.cs" />
