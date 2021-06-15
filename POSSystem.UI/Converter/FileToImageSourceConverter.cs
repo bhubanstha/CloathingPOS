@@ -14,7 +14,7 @@ namespace POSSystem.UI.Converter
             if (value != null)
             {
                 string imageName = value.ToString();
-                string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "Profile", imageName);
+                string imagePath = FilePath.GetProfileImageFullPath(imageName);
                 ImageSource image = ImageUtility.GetImageSource(imagePath);
                 return image;
             }
