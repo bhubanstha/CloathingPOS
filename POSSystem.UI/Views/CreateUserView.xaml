@@ -281,6 +281,7 @@
                                     <Ellipse
                                         Width="40"
                                         Height="40"
+                                        Stroke="{DynamicResource MahApps.Brushes.Accent}"
                                         Visibility="{Binding ProfileImage, Converter={StaticResource ImageVisibility}}">
                                         <Ellipse.Fill>
                                             <ImageBrush ImageSource="{Binding ProfileImage, Converter={StaticResource ImageConverter}}" />
