@@ -19,6 +19,7 @@ namespace POSSystem.UI.Startup
             var builder = new ContainerBuilder();
             //Dialog Registration
             builder.RegisterType<UpdateInventoryDialog>().AsSelf();
+            builder.RegisterType<AdminChangePassword>().AsSelf();
 
 
             //Flyout Registration
@@ -68,6 +69,7 @@ namespace POSSystem.UI.Startup
             builder.RegisterType<CategoryViewModel>().AsSelf();
             builder.RegisterType<BrandViewModel>().AsSelf();
             builder.RegisterType<InventoryHistoryViewModel>().AsSelf();
+            builder.RegisterType<AdminChangeUserPasswordViewModel>().AsSelf();
 
 
 

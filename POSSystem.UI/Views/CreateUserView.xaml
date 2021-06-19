@@ -143,34 +143,34 @@
                 </mah:ToggleSwitch>
 
                 <TextBlock
-                Grid.Row="6"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Profile Image" />
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="Profile Image" />
 
                 <TextBox
-                x:Name="txtFileName"
-                Grid.Row="6"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                IsEnabled="False"
-                Style="{DynamicResource MahApps.Styles.TextBox}"
-                Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    x:Name="txtFileName"
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    IsEnabled="False"
+                    Style="{DynamicResource MahApps.Styles.TextBox}"
+                    Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Button
-                x:Name="filePicker"
-                Grid.Row="6"
-                Grid.Column="2"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter simple password"
-                Command="{Binding FilePickCommand}"
-                Content="Browse..."
-                Style="{DynamicResource Button.FilePicker}" />
-                
-                
+                    x:Name="filePicker"
+                    Grid.Row="6"
+                    Grid.Column="2"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter simple password"
+                    Command="{Binding FilePickCommand}"
+                    Content="Browse..."
+                    Style="{DynamicResource Button.FilePicker}" />
+
+
 
                 <Button
                     Grid.Row="7"
@@ -183,7 +183,7 @@
                     Content="{Binding ButtonText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
-                
+
                 <Button
                     Grid.Row="7"
                     Grid.Column="1"
@@ -307,20 +307,51 @@
                     <DataGridTemplateColumn Width="*" Header="Options">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid HorizontalAlignment="Center" ShowGridLines="True">
+                                <Grid HorizontalAlignment="Center">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
 
                                     <Button
                                         Grid.Column="0"
                                         Width="25"
                                         Height="25"
-                                        Margin="2,0"
-                                        ToolTip="Edit User"
+                                        Command="{Binding Path=DataContext.ChangeUserPasswordCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        ToolTip="Change User Password">
+
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="KeyFill"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource Button.Circle.In.GridRow}" TargetType="Button">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DeactivationDate, Converter={StaticResource UserDeactivation}}" Value="True">
+                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="25"
+                                        Height="25"
                                         Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                        Foreground="{DynamicResource MahApps.Brushes.Accent}">
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        ToolTip="Edit User">
 
                                         <Button.ContentTemplate>
                                             <DataTemplate>
@@ -344,14 +375,13 @@
                                     </Button>
 
                                     <Button
-                                        Grid.Column="0"
+                                        Grid.Column="2"
                                         Width="25"
                                         Height="25"
-                                        Margin="60,0 0 0"
-                                        ToolTip="Deactivate User"
                                         Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                        Foreground="{DynamicResource MahApps.Brushes.Accent}">
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        ToolTip="Deactivate User">
 
                                         <Button.ContentTemplate>
                                             <DataTemplate>
@@ -375,14 +405,13 @@
                                     </Button>
 
                                     <Button
-                                        Grid.Column="0"
+                                        Grid.Column="1"
                                         Width="25"
                                         Height="25"
-                                        Margin="30 0 0 0"
-                                        ToolTip="Reactivate User"
                                         Command="{Binding Path=DataContext.RestoreUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
-                                        Foreground="{DynamicResource MahApps.Brushes.Accent}">
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        ToolTip="Reactivate User">
 
                                         <Button.ContentTemplate>
                                             <DataTemplate>

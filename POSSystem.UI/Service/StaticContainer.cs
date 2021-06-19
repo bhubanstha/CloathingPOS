@@ -34,6 +34,7 @@ namespace POSSystem.UI.Service
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         public static CustomDialog InventoryUpdateDialog { get; set; }
+        public static CustomDialog ChangeUserPasswordDialog { get; set; }
         static StaticContainer()
         {
             DialogSettings = new MetroDialogSettings

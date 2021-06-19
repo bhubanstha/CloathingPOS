@@ -477,6 +477,7 @@
     <Compile Include="Enum\CacheKey.cs" />
     <Compile Include="Event\BrandChangedEvent.cs" />
     <Compile Include="Event\CategoryChangedEvent.cs" />
+    <Compile Include="Event\ChangeUserPasswordEvent.cs" />
     <Compile Include="Event\InventoryChangedEvent.cs" />
     <Compile Include="Event\InventoryUpdatePopupOpenEvent.cs" />
     <Compile Include="ForgotPasswordWindow.xaml.cs">
@@ -519,6 +520,7 @@
     <Compile Include="UIModel\EventAction.cs" />
     <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="UIModel\InventoryChangedEventArgs.cs" />
+    <Compile Include="ViewModel\AdminChangeUserPassword.cs" />
     <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
@@ -541,6 +543,9 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\AdminChangePassword.xaml.cs">
+      <DependentUpon>AdminChangePassword.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialog\UpdateInventoryDialog.xaml.cs">
       <DependentUpon>UpdateInventoryDialog.xaml</DependentUpon>
@@ -683,6 +688,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\AdminChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

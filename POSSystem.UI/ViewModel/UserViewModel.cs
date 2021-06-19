@@ -6,9 +6,12 @@ using POS.BusinessRule;
 using POS.Model;
 using POS.Utilities;
 using POSSystem.UI.Enum;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +38,8 @@ namespace POSSystem.UI.ViewModel
         public PasswordBox PasswordTextBox { get; set; }
 
         private ICacheService _cacheService;
+        private AdminChangePassword _adminChangePasswordUI;
+        private IEventAggregator _eventAggregator;
         private UserBO _userBo;
 
         public ICommand CreateUserCommand { get; }
@@ -43,7 +48,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand ResetUserCommand { get; }
         public ICommand RestoreUserCommand { get; }
         public ICommand FilePickCommand { get; }
-
+        public ICommand ChangeUserPasswordCommand { get; }
         public UserWrapper NewUser
         {
             get { return _newUser; }
@@ -102,9 +107,11 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        public UserViewModel(ICacheService cacheService)
+        public UserViewModel(ICacheService cacheService, IEventAggregator eventAggregator, AdminChangePassword adminChangePasswordUI)
         {
             _cacheService = cacheService;
+            this._adminChangePasswordUI = adminChangePasswordUI;
+            this._eventAggregator = eventAggregator;
             _userBo = new UserBO();
             NewUser = new UserWrapper(new User(), cacheService);
             NewUser.PromptForPasswordReset = true;
@@ -116,8 +123,29 @@ namespace POSSystem.UI.ViewModel
             ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
             RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
             FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
+            ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
+            eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
             LoadAllUsers();
         }
+
+        private void OnUserPasswordChanged(User obj)
+        {
+            var u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
+            u.PromptForPasswordReset = obj.PromptForPasswordReset;
+            if(NewUser.Id == obj.Id)
+            {
+                NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
+            }
+        }
+
+        private void OnUserChangePasswordExecute(UserWrapper obj)
+        {
+            MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            StaticContainer.ChangeUserPasswordDialog = _adminChangePasswordUI;
+            _eventAggregator.GetEvent<ChangeUserPasswordEvent>().Publish(obj.Model);
+            _window.ShowMetroDialogAsync(_adminChangePasswordUI);
+        }
+
         private void OnFilePickCommandExecute()
         {
             string fileName = FileUtility.OpenImageFilePicker();
@@ -136,7 +164,7 @@ namespace POSSystem.UI.ViewModel
             {
                 obj.DeactivationDate = null;
                 obj.PromptForPasswordReset = true;
-                obj.IsActive = false;
+                obj.IsActive = true;
                 UserBO userBO = new UserBO();
                 int i = await userBO.UpdateUser(obj.Model);
                 if (i > 0)
