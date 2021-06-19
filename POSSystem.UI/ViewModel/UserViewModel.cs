@@ -237,7 +237,12 @@ namespace POSSystem.UI.ViewModel
                 PasswordTextBox = obj;
                 if (_isLogoChanged)
                 {
-                    FileUtility.SaveProfileFile(LogoFullPathName, NewUser.ProfileImage);
+                   bool profileImageSaved =  FileUtility.SaveProfileFile(LogoFullPathName, NewUser.ProfileImage);
+                    if(!profileImageSaved)
+                    {
+                        StaticContainer.ShowNotification("Profile Image", "Profile picture image name already exists. Upload different profile picture and try again.", NotificationType.Warning);
+                        return;
+                    }
                 }
 
                 User u = new User
@@ -330,6 +335,9 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.DisplayName = "";
             this.NewUser.IsAdmin = false;
             this.NewUser.PromptForPasswordReset = true;
+            this.NewUser.ProfileImage = "";
+            this.LogoName = "";
+            this.LogoFullPathName = "";
             this.PasswordTextBox.Password = "";
         }
 
