@@ -154,7 +154,7 @@
                 Command="{Binding ClosePopupCommand}"
                 Content="Close"
                 IsCancel="True"
-                Style="{DynamicResource MahApps.Styles.Button.MetroWindow.Close.Dark.Win10}" />
+                Style="{DynamicResource button.Reset}" />
         </Grid>
     </StackPanel>
 

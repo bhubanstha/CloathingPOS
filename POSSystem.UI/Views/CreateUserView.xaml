@@ -198,7 +198,7 @@
                     Command="{Binding ResetUserCommand}"
                     CommandParameter="{Binding ElementName=txtPassword}"
                     Content="Reset"
-                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                    Style="{DynamicResource button.Reset}" />
 
 
 
