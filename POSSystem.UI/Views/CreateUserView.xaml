@@ -104,9 +104,37 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Style="{StaticResource Label.Validation.Container.Margin}"
+                    Text="Profile Image" />
+
+                <TextBox
+                    x:Name="txtFileName"
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    IsEnabled="False"
+                    Style="{DynamicResource MahApps.Styles.TextBox}"
+                    Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Button
+                    x:Name="filePicker"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter simple password"
+                    Command="{Binding FilePickCommand}"
+                    Content="Browse..."
+                    Style="{DynamicResource Button.FilePicker}" />
+
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Style="{StaticResource Label.Validation.Container.Margin}"
                     Text="Is Admin" />
                 <mah:ToggleSwitch
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Margin="{StaticResource ControlMargin}"
                     ContentPadding="0 0 0 3"
@@ -115,12 +143,12 @@
                     OnContent="Yes" />
 
                 <TextBlock
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="0"
                     Style="{StaticResource Label.Validation.Container.Margin}"
                     Text="For Password Change" />
                 <mah:ToggleSwitch
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Margin="{StaticResource ControlMargin}"
                     ContentPadding="0 0 0 3"
@@ -142,33 +170,7 @@
                 </mah:ToggleSwitch.Resources>-->
                 </mah:ToggleSwitch>
 
-                <TextBlock
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Style="{StaticResource Label.Validation.Container.Margin}"
-                    Text="Profile Image" />
 
-                <TextBox
-                    x:Name="txtFileName"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    Margin="{StaticResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    IsEnabled="False"
-                    Style="{DynamicResource MahApps.Styles.TextBox}"
-                    Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <Button
-                    x:Name="filePicker"
-                    Grid.Row="6"
-                    Grid.Column="2"
-                    Margin="{StaticResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter simple password"
-                    Command="{Binding FilePickCommand}"
-                    Content="Browse..."
-                    Style="{DynamicResource Button.FilePicker}" />
 
 
 
