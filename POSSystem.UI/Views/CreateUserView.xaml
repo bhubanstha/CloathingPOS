@@ -388,7 +388,7 @@
                                                 <iconPacks:PackIconBootstrapIcons
                                                     Width="15"
                                                     Height="15"
-                                                    Kind="Trash"
+                                                    Kind="Lock"
                                                     Style="{StaticResource row.option.icon}" />
                                             </DataTemplate>
                                         </Button.ContentTemplate>
@@ -418,7 +418,7 @@
                                                 <iconPacks:PackIconBootstrapIcons
                                                     Width="15"
                                                     Height="15"
-                                                    Kind="ArrowCounterclockwise"
+                                                    Kind="Unlock"
                                                     Style="{StaticResource row.option.icon}" />
                                             </DataTemplate>
                                         </Button.ContentTemplate>
