@@ -61,6 +61,12 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public string ColorName
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
         public Int64 CategoryId
         {
             get { return GetValue<Int64>(); }
@@ -97,7 +103,7 @@ namespace POSSystem.UI.Wrapper
             this.CategoryName = source.CategoryName;
             this.BrandId = source.BrandId;
             this.BrandName = source.BrandName;
-            
+            this.ColorName = source.ColorName;
         }
     }
 

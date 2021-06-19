@@ -71,7 +71,7 @@ namespace POS.Utilities.PDF
         {
             Cell c = CreateCell(sn.ToString(), TextAlignment.CENTER);
             invoiceTable.AddCell(c);
-            invoiceTable.AddCell(CreateCell($"{mockSales.ProductName} - {mockSales.Size}({mockSales.Color.ToKnownColourName()})", TextAlignment.LEFT));
+            invoiceTable.AddCell(CreateCell($"{mockSales.ProductName} - {mockSales.Size}({mockSales.ColorName})", TextAlignment.LEFT));
             invoiceTable.AddCell(CreateCell(mockSales.SalesQuantity.ToString(), TextAlignment.CENTER));
             invoiceTable.AddCell(CreateCell(mockSales.RetailRate.ToString(), TextAlignment.CENTER));
             invoiceTable.AddCell(CreateCell($"{mockSales.SalesQuantity * mockSales.RetailRate}", TextAlignment.RIGHT));

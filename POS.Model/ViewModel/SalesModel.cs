@@ -20,6 +20,7 @@ namespace POS.Model.ViewModel
         public string ProductName { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }        
+        public string ColorName { get; set; }        
         public string CategoryName { get; set; }
         public string BrandName { get; set; }
     }

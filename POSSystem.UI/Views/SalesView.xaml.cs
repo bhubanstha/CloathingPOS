@@ -48,6 +48,7 @@ namespace POSSystem.UI.Views
                 model.CurrentProduct.CategoryName = pr.Category.Name;
                 model.CurrentProduct.BrandId = pr.Brand.Id;
                 model.CurrentProduct.BrandName = pr.Brand.Name;
+                model.CurrentProduct.ColorName = pr.ColorName;
                 txtSalesQty.Maximum = (double)pr.Quantity;
             }
         }
