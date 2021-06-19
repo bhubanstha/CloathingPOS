@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,16 +41,16 @@ namespace POS.Utilities
             }
         }
 
-        public static void SaveProfileFile(string sourcefile, string destinationFileName)
+        public static bool  SaveProfileFile(string sourcefile, string destinationFileName)
         {
             try
             {
                 string logoPath = FilePath.GetProfileImageFullPath("");
                 CreateDirectory(logoPath);
-                CopyFile(sourcefile, Path.Combine(logoPath, destinationFileName));
+                return CopyFile(sourcefile, Path.Combine(logoPath, destinationFileName));
             }
-            catch             {
-
+            catch {
+                return false;
                 throw;
             }
         }
@@ -62,9 +63,15 @@ namespace POS.Utilities
             }
         }
 
-        private static void CopyFile(string source, string destination)
+        private static bool CopyFile(string source, string destination)
         {
-            File.Copy(source, destination);
+            if(!File.Exists(destination))
+            {
+                File.Copy(source, destination);
+                return true;
+            }
+            return false;
+            
         }
         private static void CleanupDirectory(string directoryPath)
         {
