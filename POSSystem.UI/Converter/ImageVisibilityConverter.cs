@@ -1,5 +1,7 @@
-﻿using System;
+﻿using POS.Utilities;
+using System;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Data;
 
@@ -9,11 +11,17 @@ namespace POSSystem.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || string.IsNullOrEmpty(value.ToString()))
+            if (value == null )
             {
                 return Visibility.Collapsed;
             }
-            return Visibility.Visible;
+            else if(!string.IsNullOrEmpty(value.ToString()))
+            {
+                string fullpath = FilePath.GetProfileImageFullPath(value.ToString());
+                if (File.Exists(fullpath))
+                    return Visibility.Visible;
+            }
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
