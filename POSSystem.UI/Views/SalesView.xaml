@@ -388,7 +388,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Name"
                     LostFocus="txCustInfo_LostFocus"
-                    Style="{DynamicResource App.TextBox.Validation}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding CurrentBill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Left" />
 
@@ -411,7 +411,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer Address"
                     LostFocus="txCustInfo_LostFocus"
-                    Style="{DynamicResource App.TextBox.Validation}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding CurrentBill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Left" />
 
@@ -434,7 +434,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter Customer PAN Number"
                     LostFocus="txCustInfo_LostFocus"
-                    Style="{DynamicResource App.TextBox.Validation}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding CurrentBill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Left" />
 
