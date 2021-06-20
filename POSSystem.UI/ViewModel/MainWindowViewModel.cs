@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Model;
+using POSSystem.UI.Enum;
 using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel.Service;
@@ -102,6 +103,7 @@ namespace POSSystem.UI.ViewModel
         {
             LoginWindow window = StaticContainer.Container.Resolve<LoginWindow>();
             MainWindow.Hide();
+            _cacheService.RemoveCache(CacheKey.LoginUser.ToString());
             window.Show();
             MainWindow.Close();
            
