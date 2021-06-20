@@ -14,8 +14,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-    </UserControl.Resources>
+    <UserControl.Resources />
 
     <StackPanel Margin="0,5,3,5">
         <Grid behaviors:KeyboardFocus.On="{Binding ElementName=cmbCategory}">
@@ -124,7 +123,7 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Product Name"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding Inventory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
@@ -146,7 +145,7 @@
                 mah:TextBoxHelper.Watermark="Enter Product Size"
                 CharacterCasing="Upper"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding Inventory.Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
@@ -155,15 +154,19 @@
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Colour" />
-            <mah:ColorPicker
+            <StackPanel
                 Grid.Row="4"
                 Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:ColorPalettesTabHeader="Standard Colours"
-                mah:TextBoxHelper.Watermark="Select a product colour"
-                SelectedColor="{Binding Inventory.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                Style="{DynamicResource MahApps.Styles.ColorPicker}" />
+                Margin="0,0,5,0">
+                <mah:ColorPicker
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:ColorPalettesTabHeader="Standard Colours"
+                    mah:TextBoxHelper.Watermark="Select a product colour"
+                    SelectedColor="{Binding Inventory.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                    Style="{DynamicResource MahApps.Styles.ColorPicker}" />
+            </StackPanel>
+
             <TextBox
                 x:Name="txtColorName"
                 Grid.Row="4"
@@ -177,7 +180,7 @@
                 mah:TextBoxHelper.Watermark="Known Colour Name"
                 CharacterCasing="Normal"
                 IsEnabled="{Binding Inventory.ColorNameEntryEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding Inventory.ColorName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
 
@@ -200,7 +203,7 @@
                 mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
                 Minimum="1"
                 TextAlignment="Left"
-                Value="{Binding Inventory.Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                Value="{Binding Inventory.Quantity, FallbackValue=1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="6"
