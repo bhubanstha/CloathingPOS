@@ -86,7 +86,7 @@
                                     Binding="{Binding Name}"
                                     Header="Product Name" />
                                 <DataGridTextColumn
-                                    Width="150"
+                                    Width="70"
                                     Binding="{Binding Size}"
                                     Header="Size" />
                                 <DataGridTemplateColumn Header="Colour">
@@ -224,6 +224,7 @@
                     CanUserReorderColumns="False"
                     CanUserResizeColumns="False"
                     CanUserSortColumns="False"
+                    CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
                     IsReadOnly="True"
                     ItemsSource="{Binding Path=CurrentCart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
@@ -299,13 +300,14 @@
                                         Command="{Binding Path=DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                                        Style="{DynamicResource Button.Circle.In.GridRow}">
+                                        Style="{DynamicResource Button.Circle.In.GridRow}"
+                                        ToolTip="Remove Item from Cart">
                                         <Button.ContentTemplate>
                                             <DataTemplate>
                                                 <iconPacks:PackIconBootstrapIcons
                                                     Width="15"
                                                     Height="15"
-                                                    Kind="Trash"
+                                                    Kind="CartDash"
                                                     Style="{StaticResource row.option.icon}" />
                                             </DataTemplate>
                                         </Button.ContentTemplate>
