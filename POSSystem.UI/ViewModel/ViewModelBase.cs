@@ -20,6 +20,17 @@ namespace POSSystem.UI.ViewModel
                 null;
         }
 
+        public string GetFirstError(string propertyName)
+        {
+
+            if(_errorsByPropertyName.ContainsKey(propertyName))
+            {
+                return _errorsByPropertyName[propertyName][0];
+            }
+            return "";
+        }
+
+
         protected virtual void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));

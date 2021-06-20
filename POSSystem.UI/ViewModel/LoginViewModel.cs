@@ -19,10 +19,11 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class LoginViewModel : NotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
         private bool _hasChanges;
         private LoginWrapper _loginUser;
+        private string _noUserFound;
 
         public ICommand LoginCommand { get; }
         private IGenericDataRepository<User> _genericDataRepository;
@@ -39,6 +40,16 @@ namespace POSSystem.UI.ViewModel
             get { return _loginUser; }
             set { _loginUser = value; OnPropertyChanged(); }
         }
+
+        
+
+        public string NoUserFound
+        {
+            get { return _noUserFound; }
+            set { _noUserFound = value; 
+                OnPropertyChanged(); }
+        }
+
 
         public bool HasChanges
         {
@@ -68,10 +79,6 @@ namespace POSSystem.UI.ViewModel
         private void LoginUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
-            //if(e.PropertyName == nameof(LoginUser.HasErrors))
-            //{
-            //    ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
-            //}
         }
 
         private void OnLoginExecute()
@@ -125,6 +132,10 @@ namespace POSSystem.UI.ViewModel
                     ManageWindowVisibility(mainWindow, LoginWindow, true);
                 }
                 
+            }
+            else
+            {
+                NoUserFound = "Username or password is invalid";
             }
         }
 
