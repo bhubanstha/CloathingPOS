@@ -22,8 +22,9 @@ namespace POSSystem.UI.Wrapper
         protected virtual void SetValue<TValue>(TValue value, [CallerMemberName] string propertyName=null)
         {
             typeof(T).GetProperty(propertyName).SetValue(Model, value);
-            OnPropertyChanged(propertyName);
             ValidatePropertyInternal(propertyName, value);
+            OnPropertyChanged(propertyName);
+            
         }
 
         private void ValidatePropertyInternal<TValue>(string propertyName, TValue value)
