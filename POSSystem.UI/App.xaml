@@ -19,7 +19,7 @@
                 <ResourceDictionary Source="Resources/AutoCompleteTextBox.xaml" />
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml" />
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml" />
-                <ResourceDictionary Source="Resources/AppValidation.xaml" />
+                <ResourceDictionary Source="Resources/TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style
