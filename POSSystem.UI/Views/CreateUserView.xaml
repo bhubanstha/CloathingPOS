@@ -63,7 +63,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                     SpellCheck.IsEnabled="True"
-                    Style="{DynamicResource MahApps.Styles.TextBox}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
                 <TextBlock
@@ -82,7 +82,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
                     SpellCheck.IsEnabled="True"
-                    Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding NewUser.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock
@@ -90,7 +90,18 @@
                     Grid.Column="0"
                     Style="{StaticResource Label.Validation.Container.Margin}"
                     Text="Password" />
-                <PasswordBox
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2">
+                    <ctrl:BindablePasswordBox Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                    <TextBlock
+                        Grid.Row="4"
+                        Style="{DynamicResource TextBlock.Validation.Message}"
+                        Text="{Binding NewUser.PasswordErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <!--<PasswordBox
                     x:Name="txtPassword"
                     Grid.Row="2"
                     Grid.Column="1"
@@ -101,7 +112,7 @@
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter simple password"
                     MaxLength="6"
-                    Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />
+                    Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />-->
 
                 <TextBlock
                     Grid.Row="3"

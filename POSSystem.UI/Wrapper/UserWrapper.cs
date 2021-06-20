@@ -11,6 +11,7 @@ namespace POSSystem.UI.Wrapper
     public class UserWrapper : WrapperBase<User>
     {
         private ICacheService cacheService;
+        private string _pwdErrorMsg;
         public UserWrapper(User model): base(model)
         {
 
@@ -41,7 +42,11 @@ namespace POSSystem.UI.Wrapper
         public string Password
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set {
+                SetValue(value);
+                _pwdErrorMsg = GetFirstError(nameof(Password));
+                OnPropertyChanged(nameof(PasswordErrorMessage));
+            }
         }
         public string ProfileImage
         {
@@ -79,6 +84,14 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public string PasswordErrorMessage
+        {
+            get { return _pwdErrorMsg; }
+            private set
+            {
+                OnPropertyChanged();
+            }
+        }
 
         protected override IEnumerable<string> ValidateProperty(string propertyName)
         {
@@ -93,13 +106,23 @@ namespace POSSystem.UI.Wrapper
                 {
                     ObservableCollection<UserWrapper> list = cacheService.ReadCache<ObservableCollection<UserWrapper>>(CacheKey.UserList.ToString());
 
-                    bool exists = list.Any(x => string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase));
-                    if (exists)
+                    if (list != null)
                     {
-                        errors.Add($"Can not create {UserName} user. It already exists.");
+                        bool exists = list.Any(x => string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase));
+                        if (exists)
+                        {
+                            errors.Add($"Can not create {UserName} user. It already exists.");
+                        }
                     }
                 }
 
+            }
+            else if(propertyName == "Password")
+            {
+                if(Password.Length>10)
+                {
+                    errors.Add("Password can be upto 10 character long");
+                }
             }
 
             return errors;

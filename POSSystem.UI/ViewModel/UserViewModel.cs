@@ -35,8 +35,6 @@ namespace POSSystem.UI.ViewModel
         private bool _isLogoChanged = false;
 
 
-        public PasswordBox PasswordTextBox { get; set; }
-
         private ICacheService _cacheService;
         private AdminChangePassword _adminChangePasswordUI;
         private IEventAggregator _eventAggregator;
@@ -115,12 +113,12 @@ namespace POSSystem.UI.ViewModel
             _userBo = new UserBO();
             NewUser = new UserWrapper(new User(), cacheService);
             NewUser.PromptForPasswordReset = true;
-
+            NewUser.UserName = "";
             NewUser.PropertyChanged += NewUser_PropertyChanged;
-            CreateUserCommand = new DelegateCommand<PasswordBox>(OnCreateUserExecute).ObservesProperty(() => HasChanges);
+            CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
             EditUserCommand = new DelegateCommand<UserWrapper>(EditUser);
-            DeleteUserCommand = new DelegateCommand<UserWrapper>(DeleteUser);
-            ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
+            DeleteUserCommand = new DelegateCommand<UserWrapper>(LockUser);
+            ResetUserCommand = new DelegateCommand(ResetUser);
             RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
             FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
@@ -178,23 +176,19 @@ namespace POSSystem.UI.ViewModel
 
         private void NewUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!HasChanges)
-            {
-                HasChanges = _userBo.HasChanges();
-            }
-            //if(e.PropertyName == nameof(NewUser.HasErrors))
+            //if (!HasChanges)
             //{
-            //    ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
+            //    HasChanges = _userBo.HasChanges();
             //}
+            ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
         }
 
-        private void ResetUser(PasswordBox obj)
+        private void ResetUser()
         {
-            this.PasswordTextBox = obj;
             ClearAll();
         }
 
-        private async void DeleteUser(UserWrapper obj)
+        private async void LockUser(UserWrapper obj)
         {
             if (obj != null && obj.Id > 0)
             {
@@ -207,7 +201,7 @@ namespace POSSystem.UI.ViewModel
                 {
                     ManageUserInCollection(obj.Model);
                     //LoadAllUsers();
-                    StaticContainer.ShowNotification("User Removed", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
+                    StaticContainer.ShowNotification("User Locked", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
                 }
             }
         }
@@ -221,20 +215,19 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.Password = userBO.DecryptPassword(obj.Password).Result;
             this.NewUser.IsAdmin = obj.IsAdmin;
             this.NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
-            this.PasswordTextBox.Password = this.NewUser.Password;
+
             this.ButtonText = "Update User";
         }
 
-        private bool OnCreateUserCanExecute(PasswordBox txtPwdBox)
+        private bool OnCreateUserCanExecute()
         {
-            return this.NewUser != null && !this.NewUser.HasErrors && HasChanges && !string.IsNullOrEmpty(txtPwdBox.Password);
+            return this.NewUser != null && !this.NewUser.HasErrors && HasChanges && !string.IsNullOrEmpty(this.NewUser.Password);
         }
 
-        private async void OnCreateUserExecute(PasswordBox obj)
+        private async void OnCreateUserExecute()
         {
             try
             {
-                PasswordTextBox = obj;
                 if (_isLogoChanged)
                 {
                    bool profileImageSaved =  FileUtility.SaveProfileFile(LogoFullPathName, NewUser.ProfileImage);
@@ -250,7 +243,7 @@ namespace POSSystem.UI.ViewModel
                     Id = this.NewUser.Id,
                     UserName = this.NewUser.UserName,
                     DisplayName = this.NewUser.DisplayName,
-                    Password = obj.Password,
+                    Password = this.NewUser.Password,
                     IsAdmin = this.NewUser.IsAdmin,
                     PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
                     IsActive = true,
@@ -336,9 +329,9 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.IsAdmin = false;
             this.NewUser.PromptForPasswordReset = true;
             this.NewUser.ProfileImage = "";
+            this.NewUser.Password = "";
             this.LogoName = "";
             this.LogoFullPathName = "";
-            this.PasswordTextBox.Password = "";
         }
 
         

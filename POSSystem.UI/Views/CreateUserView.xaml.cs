@@ -15,7 +15,7 @@ namespace POSSystem.UI.Views
             InitializeComponent();
 
             UserViewModel viewModel = StaticContainer.Container.Resolve<UserViewModel>();
-            viewModel.PasswordTextBox = txtPassword;
+            //viewModel.PasswordTextBox = txtPassword;
             this.DataContext = viewModel;
 
         }
