@@ -7,6 +7,7 @@ namespace POSSystem.UI.Wrapper
 {
     public class LoginWrapper : WrapperBase<LoginModel>
     {
+        private string _pwdErrorMsg;
         public LoginWrapper(LoginModel obj) : base(obj)
         {
         }
@@ -21,7 +22,12 @@ namespace POSSystem.UI.Wrapper
         public string Password
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set 
+            { 
+                SetValue(value);
+                _pwdErrorMsg = GetFirstError(nameof(Password));
+                OnPropertyChanged(nameof(PasswordErrorMessage));
+            }
         }
 
         public bool RememberMe
@@ -29,6 +35,16 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
+
+        public string PasswordErrorMessage
+        {
+            get { return _pwdErrorMsg; }
+            private set 
+            { 
+                OnPropertyChanged(); 
+            }
+        }
+
 
         //protected override IEnumerable<string> ValidateProperty(string propertyName)
         //{
