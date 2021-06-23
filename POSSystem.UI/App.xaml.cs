@@ -1,22 +1,17 @@
-﻿using POSSystem.UI.Views;
+﻿using Autofac;
+using ControlzEx.Theming;
+using log4net;
+using Notifications.Wpf;
+using POS.BusinessRule;
+using POS.Model;
+using POSSystem.UI.Service;
+using POSSystem.UI.Views;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+using System.ComponentModel.Composition.Hosting;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows;
-using POSSystem.UI.Startup;
-using Autofac;
-using POSSystem.UI.Service;
-using ControlzEx.Theming;
-using System.IO.IsolatedStorage;
-using System.IO;
-using Notifications.Wpf;
-using POS.Model;
-using POS.Data.Repository;
-using POS.Data;
-using POS.BusinessRule;
 
 namespace POSSystem.UI
 {
@@ -25,22 +20,55 @@ namespace POSSystem.UI
     /// </summary>
     public partial class App : Application
     {
+        private ILog logger;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var startup = new Startup.Startup();
+            logger = new Logger().GetLogger(typeof(App));
+            logger.Info("Starting Application");
+
+            //            AppDomain.CurrentDomain.UnhandledException
+            //Application.Current.DispatcherUnhandledException
+            //TaskScheduler.UnobservedTaskException
+
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
+            var startup = new Startup();
             var container = startup.BootstrapDependencies();
 
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
             StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
-           
+
+            logger.Info("Bootrap completed");
+
+            logger.Info("Reloading Configuration");
             ReloadConfig();
+            logger.Info("Configuration Restore");
+
+            logger.Info("Loading Company info");
             LoadCompanyInfo();
+            logger.Info("Company Info loaded");
+
+            logger.Info("Resolving Login Window");
             var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
+            logger.Info("Showing Login Window");
             //Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-           
             window.Show();
+        }
+
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            logger.Error(e.Exception.ToString());
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+
+            logger.Error(e.ToString());
         }
 
         private void LoadCompanyInfo()
@@ -61,6 +89,8 @@ namespace POSSystem.UI
         }
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+
+            logger.Error(e.Exception.Message);
             StaticContainer.NotificationManager.Show(new NotificationContent
             {
                 Message = e.Exception.Message,

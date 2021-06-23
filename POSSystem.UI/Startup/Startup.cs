@@ -10,7 +10,7 @@ using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Views.Flyouts;
 using Prism.Events;
 
-namespace POSSystem.UI.Startup
+namespace POSSystem.UI
 {
     public class Startup
     {
