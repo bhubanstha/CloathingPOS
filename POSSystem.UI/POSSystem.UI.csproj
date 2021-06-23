@@ -58,7 +58,7 @@
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -113,10 +113,13 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Image\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -166,6 +169,9 @@
     </Reference>
     <Reference Include="itext.svg, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.svg.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.4\lib\net47\MahApps.Metro.dll</HintPath>
@@ -483,6 +489,7 @@
     <Compile Include="ForgotPasswordWindow.xaml.cs">
       <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logger\Logger.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -782,6 +789,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
+    <None Include="log4NetConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -805,7 +816,7 @@
       <Name>POS.BusinessRule</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Data\POS.Data.csproj">
-      <Project>{7FF4BD36-A846-4E3F-8078-1CC04A96B02C}</Project>
+      <Project>{7ff4bd36-a846-4e3f-8078-1cc04a96b02c}</Project>
       <Name>POS.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Model\POS.Model.csproj">
@@ -894,6 +905,7 @@ if $(ConfigurationName) == Release del $(TargetDir)*.pdb</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if not exist DirToCreate mkdir $(TargetDir)Image\CompanyLogo
-copy $(ProjectDir)Image\companyLogo1.png $(TargetDir)Image\CompanyLogo /Y</PreBuildEvent>
+copy $(ProjectDir)Image\companyLogo1.png $(TargetDir)Image\CompanyLogo /Y
+copy $(ProjectDir)Image\AppIcon.ico $(TargetDir)Image /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>
