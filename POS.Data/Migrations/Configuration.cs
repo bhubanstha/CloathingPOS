@@ -1,6 +1,5 @@
 ﻿namespace POS.Data.Migrations
 {
-    using Org.BouncyCastle.Crypto.Engines;
     using POS.Model;
     using POS.Utilities.Encryption;
     using System;
@@ -20,7 +19,6 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            BouncyCastleEncryption encryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
             
             context.User.AddOrUpdate(
                     u=> u.Id,
@@ -28,7 +26,7 @@
                         Id=1,
                         UserName = "sysadmin", 
                         DisplayName = "System Admin", 
-                        Password = encryption.EncryptAsAsync("123").Result, 
+                        Password = PasswordEncryptDecryptor.Encrypt("123").Result, 
                         IsActive = true,
                         IsAdmin = true,
                         PromptForPasswordReset = false,
@@ -40,7 +38,7 @@
                         Id=2,
                         UserName = "hom",
                         DisplayName = "Hom Bdr. Tamang",
-                        Password = encryption.EncryptAsAsync("123456").Result,
+                        Password = PasswordEncryptDecryptor.Encrypt("123456").Result,
                         IsAdmin = true,
                         IsActive = true,
                         PromptForPasswordReset = true,
