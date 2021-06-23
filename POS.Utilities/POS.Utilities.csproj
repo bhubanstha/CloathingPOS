@@ -122,6 +122,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encryption\PasswordEncryptDecryptor.cs" />
     <Compile Include="Extension\StringExtension.cs" />
     <Compile Include="FilePath.cs" />
     <Compile Include="FileUtility.cs" />
