@@ -2,6 +2,7 @@
 using POS.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace POS.Data
     public class POSDataContext: DbContext
     {
         public POSDataContext():
-            base("CloathingPOS")
+            base(ConfigurationManager.ConnectionStrings["CloathingPOS"].ConnectionString)
         {
 
         }
