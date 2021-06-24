@@ -15,6 +15,7 @@
 	<String Id="Keywords">POS, .NET, Windows App, Bhuban Shrestha</String>
 	<String Id="Comments">Contact Bhuban Shretha for support.</String>
 	<String Id="DowngradeErrorMessage">A newer version of POS System is already installed.</String>
+	<String Id="Manufacturer">Bhuban_Shrestha</String>
   
   
 </WixLocalization>

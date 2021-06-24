@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   
   <Fragment>
     
@@ -17,9 +18,18 @@
       <!--Desktop Shortcut-->
       <ComponentRef Id="ComponentDesktopShortcut" />
       
+      <!--Dynamic Folders-->
+      <ComponentRef Id="DynamicFolders"/>
+
+      <!--clenup on uninstall-->
+      <ComponentRef Id="CleanupMainApplicationFolder"/>
+      
     </ComponentGroup>
 
-     
+
+    <Property Id="INSTALLFOLDER">
+      <RegistrySearch Key="SOFTWARE\!(loc.Manufacturer)\!(loc.ProductName)" Root="HKLM" Type="raw" Id="INSTALLFOLDER_REGSEARCH" Name="Path" />
+    </Property>
     <!--Installed files-->
     <DirectoryRef Id="INSTALLFOLDER" FileSource="..\POSSystem.UI\bin\$(var.Platform)\$(var.Configuration)\">
        
@@ -76,12 +86,49 @@
                   Target="[INSTALLFOLDER]POSSystem.exe"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="icon.ico"/>
+        
         <!--Remove desktop shortcut on uninstall-->
         <RemoveFolder Id="DesktopFolder" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="SOFTWARE\$(loc.ProductNameFolder)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+        
+        
+       
+      </Component>
+
+
+
+      <Component Id="DynamicFolders" Guid="{BA5209B4-78E7-4A03-B525-57E15890D6B6}">
+        
+        <RemoveFolder Id="BillsFolder" Directory="Bills" On="uninstall"/>
+        <RemoveFolder Id="LogsFolder" Directory="Logs" On="uninstall"/>
+
+        <!--Registry key to remember above folders-->
+        <RegistryValue Id="DynFolderKey"
+                       Root="HKCU"
+                       Key="SOFTWARE\$(loc.ProductNameFolder)"
+                       Name="DynamicFolder"
+                       Value="1"
+                       Type="integer"
+                       KeyPath="yes"/>
       </Component>
       
     </DirectoryRef>
+
+
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="CleanupMainApplicationFolder" Guid="{76BD9E32-3B24-4F42-AF93-9A0F531DBC89}">
+        <RemoveFile Id="RemoveAllFilesOnUninstall" Directory="INSTALLFOLDER" Name="*.*" On="uninstall" />
+        <RemoveFolder Id="RemoveAllFoldersOnUninstall" Directory="INSTALLFOLDER" On="uninstall" />
+
+        
+        <RegistryValue Root="HKLM" Key="SOFTWARE\!(loc.Manufacturer)\!(loc.ProductName)" Name="Path" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
+        <!-- We need to use APPLICATIONFOLDER variable here or RemoveFolderEx
+             will not remove on "install". 
+        <?define Logs = [Logs]?>-->
+        <util:RemoveFolderEx On="uninstall" Property="INSTALLFOLDER" />
+      </Component>
+    </DirectoryRef>
+
     
     
   </Fragment>
