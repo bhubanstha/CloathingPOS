@@ -1,0 +1,28 @@
+﻿using Org.BouncyCastle.Crypto.Engines;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace POS.Core.Utilities.Encryption
+{
+    public class PasswordEncryptDecryptor
+    {
+        static BouncyCastleEncryption encryption;
+
+        static PasswordEncryptDecryptor()
+        {
+            encryption  = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
+        }
+        public async static Task<string> Encrypt(string text)
+        {
+            return await encryption.EncryptAsAsync(text);
+        }
+
+        public async static Task<string> Decrypt(string encyptedText)
+        {
+            return await encryption.DecryptAsAsync(encyptedText);
+        }
+    }
+}
