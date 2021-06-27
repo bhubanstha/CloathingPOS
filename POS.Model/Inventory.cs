@@ -20,7 +20,7 @@ namespace POS.Model
 
 
         [Required(ErrorMessage = "Item purchase quantity is required.")]
-        [Range(1, (double)(int.MaxValue), ErrorMessage = "Item purchase quantity should be greater than 0")]
+        [Range(0, (double)(int.MaxValue), ErrorMessage = "Item purchase quantity should be greater than 0")]
         public int Quantity { get; set; }
 
 
