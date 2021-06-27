@@ -131,6 +131,7 @@
                     new Shop
                     {
                         Id = 1,
+                        BranchName = "Branch1",
                         Name = "Give Your Shop Name",
                         Address = "Your Shop Address",
                         LogoPath = "companyLogo1.png",

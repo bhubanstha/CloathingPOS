@@ -12,9 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-       
-    </UserControl.Resources>
+    <UserControl.Resources />
     <StackPanel Margin="0,5,3,5">
 
         <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
@@ -41,9 +39,9 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Shop Name" />
+                Text="Branch Name" />
             <TextBox
-                x:Name="txtShopName"
+                x:Name="txtBranchName"
                 Grid.Row="0"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
@@ -53,17 +51,36 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter shop name without special character [a-z]"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox}"
-                Text="{Binding ShopWrapper.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
+                Style="{DynamicResource TextBox.Validation}"
+                Text="{Binding ShopWrapper.BranchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
+                Text="Shop Name" />
+            <TextBox
+                x:Name="txtShopName"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter shop name without special character [a-z]"
+                SpellCheck.IsEnabled="True"
+                Style="{DynamicResource TextBox.Validation}"
+                Text="{Binding ShopWrapper.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Style="{StaticResource Label.Validation.Container.Margin}"
                 Text="Address" />
             <TextBox
                 x:Name="txtAddress"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Margin="{StaticResource ControlMargin}"
@@ -72,17 +89,17 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter shop full address without special character [a-z]"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding ShopWrapper.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
                 Text="PAN Number" />
             <TextBox
                 x:Name="txtPanNumber"
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Margin="{StaticResource ControlMargin}"
@@ -90,27 +107,27 @@
                 mah:TextBoxHelper.ClearTextButton="True"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter PAN Number"
-                Style="{StaticResource MahApps.Styles.TextBox}"
+                Style="{StaticResource TextBox.Validation}"
                 Text="{Binding ShopWrapper.PANNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
                 Text="Shop Logo" />
 
             <TextBox
                 x:Name="txtFileName"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
                 IsEnabled="False"
-                Style="{DynamicResource MahApps.Styles.TextBox}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Button
                 x:Name="filePicker"
-                Grid.Row="3"
+                Grid.Row="4"
                 Grid.Column="2"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
@@ -123,12 +140,31 @@
 
 
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
+                Grid.Column="0"
+                Style="{StaticResource Label.Validation.Container.Margin}"
+                Text="Pdf Password" />
+
+            <TextBox
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                mah:TextBoxHelper.ClearTextButton="True"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter password to protect bills"
+                SpellCheck.IsEnabled="True"
+                Style="{DynamicResource MahApps.Styles.TextBox}"
+                Text="{Binding ShopWrapper.PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Grid.Row="6"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
                 Text="Calculate VAT on Sale" />
             <mah:ToggleSwitch
-                Grid.Row="4"
+                Grid.Row="6"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 ContentPadding="0 0 0 3"
@@ -137,13 +173,13 @@
                 OnContent="Yes" />
 
             <TextBlock
-                Grid.Row="5"
+                Grid.Row="7"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
                 Text="Print Sale Invoice" />
 
             <mah:ToggleSwitch
-                Grid.Row="5"
+                Grid.Row="7"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 ContentPadding="0 0 0 3"
@@ -151,27 +187,8 @@
                 OffContent="No"
                 OnContent="Yes" />
 
-            <TextBlock
-                Grid.Row="6"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Pdf Password" />
-
-            <TextBox
-                Grid.Row="6"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                Style="{DynamicResource MahApps.Styles.TextBox}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter password to protect bills"
-                SpellCheck.IsEnabled="True"
-                Text="{Binding ShopWrapper.PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
             <Button
-                Grid.Row="7"
+                Grid.Row="8"
                 Grid.Column="1"
                 Width="150"
                 Margin="0,5,0,15"
@@ -179,39 +196,62 @@
                 Command="{Binding SaveCommand}"
                 Content="{Binding ButtonText, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+            <Button
+                Grid.Row="8"
+                Grid.Column="1"
+                Width="150"
+                Margin="160,5,0,15"
+                HorizontalAlignment="Left"
+                Command="{Binding ResetCommand}"
+                Content="Reset"
+                Style="{DynamicResource button.Reset}" />
         </Grid>
 
         <Separator />
 
-        <Border
-            Width="400"
-            BorderBrush="Red"
-            BorderThickness="2"
-            CornerRadius="5">
-            <StackPanel>
-                <tile:ServiceTile
-                    ImageSource="{Binding LogoFullPathName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    ImageStretch="Uniform"
-                    LoadImageFromResource="False"
-                    ServiceTitle="{Binding ShopWrapper.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock
-                    Margin="10,-20,0,10"
-                    LineHeight="20"
-                    LineStackingStrategy="BlockLineHeight">
-                    <Run FontWeight="Bold" Text="Address :" />
-                    <Run Text="{Binding ShopWrapper.Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <LineBreak />
-                    <Run FontWeight="Bold" Text="PAN Number : " />
-                    <Run Text="{Binding ShopWrapper.PANNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <LineBreak />
-                    <Run FontWeight="Bold" Text="Calculate VAT : " />
-                    <iconPacks:PackIconBootstrapIcons DataContext="{Binding ShopWrapper, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource icon.Calculate.VAT}" />
-                    <Run Text="                             " />
-                    <Run FontWeight="Bold" Text="Print Invoice : " />
-                    <iconPacks:PackIconBootstrapIcons DataContext="{Binding ShopWrapper, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource icon.Print.Invoice}" />
-                </TextBlock>
-            </StackPanel>
-        </Border>
+        <StackPanel Orientation="Horizontal">
 
+            <Border
+                Width="400"
+                BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                BorderThickness="2"
+                CornerRadius="5">
+                <StackPanel>
+                    <tile:ServiceTile
+                        ImageSource="{Binding LogoFullPathName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        ImageStretch="Uniform"
+                        LoadImageFromResource="False"
+                        ServiceTitle="{Binding ShopWrapper.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock
+                        Margin="10,-20,0,10"
+                        LineHeight="20"
+                        LineStackingStrategy="BlockLineHeight">
+                        <Run FontWeight="Bold" Text="Branch :" />
+                        <Run Text="{Binding ShopWrapper.BranchName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <LineBreak />
+                        <Run FontWeight="Bold" Text="Address :" />
+                        <Run Text="{Binding ShopWrapper.Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <LineBreak />
+                        <Run FontWeight="Bold" Text="PAN Number : " />
+                        <Run Text="{Binding ShopWrapper.PANNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <LineBreak />
+                        <Run FontWeight="Bold" Text="Calculate VAT : " />
+                        <iconPacks:PackIconBootstrapIcons DataContext="{Binding ShopWrapper, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource icon.Calculate.VAT}" />
+                        <Run Text="                             " />
+                        <Run FontWeight="Bold" Text="Print Invoice : " />
+                        <iconPacks:PackIconBootstrapIcons DataContext="{Binding ShopWrapper, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource icon.Print.Invoice}" />
+                    </TextBlock>
+                    <Button
+                        Height="30"
+                        Margin="0,-110,10,0"
+                        Padding="10,0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding EditCommand}"
+                        CommandParameter="{Binding}"
+                        Content="Edit"
+                        Style="{StaticResource Button.Link}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
     </StackPanel>
 </UserControl>

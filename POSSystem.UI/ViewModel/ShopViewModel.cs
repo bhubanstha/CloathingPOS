@@ -64,7 +64,7 @@ namespace POSSystem.UI.ViewModel
 
             FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             SaveCommand = new DelegateCommand(OnSaveCommandExecute);
-            LoadShopInfo();
+            ShopWrapper = new ShopWrapper(new Shop());
         }
 
         private async void OnSaveCommandExecute()
@@ -116,6 +116,7 @@ namespace POSSystem.UI.ViewModel
                 ShopWrapper = new ShopWrapper(new Shop())
                 {
                     Id = StaticContainer.Shop.Id,
+                    BranchName = StaticContainer.Shop.BranchName,
                     Name = StaticContainer.Shop.Name,
                     Address = StaticContainer.Shop.Address,
                     PANNumber = StaticContainer.Shop.PANNumber,

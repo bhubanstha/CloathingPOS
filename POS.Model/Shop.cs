@@ -10,6 +10,10 @@ namespace POS.Model
     public class Shop : EntityBase
     {
 
+        [Required(ErrorMessage = "Branch name is required.")]
+        [MaxLength(50)]
+        public string BranchName { get; set; }
+
         [Required(ErrorMessage = "Shop Name is required.")]
         [MaxLength(200)]
         public string Name { get; set; }

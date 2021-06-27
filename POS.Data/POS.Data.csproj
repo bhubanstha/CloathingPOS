@@ -108,6 +108,10 @@
     <Compile Include="Migrations\202106151133006_userPassword.designer.cs">
       <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106261502054_shop-branch-added.cs" />
+    <Compile Include="Migrations\202106261502054_shop-branch-added.designer.cs">
+      <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106151133006_userPassword.resx">
       <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106261502054_shop-branch-added.resx">
+      <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
