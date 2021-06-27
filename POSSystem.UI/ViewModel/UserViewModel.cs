@@ -221,7 +221,7 @@ namespace POSSystem.UI.ViewModel
 
         private bool OnCreateUserCanExecute()
         {
-            return this.NewUser != null && !this.NewUser.HasErrors && HasChanges && !string.IsNullOrEmpty(this.NewUser.Password);
+            return this.NewUser != null && !this.NewUser.HasErrors && !string.IsNullOrEmpty(this.NewUser.Password);
         }
 
         private async void OnCreateUserExecute()
