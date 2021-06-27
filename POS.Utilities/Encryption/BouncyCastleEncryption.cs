@@ -1,4 +1,5 @@
 ﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
@@ -24,6 +25,11 @@ namespace POS.Utilities.Encryption
         public BouncyCastleEncryption(Encoding encoding, IBlockCipher blockCipher)
         {
             _blockCipher = blockCipher;
+            _encoding = encoding;
+        }
+        public BouncyCastleEncryption(Encoding encoding)
+        {
+            _blockCipher = new AesEngine();
             _encoding = encoding;
         }
 
