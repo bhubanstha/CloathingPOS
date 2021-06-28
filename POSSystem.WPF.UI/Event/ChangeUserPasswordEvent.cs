@@ -1,4 +1,4 @@
-﻿using POS.Model;
+﻿using POS.Core.Model;
 using Prism.Events;
 
 namespace POSSystem.WPF.UI.Event

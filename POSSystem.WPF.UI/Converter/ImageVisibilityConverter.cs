@@ -1,4 +1,4 @@
-﻿using POS.Utilities;
+﻿using POS.Core.Utilities;
 using System;
 using System.Globalization;
 using System.IO;

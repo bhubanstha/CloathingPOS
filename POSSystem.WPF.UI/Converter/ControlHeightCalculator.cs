@@ -11,8 +11,8 @@ namespace POSSystem.WPF.UI.Converter
         {
             double controlHeight = 0;
             Window win =  Application.Current.MainWindow;
-            System.Windows.Forms.Screen sc = GetActiveScreen(ref win);
-            double winHeight = sc.WorkingArea.Height;
+            //System.Windows.Forms.Screen sc = GetActiveScreen(ref win);
+            double winHeight = win.Height;
             double.TryParse(values[0].ToString(), out controlHeight);
             return winHeight - controlHeight;
 
@@ -35,18 +35,6 @@ namespace POSSystem.WPF.UI.Converter
             throw new NotImplementedException();
         }
 
-        private System.Windows.Forms.Screen GetActiveScreen(ref Window appWindow)
-        {
-            try
-            {
-                System.Windows.Forms.Screen sc = System.Windows.Forms.Screen.FromHandle(new System.Windows.Interop.WindowInteropHelper(appWindow).Handle);
-                return sc;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
+        
     }
 }

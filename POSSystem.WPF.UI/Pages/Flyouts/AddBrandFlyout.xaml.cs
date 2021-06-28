@@ -3,7 +3,7 @@ using MahApps.Metro.Controls;
 using POSSystem.WPF.UI.Service;
 using POSSystem.WPF.UI.ViewModel;
 
-namespace POSSystem.WPF.UI.Views.Flyouts
+namespace POSSystem.WPF.UI.Pages.Flyouts
 {
     /// <summary>
     /// Interaction logic for AddCategory.xaml

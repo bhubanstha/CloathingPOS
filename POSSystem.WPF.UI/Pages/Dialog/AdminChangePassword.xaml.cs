@@ -3,7 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using POSSystem.WPF.UI.Service;
 using POSSystem.WPF.UI.ViewModel;
 
-namespace POSSystem.WPF.UI.Views.Dialog
+namespace POSSystem.WPF.UI.Pages.Dialog
 {
     /// <summary>
     /// Interaction logic for AdminChangePassword.xaml

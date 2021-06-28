@@ -1,6 +1,11 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POSSystem.WPF.UI.Event;
+using POSSystem.WPF.UI.Pages.Dialog;
+using POSSystem.WPF.UI.Service;
+using POSSystem.WPF.UI.UIModel;
 using POSSystem.WPF.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;

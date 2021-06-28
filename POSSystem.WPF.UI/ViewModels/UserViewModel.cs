@@ -1,15 +1,14 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
-using Notifications.Wpf;
-using POS.BusinessRule;
-using POS.Model;
-using POS.Utilities;
-using POSSystem.UI.Enum;
-using POSSystem.UI.Event;
-using POSSystem.UI.Service;
-using POSSystem.UI.Views.Dialog;
-using POSSystem.UI.Wrapper;
+using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POS.Core.Utilities;
+using POSSystem.WPF.UI.Enum;
+using POSSystem.WPF.UI.Event;
+using POSSystem.WPF.UI.Pages.Dialog;
+using POSSystem.WPF.UI.Service;
+using POSSystem.WPF.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
 using System;
@@ -18,8 +17,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace POSSystem.WPF.UI.ViewModel
@@ -274,22 +271,12 @@ namespace POSSystem.WPF.UI.ViewModel
                 {
                     ClearAll();
                     LoadAllUsers();
-                    StaticContainer.NotificationManager.Show(new NotificationContent
-                    {
-                        Message = "New user is added into the system successfully.",
-                        Title = "User Created",
-                        Type = NotificationType.Success
-                    });
+                    StaticContainer.ShowNotification("User Created", "New user is added into the system successfully.", NotificationType.Success);
                 }
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Message = "Could not create user. Please provide all the required values.",
-                    Title = "Error",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", "Could not create user. Please provide all the required values.", NotificationType.Error);
             }
 
         }

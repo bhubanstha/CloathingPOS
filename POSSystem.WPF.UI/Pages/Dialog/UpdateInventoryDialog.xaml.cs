@@ -4,7 +4,7 @@ using POSSystem.WPF.UI.Service;
 using POSSystem.WPF.UI.ViewModel;
 using System.Windows;
 
-namespace POSSystem.WPF.UI.Views.Dialog
+namespace POSSystem.WPF.UI.Pages.Dialog
 {
     /// <summary>
     /// Interaction logic for UpdateInventoryDialog.xaml

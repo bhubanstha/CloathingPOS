@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\POS.Core.Model\POS.Core.Model.csproj" />
     <ProjectReference Include="..\POS.Core.Utilities\POS.Core.Utilities.csproj" />
   </ItemGroup>
 

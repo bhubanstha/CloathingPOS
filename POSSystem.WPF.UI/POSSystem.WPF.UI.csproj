@@ -39,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MoonPdfLib.Core\MoonPdfLib.Core.csproj" />
+    <ProjectReference Include="..\MouseKeyboardActivitiyMonitor.Core\MouseKeyboardActivitiyMonitor.Core.csproj" />
+    <ProjectReference Include="..\POS.Core.Model\POS.Core.Model.csproj" />
     <ProjectReference Include="..\POS.Core.Utilities\POS.Core.Utilities.csproj" />
     <ProjectReference Include="..\POS.Core\POS.Core.csproj" />
   </ItemGroup>
@@ -62,6 +65,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ForgotPasswordWindow.xaml.cs">
+      <DependentUpon>ForgotPasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\Dialog\AdminChangePassword.xaml.cs">
       <DependentUpon>AdminChangePassword.xaml</DependentUpon>
     </Compile>
@@ -77,18 +86,39 @@
     <Compile Update="Pages\Flyouts\SettingFlyout.xaml.cs">
       <DependentUpon>SettingFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\UserControls\ForgetPasswordView.xaml.cs">
+      <DependentUpon>ForgetPasswordView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\UserControls\PartialShopView.xaml.cs">
       <DependentUpon>PartialShopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PDFViewer\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PDFViewer\GotoPageDialog.xaml.cs">
+      <DependentUpon>GotoPageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PDFViewer\PdfPasswordDialog.xaml.cs">
+      <DependentUpon>PdfPasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PDFViewer\PDFViewerWindow.xaml.cs">
+      <DependentUpon>PDFViewerWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="styles\autocomplete.TextBox">
-      <Generator>MSBuild:Compile</Generator>
+    <None Update="log4NetConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="ForgotPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\Dialog\AdminChangePassword.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -104,8 +134,62 @@
     <Page Update="Pages\Flyouts\SettingFlyout.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Pages\UserControls\ForgetPasswordView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Pages\UserControls\PartialShopView.xaml">
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PDFViewer\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PDFViewer\GotoPageDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PDFViewer\PdfPasswordDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PDFViewer\PDFViewerWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="styles\autocomplete.TextBox.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\border.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\button.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\calendar.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\colors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="styles\common.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\grid.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\hyperlink.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\label.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\passwordbox.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\scrollview.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\textblock.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
+    <Page Update="styles\textbox.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
 

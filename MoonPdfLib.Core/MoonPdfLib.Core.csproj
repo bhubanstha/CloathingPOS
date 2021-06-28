@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Page Remove="GlobalResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MouseKeyboardActivitiyMonitor.Core\MouseKeyboardActivitiyMonitor.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="GlobalResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ContinuousMoonPdfPanel.xaml.cs">
+      <DependentUpon>ContinuousMoonPdfPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MoonPdfPanel.xaml.cs">
+      <DependentUpon>MoonPdfPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="SinglePageMoonPdfPanel.xaml.cs">
+      <DependentUpon>SinglePageMoonPdfPanel.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="ContinuousMoonPdfPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MoonPdfPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SinglePageMoonPdfPanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

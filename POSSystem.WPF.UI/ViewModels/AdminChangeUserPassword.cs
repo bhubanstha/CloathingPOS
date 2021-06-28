@@ -1,7 +1,10 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
 using POS.Core.Model;
 using POSSystem.WPF.UI.Event;
+using POSSystem.WPF.UI.Service;
 using POSSystem.WPF.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -128,11 +131,11 @@ namespace POSSystem.WPF.UI.ViewModel
                 await bO.UpdateUser(user);
                 OnCloseDialogExecute();
                 eventAggregator.GetEvent<UserPasswordChangedEvent>().Publish(user);
-                StaticContainer.ShowNotification("Password Changed", $"{user.DisplayName} login password changed.", Notifications.Wpf.NotificationType.Success);
+                StaticContainer.ShowNotification("Password Changed", $"{user.DisplayName} login password changed.", NotificationType.Success);
             }
             catch (Exception)
             {
-                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
                 throw;
             }
         }

@@ -1,12 +1,9 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using POS.Model;
-using POSSystem.UI.Enum;
-using POSSystem.UI.PDFViewer;
-using POSSystem.UI.Service;
-using POSSystem.UI.ViewModel.Service;
-using POSSystem.UI.Views;
+using POS.Core.Model;
+using POSSystem.WPF.UI.Enum;
+using POSSystem.WPF.UI.PDFViewer;
+using POSSystem.WPF.UI.Service;
 using Prism.Commands;
 using System;
 using System.Windows;

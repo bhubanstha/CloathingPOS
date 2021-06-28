@@ -1,12 +1,9 @@
-﻿using POS.BusinessRule;
-using POS.Model;
-using POSSystem.UI.Service;
+﻿using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POSSystem.WPF.UI.Service;
 using Prism.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace POSSystem.WPF.UI.ViewModel
@@ -69,7 +66,7 @@ namespace POSSystem.WPF.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Success);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
             }
         }
     }

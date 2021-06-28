@@ -1,4 +1,4 @@
-﻿using POSSystem.UI.Service;
+﻿using POSSystem.WPF.UI.Service;
 using System;
 using System.Globalization;
 using System.Windows.Data;

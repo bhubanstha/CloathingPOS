@@ -1,6 +1,11 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls.Dialogs;
-
+using POS.Core.Repo;
+using POSSystem.WPF.UI.Pages.Dialog;
+using POSSystem.WPF.UI.Pages.Flyouts;
+using POSSystem.WPF.UI.PDFViewer;
+using POSSystem.WPF.UI.Service;
+using POSSystem.WPF.UI.ViewModel;
 using Prism.Events;
 
 namespace POSSystem.WPF.UI
@@ -20,13 +25,13 @@ namespace POSSystem.WPF.UI
             builder.RegisterType<AddCategoryFlyout>().AsSelf();
 
             //View Registration
-            builder.RegisterType<CreateUserView>().AsSelf();
-            builder.RegisterType<InventoryView>().AsSelf();
-            builder.RegisterType<GraphView>().AsSelf();
-            builder.RegisterType<SalesView>().AsSelf();
-            builder.RegisterType<SalesReturnView>().AsSelf();
-            builder.RegisterType<AboutView>().AsSelf();
-            builder.RegisterType<UserProfileView>().AsSelf();
+            //builder.RegisterType<CreateUserView>().AsSelf();
+            //builder.RegisterType<InventoryView>().AsSelf();
+            //builder.RegisterType<GraphView>().AsSelf();
+            //builder.RegisterType<SalesView>().AsSelf();
+            //builder.RegisterType<SalesReturnView>().AsSelf();
+            //builder.RegisterType<AboutView>().AsSelf();
+            //builder.RegisterType<UserProfileView>().AsSelf();
             
             
 
@@ -40,7 +45,7 @@ namespace POSSystem.WPF.UI
 
             //Service Registration
             builder.RegisterType<CacheService>().As<ICacheService>();
-            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
+            //builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
             builder.RegisterType<NepDateConverter>().AsImplementedInterfaces();
             builder.RegisterType<NepDate>().AsSelf();
             builder.RegisterType<ColorService>().As<IColorService>();

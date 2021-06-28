@@ -1,4 +1,4 @@
-﻿using POS.Model;
+﻿using POS.Core.Model;
 
 namespace POSSystem.WPF.UI.UIModel
 {

@@ -1,13 +1,13 @@
 ﻿using MahApps.Metro.Controls;
 using MoonPdfLib;
-using Notifications.Wpf;
-using POS.BusinessRule;
-using POS.Model;
-using POS.Model.ViewModel;
-using POS.Utilities.PDF;
-using POSSystem.UI.Controls;
-using POSSystem.UI.Service;
-using POSSystem.UI.Wrapper;
+using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POS.Core.Model.ViewModel;
+using POS.Core.Utilities.PDF;
+using POSSystem.WPF.UI.Controls;
+using POSSystem.WPF.UI.Service;
+using POSSystem.WPF.UI.Wrapper;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -145,21 +145,11 @@ namespace POSSystem.WPF.UI.ViewModel
                 ManageItemInCart();
                 ClearProduct();
                 await CreatePdfFromCurrentCartItem();
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Item Added",
-                    Message = "Item added into cart for checkout.",
-                    Type = NotificationType.Success
-                });
+                StaticContainer.ShowNotification("Item Added", "Item added into cart for checkout.", NotificationType.Success);
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = "Something went wrong while trying to add item to cart.",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -171,22 +161,11 @@ namespace POSSystem.WPF.UI.ViewModel
                 RemoveItemFromCurrentCart(obj);
                 CalculateVAT();
                 await CreatePdfFromCurrentCartItem();
-
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Item Removed",
-                    Message = "Selected item removed from the cart.",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Item Removed", "Selected item removed from the cart.", NotificationType.Success);                
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = "Something went wrong while trying to remove item to cart.",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
             }
         }
 
@@ -195,22 +174,11 @@ namespace POSSystem.WPF.UI.ViewModel
             try
             {
                 CheckoutCart();
-
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Checkout",
-                    Message = "Cart checkout. Items sold successfully",
-                    Type = NotificationType.Success
-                });
+                StaticContainer.ShowNotification("Checkout", "Cart checkout. Items sold successfully", NotificationType.Error);
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
             }
             finally
             {

@@ -8,7 +8,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace POSSystem.UI.Views.Flyouts
+namespace POSSystem.WPF.UI.Pages.Flyouts
 {
     /// <summary>
     /// Interaction logic for SettingView.xaml
@@ -69,7 +69,7 @@ namespace POSSystem.UI.Views.Flyouts
             User u = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             if(u!= null)
             {
-                //shopSetting.Visibility = u.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+                shopSetting.Visibility = u.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using POS.Core.Model;
+using POS.Core.Utilities.Extension;
 using System;
 using System.ComponentModel.DataAnnotations;
 namespace POSSystem.WPF.UI.Wrapper

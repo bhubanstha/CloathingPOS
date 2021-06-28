@@ -1,18 +1,17 @@
 ﻿using MahApps.Metro.Controls;
-using Notifications.Wpf;
-using POS.BusinessRule;
-using POS.Model;
-using POSSystem.UI.Event;
-using POSSystem.UI.Service;
-using POSSystem.UI.UIModel;
-using POSSystem.UI.Wrapper;
+using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POSSystem.WPF.UI.Event;
+using POSSystem.WPF.UI.Service;
+using POSSystem.WPF.UI.UIModel;
+using POSSystem.WPF.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Windows.Input;
 
 namespace POSSystem.WPF.UI.ViewModel

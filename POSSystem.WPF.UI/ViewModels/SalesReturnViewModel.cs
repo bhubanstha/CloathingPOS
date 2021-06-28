@@ -1,9 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Notifications.Wpf;
-using POS.BusinessRule;
-using POS.Model;
-using POSSystem.UI.Service;
+using Notifications.Wpf.Core;
+using POS.Core.BusinessRule;
+using POS.Core.Model;
+using POSSystem.WPF.UI.Service;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -85,22 +85,12 @@ namespace POSSystem.WPF.UI.ViewModel
                     InventoryBO inventoryBO = new InventoryBO();
                     await inventoryBO.Restock(item.Inventory, salesReturn);
                     LoadSales();
-                    StaticContainer.NotificationManager.Show(new NotificationContent
-                    {
-                        Title = "Sales Return",
-                        Message = $"Item: {item.Inventory.Name} , Return Qty: {salesReturn} returned on {DateTime.Now.ToString("yyyy/MM/dd")}",
-                        Type = NotificationType.Success
-                    });
+                    StaticContainer.ShowNotification("Sales Return", $"Item: {item.Inventory.Name} , Return Qty: {salesReturn} returned on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
                 }                
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -129,12 +119,7 @@ namespace POSSystem.WPF.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", ex.Message, NotificationType.Error);
             }
             return 1;
         }

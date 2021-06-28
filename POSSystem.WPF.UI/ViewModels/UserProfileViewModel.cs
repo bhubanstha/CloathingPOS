@@ -1,5 +1,5 @@
-﻿using POS.Model;
-using POSSystem.UI.Service;
+﻿using POS.Core.Model;
+using POSSystem.WPF.UI.Service;
 
 namespace POSSystem.WPF.UI.ViewModel
 {

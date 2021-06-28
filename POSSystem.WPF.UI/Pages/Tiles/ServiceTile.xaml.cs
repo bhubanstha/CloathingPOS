@@ -163,7 +163,7 @@ namespace POSSystem.WPF.UI.Pages.Tiles
                     BitmapImage image = new BitmapImage();
 
                     image.BeginInit();
-                    image.UriSource = new Uri("pack://application:,,,/POSSystem;component/" + imageName);
+                    image.UriSource = new Uri("pack://application:,,,/POSSystem.WPF.UI;component/" + imageName);
                     image.EndInit();
 
                     return image;

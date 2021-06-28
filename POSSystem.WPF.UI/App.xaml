@@ -15,6 +15,7 @@
 
 
                 <!--  App Styles  -->
+                <ResourceDictionary Source="styles/colors.xaml" />
                 <ResourceDictionary Source="styles/common.xaml" />
                 <ResourceDictionary Source="styles/autocomplete.TextBox.xaml" />
                 <ResourceDictionary Source="styles/border.xaml" />

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace POSSystem.WPF.UI.Control
+namespace POSSystem.WPF.UI.Controls
 {
     /// <summary>
     /// Interaction logic for BindablePasswordBox.xaml
