@@ -21,6 +21,19 @@ namespace POSSystem.WPF.UI.Pages
         public AboutPage()
         {
             InitializeComponent();
+            this.Loaded += AboutView_Loaded;
+        }
+
+        private void AboutView_Loaded(object sender, RoutedEventArgs e)
+        {
+            //bitmapImage = StaticContainer.AppScreenshot;
+            //ThisWindowPic.Source = bitmapImage;
+        }
+
+        private void OnNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
     }
 }

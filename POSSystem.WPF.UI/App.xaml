@@ -12,6 +12,21 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <!--  Theme setting  -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+
+
+                <!--  App Styles  -->
+                <ResourceDictionary Source="styles/common.xaml" />
+                <ResourceDictionary Source="styles/autocomplete.TextBox.xaml" />
+                <ResourceDictionary Source="styles/border.xaml" />
+                <ResourceDictionary Source="styles/button.xaml" />
+                <ResourceDictionary Source="styles/calendar.xaml" />
+                <ResourceDictionary Source="styles/grid.xaml" />
+                <ResourceDictionary Source="styles/hyperlink.xaml" />
+                <ResourceDictionary Source="styles/label.xaml" />
+                <ResourceDictionary Source="styles/passwordbox.xaml" />
+                <ResourceDictionary Source="styles/scrollview.xaml" />
+                <ResourceDictionary Source="styles/textblock.xaml" />
+                <ResourceDictionary Source="styles/textbox.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

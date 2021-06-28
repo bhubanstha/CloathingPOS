@@ -1,14 +1,192 @@
-﻿<Page x:Class="POSSystem.WPF.UI.Pages.AboutPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:POSSystem.WPF.UI.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AboutPage">
+﻿<Page
+    x:Class="POSSystem.WPF.UI.Pages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:POSSystem.WPF.UI.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tiles="clr-namespace:POSSystem.WPF.UI.Pages.Tiles"
+    Title="AboutPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="About Page"></TextBlock>
-    </Grid>
+    <StackPanel Margin="0,5,3,5" Orientation="Vertical">
+        <Grid Margin="{StaticResource ControlMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                x:Name="ThisWindowPic"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Stretch="UniformToFill" />
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="10,0,30,-20"
+                FontSize="14"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow">
+                <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                system is a complete package to handle your<Bold>
+                    <Italic>User, Inventory and Sales.</Italic>
+                </Bold>
+                <Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                is design to remove your day to day manual work in stores.<Run Text="{Binding AppName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                is best suitable for small stores without any branch.
+                Though<Run Text="{Binding AppName}" />
+                can be used by big franchies with multiple branches located in different geographical location, it many not contain all functions you are looking for. In such case please reach out to me through given contact information.<LineBreak />
+                <LineBreak />
+                Some Features of<Run Text="{Binding AppName}" />
+                :<LineBreak />
+            </TextBlock>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,30,-20"
+                FontSize="14"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow">
+                1. User Management<LineBreak />
+                2. Inventory Management<LineBreak />
+                3. POS Integrated<LineBreak />
+            </TextBlock>
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="10,0,30,-20"
+                FontSize="14"
+                TextAlignment="Justify"
+                TextWrapping="WrapWithOverflow">
+                4. Multiple Reports<LineBreak />
+                5. Interactive Graphs<LineBreak />
+                6. Modern UI and Interactive User Experience<LineBreak />
+            </TextBlock>
+
+        </Grid>
+
+        <Separator BorderBrush="{StaticResource MahApps.Brushes.ThemeBackground}" BorderThickness="2" />
+        <Grid Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontSize="20">
+                <Bold>Remember Me For</Bold>
+            </TextBlock>
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="0,0,30,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="12">
+                Email:<Hyperlink
+                    NavigateUri="mailto:bhubanshrestha12@gmail.com?subject=I would like to know more about your services &amp;body=Hi Bhuban,"
+                    RequestNavigate="OnNavigate"
+                    Style="{StaticResource HyperLink.Contact.Me}"
+                    TextDecorations="None">
+                    <Span>bhubanshrestha12@gmail.com</Span>
+                </Hyperlink>
+                <LineBreak />
+                Contact:<Hyperlink
+                    NavigateUri="tel:(+977)9823074545"
+                    RequestNavigate="OnNavigate"
+                    Style="{StaticResource HyperLink.Contact.Me}"
+                    TextDecorations="None">
+                    <Span>9823-07-4545</Span>
+                </Hyperlink>
+                /<Hyperlink
+                    NavigateUri="tel:(+977)9869064005"
+                    RequestNavigate="OnNavigate"
+                    Style="{StaticResource HyperLink.Contact.Me}"
+                    TextDecorations="None">
+                    <Span>9869-06-4005</Span>
+                </Hyperlink>
+            </TextBlock>
+        </Grid>
+        <Grid Margin="0,0,25,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,0,5,5"
+                BorderBrush="{DynamicResource RedNegative}"
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description=" A business's online presence, regardless of industry, can have a massive impact on its success. Having a strong online presence, particularly a website, can be make or break for generating more revenue. Without a website, people may question your legitimacy as a business. Having a website is an opportunity to make a great first impression and give people comfort that you're a real business. We help you to design greate website that align with your business values and represent your brand to the world."
+                    ImageSource="/Image/webDesigning.png"
+                    ServiceTitle="Website Designing &amp; Hosting" />
+            </Border>
+
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="5,0,0,5"
+                BorderBrush="{StaticResource HighlightBlue}"
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="Web applications have become an essential component of business in today's world. By using the web applications, businesses can now develop and become simpler, and achieve its objectives much faster. These applications can help target numerous clientele and customers at a time. It is no longer possible for the businesses to see a growth in their market share unless they have a proper web application. Web applications can play a crucial role in the branding process. With their help, it is easier to maintain a proper communication channel between potential customers and the business organization."
+                    ImageSource="/Image/webApp.png"
+                    ServiceTitle="Web Application Development" />
+            </Border>
+
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,5,5"
+                BorderBrush="{StaticResource GreenPositive}"
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="As consumer behaviour continues to evolve, businesses need to adapt their strategy to be 'where their customers are'. As a result, companies are moving rapidly toward making mobile apps commonplace as business tools and assets. One of the key questions in business is 'how you can give your brand a competitive edge'. The answer; mobile apps. It is important to understand that a native app isn't just a mobile version of your website but rather an engaging and experience-driven environment crucial for creating a cohesive customer journey. A mobile app can be used to build a strong mobile presence, that results in far better engagement for your investment."
+                    ImageSource="/Image/mobileApp.jpg"
+                    ServiceTitle="Mobile Application Development" />
+            </Border>
+
+            <Border
+                Grid.Row="1"
+                Grid.Column="2"
+                Margin="5,0,0,5"
+                BorderBrush="{StaticResource HighlightYellowOccured}"
+                BorderThickness="3"
+                CornerRadius="5">
+                <tiles:ServiceTile
+                    Description="Creating a cohesive working environment for employees is one of the main requirements of business running. The onus is obviously on the management to generate a dynamic environment for their employees.Remember, this is a very clever approach in eliciting high performance from employees. Well-designed applications that improve enterprise co-ordination are the best tools that trigger quick completion of your projects.In addition to high levels of communication amongst members of different teams, the offline capabilities of these applications make sure that no updates go unaccounted for even in non-web scenarios."
+                    ImageSource="/Image/desktopApp.jpg"
+                    ServiceTitle="Desktop Application Development" />
+            </Border>
+
+        </Grid>
+    </StackPanel>
 </Page>

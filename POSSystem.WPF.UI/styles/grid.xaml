@@ -1,0 +1,60 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:POSSystem.UI.Converter">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/POSSystem.WPF.UI;component/styles/common.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <conv:QuantityLowStock x:Key="QtyLow" />
+
+    <Style x:Key="ControlerMainGrid" TargetType="Grid">
+        <Setter Property="Margin" Value="0,30,40,0" />
+    </Style>
+
+    <Style x:Key="TabularGrid" TargetType="Grid">
+        <Setter Property="ShowGridLines" Value="True" />
+    </Style>
+
+
+    <Style x:Key="DataGridRow.Accent" TargetType="{x:Type DataGridRow}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent4}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="DataGrid.Inventory.List.Row"
+        BasedOn="{StaticResource MahApps.Styles.DataGridRow.Azure}"
+        TargetType="{x:Type DataGridRow}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Quantity, Converter={StaticResource QtyLow}}" Value="True">
+                <Setter Property="Background" Value="{StaticResource LowQty}" />
+            </DataTrigger>
+
+            <!--<MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Binding="{Binding Quantity}" Value="3"/>
+                </MultiTrigger.Conditions>
+                 <Setter Property="Background" Value="{StaticResource LowQty}" />
+            </MultiTrigger>
+
+
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsSelected}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground" Value="{StaticResource MahApps.Brushes.ThemeForeground}" />
+            </MultiDataTrigger>-->
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

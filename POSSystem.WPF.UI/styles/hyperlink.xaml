@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/POSSystem.WPF.UI;component/styles/common.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="HyperLink.Contact.Me" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="HyperLink.Forgot.Password" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource BlueNeutral}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
