@@ -85,6 +85,11 @@ namespace POS.BusinessRule
             inventoryHistoryBO.AddToHistory(history);
             return await genericDataRepository.SaveAsync();
         }
+        public async Task<int> UpdateInventory(Inventory inventory)
+        {
+            genericDataRepository.Update(inventory);
+            return await genericDataRepository.SaveAsync();
+        }
 
         public async Task<int> Restock(Inventory inventory, int salesReturn)
         {

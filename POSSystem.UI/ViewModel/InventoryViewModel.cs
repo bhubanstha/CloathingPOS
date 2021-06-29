@@ -22,6 +22,10 @@ namespace POSSystem.UI.ViewModel
         private IEventAggregator _eventAggregator;
         private ObservableCollection<CategoryWrapper> _categories = null;
         private ObservableCollection<BrandWrapper> _brands = null;
+        private InventoryBO InventoryBO;
+        private CategoryBO CategoryBO ;
+        private string _buttonText = "Create Inventory";
+
         public virtual ObservableCollection<CategoryWrapper> Categories 
         { 
             get { return _categories; }
@@ -45,8 +49,15 @@ namespace POSSystem.UI.ViewModel
 
         public InventoryWrapper Inventory { get; set; }
 
-        private InventoryBO InventoryBO;
-        private CategoryBO CategoryBO;
+        
+
+        public string ButtonText
+        {
+            get { return _buttonText; }
+            set { _buttonText = value; OnPropertyChanged(); }
+        }
+
+
 
 
         public ICommand SaveCommand { get; }
@@ -69,6 +80,29 @@ namespace POSSystem.UI.ViewModel
             AddBrandCommand = new DelegateCommand(OnOpenAddBrandFlyout);
             eventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(ReLoadCategories);
             eventAggregator.GetEvent<BrandChangedEvent>().Subscribe(ReLoadBrands);
+            eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(OnInventoryEditReceived);
+        }
+
+        private void OnInventoryEditReceived(InventoryChangedEventArgs obj)
+        {
+            if(obj.Action == EventAction.Edit)
+            {
+                Inventory.Id = obj.Inventory.Id;
+                Inventory.FirstPurchaseDate = obj.Inventory.FirstPurchaseDate;
+                Inventory.PurchaseRate = obj.Inventory.PurchaseRate;
+                Inventory.RetailRate = obj.Inventory.RetailRate;
+                Inventory.Name = obj.Inventory.Name;
+                Inventory.Size = obj.Inventory.Size;
+                Inventory.Color = obj.Inventory.Color;
+                Inventory.ColorName = obj.Inventory.ColorName;
+                Inventory.Quantity = obj.Inventory.Quantity;
+                Inventory.CategoryId = obj.Inventory.CategoryId;
+                Inventory.CategoryName = obj.Inventory.Category.Name;
+                Inventory.BrandId = obj.Inventory.BrandId;
+                Inventory.BrandName = obj.Inventory.Brand.Name;
+                StaticContainer.UIHamburgerMenuControl.SelectedIndex = 1;
+                ButtonText = "Update Inventory";
+            }
         }
 
         private void OnOpenAddCategoryFlyout()
@@ -85,6 +119,8 @@ namespace POSSystem.UI.ViewModel
 
         private async void OnSaveProduct()
         {
+            EventAction eventAction;
+            string msg = "";
             try
             {
                 Inventory inventory = new Inventory
@@ -102,24 +138,37 @@ namespace POSSystem.UI.ViewModel
                     ColorName = this.Inventory.ColorName
                 };
                 InventoryBO = new InventoryBO();
-                int c = await InventoryBO.Save(inventory);
+                int c = 0;
+                if(this.Inventory.Id>0)
+                {
+                    c = await InventoryBO.UpdateInventory(inventory);
+                    eventAction = EventAction.Update;
+                    msg = "updated";
+                }
+                else
+                {
+                    c = await InventoryBO.Save(inventory);
+                    eventAction = EventAction.Add;
+                    msg = "added into inventory";
+                }
+                
                 if (c > 0)
                 {
                     InventoryChangedEventArgs args = new InventoryChangedEventArgs
                     {
                         Inventory = inventory,
-                        Action = EventAction.Add
+                        Action = eventAction
                     };
                     _eventAggregator.GetEvent<InventoryChangedEvent>().Publish(args);
                     ResetInventory();
 
-                    StaticContainer.ShowNotification("Product Added", $"Product: {inventory.Name} - {inventory.Size} purchased on {inventory.FirstPurchaseDate.ToString("yyyy/MM/dd")} added into inventory.", NotificationType.Success);
+                    StaticContainer.ShowNotification("Product Added", $"Product: {inventory.Name} - {inventory.Size} purchased on {inventory.FirstPurchaseDate.ToString("yyyy/MM/dd")} {msg}.", NotificationType.Success);
 
                 }
             }
             catch (Exception ex)
             {
-                StaticContainer.ShowNotification("Error", "Could not create inventory. Please provide all the required item information.", NotificationType.Error);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -200,6 +249,7 @@ namespace POSSystem.UI.ViewModel
             Inventory.RetailRate = 1;
             Inventory.Size = "";
             Inventory.ColorName = "";
+            ButtonText = "Create Inventory";
         }
     }
 }

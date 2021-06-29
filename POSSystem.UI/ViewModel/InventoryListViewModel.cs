@@ -40,6 +40,8 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand DeleteInventoryItemCommand { get; }
         public ICommand AddInventoryItemStockCommand { get; }
+        public ICommand EditInventoryItemCommand { get; }
+
 
         public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator)
         {
@@ -48,8 +50,19 @@ namespace POSSystem.UI.ViewModel
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             DeleteInventoryItemCommand = new DelegateCommand<InventoryWrapper>(DeleteInventoryItem);
             AddInventoryItemStockCommand = new DelegateCommand<InventoryWrapper>(OnAddInventoryItemStock);
+            EditInventoryItemCommand = new DelegateCommand<InventoryWrapper>(OnInventoryItemEdit);
             eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(ReloadInventory);
             LoadInventory();
+        }
+
+        private void OnInventoryItemEdit(InventoryWrapper obj)
+        {
+            InventoryChangedEventArgs args = new InventoryChangedEventArgs
+            {
+                Inventory = obj.Model,
+                Action = EventAction.Edit
+            };
+            _eventAggregator.GetEvent<InventoryChangedEvent>().Publish(args);
         }
 
         private void OnAddInventoryItemStock(InventoryWrapper obj)
