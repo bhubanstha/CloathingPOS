@@ -558,9 +558,6 @@
     <Compile Include="Views\Dialog\AdminChangePassword.xaml.cs">
       <DependentUpon>AdminChangePassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Dialog\EditInventoryDialog.xaml.cs">
-      <DependentUpon>EditInventoryDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Dialog\UpdateInventoryDialog.xaml.cs">
       <DependentUpon>UpdateInventoryDialog.xaml</DependentUpon>
     </Compile>
@@ -707,10 +704,6 @@
     <Page Include="Views\Dialog\AdminChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Dialog\EditInventoryDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialog\UpdateInventoryDialog.xaml">
       <SubType>Designer</SubType>
