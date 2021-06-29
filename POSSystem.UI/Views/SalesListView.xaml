@@ -1,0 +1,297 @@
+﻿<UserControl x:Class="POSSystem.UI.Views.SalesListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:POSSystem.UI.Converter" 
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
+        <conv:ControlHeightCalculator x:Key="HeightCalc" />
+        <conv:BillToBillInfoConverter x:Key="BillInfoConverter"/>
+
+        <Style x:Key="DataGrid.Test" TargetType="{x:Type DataGrid}"> 
+            
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Margin="0,5,3,5">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       Margin="5 0"
+                       Text="Sales Date"/>
+            <DatePicker
+                x:Name="PurchaseDate"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter a product purchase date"
+                DisplayDate="{Binding Inventory.FirstPurchaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                IsHitTestVisible="True"
+                IsTodayHighlighted="True"
+                SelectedDateFormat="Short"
+                SelectedDate="{Binding BillingDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"/>
+            
+            <Button Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="5 0"
+                    Command="{Binding SearchBillCommand}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}"
+                    Content="Search"/>
+            
+            <DataGrid
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                x:Name="CartGrid"
+                AutoGenerateColumns="False"
+                EnableColumnVirtualization="True"
+                EnableRowVirtualization="True"            
+                VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                HeadersVisibility="All"
+                SelectionUnit="FullRow"
+                RowHeaderWidth="0"
+                CanUserAddRows="False"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="False"
+                CanUserSortColumns="False"
+                HorizontalScrollBarVisibility="Hidden"
+                CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
+                IsReadOnly="True"
+                ItemsSource="{Binding SalesList, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                RowStyle="{DynamicResource MahApps.Styles.DataGridRow}"
+                Style="{DynamicResource MahApps.Styles.DataGrid}">
+
+                <DataGrid.MaxHeight>
+                    <MultiBinding
+                        Converter="{StaticResource HeightCalc}"
+                        Mode="OneWay"
+                        UpdateSourceTrigger="LostFocus">
+                        <Binding>
+                            <Binding.Source>
+                                <sys:Double>125</sys:Double>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </DataGrid.MaxHeight>
+                        
+            <DataGrid.GroupStyle>
+
+                <!--Style for groups at top level.--> 
+                <GroupStyle>
+                    
+                    <!--Inner grid make fit within outer grid so that all columns remain as it is without collapse-->
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                    
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin" Value="0,0,0,3"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1">
+                                            <Expander.Header>
+                                                <DockPanel >
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                    
+                                                        <TextBlock Grid.Column="0" FontWeight="Bold">
+                                                            <Run Text="Billing Info:"/>
+                                                            <Run Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource BillInfoConverter}}"/>
+                                                        </TextBlock>
+                                                        <!--<TextBlock Grid.Column="1" FontWeight="Bold">
+                                                            <Run Text="Total Sales Record:"/>
+                                                            <Run Text="{Binding Path=ItemCount}"/>
+                                                        </TextBlock>-->
+                                                        <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="Total Sales Record:"/>-->
+                                                        <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="{Binding Path=ItemCount}"/>-->
+                                                        <TextBlock Grid.Column="1" FontWeight="Bold">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0}: {1}">
+                                                                    <Binding>
+                                                                        <Binding.Source>
+                                                                            <sys:String>Total Sales Record</sys:String>
+                                                                        </Binding.Source>
+                                                                    </Binding>
+                                                                    <Binding Mode="OneWay" Path="ItemCount" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+                 <!--Style for groups under the top level.--> 
+                <!--<GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <DockPanel Background="{DynamicResource MahApps.Brushes.Accent}">
+                                <TextBlock Text="{Binding Path=Name}"  Margin="30,0,0,0" Width="100"/>
+                                --><!--<TextBlock Text="{Binding Path=ItemCount}" Foreground="Blue"/>--><!--
+                            </DockPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>-->
+            </DataGrid.GroupStyle>
+
+            <DataGrid.Columns>                   
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding Bill.BillDate, StringFormat=\{0:yyyy/MM/dd\}}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        Header="Sales Date"
+                        HeaderStringFormat="yyyy/MM/dd" />
+                    <DataGridTextColumn
+                        Width="0.5*"
+                        Binding="{Binding Inventory.Brand.Name}"
+                        Header="Brand" />
+                    <DataGridTextColumn
+                        Width="0.5*"
+                        Binding="{Binding Inventory.Category.Name}"
+                        Header="Category" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Inventory.Name}"
+                        Header="Name" />
+                    <DataGridTextColumn
+                        Width="45"
+                        Binding="{Binding Inventory.Size}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        Header="Size" />
+                    <DataGridTemplateColumn Header="Colour">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Rectangle
+                                    Width="24"
+                                    Height="20"
+                                    VerticalAlignment="Top"
+                                    Fill="{Binding Inventory.Color, Converter={StaticResource ColorConverter}}"
+                                    Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                    StrokeThickness="0.5" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Width="50"
+                        Binding="{Binding SalesQuantity}"
+                        ElementStyle="{StaticResource GridNumericColumn}"
+                        Header="Qty" />
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding Rate, StringFormat=N2}"
+                        ElementStyle="{StaticResource GridNumericColumn}"
+                        Header="Sales Rate" />
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding Discount, StringFormat=N2}"
+                        ElementStyle="{StaticResource GridNumericColumn}"
+                        Header="Discount" />
+                    <DataGridTextColumn
+                        Width="110"
+                        Binding="{Binding Discount, StringFormat=N2}"
+                        ElementStyle="{StaticResource GridNumericColumn}"
+                        Header="Total" />
+                    
+                    
+                    <!--<DataGridTemplateColumn Width="70" Header="Options">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button
+                                        Grid.Column="0"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="2,0"
+                                        Command="{Binding DataContext.AddInventoryItemStockCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}"
+                                        ToolTip="Add Stock">
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="Plus"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="2,0"
+                                        Command="{Binding DataContext.DeleteInventoryItemCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding DataContext, RelativeSource={RelativeSource Mode=Self}}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}"
+                                        ToolTip="Remove Inventory Item">
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="Trash"
+                                                    Style="{StaticResource row.option.icon}" />
+
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+
+                                </Grid>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+    </StackPanel>
+</UserControl>

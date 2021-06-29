@@ -343,6 +343,11 @@
                             <views:SalesReturnView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartArrowUp}" Label="Sales List">
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:SalesListView />
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuReport"
                         Icon="{iconPacks:Material Kind=FileDocument}"

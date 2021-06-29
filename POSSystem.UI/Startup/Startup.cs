@@ -70,6 +70,7 @@ namespace POSSystem.UI
             builder.RegisterType<BrandViewModel>().AsSelf();
             builder.RegisterType<InventoryHistoryViewModel>().AsSelf();
             builder.RegisterType<AdminChangeUserPasswordViewModel>().AsSelf();
+            builder.RegisterType<SalesListViewModel>().AsSelf();
 
 
 

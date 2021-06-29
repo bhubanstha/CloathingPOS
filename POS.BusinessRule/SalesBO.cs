@@ -25,21 +25,17 @@ namespace POS.BusinessRule
         {
             return genericDataRepository.BeginTransaction();
         }
-        public Sales ManageCartItem(SalesModel item, ObservableCollection<SalesModel> cart, ref Bill b)
+       
+        public List<Sales> GetAll()
         {
-            return null;
-            //Sales _existingItem = cart.Where(x => x.ProductId == item.Inventory.Id).FirstOrDefault();
-            //if (_existingItem != null)
-            //{
-            //    cart.Remove(_existingItem);
-            //}
-
-            //item.Rate = item.Inventory.RetailRate;
-            //item.ProductId = item.Inventory.Id;
-            //item.Bill = b;
-            //return item;
+            return genericDataRepository.GetAll().ToList();
         }
 
+        public List<Sales> GetAllOnDate(DateTime billingdate)
+        {
+            DateTime billDate = new DateTime(billingdate.Year, billingdate.Month, billingdate.Day);
+            return genericDataRepository.GetAll().Where(x => x.Bill.BillDate >= billDate).ToList() ;
+        }
         public async Task<int> CheckoutSales(Sales item)
         {
             genericDataRepository.Insert(item);

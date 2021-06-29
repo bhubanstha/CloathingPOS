@@ -471,8 +471,10 @@
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\ControlHeightCalculator.cs" />
     <Compile Include="Converter\FileToImageSourceConverter.cs" />
+    <Compile Include="Converter\BillToBillInfoConverter.cs" />
     <Compile Include="Converter\IconVisibilityConverter.cs" />
     <Compile Include="Converter\ImageVisibilityConverter.cs" />
+    <Compile Include="Converter\ItemCountConverter.cs" />
     <Compile Include="Converter\QuantityLowStock.cs" />
     <Compile Include="Converter\UserDeactivationConverter.cs" />
     <Compile Include="Converter\DateConverter.cs" />
@@ -527,12 +529,14 @@
     <Compile Include="UIModel\EventAction.cs" />
     <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="UIModel\InventoryChangedEventArgs.cs" />
+    <Compile Include="UIModel\SalesUIModel.cs" />
     <Compile Include="ViewModel\AdminChangeUserPassword.cs" />
     <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
+    <Compile Include="ViewModel\SalesListViewModel.cs" />
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
@@ -583,6 +587,9 @@
     </Compile>
     <Compile Include="Views\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SalesListView.xaml.cs">
+      <DependentUpon>SalesListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SalesReturnView.xaml.cs">
       <DependentUpon>SalesReturnView.xaml</DependentUpon>
@@ -735,6 +742,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SalesListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
