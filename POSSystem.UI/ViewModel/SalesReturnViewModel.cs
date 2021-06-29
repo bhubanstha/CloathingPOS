@@ -82,9 +82,13 @@ namespace POSSystem.UI.ViewModel
                         item.SalesQuantity -= salesReturn;
                         i = await salesBO.Update(item); 
                     }
+                    //Restock Item into inventory
                     InventoryBO inventoryBO = new InventoryBO();
                     await inventoryBO.Restock(item.Inventory, salesReturn);
-                    LoadSales();
+
+                    //Remove BillingInfo if no sales record exists for current billno
+                    ManageBills(item.BillNo);
+                    await LoadSales();
                     StaticContainer.NotificationManager.Show(new NotificationContent
                     {
                         Title = "Sales Return",
@@ -114,6 +118,19 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        private void  ManageBills(Int64 BillNo)
+        {
+           Task t =  Task.Run(() =>
+            {
+                BillBO billBO = new BillBO();
+                int totalRemainingSales = billBO.GetRemainingSalesCount(BillNo);
+                if(totalRemainingSales == 0)
+                {
+                    billBO.Remove(BillNo);
+                }
+            });
+
+        }
         private async Task<int> LoadSales()
         {
             try

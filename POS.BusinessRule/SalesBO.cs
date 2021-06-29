@@ -34,7 +34,7 @@ namespace POS.BusinessRule
         public List<Sales> GetAllOnDate(DateTime billingdate)
         {
             DateTime billDate = new DateTime(billingdate.Year, billingdate.Month, billingdate.Day);
-            return genericDataRepository.GetAll().Where(x => x.Bill.BillDate >= billDate).ToList() ;
+            return genericDataRepository.GetAll().Where(x => DbFunctions.TruncateTime(x.Bill.BillDate) == billDate).ToList() ;
         }
         public async Task<int> CheckoutSales(Sales item)
         {
