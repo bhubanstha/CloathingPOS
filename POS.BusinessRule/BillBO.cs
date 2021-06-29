@@ -22,6 +22,15 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
+        public int GetRemainingSalesCount(Int64 BillNo)
+        {
+            int remainingRecords =  genericDataRepository.GetAll()
+                .Where(x=>x.Id == BillNo)
+                .Select(x=>x.Sales)
+                .Count();
+            return remainingRecords;
+        }
+
         public long GetNewBillNo()
         {
             
