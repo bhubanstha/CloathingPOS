@@ -78,6 +78,17 @@ namespace POS.Utilities.PDF
 
         }
 
+        public static void CreateInoiceTableRecord(ref Table invoiceTable, Sales item, int sn)
+        {
+            Cell c = CreateCell(sn.ToString(), TextAlignment.CENTER);
+            invoiceTable.AddCell(c);
+            invoiceTable.AddCell(CreateCell($"{item.Inventory.Name} - {item.Inventory.Size}({item.Inventory.ColorName})", TextAlignment.LEFT));
+            invoiceTable.AddCell(CreateCell(item.SalesQuantity.ToString(), TextAlignment.CENTER));
+            invoiceTable.AddCell(CreateCell(item.Inventory.RetailRate.ToString(), TextAlignment.CENTER));
+            invoiceTable.AddCell(CreateCell($"{item.SalesQuantity * item.Inventory.RetailRate}", TextAlignment.RIGHT));
+
+        }
+
         public static void CreateInvoiceTotal(ref Table inoiceTable, List<SalesModel> sales, Shop shop)
         {
 
@@ -100,6 +111,30 @@ namespace POS.Utilities.PDF
 
             inoiceTable.AddCell(CreateCell("Grand Total", TextAlignment.LEFT, 1, 2));
             inoiceTable.AddCell(CreateCell($"{(grandTotal>0? grandTotal.ToString() : "" ) }", TextAlignment.RIGHT));
+        }
+
+        public static void CreateInvoiceTotal(ref Table inoiceTable, List<Sales> sales, Shop shop)
+        {
+
+            decimal total = sales.Sum(x => x.SalesQuantity * x.Inventory.RetailRate);
+            decimal totalDiscount = sales.Sum(x => x.Discount);
+            decimal vatAmount = shop.CalculateVATOnSales ? Math.Ceiling((13 * total) / 100) : 0;
+            decimal grandTotal = total + vatAmount - totalDiscount;
+
+            string amountInWord = grandTotal > 0 ? NumberToWord.Parse($"{grandTotal}") : "";
+            inoiceTable.AddCell(CreateCell($"{amountInWord}.", TextAlignment.CENTER, 4, 2).SetVerticalAlignment(VerticalAlignment.MIDDLE));
+
+            inoiceTable.AddCell(CreateCell("Taxable Total", TextAlignment.LEFT, 1, 2));
+            inoiceTable.AddCell(CreateCell($"{(total > 0 ? total.ToString() : "")}", TextAlignment.RIGHT));
+
+            inoiceTable.AddCell(CreateCell("Discount", TextAlignment.LEFT, 1, 2));
+            inoiceTable.AddCell(CreateCell($"{(totalDiscount > 0 ? totalDiscount.ToString() : "-")}", totalDiscount > 0 ? TextAlignment.RIGHT : TextAlignment.CENTER));
+
+            inoiceTable.AddCell(CreateCell("VAT(13%)", TextAlignment.LEFT, 1, 2));
+            inoiceTable.AddCell(CreateCell($"{(vatAmount > 0 ? vatAmount.ToString() : "-")}", vatAmount > 0 ? TextAlignment.RIGHT : TextAlignment.CENTER));
+
+            inoiceTable.AddCell(CreateCell("Grand Total", TextAlignment.LEFT, 1, 2));
+            inoiceTable.AddCell(CreateCell($"{(grandTotal > 0 ? grandTotal.ToString() : "") }", TextAlignment.RIGHT));
         }
 
 

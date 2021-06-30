@@ -73,6 +73,31 @@ namespace POS.Utilities
             return false;
             
         }
+
+        public static string GetInvoicePdfPath(Int64 billId, bool deleteIfExists = true)
+        {
+            string fileFullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{billId}.pdf");
+            if(deleteIfExists)
+            {
+                if(File.Exists(fileFullPath))
+                {
+                    try
+                    {
+                        File.Delete(fileFullPath);
+                    }
+                    catch 
+                    {
+                        throw;
+                    }
+                }
+            }
+            return fileFullPath;
+        }
+
+        public static bool CheckInvoiceFileExists(string invoiceFile)
+        {
+            return File.Exists(invoiceFile);
+        }
         private static void CleanupDirectory(string directoryPath)
         {
             try

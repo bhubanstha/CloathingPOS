@@ -3,6 +3,8 @@ using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities;
+using POS.Utilities.PDF;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
@@ -64,10 +66,12 @@ namespace POSSystem.UI.ViewModel
             eventAggregator.GetEvent<BillingInfoUpdateEvent>().Subscribe(OnBillInfoUpdateReceive);
         }
 
-        private void OnBillReprintExeucte(long? obj)
+        private async void OnBillReprintExeucte(long? obj)
         {
-            if(_isBillingInfoUpdated)
+            if(_isBillingInfoUpdated || FileUtility.CheckInvoiceFileExists(FileUtility.GetInvoicePdfPath(obj.Value)))
             {
+                List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
+                string pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
                 //Create Bill
             }
             //OpenBill
