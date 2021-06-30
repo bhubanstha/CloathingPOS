@@ -287,6 +287,10 @@
         x:Key="LowQty"
         Opacity="0.35"
         Color="Red" />
+    <SolidColorBrush
+        x:Key="LowQtySelected"
+        Opacity="0.2"
+        Color="Red" />
     <Style
         x:Key="DataGrid.Inventory.List.Row"
         BasedOn="{StaticResource MahApps.Styles.DataGridRow.Azure}"
@@ -295,6 +299,20 @@
             <DataTrigger Binding="{Binding Quantity, Converter={StaticResource QtyLow}}" Value="True">
                 <Setter Property="Background" Value="{StaticResource LowQty}" />
             </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Quantity, Converter={StaticResource QtyLow}}" Value="True" />
+                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Quantity, Converter={StaticResource QtyLow}}" Value="True" />
+                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource LowQtySelected}" />
+            </MultiDataTrigger>
 
             <!--<MultiTrigger>
                 <MultiTrigger.Conditions>
