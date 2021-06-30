@@ -1,15 +1,17 @@
 ﻿using POS.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSSystem.UI.UIModel
 {
     public class CategoryChangedEventArgs
     {
         public Category Category { get; set; }
+        public EventAction Action { get; set; }
+    }
+
+    public class BillingInfoUpdateEventArgs
+    {
+        public Int64 BillId { get; set; }
         public EventAction Action { get; set; }
     }
 }

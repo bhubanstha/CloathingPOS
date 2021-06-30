@@ -127,7 +127,7 @@
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
 
-                                                            <TextBlock Grid.Column="0" FontWeight="Bold">
+                                                            <TextBlock Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center">
                                                                 <Run Text="Billing Info:" />
                                                                 <Run Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource BillInfoConverter}}" />
                                                             </TextBlock>
@@ -137,7 +137,7 @@
                                                         </TextBlock>-->
                                                             <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="Total Sales Record:"/>-->
                                                             <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="{Binding Path=ItemCount}"/>-->
-                                                            <TextBlock Grid.Column="1" FontWeight="Bold">
+                                                            <TextBlock Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center">
                                                                 <TextBlock.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">
                                                                         <Binding>
@@ -158,10 +158,10 @@
                                                                     Width="25"
                                                                     Height="25"
                                                                     Margin="5,0"
-                                                                    Command="{Binding EditUserCommand}"
+                                                                    Command="{Binding Path=DataContext.EditBillingInfoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                                                     CommandParameter="{Binding Name}"
                                                                     Style="{DynamicResource Button.Circle.In.GridRow.Theme}"
-                                                                    ToolTip="Edit User">
+                                                                    ToolTip="Edit Billing Information">
 
                                                                     <Button.ContentTemplate>
                                                                         <DataTemplate>
@@ -178,22 +178,23 @@
                                                                     Width="25"
                                                                     Height="25"
                                                                     Margin="5,0"
-                                                                    Command="{Binding EditUserCommand}"
+                                                                    Command="{Binding Path=DataContext.ReprintBillCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                                                     CommandParameter="{Binding Name}"
                                                                     Style="{DynamicResource Button.Circle.In.GridRow.Theme}"
-                                                                    ToolTip="Edit User">
+                                                                    ToolTip="Reprint Bill">
 
                                                                     <Button.ContentTemplate>
                                                                         <DataTemplate>
                                                                             <iconPacks:PackIconBootstrapIcons
                                                                                 Width="15"
                                                                                 Height="15"
-                                                                                Kind="Trash"
+                                                                                Kind="Printer"
                                                                                 Style="{StaticResource row.option.icon}" />
                                                                         </DataTemplate>
                                                                     </Button.ContentTemplate>
 
                                                                 </Button>
+                                                                
                                                             </StackPanel>
                                                         </Grid>
                                                     </DockPanel>

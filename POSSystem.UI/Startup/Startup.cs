@@ -20,6 +20,7 @@ namespace POSSystem.UI
             //Dialog Registration
             builder.RegisterType<UpdateInventoryDialog>().AsSelf();
             builder.RegisterType<AdminChangePassword>().AsSelf();
+            builder.RegisterType<UpdateBillingInfoDialog>().AsSelf().SingleInstance();
 
 
             //Flyout Registration
@@ -71,6 +72,7 @@ namespace POSSystem.UI
             builder.RegisterType<InventoryHistoryViewModel>().AsSelf();
             builder.RegisterType<AdminChangeUserPasswordViewModel>().AsSelf();
             builder.RegisterType<SalesListViewModel>().AsSelf();
+            builder.RegisterType<BillingViewModel>().AsSelf();
 
 
 
