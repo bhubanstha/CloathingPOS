@@ -6,6 +6,7 @@ using POS.Model;
 using POS.Utilities;
 using POS.Utilities.PDF;
 using POSSystem.UI.Event;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
 using POSSystem.UI.Views.Dialog;
@@ -68,14 +69,24 @@ namespace POSSystem.UI.ViewModel
 
         private async void OnBillReprintExeucte(long? obj)
         {
-            if(_isBillingInfoUpdated || FileUtility.CheckInvoiceFileExists(FileUtility.GetInvoicePdfPath(obj.Value)))
+            string pdfPath = FileUtility.GetInvoicePdfPath(obj.Value);
+            if (string.IsNullOrEmpty(pdfPath))
             {
-                List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
-                string pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
-                //Create Bill
+                StaticContainer.ShowNotification("Error", $"The invoice file is in use by another application. Close the invoice and retry", NotificationType.Information);
             }
-            //OpenBill
-            StaticContainer.ShowNotification("passed value", $"The value for bill {obj.Value}", NotificationType.Information);
+            else
+            {
+                if (_isBillingInfoUpdated || !FileUtility.CheckInvoiceFileExists(pdfPath))
+                {
+                    List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
+                    pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
+                    //Create Bill
+                }
+                //OpenBill
+                PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);
+                window.Show();
+            }
+            //StaticContainer.ShowNotification("passed value", $"The value for bill {obj.Value}", NotificationType.Information);
         }
 
         private void OnBillInfoUpdateReceive(BillingInfoUpdateEventArgs obj)

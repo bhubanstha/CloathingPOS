@@ -24,7 +24,8 @@ namespace POS.Utilities.PDF
         public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, Shop shop, string pdfPassword)
         {
             Document document;
-            string pdfPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.BillNo}.pdf");
+            string pdfPath = FileUtility.GetInvoicePdfPath(bill.BillNo, true);  //System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.BillNo}.pdf");
+            if (string.IsNullOrEmpty(pdfPath)) return "";
             if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
             {
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));
@@ -91,6 +92,8 @@ namespace POS.Utilities.PDF
         {
             Document document;
             string pdfPath = FileUtility.GetInvoicePdfPath(bill.Id, true);// System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.Id}.pdf");
+            if (string.IsNullOrEmpty(pdfPath)) return "";
+
             if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
             {
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));

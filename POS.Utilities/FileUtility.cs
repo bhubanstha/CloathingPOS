@@ -87,7 +87,7 @@ namespace POS.Utilities
                     }
                     catch 
                     {
-                        throw;
+                        return "";
                     }
                 }
             }
