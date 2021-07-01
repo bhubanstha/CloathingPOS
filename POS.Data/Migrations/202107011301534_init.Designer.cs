@@ -13,7 +13,7 @@ namespace POS.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202107011151027_init"; }
+            get { return "202107011301534_init"; }
         }
         
         string IMigrationMetadata.Source

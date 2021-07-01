@@ -135,26 +135,25 @@
                         CreatedDate = c.DateTime(nullable: false),
                         DeactivationDate = c.DateTime(),
                         LastPasswordChangeDate = c.DateTime(),
-                        BranchId = c.Long(nullable: false),
+                        BranchId = c.Long(),
                         CanAccessAllBranch = c.Boolean(nullable: false),
-                        Branch_Id = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Branch", t => t.Branch_Id)
-                .Index(t => t.Branch_Id);
+                .ForeignKey("dbo.Branch", t => t.BranchId)
+                .Index(t => t.BranchId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.User", "Branch_Id", "dbo.Branch");
+            DropForeignKey("dbo.User", "BranchId", "dbo.Branch");
             DropForeignKey("dbo.Sales", "ProductId", "dbo.Inventory");
             DropForeignKey("dbo.Sales", "BillNo", "dbo.Bill");
             DropForeignKey("dbo.InventoryHistory", "InventoryId", "dbo.Inventory");
             DropForeignKey("dbo.Inventory", "CategoryId", "dbo.Category");
             DropForeignKey("dbo.Inventory", "BrandId", "dbo.Brand");
             DropForeignKey("dbo.Branch", "ShopId", "dbo.Shop");
-            DropIndex("dbo.User", new[] { "Branch_Id" });
+            DropIndex("dbo.User", new[] { "BranchId" });
             DropIndex("dbo.Sales", new[] { "BillNo" });
             DropIndex("dbo.Sales", new[] { "ProductId" });
             DropIndex("dbo.InventoryHistory", new[] { "InventoryId" });
