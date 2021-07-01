@@ -92,9 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
-    <Compile Include="Migrations\202107011151027_init.cs" />
-    <Compile Include="Migrations\202107011151027_init.designer.cs">
-      <DependentUpon>202107011151027_init.cs</DependentUpon>
+    <Compile Include="Migrations\202107011301534_init.cs" />
+    <Compile Include="Migrations\202107011301534_init.designer.cs">
+      <DependentUpon>202107011301534_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
@@ -119,8 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107011151027_init.resx">
-      <DependentUpon>202107011151027_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107011301534_init.resx">
+      <DependentUpon>202107011301534_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
