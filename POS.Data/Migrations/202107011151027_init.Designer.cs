@@ -7,13 +7,13 @@ namespace POS.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class userimage : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(userimage));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202106151129262_userimage"; }
+            get { return "202107011151027_init"; }
         }
         
         string IMigrationMetadata.Source

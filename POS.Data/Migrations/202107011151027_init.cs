@@ -8,6 +8,33 @@
         public override void Up()
         {
             CreateTable(
+                "dbo.Branch",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        BranchName = c.String(nullable: false, maxLength: 50),
+                        BranchAddress = c.String(nullable: false, maxLength: 300),
+                        ShopId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Shop", t => t.ShopId, cascadeDelete: true)
+                .Index(t => t.ShopId);
+            
+            CreateTable(
+                "dbo.Shop",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 200),
+                        PANNumber = c.String(maxLength: 20),
+                        LogoPath = c.String(maxLength: 200),
+                        CalculateVATOnSales = c.Boolean(nullable: false),
+                        PrintInvoice = c.Boolean(nullable: false),
+                        PdfPassword = c.String(maxLength: 10),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Brand",
                 c => new
                     {
@@ -94,58 +121,55 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Shop",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 200),
-                        Address = c.String(nullable: false, maxLength: 200),
-                        PANNumber = c.String(maxLength: 20),
-                        LogoPath = c.String(maxLength: 200),
-                        CalculateVATOnSales = c.Boolean(nullable: false),
-                        PrintInvoice = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
                 "dbo.User",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
                         UserName = c.String(nullable: false, maxLength: 15),
-                        DisplayName = c.String(),
-                        Password = c.String(),
+                        DisplayName = c.String(nullable: false, maxLength: 40),
+                        Password = c.String(nullable: false, maxLength: 60),
                         IsAdmin = c.Boolean(nullable: false),
                         IsActive = c.Boolean(nullable: false),
                         PromptForPasswordReset = c.Boolean(nullable: false),
+                        ProfileImage = c.String(maxLength: 30),
                         CreatedDate = c.DateTime(nullable: false),
                         DeactivationDate = c.DateTime(),
                         LastPasswordChangeDate = c.DateTime(),
+                        BranchId = c.Long(nullable: false),
+                        CanAccessAllBranch = c.Boolean(nullable: false),
+                        Branch_Id = c.Long(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Branch", t => t.Branch_Id)
+                .Index(t => t.Branch_Id);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.User", "Branch_Id", "dbo.Branch");
             DropForeignKey("dbo.Sales", "ProductId", "dbo.Inventory");
             DropForeignKey("dbo.Sales", "BillNo", "dbo.Bill");
             DropForeignKey("dbo.InventoryHistory", "InventoryId", "dbo.Inventory");
             DropForeignKey("dbo.Inventory", "CategoryId", "dbo.Category");
             DropForeignKey("dbo.Inventory", "BrandId", "dbo.Brand");
+            DropForeignKey("dbo.Branch", "ShopId", "dbo.Shop");
+            DropIndex("dbo.User", new[] { "Branch_Id" });
             DropIndex("dbo.Sales", new[] { "BillNo" });
             DropIndex("dbo.Sales", new[] { "ProductId" });
             DropIndex("dbo.InventoryHistory", new[] { "InventoryId" });
             DropIndex("dbo.Inventory", new[] { "BrandId" });
             DropIndex("dbo.Inventory", new[] { "CategoryId" });
+            DropIndex("dbo.Branch", new[] { "ShopId" });
             DropTable("dbo.User");
-            DropTable("dbo.Shop");
             DropTable("dbo.Bill");
             DropTable("dbo.Sales");
             DropTable("dbo.InventoryHistory");
             DropTable("dbo.Inventory");
             DropTable("dbo.Category");
             DropTable("dbo.Brand");
+            DropTable("dbo.Shop");
+            DropTable("dbo.Branch");
         }
     }
 }
