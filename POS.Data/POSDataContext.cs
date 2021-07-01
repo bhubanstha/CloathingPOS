@@ -26,7 +26,13 @@ namespace POS.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
+            modelBuilder.Entity<User>()
+                .HasOptional<Branch>(x => x.Branch)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
 
+            //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
 
         public DbSet<Brand> Brands{ get; set; }
