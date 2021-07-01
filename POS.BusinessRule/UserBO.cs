@@ -4,6 +4,7 @@ using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace POS.BusinessRule
             List<User> users =  genericDataRepository
                 .GetAll()
                 .Where(x => x.UserName != "sysadmin" && x.UserName != myUserName)
+                .Include(i=>i.Branch)
                 .ToList();
             return users;
         }
