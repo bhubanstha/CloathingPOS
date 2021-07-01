@@ -193,13 +193,13 @@ namespace POS.Utilities.PDF
 
             string invoiceHeader = _shop.CalculateVATOnSales ? "TAX INVOICE" : "INVOICE";
 
-            canvas.Add(PDFUtility.CreateParagraph($"{invoiceHeader}", TextAlignment.CENTER, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"{_shop.Name}", TextAlignment.CENTER, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"{invoiceHeader}", TextAlignment.CENTER, 0.5f, 12));
+            canvas.Add(PDFUtility.CreateParagraph($"{_shop.Name}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateLogoAtPoint(_shop.LogoPath, new Point(15, 390)));
             canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Bill No.: {_bill.BillNo}\t\t\t\t\t\t\tDate: {DateTime.Now.ToString("yyyy/mm/dd hh:mm tt")}", TextAlignment.LEFT, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"Bill No.: {_bill.BillNo}\t\t\t\t\tDate: {DateTime.Now.ToString("yyyy/mm/dd hh:mm tt")}", TextAlignment.LEFT, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"Customer Name: {_bill.BillTo}", TextAlignment.LEFT, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"Customer Address: {_bill.BillingAddress}", TextAlignment.LEFT, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"Customer PAN: {_bill.BillingPAN}", TextAlignment.LEFT, 0.5f));
