@@ -285,11 +285,11 @@
                         Header="UserId"
                         Visibility="Hidden" />
                     <DataGridTextColumn
-                        Width="280"
-                        Binding="{Binding Branch.BranchName}"
+                        Width="*"
+                        Binding="{Binding BranchName}"
                         Header="Branch" />
                     <DataGridTextColumn
-                        Width="280"
+                        Width="*"
                         Binding="{Binding DisplayName}"
                         Header="Display Name" />
                     <DataGridTextColumn
@@ -307,6 +307,13 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.IsActive}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="All Branch">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <iconPacks:PackIconBootstrapIcons Style="{DynamicResource User.CanAccessAllBranch}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
