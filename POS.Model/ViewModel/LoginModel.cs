@@ -9,7 +9,7 @@ namespace POS.Model.ViewModel
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        [MaxLength(6)]
+        [MaxLength(10)]
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }
