@@ -29,24 +29,28 @@
                             Id = 1,
                             UserName = "sysadmin",
                             DisplayName = "System Admin",
-                            Password = PasswordEncryptDecryptor.Encrypt("123").Result,
+                            Password = PasswordEncryptDecryptor.Encrypt("Nepal@123").Result,
                             IsActive = true,
                             IsAdmin = true,
                             PromptForPasswordReset = false,
                             CreatedDate = DateTime.Now,
-                            DeactivationDate = null
+                            DeactivationDate = null,
+                            BranchId = 1,
+                            CanAccessAllBranch = true,
                         },
                         new User
                         {
                             Id = 2,
-                            UserName = "hom",
-                            DisplayName = "Hom Bdr. Tamang",
+                            UserName = "admin",
+                            DisplayName = "Default Administrator",
                             Password = PasswordEncryptDecryptor.Encrypt("123456").Result,
                             IsAdmin = true,
                             IsActive = true,
                             PromptForPasswordReset = true,
                             CreatedDate = DateTime.Now,
-                            DeactivationDate = null
+                            DeactivationDate = null,
+                            BranchId = 1,
+                            CanAccessAllBranch = true,
                         }
                     );
             }
@@ -142,7 +146,6 @@
                         {
                             Id = 1,
                             Name = "Give Your Shop Name",
-                            Address = "Your Shop Address",
                             LogoPath = "companyLogo1.png",
                             PANNumber = "123456",
                             CalculateVATOnSales = true,
