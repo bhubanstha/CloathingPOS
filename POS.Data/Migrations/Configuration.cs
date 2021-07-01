@@ -4,6 +4,7 @@
     using POS.Utilities.Encryption;
     using System;
     using System.Data.Entity.Migrations;
+    using System.Linq;
     using System.Text;
 
     internal sealed class Configuration : DbMigrationsConfiguration<POS.Data.POSDataContext>
@@ -19,35 +20,40 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
-            
-            context.User.AddOrUpdate(
-                    u=> u.Id,
-                    new User { 
-                        Id=1,
-                        UserName = "sysadmin", 
-                        DisplayName = "System Admin", 
-                        Password = PasswordEncryptDecryptor.Encrypt("123").Result, 
-                        IsActive = true,
-                        IsAdmin = true,
-                        PromptForPasswordReset = false,
-                        CreatedDate = DateTime.Now,  
-                        DeactivationDate = null 
-                    },
-                    new User
-                    {
-                        Id=2,
-                        UserName = "hom",
-                        DisplayName = "Hom Bdr. Tamang",
-                        Password = PasswordEncryptDecryptor.Encrypt("123456").Result,
-                        IsAdmin = true,
-                        IsActive = true,
-                        PromptForPasswordReset = true,
-                        CreatedDate = DateTime.Now,
-                        DeactivationDate = null
-                    }
-                );
+            if (!context.User.Any())
+            {
+                context.User.AddOrUpdate(
+                        u => u.Id,
+                        new User
+                        {
+                            Id = 1,
+                            UserName = "sysadmin",
+                            DisplayName = "System Admin",
+                            Password = PasswordEncryptDecryptor.Encrypt("123").Result,
+                            IsActive = true,
+                            IsAdmin = true,
+                            PromptForPasswordReset = false,
+                            CreatedDate = DateTime.Now,
+                            DeactivationDate = null
+                        },
+                        new User
+                        {
+                            Id = 2,
+                            UserName = "hom",
+                            DisplayName = "Hom Bdr. Tamang",
+                            Password = PasswordEncryptDecryptor.Encrypt("123456").Result,
+                            IsAdmin = true,
+                            IsActive = true,
+                            PromptForPasswordReset = true,
+                            CreatedDate = DateTime.Now,
+                            DeactivationDate = null
+                        }
+                    );
+            }
 
-            context.Categories.AddOrUpdate(
+            if (!context.Categories.Any())
+            {
+                context.Categories.AddOrUpdate(
                     c => c.Id,
                     new Category
                     {
@@ -76,13 +82,15 @@
                     }
 
                 );
-
-            context.Brands.AddOrUpdate(
-                    b=>b.Id,
+            }
+            if (!context.Brands.Any())
+            {
+                context.Brands.AddOrUpdate(
+                    b => b.Id,
                     new Brand
                     {
-                        Id=1,
-                        Name="Adidas"
+                        Id = 1,
+                        Name = "Adidas"
                     },
                     new Brand
                     {
@@ -125,22 +133,25 @@
                         Name = "Nike"
                     }
                  );
-
-            context.Shops.AddOrUpdate(
-                    s => s.Id,
-                    new Shop
-                    {
-                        Id = 1,
-                        BranchName = "Branch1",
-                        Name = "Give Your Shop Name",
-                        Address = "Your Shop Address",
-                        LogoPath = "companyLogo1.png",
-                        PANNumber = "123456",
-                        CalculateVATOnSales = true,
-                        PrintInvoice = false,
-                        PdfPassword = "123"
-                    }
-                );
+            }
+            if (!context.Shops.Any())
+            {
+                context.Shops.AddOrUpdate(
+                        s => s.Id,
+                        new Shop
+                        {
+                            Id = 1,
+                            BranchName = "Branch1",
+                            Name = "Give Your Shop Name",
+                            Address = "Your Shop Address",
+                            LogoPath = "companyLogo1.png",
+                            PANNumber = "123456",
+                            CalculateVATOnSales = true,
+                            PrintInvoice = false,
+                            PdfPassword = "123"
+                        }
+                    );
+            }
         }
     }
 }
