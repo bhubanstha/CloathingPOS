@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace POS.Model
 {
@@ -30,5 +31,13 @@ namespace POS.Model
         public DateTime? DeactivationDate { get; set; }
 
         public DateTime? LastPasswordChangeDate { get; set; }
+
+
+        [ForeignKey("Branch")]
+        public Int64 BranchId { get; set; }
+        public bool CanAccessAllBranch { get; set; }
+
+        public virtual Branch Branch { get; set; }
+
     }
 }
