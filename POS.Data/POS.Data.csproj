@@ -92,29 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
-    <Compile Include="Migrations\202106141059358_init.cs" />
-    <Compile Include="Migrations\202106141059358_init.designer.cs">
-      <DependentUpon>202106141059358_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106141438359_pdfPassword_in_shop.cs" />
-    <Compile Include="Migrations\202106141438359_pdfPassword_in_shop.designer.cs">
-      <DependentUpon>202106141438359_pdfPassword_in_shop.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106151129262_userimage.cs" />
-    <Compile Include="Migrations\202106151129262_userimage.designer.cs">
-      <DependentUpon>202106151129262_userimage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106151133006_userPassword.cs" />
-    <Compile Include="Migrations\202106151133006_userPassword.designer.cs">
-      <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106261502054_shop-branch-added.cs" />
-    <Compile Include="Migrations\202106261502054_shop-branch-added.designer.cs">
-      <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107010925566_branch.cs" />
-    <Compile Include="Migrations\202107010925566_branch.designer.cs">
-      <DependentUpon>202107010925566_branch.cs</DependentUpon>
+    <Compile Include="Migrations\202107011151027_init.cs" />
+    <Compile Include="Migrations\202107011151027_init.designer.cs">
+      <DependentUpon>202107011151027_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
@@ -139,23 +119,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106141059358_init.resx">
-      <DependentUpon>202106141059358_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106141438359_pdfPassword_in_shop.resx">
-      <DependentUpon>202106141438359_pdfPassword_in_shop.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106151129262_userimage.resx">
-      <DependentUpon>202106151129262_userimage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106151133006_userPassword.resx">
-      <DependentUpon>202106151133006_userPassword.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106261502054_shop-branch-added.resx">
-      <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107010925566_branch.resx">
-      <DependentUpon>202107010925566_branch.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107011151027_init.resx">
+      <DependentUpon>202107011151027_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

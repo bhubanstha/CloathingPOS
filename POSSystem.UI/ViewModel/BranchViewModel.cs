@@ -89,7 +89,6 @@ namespace POSSystem.UI.ViewModel
                     : "Branch Changed Successfully.";
                 
                 eventAggregator.GetEvent<BranchChangedEvent>().Publish(args);
-                StaticContainer.ShowNotification("Branch", msg, Notifications.Wpf.NotificationType.Success);
             }
             catch (Exception ex)
             {
