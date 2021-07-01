@@ -352,6 +352,7 @@ namespace POSSystem.UI.ViewModel
             foreach (User u in _users)
             {
                 UserWrapper userWrapper = new UserWrapper(u);
+                userWrapper.BranchName = u.Branch.BranchName;
                 UsersList.Add(userWrapper);
             }
             _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
