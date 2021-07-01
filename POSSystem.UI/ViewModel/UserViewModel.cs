@@ -1,6 +1,5 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
@@ -8,6 +7,7 @@ using POS.Utilities;
 using POSSystem.UI.Enum;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
 using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -18,8 +18,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -29,6 +27,7 @@ namespace POSSystem.UI.ViewModel
         private bool _hasChanges;
         private string _buttonText = "Create Account";
         private ObservableCollection<UserWrapper> _userList;
+        private ObservableCollection<BranchWrapper> _branches;
         private UserWrapper _newUser;
         private string _logoFullPathName;
         private string _logoName;
@@ -66,6 +65,17 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<BranchWrapper> Branches
+        {
+            get { return _branches; }
+            set
+            {
+                _branches = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string LogoFullPathName
         {
             get { return _logoFullPathName; }
@@ -114,6 +124,8 @@ namespace POSSystem.UI.ViewModel
             NewUser = new UserWrapper(new User(), cacheService);
             NewUser.PromptForPasswordReset = true;
             NewUser.UserName = "";
+            NewUser.CanAccessAllBranch = false;
+
             NewUser.PropertyChanged += NewUser_PropertyChanged;
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
             EditUserCommand = new DelegateCommand<UserWrapper>(EditUser);
@@ -123,7 +135,40 @@ namespace POSSystem.UI.ViewModel
             FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
             eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
+            eventAggregator.GetEvent<BranchChangedEvent>().Subscribe(OnBranchUpdateReceived);
             LoadAllUsers();
+            LoadAllBranches();
+        }
+
+        private void OnBranchUpdateReceived(BranchChangedEventArgs obj)
+        {
+            if(obj.Action == EventAction.Add)
+            {
+                BranchWrapper branchWrapper = new BranchWrapper(new Branch())
+                {
+                    Id = obj.Branch.Id,
+                    BranchName = obj.Branch.BranchName,
+                    BranchAddress = obj.Branch.BranchAddress,
+                    ShopId = obj.Branch.ShopId
+                };
+
+                Branches.Add(branchWrapper);
+            }
+            else if(obj.Action == EventAction.Update)
+            {
+                var item = Branches.Where(x => x.Id == obj.Branch.Id).FirstOrDefault();
+                item.BranchName = obj.Branch.BranchName;
+                item.BranchAddress = obj.Branch.BranchAddress;
+            }
+            else if (obj.Action == EventAction.Remove)
+            {
+                var item = Branches.Where(x => x.Id == obj.Branch.Id).FirstOrDefault();
+                Branches.Remove(item);
+                //if(NewUser.BranchId == obj.Branch.Id)
+                //{
+                //    NewUser.BranchId == Branches
+                //}
+            }
         }
 
         private void OnUserPasswordChanged(User obj)
@@ -215,7 +260,9 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.Password = userBO.DecryptPassword(obj.Password).Result;
             this.NewUser.IsAdmin = obj.IsAdmin;
             this.NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
-
+            this.NewUser.CanAccessAllBranch = false;
+            this.NewUser.BranchId = obj.BranchId;
+            this.NewUser.CanAccessAllBranch = obj.CanAccessAllBranch;
             this.ButtonText = "Update User";
         }
 
@@ -241,12 +288,14 @@ namespace POSSystem.UI.ViewModel
                 User u = new User
                 {
                     Id = this.NewUser.Id,
+                    BranchId = this.NewUser.BranchId,
                     UserName = this.NewUser.UserName,
                     DisplayName = this.NewUser.DisplayName,
                     Password = this.NewUser.Password,
                     IsAdmin = this.NewUser.IsAdmin,
                     PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
                     IsActive = true,
+                    CanAccessAllBranch = this.NewUser.CanAccessAllBranch,
                     CreatedDate = DateTime.Now,
                     ProfileImage = this.NewUser.ProfileImage
                 };
@@ -308,6 +357,29 @@ namespace POSSystem.UI.ViewModel
             _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
         }
 
+        private void LoadAllBranches()
+        {
+            bool setUserDefaultBranch = true;
+            BranchBO bo = new BranchBO();
+            List<Branch> branchList = bo.GetAll();
+            Branches = new ObservableCollection<BranchWrapper>();
+            foreach (Branch branch in branchList)
+            {
+                BranchWrapper branchWrapper = new BranchWrapper(new Branch())
+                {
+                    Id = branch.Id,
+                    ShopId = branch.ShopId,
+                    BranchAddress = branch.BranchAddress,
+                    BranchName = branch.BranchName
+                };
+                Branches.Add(branchWrapper);
+                if(setUserDefaultBranch)
+                {
+                    NewUser.BranchId = branch.Id;
+                    setUserDefaultBranch = false;
+                }
+            }
+        }
         private void ManageUserInCollection(User obj)
         {
             UserWrapper u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();

@@ -27,6 +27,12 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<Int64>(); }
             set { SetValue(value); }
         }
+
+        public Int64 BranchId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
         public string UserName 
         {
             get { return GetValue<string>(); }
@@ -57,7 +63,14 @@ namespace POSSystem.UI.Wrapper
         public bool IsAdmin
         {
             get { return GetValue<bool>(); }
-            set { SetValue(value); }
+            set 
+            { 
+                SetValue(value); 
+                if(!value)
+                {
+                    CanAccessAllBranch = false;
+                }
+            }
         }
 
         public bool IsActive
@@ -67,6 +80,12 @@ namespace POSSystem.UI.Wrapper
         }
 
         public bool PromptForPasswordReset
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
+        public bool CanAccessAllBranch
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
@@ -104,14 +123,17 @@ namespace POSSystem.UI.Wrapper
                 }
                 else
                 {
-                    ObservableCollection<UserWrapper> list = cacheService.ReadCache<ObservableCollection<UserWrapper>>(CacheKey.UserList.ToString());
-
-                    if (list != null)
+                    if (Id < 1) //Check name only during new user creation
                     {
-                        bool exists = list.Any(x => string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase));
-                        if (exists)
+                        ObservableCollection<UserWrapper> list = cacheService.ReadCache<ObservableCollection<UserWrapper>>(CacheKey.UserList.ToString());
+
+                        if (list != null)
                         {
-                            errors.Add($"Can not create {UserName} user. It already exists.");
+                            bool exists = list.Any(x => string.Equals(x.UserName, UserName, StringComparison.OrdinalIgnoreCase));
+                            if (exists)
+                            {
+                                errors.Add($"Can not create {UserName} user. It already exists.");
+                            }
                         }
                     }
                 }
