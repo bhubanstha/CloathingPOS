@@ -1,5 +1,8 @@
-﻿using iText.IO.Image;
+﻿using iText.IO.Font;
+using iText.IO.Font.Constants;
+using iText.IO.Image;
 using iText.Kernel.Colors;
+using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Layout.Borders;
 using iText.Layout.Element;
@@ -16,9 +19,9 @@ namespace POS.Utilities.PDF
 {
     public static class PDFUtility
     {
-        public static Paragraph CreateParagraph(string text, TextAlignment textAlignment = TextAlignment.JUSTIFIED, float lineSpacing = 1.0f)
+        public static Paragraph CreateParagraph(string text, TextAlignment textAlignment = TextAlignment.JUSTIFIED, float lineSpacing = 1.0f, float fontSize = 10.0f)
         {
-            Paragraph p = new Paragraph(text);
+            Paragraph p = new Paragraph(text).SetFontSize(fontSize);
             p.SetTextAlignment(textAlignment);
             p.SetMultipliedLeading(lineSpacing);
             return p;
@@ -33,6 +36,7 @@ namespace POS.Utilities.PDF
             c.SetTextAlignment(textAlignment);
             //Border b = new SolidBorder(ColorConstants.LIGHT_GRAY, 1);
             // c.SetBorderBottom(b);
+            c.SetVerticalAlignment(VerticalAlignment.MIDDLE);
             return c;
         }
         public static Image CreateLogoAtPoint(string logoName, Point point)
