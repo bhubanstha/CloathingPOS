@@ -195,7 +195,7 @@ namespace POS.Utilities.PDF
 
             canvas.Add(PDFUtility.CreateParagraph($"{invoiceHeader}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateParagraph($"{_shop.Name}", TextAlignment.CENTER, 0.5f, 12));
-            canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
+            //canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateLogoAtPoint(_shop.LogoPath, new Point(15, 390)));
             canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f));
