@@ -12,6 +12,7 @@ namespace POSSystem.UI.Wrapper
     {
         private ICacheService cacheService;
         private string _pwdErrorMsg;
+        private string _branchName;
         public UserWrapper(User model): base(model)
         {
 
@@ -33,6 +34,17 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<Int64>(); }
             set { SetValue(value); }
         }
+
+        public string BranchName
+        {
+            get { return _branchName; }
+            set
+            {
+                _branchName = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string UserName 
         {
             get { return GetValue<string>(); }
