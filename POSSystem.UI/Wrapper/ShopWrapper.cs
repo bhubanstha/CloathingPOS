@@ -27,12 +27,6 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
-        public string Address
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
 
         public string PANNumber
         {

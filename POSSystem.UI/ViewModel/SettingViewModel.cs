@@ -56,7 +56,6 @@ namespace POSSystem.UI.ViewModel
                 {
                     Id = StaticContainer.Shop.Id,
                     Name = StaticContainer.Shop.Name,
-                    Address = StaticContainer.Shop.Address,
                     PANNumber = StaticContainer.Shop.PANNumber,
                     LogoPath = StaticContainer.Shop.LogoPath,
                     CalculateVATOnSales = CalculateVAT,

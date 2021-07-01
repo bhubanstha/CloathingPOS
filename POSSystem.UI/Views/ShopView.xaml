@@ -55,25 +55,6 @@
                 Text="{Binding ShopWrapper.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
             <TextBlock
-                Grid.Row="2"
-                Grid.Column="0"
-                Style="{StaticResource Label.Validation.Container.Margin}"
-                Text="Address" />
-            <TextBox
-                x:Name="txtAddress"
-                Grid.Row="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter shop full address without special character [a-z]"
-                SpellCheck.IsEnabled="True"
-                Style="{DynamicResource TextBox.Validation}"
-                Text="{Binding ShopWrapper.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-
-            <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
                 Style="{StaticResource Label.Validation.Container.Margin}"
@@ -207,9 +188,6 @@
                         Margin="10,-20,0,10"
                         LineHeight="20"
                         LineStackingStrategy="BlockLineHeight">
-                        <Run FontWeight="Bold" Text="Address :" />
-                        <Run Text="{Binding ShopWrapper.Address, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <LineBreak />
                         <Run FontWeight="Bold" Text="PAN Number : " />
                         <Run Text="{Binding ShopWrapper.PANNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                         <LineBreak />

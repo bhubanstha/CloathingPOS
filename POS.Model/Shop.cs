@@ -14,11 +14,6 @@ namespace POS.Model
         [MaxLength(200)]
         public string Name { get; set; }
 
-
-        [Required(ErrorMessage = "Shop Address is required.")]
-        [MaxLength(200)]
-        public string Address { get; set; }
-
         [MaxLength(20)]
         public string PANNumber { get; set; }
 
