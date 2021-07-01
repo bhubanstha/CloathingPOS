@@ -265,6 +265,7 @@
             <flyout:SettingFlyout x:Name="SettingsFlyout" />
             <flyout:AddCategoryFlyout x:Name="CategoryFlyout" />
             <flyout:AddBrandFlyout x:Name="BrandFlyout" />
+            <flyout:AddBranchFlyout x:Name="BranchFlyout" />
             <mah:Flyout
                 x:Name="NoSearchResultFlyout"
                 Height="50"
@@ -289,7 +290,7 @@
             x:Name="UMenuPopup"
             AllowsTransparency="True"
             HorizontalOffset="{Binding PopupRightMargin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            IsOpen="{Binding IsUserMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            IsOpen="{Binding IsPopUpMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Placement="RelativePoint"
             PlacementTarget="{Binding ElementName=btnCmdUserName}"
             StaysOpen="False"

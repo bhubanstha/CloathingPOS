@@ -532,6 +532,7 @@
     <Compile Include="UIModel\SalesUIModel.cs" />
     <Compile Include="ViewModel\AdminChangeUserPassword.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
+    <Compile Include="ViewModel\BranchViewModel.cs" />
     <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
@@ -564,6 +565,9 @@
     </Compile>
     <Compile Include="Views\Dialog\UpdateInventoryDialog.xaml.cs">
       <DependentUpon>UpdateInventoryDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Flyouts\AddBranchFlyout.xaml.cs">
+      <DependentUpon>AddBranchFlyout.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Flyouts\AddBrandFlyout.xaml.cs">
       <DependentUpon>AddBrandFlyout.xaml</DependentUpon>
@@ -620,6 +624,7 @@
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wrapper\BillWrapper.cs" />
+    <Compile Include="Wrapper\BranchWrapper.cs" />
     <Compile Include="Wrapper\BrandWrapper.cs" />
     <Compile Include="Wrapper\CategoryWrapper.cs" />
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
@@ -717,6 +722,10 @@
     <Page Include="Views\Dialog\UpdateInventoryDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Flyouts\AddBranchFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Flyouts\AddBrandFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>

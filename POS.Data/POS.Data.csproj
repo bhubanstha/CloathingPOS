@@ -112,6 +112,10 @@
     <Compile Include="Migrations\202106261502054_shop-branch-added.designer.cs">
       <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107010925566_branch.cs" />
+    <Compile Include="Migrations\202107010925566_branch.designer.cs">
+      <DependentUpon>202107010925566_branch.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106261502054_shop-branch-added.resx">
       <DependentUpon>202106261502054_shop-branch-added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107010925566_branch.resx">
+      <DependentUpon>202107010925566_branch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

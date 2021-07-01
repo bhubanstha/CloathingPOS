@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using POS.Model;
 using POSSystem.UI.Enum;
 using POSSystem.UI.PDFViewer;
@@ -20,8 +21,10 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
 
+
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
+        public ICommand AddBranchCommand { get; }
         public ICommand SettingsCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand OpenPdfViewerCommand { get; set; }
@@ -40,12 +43,12 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        private bool _isUserMenuVisible = false;
+        private bool _isPopUpMenuVisible = false;
 
-        public bool IsUserMenuVisible
+        public bool IsPopUpMenuVisible
         {
-            get { return _isUserMenuVisible ; }
-            set { _isUserMenuVisible  = value;
+            get { return _isPopUpMenuVisible ; }
+            set { _isPopUpMenuVisible  = value;
                 OnPropertyChanged();
             }
         }
@@ -82,10 +85,19 @@ namespace POSSystem.UI.ViewModel
             User = cacheService.ReadCache<User>("LoginUser");
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
+            AddBranchCommand = new DelegateCommand(OnAddBranchExecute);
             SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
             LogoutCommand = new DelegateCommand(OnUserLogout);
             OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
             ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
+        }
+
+        private void OnAddBranchExecute()
+        {
+            Flyout f = StaticContainer.AddBranchFlyout;
+            f.IsOpen = !f.IsOpen;
+            ManageMenuVisibility();
+            StaticContainer.ShowNotification("Test", "this is test", NotificationType.Information);
         }
 
         private void OnApplicationExit()
@@ -137,7 +149,7 @@ namespace POSSystem.UI.ViewModel
 
         private void ManageMenuVisibility()
         {
-            IsUserMenuVisible = !_isUserMenuVisible ;
+            IsPopUpMenuVisible = !_isPopUpMenuVisible ;
         }
 
         public void CheckUserIsAdmin()

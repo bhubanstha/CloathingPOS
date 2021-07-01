@@ -118,6 +118,29 @@
                             <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
                         </ListViewItem.InputBindings>
                     </ListViewItem>
+
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}" 
+                                  Visibility="{Binding IsAdminMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconFontAwesome
+                            Grid.Column="0"
+                            Width="24"
+                            Height="24"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Kind="SitemapSolid" />
+                            <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Branch" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding AddBranchCommand}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>
+                    
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome

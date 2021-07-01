@@ -7,4 +7,10 @@ namespace POSSystem.UI.Event
     {
 
     }
+
+    public class BranchChangedEvent : PubSubEvent<BranchChangedEventArgs>
+    {
+
+    }
+
 }

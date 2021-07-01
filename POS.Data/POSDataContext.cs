@@ -36,5 +36,6 @@ namespace POS.Data
         public DbSet<Sales> Sales { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Shop> Shops { get; set; }
+        public DbSet<Branch> Branches { get; set; }
     }
 }

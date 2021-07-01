@@ -20,14 +20,6 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
-        public string BranchName
-        {
-            get { return GetValue<string>(); }
-            set
-            {
-                SetValue(value);
-            }
-        }
 
         public string Name
         {

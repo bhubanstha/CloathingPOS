@@ -141,7 +141,6 @@
                         new Shop
                         {
                             Id = 1,
-                            BranchName = "Branch1",
                             Name = "Give Your Shop Name",
                             Address = "Your Shop Address",
                             LogoPath = "companyLogo1.png",
@@ -150,6 +149,20 @@
                             PrintInvoice = false,
                             PdfPassword = "123"
                         }
+                    );
+            }
+
+            if(!context.Branches.Any())
+            {
+                context.Branches.AddOrUpdate(
+                    b => b.Id,
+                    new Branch
+                    {
+                        Id = 1,
+                        ShopId = 1,
+                        BranchName = "Head Office",
+                        BranchAddress = "Gongabu-5, Kathmandu"
+                    }
                     );
             }
         }

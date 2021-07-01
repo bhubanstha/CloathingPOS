@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BillBO.cs" />
+    <Compile Include="BranchBO.cs" />
     <Compile Include="BrandBO.cs" />
     <Compile Include="CategoryBO.cs" />
     <Compile Include="InventoryBO.cs" />

@@ -8,5 +8,11 @@ namespace POSSystem.UI.UIModel
         public EventAction Action { get; set; }
     }
 
+    public class BranchChangedEventArgs
+    {
+        public Branch Branch { get; set; }
+        public EventAction Action { get; set; }
+    }
+
 
 }

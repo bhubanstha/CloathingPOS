@@ -26,6 +26,8 @@ namespace POSSystem.UI
             //Flyout Registration
             builder.RegisterType<SettingFlyout>().AsSelf();
             builder.RegisterType<AddCategoryFlyout>().AsSelf();
+            builder.RegisterType<AddBrandFlyout>().AsSelf();
+            builder.RegisterType<AddBranchFlyout>().AsSelf();
 
             //View Registration
             builder.RegisterType<CreateUserView>().AsSelf();
@@ -73,6 +75,7 @@ namespace POSSystem.UI
             builder.RegisterType<AdminChangeUserPasswordViewModel>().AsSelf();
             builder.RegisterType<SalesListViewModel>().AsSelf();
             builder.RegisterType<BillingViewModel>().AsSelf();
+            builder.RegisterType<BranchViewModel>().AsSelf();
 
 
 
