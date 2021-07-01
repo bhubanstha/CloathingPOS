@@ -117,6 +117,7 @@
                     Password="{Binding LoginUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                 <TextBlock
                     Grid.Row="4"
+                    TextWrapping="Wrap"
                     Style="{DynamicResource TextBlock.Validation.Message}"
                     Text="{Binding LoginUser.PasswordErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 
