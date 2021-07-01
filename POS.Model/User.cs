@@ -32,10 +32,11 @@ namespace POS.Model
 
         public DateTime? LastPasswordChangeDate { get; set; }
 
-
         [ForeignKey("Branch")]
-        public Int64 BranchId { get; set; }
+        public Int64? BranchId { get; set; }
         public bool CanAccessAllBranch { get; set; }
+
+
 
         public virtual Branch Branch { get; set; }
 

@@ -26,10 +26,10 @@ namespace POS.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Add(new DataTypePropertyAttributeConvention());
-            modelBuilder.Entity<User>()
-                .HasOptional<Branch>(x => x.Branch)
-                .WithOptionalDependent()
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<User>()
+            //    .HasOptional(x => x.Branch)
+            //    .WithOptionalDependent()
+            //    .WillCascadeOnDelete();
 
             //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
