@@ -31,6 +31,7 @@ namespace POSSystem.UI.ViewModel
         private IEventAggregator _eventAggregator;
         private UpdateBillingInfoDialog _billingDialog;
         private bool _isBillingInfoUpdated = false;
+        private bool _isBillGenerating = false;
 
         public ICollection<Sales> SalesList
         {
@@ -42,7 +43,16 @@ namespace POSSystem.UI.ViewModel
             }
         
         }
+
        
+
+        public bool IsBillGenerating
+        {
+            get { return _isBillGenerating ; }
+            set { _isBillGenerating  = value; OnPropertyChanged(); }
+        }
+
+
 
         public DateTime? BillingDate
         {
@@ -70,6 +80,7 @@ namespace POSSystem.UI.ViewModel
         private async void OnBillReprintExeucte(long? obj)
         {
             string pdfPath = FileUtility.GetInvoicePdfPath(obj.Value);
+            IsBillGenerating = true;
             if (string.IsNullOrEmpty(pdfPath))
             {
                 StaticContainer.ShowNotification("Error", $"The invoice file is in use by another application. Close the invoice and retry", NotificationType.Information);
@@ -83,9 +94,10 @@ namespace POSSystem.UI.ViewModel
                     //Create Bill
                 }
                 //OpenBill
-                PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);
+                PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);                
                 window.Show();
             }
+            IsBillGenerating = false;
             //StaticContainer.ShowNotification("passed value", $"The value for bill {obj.Value}", NotificationType.Information);
         }
 

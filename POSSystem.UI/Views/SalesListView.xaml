@@ -22,6 +22,7 @@
     </UserControl.Resources>
 
     <StackPanel Margin="0,5,3,5">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -63,6 +64,17 @@
                 Content="Search"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
 
+            <mah:ProgressRing
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Width="50"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                Foreground="{DynamicResource MahApps.Brushes.Progress}"
+                IsActive="{Binding IsBillGenerating, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             <DataGrid
                 x:Name="CartGrid"
                 Grid.Row="2"
@@ -127,7 +139,10 @@
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
 
-                                                            <TextBlock Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center">
+                                                            <TextBlock
+                                                                Grid.Column="0"
+                                                                VerticalAlignment="Center"
+                                                                FontWeight="Bold">
                                                                 <Run Text="Billing Info:" />
                                                                 <Run Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource BillInfoConverter}}" />
                                                             </TextBlock>
@@ -137,7 +152,10 @@
                                                         </TextBlock>-->
                                                             <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="Total Sales Record:"/>-->
                                                             <!--<TextBlock FontWeight="Bold" Grid.Column="1" Text="{Binding Path=ItemCount}"/>-->
-                                                            <TextBlock Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center">
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                VerticalAlignment="Center"
+                                                                FontWeight="Bold">
                                                                 <TextBlock.Text>
                                                                     <MultiBinding StringFormat="{}{0}: {1}">
                                                                         <Binding>
@@ -194,7 +212,7 @@
                                                                     </Button.ContentTemplate>
 
                                                                 </Button>
-                                                                
+
                                                             </StackPanel>
                                                         </Grid>
                                                     </DockPanel>
