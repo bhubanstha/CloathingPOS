@@ -8,7 +8,7 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:POSSystem.UI"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:views="clr-namespace:POSSystem.UI.Views"
@@ -228,6 +228,7 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
+            <ctrl:UserBranchControl MaxWidth="130" BranchValue="{Binding CurrentBranchId}"/>
             <Button
                 x:Name="btnCmdUserName"
                 Command="{Binding UserMenuCommand}"
@@ -257,6 +258,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
+            
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 

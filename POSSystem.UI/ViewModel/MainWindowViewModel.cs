@@ -13,11 +13,15 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class MainWindowViewModel : NotifyPropertyChanged
+    public class MainWindowViewModel : ViewModelBase
     {
         private double _popupRightMargin = 200;
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
+        private bool _isPopUpMenuVisible = false;
+        private bool _isAdminMenuVisible = false;
+        private bool _isSysAdminMenuVisible = false;
+        private Int64 _currentBranchId;
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -39,7 +43,18 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private bool _isPopUpMenuVisible = false;
+        
+
+        public Int64 CurrentBranchId
+        {
+            get { return _currentBranchId; }
+            set {
+                _currentBranchId = value;
+                StaticContainer.ActiveBranchId = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public bool IsPopUpMenuVisible
         {
@@ -49,8 +64,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private bool _isAdminMenuVisible = false;
-        private bool _isSysAdminMenuVisible = false;
+       
 
         public bool IsAdminMenuVisible
         {
@@ -76,6 +90,7 @@ namespace POSSystem.UI.ViewModel
         public MainWindowViewModel(ICacheService cacheService, 
             IMessageDialogService messageDialogService)
         {
+            CurrentBranchId = _loggedInUser.BranchId.Value;
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
             User = cacheService.ReadCache<User>("LoginUser");

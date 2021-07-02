@@ -3,6 +3,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.Model;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media.Imaging;
@@ -36,6 +37,9 @@ namespace POSSystem.UI.Service
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         public static CustomDialog InventoryUpdateDialog { get; set; }
         public static CustomDialog ChangeUserPasswordDialog { get; set; }
+
+        public static Int64 ActiveBranchId { get; set; }
+
         static StaticContainer()
         {
             DialogSettings = new MetroDialogSettings
