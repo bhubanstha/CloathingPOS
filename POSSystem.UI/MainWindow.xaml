@@ -229,6 +229,7 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <ctrl:UserBranchControl
+                x:Name="ctrlBranchSelection"
                 MaxWidth="130"
                 BranchValue="{Binding CurrentBranchId}"
                 StyleString="ComboBox.Branch" />
@@ -304,6 +305,16 @@
             StaysOpen="False"
             VerticalOffset="28">
             <views:UserMenuPopupControl />
+        </Popup>
+
+        <Popup
+            x:Name="NewFeaturePopup"
+            AllowsTransparency="True"
+            IsOpen="{Binding IsFeatureHighlightOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Placement="Bottom"
+            PlacementTarget="{Binding ElementName=ctrlBranchSelection}"
+            StaysOpen="True">
+            <views:FeatureIntro IntroText="New Branch management is here. You can switch to different branch assigned to you by simply clicking here." IsPopupOpen="{Binding IsFeatureHighlightOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Popup>
 
         <mah:HamburgerMenu

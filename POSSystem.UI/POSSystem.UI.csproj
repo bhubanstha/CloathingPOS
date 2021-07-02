@@ -597,6 +597,9 @@
     <Compile Include="Views\PartialShopView.xaml.cs">
       <DependentUpon>PartialShopView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popups\FeatureIntro.xaml.cs">
+      <DependentUpon>FeatureIntro.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
@@ -764,6 +767,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PartialShopView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Popups\FeatureIntro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

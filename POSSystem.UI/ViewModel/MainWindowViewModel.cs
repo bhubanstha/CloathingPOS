@@ -20,6 +20,7 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
         private bool _isPopUpMenuVisible = false;
+        private bool _isFeatureHighlightOpen = true;
         private bool _isAdminMenuVisible = false;
         private bool _isSysAdminMenuVisible = false;
 
@@ -62,6 +63,15 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+        
+        public bool IsFeatureHighlightOpen
+        {
+            get { return _isFeatureHighlightOpen; }
+            set {
+                _isFeatureHighlightOpen = value;
+                OnPropertyChanged();
+            }
+        }
 
        
 
@@ -92,6 +102,7 @@ namespace POSSystem.UI.ViewModel
             CurrentBranchId = _loggedInUser.BranchId.Value;
             _cacheService = cacheService;
             _messageDialogService = messageDialogService;
+            IsFeatureHighlightOpen = Application.Current.Properties["FeatureShown"] == null ? true: Convert.ToBoolean(Application.Current.Properties["FeatureShown"]);
             User = cacheService.ReadCache<User>("LoginUser");
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
