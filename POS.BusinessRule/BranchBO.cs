@@ -23,6 +23,14 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
+        public List<Branch> GetAll(Int64 branchId, bool canAccessAllBranch)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x=>x.Id == branchId || canAccessAllBranch == true)
+                .ToList();
+        }
+
         public Branch GetById(Int64 id)
         {
             return genericDataRepository.GetByID(id);
