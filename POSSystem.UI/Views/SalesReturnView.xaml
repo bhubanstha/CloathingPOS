@@ -21,8 +21,6 @@
     <StackPanel Margin="0,5,3,5" behaviors:KeyboardFocus.On="{Binding ElementName=txtBillNo}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="250" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -31,60 +29,64 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Grid.Column="0"
-                VerticalAlignment="Center"
-                Text="Bill No.:" />
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock
+                    Margin="5 0"
+                    VerticalAlignment="Center"
+                    Text="Branch:" />
 
-            <mah:NumericUpDown
-                x:Name="txtBillNo"
-                Grid.Row="0"
-                Grid.Column="1"
-                Margin="{StaticResource ControlMargin}"
-                Padding="{StaticResource ControlPadding}"
-                HorizontalContentAlignment="Left"
-                mah:TextBoxHelper.ClearTextButton="True"
-                mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter Bill Number"
-                Minimum="1"
-                TextAlignment="Left"
-                Value="{Binding BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <ctrl:UserBranchControl BranchValue="{Binding BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" TabIndex="0" Margin="5 0"/>
 
-            <Button
-                Grid.Row="0"
-                Grid.Column="2"
-                Width="100"
-                Margin="20,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Command="{Binding SearchCommand}"
-                IsDefault="True"
-                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconBootstrapIcons Kind="Search" />
-                        <TextBlock Margin="10,0,0,0" Text="Search" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Margin="5 0"
+                    Text="Bill No.:" />
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                VerticalAlignment="Bottom">
-                <Run Text="Billing To: " />
-                <Run Text="{Binding Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </TextBlock>
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="3"
-                Grid.ColumnSpan="2"
-                VerticalAlignment="Bottom">
-                <Run Text="Billing Date: " />
-                <Run Text="{Binding Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:yyyy/MM/dd}'}" />
-            </TextBlock>
+                <mah:NumericUpDown
+                    x:Name="txtBillNo"
+                    Margin="{StaticResource ControlMargin}"
+                    Padding="{StaticResource ControlPadding}"
+                    HorizontalContentAlignment="Left"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Bill Number"
+                    Minimum="1"
+                    Width="100"
+                    TextAlignment="Left"
+                    Value="{Binding BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button
+                    Width="100"
+                    Margin="20,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Command="{Binding SearchCommand}"
+                    IsDefault="True"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconBootstrapIcons Kind="Search" />
+                                <TextBlock Margin="10,0,0,0" Text="Search" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                <TextBlock
+                    MinWidth="250"
+                    VerticalAlignment="Bottom">
+                    <Run Text="Billing To: " />
+                    <Run Text="{Binding Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </TextBlock>
+                
+                <TextBlock
+                    VerticalAlignment="Bottom">
+                    <Run Text="Billing Date: " />
+                    <Run Text="{Binding Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:yyyy/MM/dd}'}" />
+                </TextBlock>
+            </StackPanel>
+           
             <DataGrid
                 Grid.Row="2"
                 Grid.Column="0"

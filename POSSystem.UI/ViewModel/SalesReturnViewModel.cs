@@ -13,18 +13,27 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class SalesReturnViewModel : NotifyPropertyChanged
+    public class SalesReturnViewModel : ViewModelBase
     {
 
         private Int64 _billNo = 1;
         private ObservableCollection<Sales> _sales;
         private Bill _bill;
         private MetroWindow _window;
+        private Int64 _branchId;
 
         public Int64 BillNo
         {
             get { return _billNo; }
             set { _billNo = value; OnPropertyChanged(); }
+        }
+
+        
+
+        public Int64 BranchId
+        {
+            get { return _branchId; }
+            set { _branchId = value; OnPropertyChanged(); }
         }
 
 
@@ -48,6 +57,7 @@ namespace POSSystem.UI.ViewModel
         public SalesReturnViewModel()
         {
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            BranchId = _loggedInUser.BranchId.Value;
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
             ReturnItemCommand = new DelegateCommand<Sales>(OnSalesReturn);
             Sales = new ObservableCollection<Sales>();
@@ -136,7 +146,7 @@ namespace POSSystem.UI.ViewModel
             try
             {
                 SalesBO salesBO = new SalesBO();
-                List<Sales> _sales = await salesBO.GetSalesByBillNo(BillNo);
+                List<Sales> _sales = await salesBO.GetSalesByBillNo(BillNo, BranchId);
                 Sales.Clear();
                 foreach (Sales item in _sales)
                 {
