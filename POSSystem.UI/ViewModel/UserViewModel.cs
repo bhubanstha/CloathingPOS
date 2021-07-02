@@ -27,7 +27,6 @@ namespace POSSystem.UI.ViewModel
         private bool _hasChanges;
         private string _buttonText = "Create Account";
         private ObservableCollection<UserWrapper> _userList;
-        private ObservableCollection<BranchWrapper> _branches;
         private UserWrapper _newUser;
         private string _logoFullPathName;
         private string _logoName;
@@ -62,16 +61,6 @@ namespace POSSystem.UI.ViewModel
             set
             {
                 _userList = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<BranchWrapper> Branches
-        {
-            get { return _branches; }
-            set
-            {
-                _branches = value;
                 OnPropertyChanged();
             }
         }
@@ -125,6 +114,7 @@ namespace POSSystem.UI.ViewModel
             NewUser.PromptForPasswordReset = true;
             NewUser.UserName = "";
             NewUser.CanAccessAllBranch = false;
+            NewUser.BranchId = cacheService.ReadCache<User>(CacheKey.LoginUser.ToString()).BranchId.Value;
 
             NewUser.PropertyChanged += NewUser_PropertyChanged;
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
@@ -135,41 +125,10 @@ namespace POSSystem.UI.ViewModel
             FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
             eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
-            eventAggregator.GetEvent<BranchChangedEvent>().Subscribe(OnBranchUpdateReceived);
             LoadAllUsers();
-            LoadAllBranches();
         }
 
-        private void OnBranchUpdateReceived(BranchChangedEventArgs obj)
-        {
-            if(obj.Action == EventAction.Add)
-            {
-                BranchWrapper branchWrapper = new BranchWrapper(new Branch())
-                {
-                    Id = obj.Branch.Id,
-                    BranchName = obj.Branch.BranchName,
-                    BranchAddress = obj.Branch.BranchAddress,
-                    ShopId = obj.Branch.ShopId
-                };
-
-                Branches.Add(branchWrapper);
-            }
-            else if(obj.Action == EventAction.Update)
-            {
-                var item = Branches.Where(x => x.Id == obj.Branch.Id).FirstOrDefault();
-                item.BranchName = obj.Branch.BranchName;
-                item.BranchAddress = obj.Branch.BranchAddress;
-            }
-            else if (obj.Action == EventAction.Remove)
-            {
-                var item = Branches.Where(x => x.Id == obj.Branch.Id).FirstOrDefault();
-                Branches.Remove(item);
-                //if(NewUser.BranchId == obj.Branch.Id)
-                //{
-                //    NewUser.BranchId == Branches
-                //}
-            }
-        }
+        
 
         private void OnUserPasswordChanged(User obj)
         {
@@ -213,7 +172,6 @@ namespace POSSystem.UI.ViewModel
                 if (i > 0)
                 {
                     ManageUserInCollection(obj.Model);
-                    //LoadAllUsers();
                     StaticContainer.ShowNotification("User Activated", $"User {obj.DisplayName} is re activated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
                 }
             }
@@ -221,10 +179,6 @@ namespace POSSystem.UI.ViewModel
 
         private void NewUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //if (!HasChanges)
-            //{
-            //    HasChanges = _userBo.HasChanges();
-            //}
             ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
         }
 
@@ -358,29 +312,6 @@ namespace POSSystem.UI.ViewModel
             _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
         }
 
-        private void LoadAllBranches()
-        {
-            bool setUserDefaultBranch = true;
-            BranchBO bo = new BranchBO();
-            List<Branch> branchList = bo.GetAll();
-            Branches = new ObservableCollection<BranchWrapper>();
-            foreach (Branch branch in branchList)
-            {
-                BranchWrapper branchWrapper = new BranchWrapper(new Branch())
-                {
-                    Id = branch.Id,
-                    ShopId = branch.ShopId,
-                    BranchAddress = branch.BranchAddress,
-                    BranchName = branch.BranchName
-                };
-                Branches.Add(branchWrapper);
-                if(setUserDefaultBranch)
-                {
-                    NewUser.BranchId = branch.Id;
-                    setUserDefaultBranch = false;
-                }
-            }
-        }
         private void ManageUserInCollection(User obj)
         {
             UserWrapper u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
