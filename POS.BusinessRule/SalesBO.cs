@@ -31,10 +31,10 @@ namespace POS.BusinessRule
             return genericDataRepository.GetAll().ToList();
         }
 
-        public List<Sales> GetAllOnDate(DateTime billingdate)
+        public List<Sales> GetAllOnDate(DateTime billingdate, Int64 branchId)
         {
             DateTime billDate = new DateTime(billingdate.Year, billingdate.Month, billingdate.Day);
-            return genericDataRepository.GetAll().Where(x => DbFunctions.TruncateTime(x.Bill.BillDate) == billDate).ToList() ;
+            return genericDataRepository.GetAll().Where(x => DbFunctions.TruncateTime(x.Bill.BillDate) == billDate && x.Bill.BranchId == branchId).ToList() ;
         }
         public async Task<int> CheckoutSales(Sales item)
         {
@@ -62,9 +62,9 @@ namespace POS.BusinessRule
             return count;
         }
 
-        public async Task<List<Sales>> GetSalesByBillNo(Int64 BillNo)
+        public async Task<List<Sales>> GetSalesByBillNo(Int64 BillNo, Int64 branchId)
         {
-            List<Sales> sales = await genericDataRepository.GetAll().Where(x => x.BillNo == BillNo).ToListAsync<Sales>();
+            List<Sales> sales = await genericDataRepository.GetAll().Where(x => x.BillNo == BillNo &&  x.Bill.BranchId == branchId).ToListAsync<Sales>();
             return sales;
         }
 

@@ -32,6 +32,7 @@ namespace POSSystem.UI.ViewModel
         private UpdateBillingInfoDialog _billingDialog;
         private bool _isBillingInfoUpdated = false;
         private bool _isBillGenerating = false;
+        private Int64 _branchId;
 
         public ICollection<Sales> SalesList
         {
@@ -60,6 +61,14 @@ namespace POSSystem.UI.ViewModel
             set { _billingDate = value; OnPropertyChanged(); }
         }
 
+        
+
+        public Int64 BranchId
+        {
+            get { return _branchId; }
+            set { _branchId = value;  OnPropertyChanged(); }
+        }
+
 
         public ICollectionView SalesCollectionView { get; private set; }
         public ICommand SearchBillCommand { get; private set; }
@@ -71,6 +80,7 @@ namespace POSSystem.UI.ViewModel
         {
             _eventAggregator = eventAggregator;
             _billingDialog = dialog;
+            BranchId = _loggedInUser.BranchId.Value;
             SearchBillCommand = new DelegateCommand(OnBillSearchExecute);
             EditBillingInfoCommand = new DelegateCommand<Int64?>(OnBillInfoEditExeucte);
             ReprintBillCommand = new DelegateCommand<Int64?>(OnBillReprintExeucte);
@@ -132,7 +142,7 @@ namespace POSSystem.UI.ViewModel
             if (BillingDate.HasValue)
             {
                 SalesBO bo = new SalesBO();
-                var billList = bo.GetAllOnDate(BillingDate.Value);
+                var billList = bo.GetAllOnDate(BillingDate.Value, BranchId);
                 SalesList = new ObservableCollection<Sales>(billList);
                 if(SalesList.Count == 0)
                 {
