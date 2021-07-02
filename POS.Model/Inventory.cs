@@ -31,7 +31,19 @@ namespace POS.Model
 
         public bool IsDeleted { get; set; }
 
+
+        [ForeignKey("Branch")]
+        public Int64? BranchId { get; set; }
+
+        [ForeignKey("User")]
+        public Int64? UserId { get; set; }
+
+        
         public virtual List<InventoryHistory> InventoryHistories { get; set; }
+
+
+        public virtual User User { get; set; }
+        public virtual Branch Branch { get; set; }
 
         public override string ToString()
         {

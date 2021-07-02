@@ -2,6 +2,7 @@
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.Enum;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
@@ -17,7 +18,7 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class InventoryViewModel : NotifyPropertyChanged
+    public class InventoryViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
         private ObservableCollection<CategoryWrapper> _categories = null;
@@ -63,24 +64,48 @@ namespace POSSystem.UI.ViewModel
         public ICommand SaveCommand { get; }
         public ICommand AddCategoryCommand { get; }
         public ICommand AddBrandCommand { get; }
+        public ICommand ResetCommand { get; }
 
-        public InventoryViewModel(IEventAggregator eventAggregator)
+        public InventoryViewModel(ICacheService cacheService, IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             CategoryBO = new CategoryBO();
             Inventory = new InventoryWrapper(new Inventory())
             {
                 ColorNameEntryEnabled = false,
-                FirstPurchaseDate = DateTime.Now
+                FirstPurchaseDate = DateTime.Now,
+                BranchId = _loggedInUser.BranchId.Value,
+                Quantity = 1,
+                PurchaseRate = 1,
+                RetailRate = 1
             };
             LoadCategories();
             LoadBrands();
             SaveCommand = new DelegateCommand(OnSaveProduct);
             AddCategoryCommand = new DelegateCommand(OnOpenAddCategoryFlyout);
             AddBrandCommand = new DelegateCommand(OnOpenAddBrandFlyout);
+            ResetCommand = new DelegateCommand(OnReset);
             eventAggregator.GetEvent<CategoryChangedEvent>().Subscribe(ReLoadCategories);
             eventAggregator.GetEvent<BrandChangedEvent>().Subscribe(ReLoadBrands);
             eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(OnInventoryEditReceived);
+        }
+
+        private void OnReset()
+        {
+            
+            Inventory.ColorNameEntryEnabled = false;
+            Inventory.FirstPurchaseDate = DateTime.Now;
+            Inventory.CategoryId = 1;
+            Inventory.BrandId = 1;
+            Inventory.Name = "";
+            Inventory.Code = "";
+            Inventory.BarCode = "";
+            Inventory.Size = "";
+            Inventory.Color = "";
+            Inventory.ColorName = "";
+            Inventory.Quantity = 1;
+            Inventory.PurchaseRate = 1;
+            Inventory.RetailRate = 1;
         }
 
         private void OnInventoryEditReceived(InventoryChangedEventArgs obj)
@@ -126,8 +151,10 @@ namespace POSSystem.UI.ViewModel
                 Inventory inventory = new Inventory
                 {
                     Id = this.Inventory.Id,
+                    UserId = _loggedInUser.Id,
                     CategoryId = this.Inventory.CategoryId,
                     BrandId = this.Inventory.BrandId,
+                    BranchId = this.Inventory.BranchId,
                     Color = this.Inventory.Color,
                     FirstPurchaseDate = this.Inventory.FirstPurchaseDate,
                     Name = this.Inventory.Name,
@@ -135,7 +162,9 @@ namespace POSSystem.UI.ViewModel
                     Quantity = this.Inventory.Quantity,
                     RetailRate = this.Inventory.RetailRate,
                     Size = this.Inventory.Size,
-                    ColorName = this.Inventory.ColorName
+                    ColorName = this.Inventory.ColorName,
+                    Code = this.Inventory.Code,
+                    BarCode = this.Inventory.Code.PadRight(8,'0').Substring(0,8) + Guid.NewGuid().ToString("N")
                 };
                 InventoryBO = new InventoryBO();
                 int c = 0;

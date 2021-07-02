@@ -6,6 +6,14 @@ namespace POS.Model
 {
     public class Product : EntityBase
     {
+        [Required(ErrorMessage = "Item Code is required.")]
+        [MaxLength(50, ErrorMessage = "Item Code can be upto 50 character long.")]
+        public string Code { get; set; }
+
+
+        [Column(TypeName = "VARCHAR")]
+        [MaxLength(40)]
+        public string BarCode { get; set; }
 
         [Required(ErrorMessage = "Item Name is required.")]
         [MaxLength(50, ErrorMessage = "Item name can be upto 50 character long.")]

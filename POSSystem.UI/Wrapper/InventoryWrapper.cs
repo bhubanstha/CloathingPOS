@@ -23,8 +23,19 @@ namespace POSSystem.UI.Wrapper
         }
 
 
+        public Int64? BranchId
+        {
+            get { return GetValue<Int64?>(); }
+            set { SetValue(value); }
+        }
 
-        
+        public Int64? UserId
+        {
+            get { return GetValue<Int64?>(); }
+            set { SetValue(value); }
+        }
+
+
         public DateTime FirstPurchaseDate 
         {
             get { return GetValue<DateTime>(); }
@@ -64,8 +75,18 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public string Code
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
 
-       
+        public string BarCode
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
         public string Color
         {
             get { return GetValue<string>(); }
