@@ -30,6 +30,7 @@
             Header="Create User"
             IsExpanded="True">
             <StackPanel>
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -57,21 +58,12 @@
                             Grid.Column="0"
                             Style="{StaticResource Label.Validation.Container.Margin}"
                             Text="Branch" />
-                        <ComboBox
-                            x:Name="cmbBrand"
+                        <ctrl:UserBranchControl 
                             Grid.Row="0"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
-                            Margin="{StaticResource ControlMargin}"
-                            Padding="{StaticResource ControlPadding}"
-                            mah:TextBoxHelper.ClearTextButton="True"
-                            mah:TextBoxHelper.SelectAllOnFocus="True"
-                            DisplayMemberPath="BranchName"
-                            ItemsSource="{Binding Branches, Mode=OneWay}"
-                            SelectedIndex="0"
-                            SelectedValue="{Binding NewUser.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                            SelectedValuePath="Id"
-                            Style="{DynamicResource MahApps.Styles.ComboBox}" />
+                            TabIndex="0"
+                            BranchValue="{Binding NewUser.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />                        
 
                         <TextBlock
                             Grid.Row="1"
@@ -83,6 +75,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
+                            TabIndex="2"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.ClearTextButton="True"
@@ -104,7 +97,7 @@
                             Grid.Column="1"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
-                            IsEnabled="False"
+                            IsEnabled="False"                            
                             Style="{DynamicResource MahApps.Styles.TextBox}"
                             Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
@@ -112,6 +105,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Width="80"
+                            TabIndex="4"
                             HorizontalAlignment="Right"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
@@ -131,6 +125,7 @@
                         <mah:ToggleSwitch
                             Grid.Row="3"
                             Grid.Column="1"
+                            TabIndex="6"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
                             IsOn="{Binding NewUser.PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -163,6 +158,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
+                            TabIndex="1"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.ClearTextButton="True"
@@ -181,7 +177,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2">
-                            <ctrl:BindablePasswordBox Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                            <ctrl:BindablePasswordBox TabIndex="3" Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                             <TextBlock
                                 Grid.Row="2"
                                 Style="{DynamicResource TextBlock.Validation.Message}"
@@ -199,6 +195,7 @@
                             Grid.Column="1"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
+                            TabIndex="5"
                             IsOn="{Binding NewUser.IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
                             OnContent="Yes" />
@@ -215,6 +212,7 @@
                             IsEnabled="{Binding ElementName=toggleIsAdmin, Path=IsOn}"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
+                            TabIndex="7"
                             IsOn="{Binding NewUser.CanAccessAllBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
                             OnContent="Yes">
