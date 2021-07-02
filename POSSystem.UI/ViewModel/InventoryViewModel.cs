@@ -126,6 +126,10 @@ namespace POSSystem.UI.ViewModel
                 Inventory.CategoryName = obj.Inventory.Category.Name;
                 Inventory.BrandId = obj.Inventory.BrandId;
                 Inventory.BrandName = obj.Inventory.Brand.Name;
+                Inventory.Code = obj.Inventory.Code;
+                Inventory.BarCode = obj.Inventory.BarCode;
+                Inventory.BranchId = obj.Inventory.BranchId;
+                Inventory.UserId = obj.Inventory.UserId;
                 StaticContainer.UIHamburgerMenuControl.SelectedIndex = 1;
                 ButtonText = "Update Inventory";
             }
