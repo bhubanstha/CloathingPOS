@@ -302,6 +302,7 @@
             x:Name="HamburgerMenuControl"
             Grid.Row="0"
             Grid.Column="0"
+            IsTabStop="False"
             HamburgerButtonName="btnHamburgerMenuOpenClose"
             HamburgerButtonStyle="{DynamicResource App.Hamburger}"
             HamburgerHeight="72"
