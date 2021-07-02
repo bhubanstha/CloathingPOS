@@ -46,6 +46,7 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -55,12 +56,23 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             VerticalAlignment="Center"
+                            Content="Branch" />
+                        <ctrl:UserBranchControl Grid.Row="0"
+                                                Grid.Column="1"
+                                                TabIndex="0"
+                                                BranchValue="{Binding CurrentProduct.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
                             Content="Item Name" />
                         <ctrl:AutoCompleteTextBox
                             x:Name="txtProductName"
-                            Grid.Row="0"
+                            Grid.Row="1"
                             Grid.Column="1"
                             Margin="0,5,5,0"
+                            TabIndex="1"
                             AutoCompleteHeight="200"
                             AutoCompletePlacement="Bottom"
                             AutoCompleteWidth="600"
@@ -111,13 +123,13 @@
 
 
                         <Label
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Rate" />
                         <mah:NumericUpDown
                             x:Name="txtRetailRate"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             Padding="{StaticResource ControlPadding}"
@@ -133,13 +145,13 @@
 
 
                         <Label
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Quantity" />
                         <mah:NumericUpDown
                             x:Name="txtSalesQty"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
@@ -149,12 +161,12 @@
                             Value="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Label
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Grid.Column="0"
                             VerticalAlignment="Center"
                             Content="Discount" />
                         <mah:NumericUpDown
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
@@ -167,7 +179,7 @@
                             Value="{Binding CurrentProduct.Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <Button
-                            Grid.Row="4"
+                            Grid.Row="5"
                             Grid.Column="1"
                             Margin="0,5,5,5"
                             Command="{Binding AddItemToCartCommand}"

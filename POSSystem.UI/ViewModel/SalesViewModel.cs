@@ -83,7 +83,10 @@ namespace POSSystem.UI.ViewModel
             PdfOptionBorder = pdfPanel;
             _productName = productName;
 
-            CurrentProduct = new SalesWrapper(new SalesModel());
+            CurrentProduct = new SalesWrapper(new SalesModel())
+            {
+                BranchId = _loggedInUser.BranchId.Value
+            };
             CurrentCart = new ObservableCollection<SalesModel>();
             CurrentBill = new BillWrapper(new BillModel());
             CultureInfo = StaticContainer.CultureInfo;
@@ -358,7 +361,7 @@ namespace POSSystem.UI.ViewModel
         public List<Inventory> GetFilteredProduct(string productName)
         {
             inventoryBO = new InventoryBO();
-            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName);
+            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, CurrentProduct.BranchId);
             return filteredInventory;
         }
 

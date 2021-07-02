@@ -48,11 +48,11 @@ namespace POS.BusinessRule
         }
 
 
-        public List<Inventory> GetAllActiveProducts(string productName)
+        public List<Inventory> GetAllActiveProducts(string productName, Int64 branchId)
         {
             return genericDataRepository
                 .GetAll()
-                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.Name.ToLower().StartsWith(productName))
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.BranchId == branchId  && x.Name.ToLower().StartsWith(productName))
                 .ToList();
         }
 
