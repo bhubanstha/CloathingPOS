@@ -92,7 +92,7 @@ namespace POSSystem.UI.ViewModel
         private void LoadInventory()
         {
             _inventoryBo = new InventoryBO();
-            List<Inventory> items = _inventoryBo.GetAllActiveProducts();
+            List<Inventory> items = _inventoryBo.GetAllActiveProducts(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
 
             Inventory = new ObservableCollection<InventoryWrapper>();
             foreach (Inventory item in items)
