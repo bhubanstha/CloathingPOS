@@ -468,6 +468,9 @@
     <Compile Include="Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UserBranchControl.xaml.cs">
+      <DependentUpon>UserBranchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\ControlHeightCalculator.cs" />
     <Compile Include="Converter\FileToImageSourceConverter.cs" />
@@ -544,6 +547,7 @@
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ShopViewModel.cs" />
     <Compile Include="ViewModel\InventoryHistoryViewModel.cs" />
+    <Compile Include="ViewModel\UserBranchViewModel.cs" />
     <Compile Include="ViewModel\UserProfileViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
@@ -640,6 +644,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UserBranchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

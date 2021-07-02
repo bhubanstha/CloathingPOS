@@ -76,6 +76,7 @@ namespace POSSystem.UI
             builder.RegisterType<SalesListViewModel>().AsSelf();
             builder.RegisterType<BillingViewModel>().AsSelf();
             builder.RegisterType<BranchViewModel>().AsSelf();
+            builder.RegisterType<UserBranchViewModel>().AsSelf();
 
 
 
