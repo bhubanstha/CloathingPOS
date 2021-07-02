@@ -31,13 +31,6 @@
 
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                 <TextBlock
-                    Margin="5 0"
-                    VerticalAlignment="Center"
-                    Text="Branch:" />
-
-                <ctrl:UserBranchControl BranchValue="{Binding BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" TabIndex="0" Margin="5 0"/>
-
-                <TextBlock
                     VerticalAlignment="Center"
                     Margin="5 0"
                     Text="Bill No.:" />

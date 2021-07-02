@@ -114,7 +114,7 @@ namespace POSSystem.UI.ViewModel
             NewUser.PromptForPasswordReset = true;
             NewUser.UserName = "";
             NewUser.CanAccessAllBranch = false;
-            NewUser.BranchId = cacheService.ReadCache<User>(CacheKey.LoginUser.ToString()).BranchId.Value;
+            NewUser.BranchId = StaticContainer.ActiveBranchId;
 
             NewUser.PropertyChanged += NewUser_PropertyChanged;
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
@@ -242,7 +242,7 @@ namespace POSSystem.UI.ViewModel
                 User u = new User
                 {
                     Id = this.NewUser.Id,
-                    BranchId = this.NewUser.BranchId,
+                    BranchId = StaticContainer.ActiveBranchId,
                     UserName = this.NewUser.UserName,
                     DisplayName = this.NewUser.DisplayName,
                     Password = this.NewUser.Password,
@@ -336,6 +336,7 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.Password = "";
             this.LogoName = "";
             this.LogoFullPathName = "";
+            this._isLogoChanged = false;
         }
 
         

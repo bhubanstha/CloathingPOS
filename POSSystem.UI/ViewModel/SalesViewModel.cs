@@ -98,7 +98,7 @@ namespace POSSystem.UI.ViewModel
             CurrentCart = new ObservableCollection<SalesModel>();
             CurrentBill = new BillWrapper(new BillModel())
             {
-                BranchId = _loggedInUser.BranchId.Value,
+                BranchId = StaticContainer.ActiveBranchId,
                 UserId = _loggedInUser.Id
             };
             CultureInfo = StaticContainer.CultureInfo;
@@ -352,7 +352,7 @@ namespace POSSystem.UI.ViewModel
                     BillingPAN = CurrentBill.BillingPAN,
                     BillTo = CurrentBill.BillTo,
                     VAT = CurrentBill.VAT,
-                    BranchId = CurrentBill.BranchId,
+                    BranchId = StaticContainer.ActiveBranchId,
                     UserId = _loggedInUser.Id
                 };
                 Int64 billNo = billBO.CreateNewBill(ref b);

@@ -52,16 +52,6 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
-                        <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Content="Branch" />
-                        <ctrl:UserBranchControl Grid.Row="0"
-                                                Grid.Column="1"
-                                                TabIndex="0"
-                                                IsEnabled="{Binding EnableBranchSelection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                BranchValue="{Binding CurrentBill.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label
                             Grid.Row="1"

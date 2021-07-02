@@ -37,16 +37,9 @@
             <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
 
                 <TextBlock
-                Margin="5,0"
-                VerticalAlignment="Center"
-                Text="Branch" />
-
-                <ctrl:UserBranchControl BranchValue="{Binding BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="0" Width="150"/>
-
-                <TextBlock
                     Margin="5,0"
                     VerticalAlignment="Center"
-                    Text="Sales Date" />
+                    Text="Sales Date:" />
                 <DatePicker
                     x:Name="PurchaseDate"
                     Margin="{StaticResource ControlMargin}"

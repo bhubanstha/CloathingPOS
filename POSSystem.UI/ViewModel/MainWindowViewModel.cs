@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
+using Notifications.Wpf;
 using POS.Model;
 using POSSystem.UI.Enum;
 using POSSystem.UI.PDFViewer;
@@ -21,7 +22,6 @@ namespace POSSystem.UI.ViewModel
         private bool _isPopUpMenuVisible = false;
         private bool _isAdminMenuVisible = false;
         private bool _isSysAdminMenuVisible = false;
-        private Int64 _currentBranchId;
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -47,9 +47,8 @@ namespace POSSystem.UI.ViewModel
 
         public Int64 CurrentBranchId
         {
-            get { return _currentBranchId; }
+            get { return StaticContainer.ActiveBranchId; }
             set {
-                _currentBranchId = value;
                 StaticContainer.ActiveBranchId = value;
                 OnPropertyChanged();
             }
@@ -179,6 +178,15 @@ namespace POSSystem.UI.ViewModel
                 }
             }
 
+        }
+
+        public void UpdateBranchOnEdit(Int64 branchId, string branchName)
+        {
+            if (StaticContainer.ActiveBranchId != branchId)
+            {
+                CurrentBranchId = branchId;
+                StaticContainer.ShowNotification("Branch Switch", $"You have been swtitched to {branchName}.", NotificationType.Information);
+            }
         }
     }
 }

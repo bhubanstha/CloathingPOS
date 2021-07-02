@@ -47,6 +47,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="110"/>
@@ -57,25 +58,13 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Style="{StaticResource Label.Validation.Container.Margin}"
-                            Text="Branch" />
-                        <ctrl:UserBranchControl 
+                            Text="Display Name" />
+                        <TextBox
+                            x:Name="DisplayName"
                             Grid.Row="0"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
                             TabIndex="0"
-                            BranchValue="{Binding NewUser.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />                        
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Style="{StaticResource Label.Validation.Container.Margin}"
-                            Text="Display Name" />
-                        <TextBox
-                            x:Name="DisplayName"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            TabIndex="2"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.ClearTextButton="True"
@@ -105,7 +94,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Width="80"
-                            TabIndex="4"
+                            TabIndex="2"
                             HorizontalAlignment="Right"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
@@ -125,10 +114,28 @@
                         <mah:ToggleSwitch
                             Grid.Row="3"
                             Grid.Column="1"
-                            TabIndex="6"
+                            TabIndex="4"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
                             IsOn="{Binding NewUser.PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            OffContent="No"
+                            OnContent="Yes">
+                        </mah:ToggleSwitch>
+
+                        <TextBlock
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            TextWrapping="Wrap"
+                            Style="{StaticResource Label.Validation.Container.Margin}"
+                            Text="Can Access All Branch" />
+                        <mah:ToggleSwitch
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            IsEnabled="{Binding ElementName=toggleIsAdmin, Path=IsOn}"
+                            Margin="{StaticResource ControlMargin}"
+                            ContentPadding="0 0 0 3"
+                            TabIndex="6"
+                            IsOn="{Binding NewUser.CanAccessAllBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
                             OnContent="Yes">
                         </mah:ToggleSwitch>
@@ -177,7 +184,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2">
-                            <ctrl:BindablePasswordBox TabIndex="3" Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                            <ctrl:BindablePasswordBox TabIndex="2" Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                             <TextBlock
                                 Grid.Row="2"
                                 Style="{DynamicResource TextBlock.Validation.Message}"
@@ -200,23 +207,7 @@
                             OffContent="No"
                             OnContent="Yes" />
 
-                        <TextBlock
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            TextWrapping="Wrap"
-                            Style="{StaticResource Label.Validation.Container.Margin}"
-                            Text="Can Access All Branch" />
-                        <mah:ToggleSwitch
-                            Grid.Row="4"
-                            Grid.Column="1"
-                            IsEnabled="{Binding ElementName=toggleIsAdmin, Path=IsOn}"
-                            Margin="{StaticResource ControlMargin}"
-                            ContentPadding="0 0 0 3"
-                            TabIndex="7"
-                            IsOn="{Binding NewUser.CanAccessAllBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            OffContent="No"
-                            OnContent="Yes">
-                        </mah:ToggleSwitch>
+                        
                     </Grid>
 
                     <Button

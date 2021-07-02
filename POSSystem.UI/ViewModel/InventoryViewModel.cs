@@ -1,8 +1,8 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
-using POSSystem.UI.Enum;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -74,7 +73,7 @@ namespace POSSystem.UI.ViewModel
             {
                 ColorNameEntryEnabled = false,
                 FirstPurchaseDate = DateTime.Now,
-                BranchId = _loggedInUser.BranchId.Value,
+                BranchId = StaticContainer.ActiveBranchId,
                 Quantity = 1,
                 PurchaseRate = 1,
                 RetailRate = 1
@@ -131,6 +130,8 @@ namespace POSSystem.UI.ViewModel
                 Inventory.BranchId = obj.Inventory.BranchId;
                 Inventory.UserId = obj.Inventory.UserId;
                 StaticContainer.UIHamburgerMenuControl.SelectedIndex = 1;
+                MainWindowViewModel model = StaticContainer.Container.Resolve<MainWindowViewModel>();
+                model.UpdateBranchOnEdit(obj.Inventory.BranchId.Value, obj.Inventory.Branch.BranchName);
                 ButtonText = "Update Inventory";
             }
         }
@@ -159,7 +160,7 @@ namespace POSSystem.UI.ViewModel
                     UserId = _loggedInUser.Id,
                     CategoryId = this.Inventory.CategoryId,
                     BrandId = this.Inventory.BrandId,
-                    BranchId = this.Inventory.BranchId,
+                    BranchId = StaticContainer.ActiveBranchId,
                     Color = this.Inventory.Color,
                     FirstPurchaseDate = this.Inventory.FirstPurchaseDate,
                     Name = this.Inventory.Name,

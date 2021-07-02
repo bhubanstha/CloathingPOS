@@ -42,7 +42,7 @@ namespace POSSystem.UI
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
-            builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
             builder.RegisterType<ForgotPasswordWindow>().AsSelf();
             builder.RegisterType<PDFViewerWindow>().AsSelf();
 
@@ -59,7 +59,7 @@ namespace POSSystem.UI
 
             //View Model Registration
             builder.RegisterType<LoginViewModel>().AsSelf();
-            builder.RegisterType<MainWindowViewModel>().AsSelf();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<GraphViewModel>().AsSelf();
             builder.RegisterType<UserViewModel>().AsSelf();
             builder.RegisterType<ForgetPasswordViewModel>().AsSelf();
