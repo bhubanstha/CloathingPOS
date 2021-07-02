@@ -142,7 +142,7 @@ namespace POSSystem.UI.ViewModel
         private void OnManageAccountExecute()
         {
             //StaticContainer.UIHamburgerMenuControl.Items.
-            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[7];
+            StaticContainer.UIHamburgerMenuControl.Content = StaticContainer.UIHamburgerMenuControl.Items[StaticContainer.UIHamburgerMenuControl.Items.Count-2];
             StaticContainer.UIHamburgerMenuControl.SelectedIndex = -1;
             StaticContainer.UIHamburgerMenuControl.SelectedOptionsIndex = -1;
             //Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
