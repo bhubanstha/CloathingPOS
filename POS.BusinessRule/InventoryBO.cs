@@ -31,10 +31,22 @@ namespace POS.BusinessRule
             return i;
         }
 
+        public List<Inventory> GetAllActiveProducts(Int64 branchId, bool canAccessAllBranch)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x=> x.IsDeleted == false && x.Quantity>0 && (x.BranchId == branchId || canAccessAllBranch == true))
+                .ToList();
+        }
+
         public List<Inventory> GetAllActiveProducts()
         {
-            return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false && x.Quantity>0).ToList();
+            return genericDataRepository
+                .GetAll()
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 )
+                .ToList();
         }
+
 
         public List<Inventory> GetAllActiveProducts(string productName)
         {
