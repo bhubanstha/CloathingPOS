@@ -32,19 +32,26 @@ namespace POSSystem.UI.Controls
             DependencyProperty.Register("BranchValue", typeof(long), typeof(UserBranchControl),
                 new FrameworkPropertyMetadata(long.MinValue, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, BranchPropertyChanged, null, false, UpdateSourceTrigger.PropertyChanged));
 
+        public string StyleString
+        {
+            get { return (string)GetValue(StyleStringProperty); }
+            set { SetValue(StyleStringProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BranchId.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StyleStringProperty =
+            DependencyProperty.Register("StyleString", typeof(string), typeof(UserBranchControl),
+                new FrameworkPropertyMetadata("ComboBox.Branch", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, StylePropertyChanged, null, false, UpdateSourceTrigger.PropertyChanged));
+
+
 
         public UserBranchControl()
         {
             InitializeComponent();
             model = StaticContainer.Container.Resolve<UserBranchViewModel>();
             (this.Content as FrameworkElement).DataContext = model;
-            //LoadBranches();
         }
 
-        private void UserBranchControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            //this.DataContext = model;
-        }
 
         private static void BranchPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -56,44 +63,23 @@ namespace POSSystem.UI.Controls
 
         private void UpdateBranch()
         {
-            if (!_isBranchChanging)
-            {
                 cmbBranch.SelectedValue = BranchValue;
+        }
+
+
+        private static void StylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UserBranchControl branchComboBox)
+            {
+                branchComboBox.UpdateStyle();
             }
         }
 
-        private void cmbBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UpdateStyle()
         {
-            if (cmbBranch.SelectedValue != null)
-            {
-                _isBranchChanging = true;
-                BranchValue = (long)cmbBranch.SelectedValue;
-                _isBranchChanging = false;
-            }
-            else
-            {
-                BranchValue = 0;
-            }
+            Style s = this.FindResource(StyleString) as Style;
+            cmbBranch.Style = s;
         }
 
-        private void LoadBranches()
-        {
-            ObservableCollection<BranchWrapper> Branches;
-            BranchBO bo = new BranchBO();
-            List<Branch> branchlist = bo.GetAll();
-            Branches = new ObservableCollection<BranchWrapper>();
-            foreach (Branch branch in branchlist)
-            {
-                BranchWrapper branchWrapper = new BranchWrapper(new Branch())
-                {
-                    Id = branch.Id,
-                    ShopId = branch.ShopId,
-                    BranchName = branch.BranchName,
-                    BranchAddress = branch.BranchAddress
-                };
-                Branches.Add(branchWrapper);
-            }
-            cmbBranch.ItemsSource = Branches;
-        }
     }
 }
