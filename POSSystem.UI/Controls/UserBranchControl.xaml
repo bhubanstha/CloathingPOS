@@ -41,7 +41,6 @@
     <Grid>
         <ComboBox
             x:Name="cmbBranch"
-            Margin="{StaticResource ControlMargin}"
             Padding="{StaticResource ControlPadding}"
             mah:TextBoxHelper.SelectAllOnFocus="True"
             DisplayMemberPath="BranchName"

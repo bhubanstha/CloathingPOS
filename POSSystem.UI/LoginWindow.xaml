@@ -81,8 +81,9 @@
             <Grid
                 Grid.Row="2"
                 Margin="10"
-                behaviors:KeyboardFocus.On="{Binding ElementName=txtUserName}">
+                behaviors:KeyboardFocus.On="{Binding ElementName=cmbBranch}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -94,11 +95,31 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0">
+                    Branch
+                </TextBlock>
+
+                <StackPanel Grid.Row="1">
+                    <ctrl:UserBranchControl
+                        x:Name="cmbBranch"
+                        Grid.Row="1"
+                        Margin="{DynamicResource ControlMargin}"
+                        BorderBrush="Transparent"
+                        BranchValue="{Binding LoginUser.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        StyleString="MahApps.Styles.ComboBox" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Style="{DynamicResource TextBlock.Validation.Message}"
+                        Text="{Binding LoginUser.BranchErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+
+                <TextBlock Grid.Row="2">
                     User Name
                 </TextBlock>
                 <TextBox
                     x:Name="txtUserName"
-                    Grid.Row="1"
+                    Grid.Row="3"
                     Margin="{StaticResource ControlMargin}"
                     Padding="{StaticResource ControlPadding}"
                     mah:TextBoxHelper.ClearTextButton="True"
@@ -107,29 +128,29 @@
                     Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding LoginUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Grid.Row="2">
+                <TextBlock Grid.Row="4">
                     Password
                 </TextBlock>
                 <ctrl:BindablePasswordBox
-                    Grid.Row="3"
+                    Grid.Row="5"
                     Margin="{DynamicResource ControlMargin}"
                     BorderBrush="Transparent"
                     Password="{Binding LoginUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
                 <TextBlock
-                    Grid.Row="4"
-                    TextWrapping="Wrap"
+                    Grid.Row="6"
                     Style="{DynamicResource TextBlock.Validation.Message}"
-                    Text="{Binding LoginUser.PasswordErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding LoginUser.PasswordErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
 
 
                 <CheckBox
-                    Grid.Row="5"
+                    Grid.Row="7"
                     Margin="{DynamicResource ControlMargin}"
                     Content="Remember me"
                     FlowDirection="LeftToRight"
                     IsChecked="{Binding LoginUser.RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Button
-                    Grid.Row="6"
+                    Grid.Row="8"
                     Margin="0,5,0,5"
                     HorizontalAlignment="Left"
                     Command="{Binding LoginCommand}"
@@ -143,7 +164,7 @@
                 </Button>
 
                 <TextBlock
-                    Grid.Row="6"
+                    Grid.Row="8"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
                     <Hyperlink

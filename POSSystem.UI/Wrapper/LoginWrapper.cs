@@ -1,6 +1,7 @@
 ﻿using iText.Layout.Properties;
 using POS.Model.ViewModel;
 using POSSystem.UI.UIModel;
+using System;
 using System.Collections.Generic;
 
 namespace POSSystem.UI.Wrapper
@@ -8,10 +9,20 @@ namespace POSSystem.UI.Wrapper
     public class LoginWrapper : WrapperBase<LoginModel>
     {
         private string _pwdErrorMsg;
+        private string _branchErrorMsg;
         public LoginWrapper(LoginModel obj) : base(obj)
         {
         }
 
+        public Int64 BranchId
+        {
+            get { return GetValue<Int64>(); }
+            set { 
+                SetValue(value);
+                _branchErrorMsg = GetFirstError(nameof(BranchId));
+                OnPropertyChanged(nameof(BranchErrorMessage));
+            }
+        }
 
         public string UserName 
         { 
@@ -40,8 +51,19 @@ namespace POSSystem.UI.Wrapper
         {
             get { return _pwdErrorMsg; }
             private set 
-            { 
+            {
+                _pwdErrorMsg = value;
                 OnPropertyChanged(); 
+            }
+        }
+
+        public string BranchErrorMessage
+        {
+            get { return _branchErrorMsg; }
+            private set
+            {
+                _branchErrorMsg = value;
+                OnPropertyChanged();
             }
         }
 

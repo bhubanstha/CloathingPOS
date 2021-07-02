@@ -25,11 +25,13 @@ namespace POSSystem.UI.Views
 
         private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var userName = Convert.ToString( Application.Current.Properties["UserName"] );
-            var rememberMe = Convert.ToBoolean( Application.Current.Properties["RememberMe"]) ;
+            var userName = Convert.ToString( Application.Current.Properties["UserName"]);
+            var rememberMe = Convert.ToBoolean( Application.Current.Properties["RememberMe"]);
+            var branchId = Convert.ToInt64( Application.Current.Properties["BranchId"]);
 
             _viewModel.LoginUser.UserName = userName;
             _viewModel.LoginUser.RememberMe = rememberMe;
+            _viewModel.LoginUser.BranchId = branchId;
             Application.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;

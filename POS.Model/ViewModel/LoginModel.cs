@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace POS.Model.ViewModel
 {
@@ -11,6 +12,11 @@ namespace POS.Model.ViewModel
         [Required(ErrorMessage = "Password is required")]
         [MaxLength(10)]
         public string Password { get; set; }
+
+
+        [Required(ErrorMessage = "Branch name is required")]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Branch name is required")]
+        public Int64 BranchId { get; set; }
 
         public bool RememberMe { get; set; }
     }

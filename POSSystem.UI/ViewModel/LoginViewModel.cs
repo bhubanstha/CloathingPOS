@@ -81,26 +81,31 @@ namespace POSSystem.UI.ViewModel
             ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
         }
 
-        private void OnLoginExecute()
+        private async void OnLoginExecute()
         {
-            IEnumerable<User> users = _genericDataRepository.GetAll().ToList();
-            User u = users
-                .Where(f => CompareString(f.UserName, LoginUser.UserName)
-                        && f.Password == _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result)
-                .FirstOrDefault();
+            string encryptePassword = await _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password);
+            User u = _genericDataRepository
+                        .GetAll()
+                        .Where(f => f.UserName == LoginUser.UserName
+                                && f.Password == encryptePassword
+                                && (f.BranchId == LoginUser.BranchId || f.CanAccessAllBranch == true)
+                                )
+                        .FirstOrDefault();
             if (u != null)
             {
                 if(LoginUser.RememberMe)
                 {
                     Application.Current.Properties["UserName"] = LoginUser.UserName;
                     Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
+                    Application.Current.Properties["BranchId"] = LoginUser.BranchId;
                 }
                 else
                 {
                     Application.Current.Properties["UserName"] = "";
                     Application.Current.Properties["RememberMe"] = false;
+                    Application.Current.Properties["BranchId"] = -1;
                 }
-                
+                u.BranchId = LoginUser.BranchId;
                 _cacheService.SetCache("LoginUser", u);
                 
                 if(u.PromptForPasswordReset)
@@ -141,7 +146,7 @@ namespace POSSystem.UI.ViewModel
 
         private bool OnLoginCanExecute()
         {
-            return !string.IsNullOrEmpty(LoginUser.UserName) && !string.IsNullOrEmpty(LoginUser.Password);
+            return !string.IsNullOrEmpty(LoginUser.UserName) && !string.IsNullOrEmpty(LoginUser.Password) && LoginUser.BranchId > 0;
         }
 
         
