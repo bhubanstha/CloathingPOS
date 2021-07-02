@@ -17,6 +17,18 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public Int64 BranchId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
+        public Int64 UserId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
         public DateTime BillDate
         {
             get { return GetValue<DateTime>(); }

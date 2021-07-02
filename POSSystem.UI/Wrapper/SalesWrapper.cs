@@ -22,12 +22,6 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
-        public Int64 BranchId
-        {
-            get { return GetValue<Int64>(); }
-            set { SetValue(value); }
-        }
-
         public int SalesQuantity 
         { 
             get { return GetValue<int>(); }

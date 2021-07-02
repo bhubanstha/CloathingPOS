@@ -12,7 +12,6 @@ namespace POS.Model.ViewModel
         public Int64 ProductId { get; set; }
         public Int64 CategoryId { get; set; }
         public Int64 BrandId { get; set; }
-        public Int64 BranchId { get; set; }
 
         public int SalesQuantity { get; set; }
         public decimal Discount { get; set; }
@@ -29,6 +28,8 @@ namespace POS.Model.ViewModel
     public class BillModel
     {
         public Int64 BillNo { get; set; }
+        public Int64 BranchId { get; set; }
+        public Int64 UserId { get; set; }
         public DateTime BillDate { get; set; }
 
         [Required(ErrorMessage = "Customer name is required.")]

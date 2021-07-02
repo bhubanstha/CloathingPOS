@@ -60,7 +60,8 @@
                         <ctrl:UserBranchControl Grid.Row="0"
                                                 Grid.Column="1"
                                                 TabIndex="0"
-                                                BranchValue="{Binding CurrentProduct.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                IsEnabled="{Binding EnableBranchSelection, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                BranchValue="{Binding CurrentBill.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label
                             Grid.Row="1"
@@ -461,6 +462,19 @@
                     Command="{Binding CheckoutCommand}"
                     Content="Checkout"
                     Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+
+                <Button
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Width="90"
+                    Margin="110 0 0 0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ResetCommand}"
+                    Content="Reset"
+                    Style="{DynamicResource button.Reset}" />
+
+                
 
                 <Grid
                     Grid.Row="2"

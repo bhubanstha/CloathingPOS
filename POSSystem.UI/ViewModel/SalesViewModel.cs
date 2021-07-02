@@ -29,7 +29,7 @@ namespace POSSystem.UI.ViewModel
         private ObservableCollection<SalesModel> _currentCart;
         private SalesWrapper _currentProduct;
         private AutoCompleteTextBox _productName;
-
+        private bool _enableBranchSelection = true;
 
         //Public Properties
         public MoonPdfPanel PdfPanel { get; set; }
@@ -42,7 +42,16 @@ namespace POSSystem.UI.ViewModel
             {
                 _currentProduct = value;
                 OnPropertyChanged();
-                CanAdditemToCartExecute();
+            }
+        }
+
+        public bool EnableBranchSelection
+        {
+            get { return _enableBranchSelection; }
+            set
+            {
+                _enableBranchSelection = value;
+                OnPropertyChanged();
             }
         }
         public BillWrapper CurrentBill { get; set; }
@@ -76,6 +85,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand AddItemToCartCommand { get; }
         public ICommand DeleteCartItemCommand { get; }
         public ICommand CheckoutCommand { get; }
+        public ICommand ResetCommand { get; }
 
         //Constructor
         public SalesViewModel(Border pdfPanel, AutoCompleteTextBox productName)
@@ -83,18 +93,21 @@ namespace POSSystem.UI.ViewModel
             PdfOptionBorder = pdfPanel;
             _productName = productName;
 
-            CurrentProduct = new SalesWrapper(new SalesModel())
-            {
-                BranchId = _loggedInUser.BranchId.Value
-            };
+            CurrentProduct = new SalesWrapper(new SalesModel());
+            
             CurrentCart = new ObservableCollection<SalesModel>();
-            CurrentBill = new BillWrapper(new BillModel());
+            CurrentBill = new BillWrapper(new BillModel())
+            {
+                BranchId = _loggedInUser.BranchId.Value,
+                UserId = _loggedInUser.Id
+            };
             CultureInfo = StaticContainer.CultureInfo;
 
 
             AddItemToCartCommand = new DelegateCommand(AddItemToCart, CanAdditemToCartExecute);
             DeleteCartItemCommand = new DelegateCommand<SalesModel>(RemoveItemFromCart);
             CheckoutCommand = new DelegateCommand(OnSalesCheckout, CanSalesCheckoutExecute);
+            ResetCommand = new DelegateCommand(OnResetExecute);
 
             CurrentProduct.PropertyChanged += CurrentProduct_PropertyChanged;
             CurrentBill.PropertyChanged += CurrentBill_PropertyChanged;
@@ -104,7 +117,32 @@ namespace POSSystem.UI.ViewModel
             CreateNewBill();
         }
 
-        # region Property Events
+        private void OnResetExecute()
+        {
+            CurrentBill.VAT = 0;
+            CurrentBill.GrandTotal = 0;
+            CurrentBill.BillTo = "";
+            CurrentBill.BillingAddress = "";
+            CurrentBill.BillingPAN = "";
+            CurrentCart.Clear();
+            CurrentProduct.ProductId = 0;
+            CurrentProduct.ProductName = "";
+            CurrentProduct.RetailRate = 0;
+            CurrentProduct.SalesQuantity = 1;
+            CurrentProduct.Size = "";
+            CurrentProduct.Discount = 0;
+            CurrentProduct.ColorName = "";
+            CurrentProduct.Color = "";
+            CurrentProduct.CategoryName = "";
+            CurrentProduct.CategoryId = 0;
+            CurrentProduct.BrandName = "";
+            CurrentProduct.BrandId = 0;
+            _productName.Text = "";
+            _productName.SelectedItem = null;
+            PdfPanel.Unload();
+        }
+
+        #region Property Events
         private void CurrentCart_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             ((DelegateCommand)CheckoutCommand).RaiseCanExecuteChanged();
@@ -134,7 +172,7 @@ namespace POSSystem.UI.ViewModel
 
         public bool CanAdditemToCartExecute()
         {
-            return !string.IsNullOrEmpty(CurrentProduct.ProductName);
+            return CurrentProduct != null && !string.IsNullOrEmpty(CurrentProduct.ProductName);
         }
         #endregion
 
@@ -148,6 +186,7 @@ namespace POSSystem.UI.ViewModel
                 ManageItemInCart();
                 ClearProduct();
                 await CreatePdfFromCurrentCartItem();
+                EnableBranchSelection = false;
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
                     Title = "Item Added",
@@ -312,7 +351,9 @@ namespace POSSystem.UI.ViewModel
                     BillingAddress = CurrentBill.BillingAddress,
                     BillingPAN = CurrentBill.BillingPAN,
                     BillTo = CurrentBill.BillTo,
-                    VAT = CurrentBill.VAT
+                    VAT = CurrentBill.VAT,
+                    BranchId = CurrentBill.BranchId,
+                    UserId = _loggedInUser.Id
                 };
                 Int64 billNo = billBO.CreateNewBill(ref b);
                 foreach (var item in CurrentCart)
@@ -361,7 +402,7 @@ namespace POSSystem.UI.ViewModel
         public List<Inventory> GetFilteredProduct(string productName)
         {
             inventoryBO = new InventoryBO();
-            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, CurrentProduct.BranchId);
+            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, CurrentBill.BranchId);
             return filteredInventory;
         }
 
