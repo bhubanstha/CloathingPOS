@@ -15,6 +15,7 @@ namespace POSSystem.UI.ViewModel
     public class UserBranchViewModel :ViewModelBase
     {
         private User _loggedInUser;
+        private ICacheService cacheService;
         private ObservableCollection<BranchWrapper> branches;
 
         public ObservableCollection<BranchWrapper> Branches
@@ -30,6 +31,7 @@ namespace POSSystem.UI.ViewModel
         public UserBranchViewModel(ICacheService cache, IEventAggregator eventAggregator)
         {
             _loggedInUser = cache.ReadCache<User>(CacheKey.LoginUser.ToString());
+            cacheService = cache;
             LoadBranches();
             eventAggregator.GetEvent<BranchChangedEvent>().Subscribe(OnBranchUpdateReceived);
         }
@@ -38,6 +40,10 @@ namespace POSSystem.UI.ViewModel
         {
             if (obj.Action == EventAction.Add)
             {
+                if(_loggedInUser == null)
+                {
+                    _loggedInUser = cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
+                }
                 if (_loggedInUser.CanAccessAllBranch)
                 {
                     BranchWrapper branchWrapper = new BranchWrapper(new Branch())
@@ -70,7 +76,7 @@ namespace POSSystem.UI.ViewModel
         private void LoadBranches()
         {
             BranchBO bo = new BranchBO();
-            List<Branch> branchlist = bo.GetAll(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
+            List<Branch> branchlist = _loggedInUser == null? bo.GetAll() : bo.GetAll(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
             Branches = new ObservableCollection<BranchWrapper>();
             foreach (Branch branch in branchlist)
             {

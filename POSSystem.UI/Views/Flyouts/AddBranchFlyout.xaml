@@ -104,7 +104,7 @@
         <Grid
             x:Name="MainGrid"
             Margin="0,30,30,0"
-            behaviors:KeyboardFocus.On="{Binding ElementName=CategoryName}">
+            behaviors:KeyboardFocus.On="{Binding ElementName=txtBranchName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

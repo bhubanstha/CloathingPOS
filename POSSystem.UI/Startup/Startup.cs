@@ -42,7 +42,7 @@ namespace POSSystem.UI
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
-            builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
+            builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<ForgotPasswordWindow>().AsSelf();
             builder.RegisterType<PDFViewerWindow>().AsSelf();
 

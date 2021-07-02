@@ -104,7 +104,7 @@
         <Grid
             x:Name="MainGrid"
             Margin="0,30,30,0"
-            behaviors:KeyboardFocus.On="{Binding ElementName=CategoryName}">
+            behaviors:KeyboardFocus.On="{Binding ElementName=BrandName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -239,8 +239,7 @@
                                         Width="25"
                                         Height="25"
                                         Margin="2,0"
-                                        Command="{Binding Path=DataContext.DeleteBrandCommand, 
-                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        Command="{Binding Path=DataContext.DeleteBrandCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
                                         CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
                                         Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                         Style="{DynamicResource Button.Circle.In.GridRow}">

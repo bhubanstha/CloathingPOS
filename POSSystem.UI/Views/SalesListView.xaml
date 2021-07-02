@@ -34,7 +34,10 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                Orientation="Horizontal">
 
                 <TextBlock
                     Margin="5,0"
@@ -45,8 +48,7 @@
                     Margin="{StaticResource ControlMargin}"
                     Padding="{StaticResource ControlPadding}"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter a product purchase date"
-                    DisplayDate="{Binding Inventory.FirstPurchaseDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                    mah:TextBoxHelper.Watermark="Enter a product sold date"
                     IsHitTestVisible="True"
                     IsTodayHighlighted="True"
                     SelectedDate="{Binding BillingDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"

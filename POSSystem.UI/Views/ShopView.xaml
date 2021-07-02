@@ -15,7 +15,7 @@
     <UserControl.Resources />
     <StackPanel Margin="0,5,3,5">
 
-        <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
+        <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=txtShopName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -158,15 +158,6 @@
                 Command="{Binding SaveCommand}"
                 Content="{Binding ButtonText, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
-            <Button
-                Grid.Row="8"
-                Grid.Column="1"
-                Width="150"
-                Margin="160,5,0,15"
-                HorizontalAlignment="Left"
-                Command="{Binding ResetCommand}"
-                Content="Reset"
-                Style="{DynamicResource button.Reset}" />
         </Grid>
 
         <Separator />

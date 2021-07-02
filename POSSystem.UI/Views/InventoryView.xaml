@@ -113,9 +113,10 @@
                 Margin="0,5,0,5"
                 VerticalAlignment="Center"
                 Text="Product Name" />
-            <StackPanel Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="0 0 5 0">
+            <StackPanel
+                Grid.Row="3"
+                Grid.Column="1"
+                Margin="0,0,5,0">
                 <TextBox
                     x:Name="ProductCode"
                     Margin="{StaticResource ControlMargin}"
@@ -128,7 +129,7 @@
                     Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding Inventory.Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             </StackPanel>
-           
+
             <TextBox
                 x:Name="ProductName"
                 Grid.Row="3"
@@ -181,7 +182,7 @@
                     Padding="{StaticResource ControlPadding}"
                     mah:ColorPalettesTabHeader="Standard Colours"
                     mah:TextBoxHelper.Watermark="Select a product colour"
-                    SelectedColor="{Binding Inventory.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                    SelectedColor="{Binding Inventory.Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, FallbackValue='Black'}"
                     Style="{DynamicResource MahApps.Styles.ColorPicker}" />
             </StackPanel>
 

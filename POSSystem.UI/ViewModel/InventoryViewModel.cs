@@ -76,7 +76,8 @@ namespace POSSystem.UI.ViewModel
                 BranchId = StaticContainer.ActiveBranchId,
                 Quantity = 1,
                 PurchaseRate = 1,
-                RetailRate = 1
+                RetailRate = 1,
+                Color = "#000000"//Default black colour
             };
             LoadCategories();
             LoadBrands();

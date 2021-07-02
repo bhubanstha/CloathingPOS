@@ -30,28 +30,28 @@
             Header="Create User"
             IsExpanded="True">
             <StackPanel>
-                
+
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Row="0" Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -64,7 +64,6 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
-                            TabIndex="0"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.ClearTextButton="True"
@@ -72,6 +71,7 @@
                             mah:TextBoxHelper.Watermark="Enter person full name (space allowed)"
                             SpellCheck.IsEnabled="True"
                             Style="{DynamicResource TextBox.Validation}"
+                            TabIndex="0"
                             Text="{Binding NewUser.DisplayName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock
@@ -86,7 +86,7 @@
                             Grid.Column="1"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
-                            IsEnabled="False"                            
+                            IsEnabled="False"
                             Style="{DynamicResource MahApps.Styles.TextBox}"
                             Text="{Binding LogoName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
@@ -94,65 +94,63 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Width="80"
-                            TabIndex="2"
-                            HorizontalAlignment="Right"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
+                            HorizontalAlignment="Right"
                             mah:TextBoxHelper.ClearTextButton="True"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
                             mah:TextBoxHelper.Watermark="Enter simple password"
                             Command="{Binding FilePickCommand}"
                             Content="Browse..."
-                            Style="{DynamicResource Button.FilePicker}" />
+                            Style="{DynamicResource Button.FilePicker}"
+                            TabIndex="2" />
 
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
-                            TextWrapping="Wrap"
                             Style="{StaticResource Label.Validation.Container.Margin}"
-                            Text="Change Password on First Login" />
+                            Text="Change Password on First Login"
+                            TextWrapping="Wrap" />
                         <mah:ToggleSwitch
                             Grid.Row="3"
                             Grid.Column="1"
-                            TabIndex="4"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
                             IsOn="{Binding NewUser.PromptForPasswordReset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
-                            OnContent="Yes">
-                        </mah:ToggleSwitch>
+                            OnContent="Yes"
+                            TabIndex="4" />
 
                         <TextBlock
                             Grid.Row="4"
                             Grid.Column="0"
-                            TextWrapping="Wrap"
                             Style="{StaticResource Label.Validation.Container.Margin}"
-                            Text="Can Access All Branch" />
+                            Text="Can Access All Branch"
+                            TextWrapping="Wrap" />
                         <mah:ToggleSwitch
                             Grid.Row="4"
                             Grid.Column="1"
-                            IsEnabled="{Binding ElementName=toggleIsAdmin, Path=IsOn}"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
-                            TabIndex="6"
+                            IsEnabled="{Binding ElementName=toggleIsAdmin, Path=IsOn}"
                             IsOn="{Binding NewUser.CanAccessAllBranch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
-                            OnContent="Yes">
-                        </mah:ToggleSwitch>
+                            OnContent="Yes"
+                            TabIndex="6" />
 
                     </Grid>
 
                     <Grid Grid.Row="0" Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -165,7 +163,6 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
-                            TabIndex="1"
                             Margin="{StaticResource ControlMargin}"
                             Padding="{StaticResource ControlPadding}"
                             mah:TextBoxHelper.ClearTextButton="True"
@@ -173,6 +170,7 @@
                             mah:TextBoxHelper.Watermark="Enter user name without space and special character [a-z]"
                             SpellCheck.IsEnabled="True"
                             Style="{DynamicResource TextBox.Validation}"
+                            TabIndex="1"
                             Text="{Binding NewUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, NotifyOnTargetUpdated=True}" />
 
                         <TextBlock
@@ -184,7 +182,7 @@
                             Grid.Row="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2">
-                            <ctrl:BindablePasswordBox TabIndex="2" Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+                            <ctrl:BindablePasswordBox Password="{Binding NewUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" TabIndex="2" />
                             <TextBlock
                                 Grid.Row="2"
                                 Style="{DynamicResource TextBlock.Validation.Message}"
@@ -202,12 +200,12 @@
                             Grid.Column="1"
                             Margin="{StaticResource ControlMargin}"
                             ContentPadding="0 0 0 3"
-                            TabIndex="5"
                             IsOn="{Binding NewUser.IsAdmin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             OffContent="No"
-                            OnContent="Yes" />
+                            OnContent="Yes"
+                            TabIndex="5" />
 
-                        
+
                     </Grid>
 
                     <Button
@@ -217,7 +215,6 @@
                         Margin="150,5,0,15"
                         HorizontalAlignment="Left"
                         Command="{Binding CreateUserCommand}"
-                        CommandParameter="{Binding ElementName=txtPassword}"
                         Content="{Binding ButtonText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
 
@@ -228,69 +225,31 @@
                         Margin="320,5,0,15"
                         HorizontalAlignment="Left"
                         Command="{Binding ResetUserCommand}"
-                        CommandParameter="{Binding ElementName=txtPassword}"
                         Content="Reset"
                         Style="{DynamicResource button.Reset}" />
                 </Grid>
-            
-            
-            <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="100" />
-                </Grid.ColumnDefinitions>
-
-                
-                
-                
-
-                
-
-                
-
-                <!--<PasswordBox
-                    x:Name="txtPassword"
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Margin="{StaticResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter simple password"
-                    MaxLength="6"
-                    Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />-->
-
-                
-
-                
-
-                
-
-                
 
 
+                <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
 
-
-               
-
-
-
-            </Grid>
-            
             </StackPanel>
         </Expander>
 

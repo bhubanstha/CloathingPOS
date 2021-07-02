@@ -3,12 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:conv="clr-namespace:POSSystem.UI.Converter"
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flyout="clr-namespace:POSSystem.UI.Views.Flyouts"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:POSSystem.UI"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
     xmlns:views="clr-namespace:POSSystem.UI.Views"
@@ -26,9 +26,9 @@
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
-            <conv:FileToImageSourceConverter x:Key="ImageConverter"/>
-            <conv:ImageVisibilityConverter x:Key="ImageVisibility"/>
-            <conv:IconVisibilityConverter x:Key="IconVisibility"/>
+            <conv:FileToImageSourceConverter x:Key="ImageConverter" />
+            <conv:ImageVisibilityConverter x:Key="ImageVisibility" />
+            <conv:IconVisibilityConverter x:Key="IconVisibility" />
             <conv:WindowHeightConverter x:Key="HeightConverter" />
             <!--  This is the template for the menu items.  -->
             <DataTemplate x:Key="MenuItemTemplate" DataType="{x:Type mah:HamburgerMenuIconItem}">
@@ -228,7 +228,10 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <ctrl:UserBranchControl MaxWidth="130" BranchValue="{Binding CurrentBranchId}"/>
+            <ctrl:UserBranchControl
+                MaxWidth="130"
+                BranchValue="{Binding CurrentBranchId}"
+                StyleString="ComboBox.Branch" />
             <Button
                 x:Name="btnCmdUserName"
                 Command="{Binding UserMenuCommand}"
@@ -237,18 +240,21 @@
                 <Button.ContentTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Ellipse Width="25" Height="25" Visibility="{Binding ProfileImage, Converter={StaticResource ImageVisibility}}">
+                            <Ellipse
+                                Width="25"
+                                Height="25"
+                                Visibility="{Binding ProfileImage, Converter={StaticResource ImageVisibility}}">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="{Binding ProfileImage, Converter={StaticResource ImageConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
                             <iconPacks:PackIconFontAwesome
                                 x:Name="icnUserImage"
-                                Visibility="{Binding ProfileImage, Converter={StaticResource IconVisibility}}"
                                 Width="22"
                                 Height="22"
                                 VerticalAlignment="Center"
-                                Kind="UserAltSolid" />
+                                Kind="UserAltSolid"
+                                Visibility="{Binding ProfileImage, Converter={StaticResource IconVisibility}}" />
                             <TextBlock
                                 Margin="4,0,0,0"
                                 VerticalAlignment="Center"
@@ -258,7 +264,7 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-            
+
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
@@ -304,11 +310,11 @@
             x:Name="HamburgerMenuControl"
             Grid.Row="0"
             Grid.Column="0"
-            IsTabStop="False"
             HamburgerButtonName="btnHamburgerMenuOpenClose"
             HamburgerButtonStyle="{DynamicResource App.Hamburger}"
             HamburgerHeight="72"
             IsPaneOpen="True"
+            IsTabStop="False"
             ItemInvoked="HamburgerMenuControl_ItemInvoked"
             ItemTemplate="{StaticResource MenuItemTemplate}"
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
@@ -321,7 +327,6 @@
                     <mah:HamburgerMenuIconItem
                         x:Name="menuUserMgmt"
                         Icon="{iconPacks:Material Kind=Account}"
-                        IsVisible="{Binding IsAdminMenuVisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Label="User Management">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:CreateUserView />
