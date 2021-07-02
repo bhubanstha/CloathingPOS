@@ -106,6 +106,7 @@ namespace POSSystem.UI.ViewModel
             Inventory.Quantity = 1;
             Inventory.PurchaseRate = 1;
             Inventory.RetailRate = 1;
+            ButtonText = "Create Inventory";
         }
 
         private void OnInventoryEditReceived(InventoryChangedEventArgs obj)
