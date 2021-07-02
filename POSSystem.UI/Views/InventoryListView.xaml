@@ -71,6 +71,10 @@
                         Binding="{Binding CategoryName}"
                         Header="Category" />
                     <DataGridTextColumn
+                        Width="70"
+                        Binding="{Binding Code}"
+                        Header="Code" />
+                    <DataGridTextColumn
                         Width="*"
                         Binding="{Binding Name}"
                         Header="Name" />
