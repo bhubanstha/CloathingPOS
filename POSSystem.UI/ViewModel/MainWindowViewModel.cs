@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using Notifications.Wpf;
 using POS.Model;
 using POSSystem.UI.Enum;
 using POSSystem.UI.PDFViewer;
@@ -20,7 +18,6 @@ namespace POSSystem.UI.ViewModel
         private double _popupRightMargin = 200;
         private ICacheService _cacheService;
         private IMessageDialogService _messageDialogService;
-
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -41,7 +38,6 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-
 
         private bool _isPopUpMenuVisible = false;
 
@@ -90,14 +86,13 @@ namespace POSSystem.UI.ViewModel
             LogoutCommand = new DelegateCommand(OnUserLogout);
             OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
             ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
-        }
+        }     
 
         private void OnAddBranchExecute()
         {
             Flyout f = StaticContainer.AddBranchFlyout;
             f.IsOpen = !f.IsOpen;
-            ManageMenuVisibility();
-            StaticContainer.ShowNotification("Test", "this is test", NotificationType.Information);
+            ManagePopUpMenuVisibility();
         }
 
         private void OnApplicationExit()
@@ -126,7 +121,7 @@ namespace POSSystem.UI.ViewModel
         {
             Flyout f = StaticContainer.SettingFlyout;
             f.IsOpen = !f.IsOpen;
-            ManageMenuVisibility();
+            ManagePopUpMenuVisibility();
         }
 
 
@@ -138,16 +133,16 @@ namespace POSSystem.UI.ViewModel
             StaticContainer.UIHamburgerMenuControl.SelectedOptionsIndex = -1;
             //Window.ShowMessageAsync("This is title", "This is message", MessageDialogStyle.Affirmative);
             //_messageDialogService.ShowDialog("Manage account clicked", Window);
-            ManageMenuVisibility(); 
+            ManagePopUpMenuVisibility(); 
         }
 
 
         private void OnUserMenuClick()
         {
-            ManageMenuVisibility();
+            ManagePopUpMenuVisibility();
         }
 
-        private void ManageMenuVisibility()
+        private void ManagePopUpMenuVisibility()
         {
             IsPopUpMenuVisible = !_isPopUpMenuVisible ;
         }
