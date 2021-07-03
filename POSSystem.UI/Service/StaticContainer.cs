@@ -3,6 +3,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.Model;
+using POSSystem.UI.ViewModel;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -10,6 +11,20 @@ using System.Windows.Media.Imaging;
 
 namespace POSSystem.UI.Service
 {
+    public class SplashScreenMessage: ViewModelBase
+    {
+        private  string _msg="Registering container and services";
+
+        public  string Message
+        {
+            get { return _msg; }
+            set { 
+                _msg = value;
+                OnPropertyChanged();
+            }
+        }
+
+    }
     public static class StaticContainer
     {
         public static string ApplicationName { get; set; }

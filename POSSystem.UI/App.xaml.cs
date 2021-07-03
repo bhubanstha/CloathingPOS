@@ -46,13 +46,7 @@ namespace POSSystem.UI
 
             logger.Info("Reloading Configuration");
             ReloadConfig();
-            logger.Info("Configuration Restore");
 
-            logger.Info("Loading Company info");
-            LoadCompanyInfo();
-            logger.Info("Company Info loaded");
-
-            logger.Info("Resolving Login Window");
             var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
             logger.Info("Showing Login Window");
@@ -71,22 +65,7 @@ namespace POSSystem.UI
             logger.Error(e.ToString());
         }
 
-        private void LoadCompanyInfo()
-        {
-            try
-            {
-                ShopBO bO = new ShopBO();
-                Shop shop = bO.GetShop();
-                if (shop != null)
-                {
-                    StaticContainer.Shop = shop;
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
+        
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
 
