@@ -108,6 +108,10 @@
     <Compile Include="Migrations\202107021005126_sales_branch_user.designer.cs">
       <DependentUpon>202107021005126_sales_branch_user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107031046071_new.cs" />
+    <Compile Include="Migrations\202107031046071_new.designer.cs">
+      <DependentUpon>202107031046071_new.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -142,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107021005126_sales_branch_user.resx">
       <DependentUpon>202107021005126_sales_branch_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107031046071_new.resx">
+      <DependentUpon>202107031046071_new.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

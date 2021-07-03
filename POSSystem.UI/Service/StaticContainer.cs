@@ -3,6 +3,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.Model;
+using POS.Model.ViewModel;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Globalization;
@@ -28,7 +29,7 @@ namespace POSSystem.UI.Service
     public static class StaticContainer
     {
         public static string ApplicationName { get; set; }
-        public static BitmapImage AppScreenshot { get; set; }
+        //public static BitmapImage AppScreenshot { get; set; }
 
         public static App ThisApp { get; set; }
         public static IContainer Container { get; set; }
@@ -46,7 +47,7 @@ namespace POSSystem.UI.Service
         public static NotificationManager NotificationManager { get; set; }
         public static string SettingFile { get; set; }
         public static bool IsPasswordChanged { get; set; }
-        public static Shop Shop { get; set; }
+        public static ShopVM Shop { get; set; }
         public static string ErrorMessage { get; private set; } = "Something went wrong. Please contact system admin for support.";
 
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
@@ -81,6 +82,16 @@ namespace POSSystem.UI.Service
                 Message = message,
                 Type = type
             });
+        }
+
+        public static void UpdateShop(Shop s)
+        {
+            Shop.Id = s.Id;
+            Shop.LogoPath = s.LogoPath;
+            Shop.Name = s.Name;
+            Shop.PANNumber = s.PANNumber;
+            Shop.PdfPassword = s.PdfPassword;
+            Shop.PrintInvoice = s.PrintInvoice;
         }
 
     }

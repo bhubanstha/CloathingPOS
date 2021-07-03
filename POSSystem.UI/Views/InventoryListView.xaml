@@ -24,15 +24,27 @@
         <Grid x:Name="MainGrid">
 
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="150"
+                HorizontalAlignment="Left"
+                Command="{Binding LoadDataCommand}"
+                Content="Load Data"
+                IsDefault="True"
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+
             <DataGrid
                 x:Name="CartGrid"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
                 Margin="0,0,8,5"

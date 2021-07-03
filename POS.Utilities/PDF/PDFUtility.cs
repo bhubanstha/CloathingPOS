@@ -93,7 +93,7 @@ namespace POS.Utilities.PDF
 
         }
 
-        public static void CreateInvoiceTotal(ref Table inoiceTable, List<SalesModel> sales, Shop shop)
+        public static void CreateInvoiceTotal(ref Table inoiceTable, List<SalesModel> sales, ShopVM shop)
         {
 
             decimal total = sales.Sum(x => x.SalesQuantity * x.RetailRate);
@@ -117,7 +117,7 @@ namespace POS.Utilities.PDF
             inoiceTable.AddCell(CreateCell($"{(grandTotal>0? grandTotal.ToString() : "" ) }", TextAlignment.RIGHT));
         }
 
-        public static void CreateInvoiceTotal(ref Table inoiceTable, List<Sales> sales, Shop shop)
+        public static void CreateInvoiceTotal(ref Table inoiceTable, List<Sales> sales, ShopVM shop)
         {
 
             decimal total = sales.Sum(x => x.SalesQuantity * x.Inventory.RetailRate);

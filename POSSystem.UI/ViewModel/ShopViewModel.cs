@@ -92,7 +92,7 @@ namespace POSSystem.UI.ViewModel
             }
             finally
             {
-                StaticContainer.Shop = ShopWrapper.Model;
+                StaticContainer.UpdateShop(ShopWrapper.Model);
             }
         }
 

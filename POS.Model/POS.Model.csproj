@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\ForgetPasswordModel.cs" />
     <Compile Include="ViewModel\LoginModel.cs" />
     <Compile Include="ViewModel\SalesModel.cs" />
+    <Compile Include="ViewModel\ShopVM.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

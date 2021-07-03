@@ -47,6 +47,7 @@
             ItemsSource="{Binding Branches, Mode=OneWay}"
             SelectedValue="{Binding BranchValue, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
             SelectedValuePath="Id"
+            SelectionChanged="cmbBranch_SelectionChanged"
             Style="{DynamicResource ComboBox.Branch}"
             TabIndex="{Binding Path=TabIndex, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
     </Grid>

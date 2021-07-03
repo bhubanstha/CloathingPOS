@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls;
 using Org.BouncyCastle.Crypto.Engines;
+using POS.BusinessRule;
 using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
@@ -133,6 +134,22 @@ namespace POSSystem.UI.ViewModel
                 }
                 else
                 {
+                    BranchBO bo = new BranchBO();
+                    Branch b = bo.GetById(u.BranchId.Value);
+                    if(b != null)
+                    {
+                        StaticContainer.Shop = new ShopVM
+                        {
+                            Id = b.Shop.Id,
+                            Address = b.BranchAddress,
+                            CalculateVATOnSales = b.Shop.CalculateVATOnSales,
+                            LogoPath = b.Shop.LogoPath,
+                            Name = b.Shop.Name,
+                            PANNumber = b.Shop.PANNumber,
+                            PdfPassword = b.Shop.PdfPassword,
+                            PrintInvoice = b.Shop.PrintInvoice
+                        };
+                    }
                     MainWindow mainWindow = GetMainWindow();
                     ManageWindowVisibility(mainWindow, LoginWindow, true);
                 }

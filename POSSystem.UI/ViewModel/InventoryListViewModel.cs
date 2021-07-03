@@ -41,6 +41,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteInventoryItemCommand { get; }
         public ICommand AddInventoryItemStockCommand { get; }
         public ICommand EditInventoryItemCommand { get; }
+        public ICommand LoadDataCommand { get; }
 
 
         public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator)
@@ -51,8 +52,19 @@ namespace POSSystem.UI.ViewModel
             DeleteInventoryItemCommand = new DelegateCommand<InventoryWrapper>(DeleteInventoryItem);
             AddInventoryItemStockCommand = new DelegateCommand<InventoryWrapper>(OnAddInventoryItemStock);
             EditInventoryItemCommand = new DelegateCommand<InventoryWrapper>(OnInventoryItemEdit);
+            LoadDataCommand = new DelegateCommand(OnLoadDataExecute);
             eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(ReloadInventory);
+            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ReloadBranchData);           
+        }
+
+        private void OnLoadDataExecute()
+        {
             LoadInventory();
+        }
+
+        private void ReloadBranchData(BranchWrapper obj)
+        {
+            Inventory = null;
         }
 
         private void OnInventoryItemEdit(InventoryWrapper obj)
@@ -92,7 +104,7 @@ namespace POSSystem.UI.ViewModel
         private void LoadInventory()
         {
             _inventoryBo = new InventoryBO();
-            List<Inventory> items = _inventoryBo.GetAllActiveProducts(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
+            List<Inventory> items = _inventoryBo.GetAllActiveProducts(StaticContainer.ActiveBranchId);
 
             Inventory = new ObservableCollection<InventoryWrapper>();
             foreach (Inventory item in items)

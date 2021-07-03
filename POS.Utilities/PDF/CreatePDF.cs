@@ -21,7 +21,7 @@ namespace POS.Utilities.PDF
     public class CreatePDF
     {
 
-        public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, Shop shop, string pdfPassword)
+        public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, ShopVM shop, string pdfPassword)
         {
             Document document;
             string pdfPath = FileUtility.GetInvoicePdfPath(bill.BillNo, true);  //System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.BillNo}.pdf");
@@ -88,7 +88,7 @@ namespace POS.Utilities.PDF
         }
 
 
-        public async Task<string> CreateInvoice(Bill bill, List<Sales> salesRecord, Shop shop, string pdfPassword)
+        public async Task<string> CreateInvoice(Bill bill, List<Sales> salesRecord, ShopVM shop, string pdfPassword)
         {
             Document document;
             string pdfPath = FileUtility.GetInvoicePdfPath(bill.Id, true);// System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.Id}.pdf");
@@ -157,16 +157,16 @@ namespace POS.Utilities.PDF
     class PageHeaderEventHandler : IEventHandler
     {
         private Document doc;
-        private Shop _shop;
+        private ShopVM _shop;
         private BillModel _bill;
 
-        public PageHeaderEventHandler(Document doc, BillModel bill, Shop shop)
+        public PageHeaderEventHandler(Document doc, BillModel bill, ShopVM shop)
         {
             this.doc = doc;
             this._shop = shop;
             this._bill = bill;
         }
-        public PageHeaderEventHandler(Document doc, Bill bill, Shop shop)
+        public PageHeaderEventHandler(Document doc, Bill bill, ShopVM shop)
         {
             this.doc = doc;
             this._shop = shop;
@@ -195,7 +195,7 @@ namespace POS.Utilities.PDF
 
             canvas.Add(PDFUtility.CreateParagraph($"{invoiceHeader}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateParagraph($"{_shop.Name}", TextAlignment.CENTER, 0.5f, 12));
-            //canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateLogoAtPoint(_shop.LogoPath, new Point(15, 390)));
             canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f));

@@ -1,9 +1,11 @@
 ﻿using Autofac;
 using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using POSSystem.UI.Wrapper;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,5 +83,18 @@ namespace POSSystem.UI.Controls
             cmbBranch.Style = s;
         }
 
+        private void cmbBranch_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StaticContainer.Shop != null)
+            {
+                BranchWrapper b = (BranchWrapper)e.AddedItems[0];
+                StaticContainer.Shop.Address = b.BranchAddress;
+
+                //Publish branch change event
+                IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
+                eventAggregator.GetEvent<BranchSwitchedEvent>().Publish(b);
+
+            }
+        }
     }
 }

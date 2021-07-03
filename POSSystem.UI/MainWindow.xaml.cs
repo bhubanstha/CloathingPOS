@@ -52,13 +52,15 @@ namespace POSSystem.UI
             
             double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
             _model.PopupRightMargin = 120 + additionalWidth;
-            System.Drawing.Size s = new System.Drawing.Size();
-            s.Width = (int)container.RenderSize.Width;
-            s.Height = (int)container.RenderSize.Height;
-            Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+            //System.Drawing.Size s = new System.Drawing.Size();
+            //s.Width = (int)container.RenderSize.Width;
+            //s.Height = (int)container.RenderSize.Height;
+            //Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
+
             menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
             menuGraphs.IsVisible = _model.IsAdminMenuVisible;
             menuReport.IsVisible = _model.IsAdminMenuVisible;
@@ -122,7 +124,7 @@ namespace POSSystem.UI
 
                     }
                 }
-                StaticContainer.AppScreenshot = image;
+               // StaticContainer.AppScreenshot = image;
             });
             
         }

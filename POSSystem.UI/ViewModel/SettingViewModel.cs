@@ -64,7 +64,9 @@ namespace POSSystem.UI.ViewModel
                 };
                 ShopBO bo = new ShopBO();
                 await bo.UpdateShop(s);
-                StaticContainer.Shop = s;
+                StaticContainer.Shop.CalculateVATOnSales = s.CalculateVATOnSales;
+                StaticContainer.Shop.PrintInvoice = s.PrintInvoice;
+                StaticContainer.Shop.PdfPassword = s.PdfPassword;
             }
             catch (Exception ex)
             {

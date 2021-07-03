@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
 using MoonPdfLib;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -6,9 +7,11 @@ using POS.Model;
 using POS.Model.ViewModel;
 using POS.Utilities.PDF;
 using POSSystem.UI.Controls;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -113,8 +116,15 @@ namespace POSSystem.UI.ViewModel
             CurrentBill.PropertyChanged += CurrentBill_PropertyChanged;
             CurrentCart.CollectionChanged += CurrentCart_CollectionChanged;
 
+            IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
+            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ResetSales);
 
             CreateNewBill();
+        }
+
+        private void ResetSales(BranchWrapper obj)
+        {
+            OnResetExecute();
         }
 
         private void OnResetExecute()
@@ -139,7 +149,7 @@ namespace POSSystem.UI.ViewModel
             CurrentProduct.BrandId = 0;
             _productName.Text = "";
             _productName.SelectedItem = null;
-            PdfPanel.Unload();
+            PdfOptionVisibility();
         }
 
         #region Property Events
@@ -277,7 +287,10 @@ namespace POSSystem.UI.ViewModel
             else
             {
                 PdfOptionBorder.Visibility = Visibility.Hidden;
-                PdfPanel.Unload();
+                if (PdfPanel.IsLoaded)
+                {
+                    PdfPanel.Unload();
+                }
             }
         }
 
@@ -402,7 +415,7 @@ namespace POSSystem.UI.ViewModel
         public List<Inventory> GetFilteredProduct(string productName)
         {
             inventoryBO = new InventoryBO();
-            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, CurrentBill.BranchId);
+            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, StaticContainer.ActiveBranchId);
             return filteredInventory;
         }
 

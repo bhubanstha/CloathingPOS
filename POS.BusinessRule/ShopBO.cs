@@ -1,6 +1,7 @@
 ﻿using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
+using POS.Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,6 @@ namespace POS.BusinessRule
         {
             genericDataRepository = new DataRepository<Shop>(new POSDataContext());
         }
-
 
         public Shop GetShop()
         {
