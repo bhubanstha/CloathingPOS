@@ -119,7 +119,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>pos_app_icon.ico</ApplicationIcon>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=6.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -923,9 +923,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\AppIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\companyLogo1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -947,10 +944,13 @@
     <Resource Include="Image\posSplash.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\pos_app_icon.ico" />
+    <Resource Include="Image\AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pos_app_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

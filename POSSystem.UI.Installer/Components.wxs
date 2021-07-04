@@ -23,6 +23,9 @@
 
       <!--clenup on uninstall-->
       <ComponentRef Id="CleanupMainApplicationFolder"/>
+		
+		<!--Permission to write log-->
+      <ComponentRef Id="GrantPermissionsToAppFolder"/>
       
     </ComponentGroup>
 
@@ -126,7 +129,37 @@
              will not remove on "install". 
         <?define Logs = [Logs]?>-->
         <util:RemoveFolderEx On="uninstall" Property="INSTALLFOLDER" />
+		 
       </Component>
+
+
+		<!--Give full permission to current user to create folder and write log-->
+		<Component Id="GrantPermissionsToAppFolder" Guid="{5408A7C5-A294-4349-9768-EB3CA2CB14EB}">
+
+			<CreateFolder>
+				<!--<util:PermissionEx
+					GenericAll="yes"
+					CreateFile="yes"
+					User="[UserSID]"
+					Domain="[%USERDOMAIN]"/>-->
+				
+				<!--<Permission 
+					GenericAll="yes"
+					CreateFile="yes"
+					User="[UserSID]" 
+					Domain="[%USERDOMAIN]"/>-->
+				<Permission 
+					GenericAll="yes"
+					CreateFile="yes"
+					User="Users" />
+
+				<Permission
+					GenericAll="yes"
+					CreateFile="yes"
+					User="Everyone"/>
+			</CreateFolder>
+
+		</Component>		
     </DirectoryRef>
 
     
