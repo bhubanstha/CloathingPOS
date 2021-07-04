@@ -31,7 +31,7 @@
             IsExpanded="True">
             <StackPanel>
 
-                <Grid>
+                <Grid behaviors:KeyboardFocus.On="{Binding ElementName=DisplayName}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -228,28 +228,6 @@
                         Content="Reset"
                         Style="{DynamicResource button.Reset}" />
                 </Grid>
-
-
-                <Grid x:Name="MainGrid" behaviors:KeyboardFocus.On="{Binding ElementName=UserName}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
-
             </StackPanel>
         </Expander>
 
