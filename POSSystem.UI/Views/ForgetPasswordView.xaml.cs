@@ -28,8 +28,7 @@ namespace POSSystem.UI.Views
         public ForgetPasswordView()
         {
             InitializeComponent();
-            ICacheService cacheService = StaticContainer.Container.Resolve<ICacheService>();
-            _model = new ForgetPasswordViewModel(cacheService);            
+            _model = StaticContainer.Container.Resolve<ForgetPasswordViewModel>();           
             this.DataContext = _model;
             this.Loaded += ForgetPasswordView_Loaded;
         }

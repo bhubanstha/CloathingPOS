@@ -4,6 +4,7 @@ using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POS.Utilities;
+using POS.Utilities.Encryption;
 using POSSystem.UI.Enum;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
@@ -36,6 +37,7 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
         private AdminChangePassword _adminChangePasswordUI;
         private IEventAggregator _eventAggregator;
+        private IBouncyCastleEncryption _encryption;
         private UserBO _userBo;
 
         public ICommand CreateUserCommand { get; }
@@ -104,12 +106,13 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        public UserViewModel(ICacheService cacheService, IEventAggregator eventAggregator, AdminChangePassword adminChangePasswordUI)
+        public UserViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, IEventAggregator eventAggregator, AdminChangePassword adminChangePasswordUI)
         {
             _cacheService = cacheService;
             this._adminChangePasswordUI = adminChangePasswordUI;
             this._eventAggregator = eventAggregator;
-            _userBo = new UserBO();
+            this._encryption = encryption;
+            _userBo = new UserBO(encryption);
             NewUser = new UserWrapper(new User(), cacheService);
             NewUser.PromptForPasswordReset = true;
             NewUser.UserName = "";
@@ -167,8 +170,8 @@ namespace POSSystem.UI.ViewModel
                 obj.DeactivationDate = null;
                 obj.PromptForPasswordReset = true;
                 obj.IsActive = true;
-                UserBO userBO = new UserBO();
-                int i = await userBO.UpdateUser(obj.Model);
+                _userBo = new UserBO(_encryption);
+                int i = await _userBo.UpdateUser(obj.Model);
                 if (i > 0)
                 {
                     ManageUserInCollection(obj.Model);
@@ -194,8 +197,8 @@ namespace POSSystem.UI.ViewModel
                 obj.DeactivationDate = DateTime.Now;
                 obj.PromptForPasswordReset = false;
                 obj.IsActive = false;
-                UserBO userBO = new UserBO();
-                int i = await userBO.UpdateUser(obj.Model);
+                _userBo = new UserBO(_encryption);
+                int i = await _userBo.UpdateUser(obj.Model);
                 if (i > 0)
                 {
                     ManageUserInCollection(obj.Model);
@@ -207,11 +210,11 @@ namespace POSSystem.UI.ViewModel
 
         private void EditUser(UserWrapper obj)
         {
-            UserBO userBO = new UserBO();
+            _userBo = new UserBO(_encryption);
             this.NewUser.Id = obj.Id;
             this.NewUser.DisplayName = obj.DisplayName;
             this.NewUser.UserName = obj.UserName;
-            this.NewUser.Password = userBO.DecryptPassword(obj.Password).Result;
+            this.NewUser.Password = _userBo.DecryptPassword(obj.Password).Result;
             this.NewUser.IsAdmin = obj.IsAdmin;
             this.NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
             this.NewUser.CanAccessAllBranch = false;
@@ -256,19 +259,19 @@ namespace POSSystem.UI.ViewModel
 
                 string title = "";
                 string msg = "";
-                UserBO userBO = new UserBO();
+                _userBo = new UserBO(_encryption);
                 int id = 0;
                 if (u.Id > 0)
                 {
-                    u.Password = await userBO.EncryptPassword(u.Password);
-                    id = await userBO.UpdateUser(u);
+                    u.Password = await _userBo.EncryptPassword(u.Password);
+                    id = await _userBo.UpdateUser(u);
                     ButtonText = "Create Account";
                     title = "User Updated";
                     msg = $"User {u.UserName} is updated successfully.";
                 }
                 else
                 {
-                    id = await userBO.SaveUser(u);
+                    id = await _userBo.SaveUser(u);
                     title = "User Creation";
                     msg = $"User {u.UserName} is created successfully.";
                 }
@@ -300,8 +303,8 @@ namespace POSSystem.UI.ViewModel
         private void LoadAllUsers()
         {
             User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
-            UserBO userBO = new UserBO();
-            List<User> _users = userBO.GetAllUser(me.UserName);
+            _userBo = new UserBO(_encryption);
+            List<User> _users = _userBo.GetAllUser(me.UserName);
             UsersList = new ObservableCollection<UserWrapper>();
             foreach (User u in _users)
             {

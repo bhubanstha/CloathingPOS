@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.Encryption;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
@@ -68,6 +69,7 @@ namespace POSSystem.UI.ViewModel
         private ChangePasswordWrapper _newPassword = null;
         private User user;
         private IEventAggregator eventAggregator;
+        private IBouncyCastleEncryption _encryption;
 
         public ChangePasswordWrapper NewPassword 
         {
@@ -87,9 +89,10 @@ namespace POSSystem.UI.ViewModel
         public ICommand CloseDialogCommand { get; }
         
 
-        public AdminChangeUserPasswordViewModel(IEventAggregator eventAggregator)
+        public AdminChangeUserPasswordViewModel(IEventAggregator eventAggregator, IBouncyCastleEncryption encryption)
         {
             this.eventAggregator = eventAggregator;
+            this._encryption = encryption;
             NewPassword = new ChangePasswordWrapper(new ChangePassword());
             ChangePasswordCommand = new DelegateCommand(OnChangePasswordExecute, CanChangePasswordExecute);
             CloseDialogCommand = new DelegateCommand(OnCloseDialogExecute);
@@ -128,7 +131,7 @@ namespace POSSystem.UI.ViewModel
             try
             {
 
-                UserBO bO = new UserBO();
+                UserBO bO = new UserBO(_encryption);
                 user.Password = await bO.EncryptPassword(NewPassword.Password);
                 user.PromptForPasswordReset = NewPassword.PromptForPasswordReset;
                 await bO.UpdateUser(user);

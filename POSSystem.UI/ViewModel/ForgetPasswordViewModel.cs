@@ -2,6 +2,7 @@
 using POS.BusinessRule;
 using POS.Model;
 using POS.Model.ViewModel;
+using POS.Utilities.Encryption;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
 using POSSystem.UI.Wrapper;
@@ -16,6 +17,7 @@ namespace POSSystem.UI.ViewModel
         private bool _isUserNameEditable = false;
         private ForgetPasswordWrapper _currentUser;
         private ICacheService _cacheService;
+        private IBouncyCastleEncryption _encryption;
         private User _user;
         private UserBO userBO;
 
@@ -32,9 +34,10 @@ namespace POSSystem.UI.ViewModel
             set { _isUserNameEditable = value; OnPropertyChanged(); }
         }
 
-        public ForgetPasswordViewModel(ICacheService cacheService)
+        public ForgetPasswordViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption)
         {
             _cacheService = cacheService;
+            this._encryption = encryption;
             _user = _cacheService.ReadCache<User>("LoginUser");
             ChangePasswordCommand = new DelegateCommand(OnPasswordChange, OnPasswordCanChange);            
             LoadLoginUser();
@@ -50,7 +53,7 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                userBO = new UserBO();
+                userBO = new UserBO(_encryption);
                 User u = userBO.GetUserFromUserName(CurrentUser.UserName);
                 if(u != null)
                 {

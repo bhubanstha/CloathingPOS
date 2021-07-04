@@ -22,6 +22,7 @@
             //  to avoid creating duplicate seed data.
             if (!context.User.Any())
             {
+                BouncyCastleEncryption encryption = new BouncyCastleEncryption();
                 context.User.AddOrUpdate(
                         u => u.Id,
                         new User
@@ -29,7 +30,7 @@
                             Id = 1,
                             UserName = "sysadmin",
                             DisplayName = "System Admin",
-                            Password = PasswordEncryptDecryptor.Encrypt("Nepal@123").Result,
+                            Password = encryption.EncryptAsAsync("Nepal@123").Result,
                             IsActive = true,
                             IsAdmin = true,
                             PromptForPasswordReset = false,
@@ -43,7 +44,7 @@
                             Id = 2,
                             UserName = "admin",
                             DisplayName = "Default Administrator",
-                            Password = PasswordEncryptDecryptor.Encrypt("123456").Result,
+                            Password = encryption.EncryptAsAsync("123456").Result,
                             IsAdmin = true,
                             IsActive = true,
                             PromptForPasswordReset = true,

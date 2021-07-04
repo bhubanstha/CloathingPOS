@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using MahApps.Metro.Controls.Dialogs;
 using POS.Data;
+using POS.Utilities.Encryption;
 using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
@@ -50,6 +51,7 @@ namespace POSSystem.UI
 
 
             //Service Registration
+            builder.RegisterType<BouncyCastleEncryption>().As<IBouncyCastleEncryption>().SingleInstance();
             builder.RegisterType<CacheService>().As<ICacheService>();
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
             builder.RegisterType<NepDateConverter>().AsImplementedInterfaces();

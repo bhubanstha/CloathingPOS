@@ -5,7 +5,7 @@
     xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
     xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity;assembly=System.Windows.Interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,13 +14,13 @@
     Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="400"
     Height="620"
-    Topmost="True"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon_toolbar.png"
     ResizeMode="NoResize"
     ShowMaxRestoreButton="False"
     SizeToContent="Height"
     TitleCharacterCasing="Normal"
+    Topmost="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.IconTemplate>
@@ -48,6 +48,13 @@
 
         </TextBlock>
 
+        <mah:ProgressRing
+            x:Name="ringLoginProgress"
+            Grid.Row="1"
+            Margin="0,70,0,0"
+            VerticalAlignment="Center"
+            Panel.ZIndex="1"
+            IsActive="{Binding IsLoginOnProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
         <Grid
             Grid.Row="1"
             Margin="30,10,30,10"
@@ -96,10 +103,10 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
+
                 <TextBlock Grid.Row="0">
                     Branch
                 </TextBlock>
-
                 <StackPanel Grid.Row="1">
                     <ctrl:UserBranchControl
                         x:Name="cmbBranch"
@@ -163,6 +170,11 @@
                         <iconPacks:PackIconBootstrapIcons Kind="BoxArrowRight" />
                         <TextBlock Margin="5,0,0,0">Login</TextBlock>
                     </StackPanel>
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:ChangePropertyAction TargetObject="{Binding ElementName=ringLoginProgress}" PropertyName="IsActive" Value="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
                 </Button>
 
                 <TextBlock

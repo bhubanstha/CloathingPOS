@@ -3,6 +3,7 @@ using POS.Data;
 using POS.Data.Repository;
 using POS.Model;
 using POS.Utilities.Encryption;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,10 +17,10 @@ namespace POS.BusinessRule
         private IGenericDataRepository<User> genericDataRepository;
         private IBouncyCastleEncryption bouncyCastleEncryption;
 
-        public UserBO()
+        public UserBO(IBouncyCastleEncryption encryption)
         {
             genericDataRepository = new DataRepository<User>(new POSDataContext());
-            bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
+            bouncyCastleEncryption = encryption;
         }
 
         public bool HasChanges()
@@ -36,6 +37,17 @@ namespace POS.BusinessRule
                 .Include(i=>i.Branch)
                 .ToList();
             return users;
+        }
+
+        public User Login(string userName, string password, Int64 branchId)
+        {
+            return genericDataRepository
+                            .GetAll()
+                            .Where(f => f.UserName == userName
+                                    && f.Password == password
+                                    && (f.BranchId == branchId || f.CanAccessAllBranch == true)
+                                    )
+                            .FirstOrDefault();
         }
 
         public async Task<int> SaveUser(User u)

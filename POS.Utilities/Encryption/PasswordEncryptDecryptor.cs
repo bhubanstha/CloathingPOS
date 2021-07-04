@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace POS.Utilities.Encryption
 {
-    public class PasswordEncryptDecryptor
+    public class PasswordEncryptDecryptor_RemoveThis
     {
         static BouncyCastleEncryption encryption;
 
-        static PasswordEncryptDecryptor()
+        static PasswordEncryptDecryptor_RemoveThis()
         {
-            encryption  = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
+            encryption  = new BouncyCastleEncryption();
         }
         public async static Task<string> Encrypt(string text)
         {

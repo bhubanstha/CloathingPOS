@@ -17,6 +17,7 @@ namespace POSSystem.UI.Service
     {
         CurrencyCulture,
         AppName,
-        PdfPassword
+        PdfPassword,
+        EncryptionKey
     }
 }
