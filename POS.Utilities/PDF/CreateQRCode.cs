@@ -1,14 +1,13 @@
 ﻿using iText.IO.Image;
 using iText.Kernel.Geom;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Net.Codecrete.QrCodeGenerator;
 using POS.Model;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace POS.Utilities.PDF
