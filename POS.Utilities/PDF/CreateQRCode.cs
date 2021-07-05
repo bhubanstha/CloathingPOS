@@ -23,8 +23,9 @@ namespace POS.Utilities.PDF
         }
         public async Task<string> CreateLabel(List<Inventory> inventoryItems, int leaveLabels = 0)
         {
-            Task<string> t = Task.Run(()=>
+            Task<string> t =  Task.Run(()=>
             {
+                //Task.Delay(5000);
                 string pdfpath = FileUtility.GetLabelPdfPath(true);
                 using (FileStream stream = new FileStream(pdfpath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
@@ -57,7 +58,7 @@ namespace POS.Utilities.PDF
                             colCount = 1;
                     }
 
-                    
+
                     foreach (Inventory inventory in inventoryItems)
                     {
                         string code = $"{inventory.BarCode}";
@@ -90,9 +91,12 @@ namespace POS.Utilities.PDF
                 }
                 return pdfpath;
             });
-            t.Wait();
+
+            //t.Wait();
+
             return await Task.FromResult(t.Result);
         }
+
 
         private System.Drawing.Bitmap GetQrCode(string code)
         {
@@ -107,7 +111,7 @@ namespace POS.Utilities.PDF
             //1 inch = 72 points
             c.SetWidth(width); // 2.5 inch = 180 points
             c.SetHeight(height);// 1.5 inch = 108f points
-            //c.SetBorder(Border.NO_BORDER);
+            c.SetBorder(Border.NO_BORDER);
             return c;
         }
     }

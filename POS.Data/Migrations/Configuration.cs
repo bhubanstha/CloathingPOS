@@ -11,7 +11,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(POS.Data.POSDataContext context)
@@ -164,7 +164,7 @@
                     {
                         Id = 1,
                         ShopId = 1,
-                        BranchName = "Head Office",
+                        BranchName = "Main Branch",
                         BranchAddress = "Gongabu-5, Kathmandu"
                     }
                     );

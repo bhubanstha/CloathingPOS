@@ -112,6 +112,10 @@
     <Compile Include="Migrations\202107031046071_new.designer.cs">
       <DependentUpon>202107031046071_new.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107051457519_what.cs" />
+    <Compile Include="Migrations\202107051457519_what.designer.cs">
+      <DependentUpon>202107051457519_what.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107031046071_new.resx">
       <DependentUpon>202107031046071_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107051457519_what.resx">
+      <DependentUpon>202107051457519_what.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

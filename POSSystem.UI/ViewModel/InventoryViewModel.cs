@@ -131,8 +131,11 @@ namespace POSSystem.UI.ViewModel
                 Inventory.BranchId = obj.Inventory.BranchId;
                 Inventory.UserId = obj.Inventory.UserId;
                 StaticContainer.UIHamburgerMenuControl.SelectedIndex = 1;
-                MainWindowViewModel model = StaticContainer.Container.Resolve<MainWindowViewModel>();
-                model.UpdateBranchOnEdit(obj.Inventory.BranchId.Value, obj.Inventory.Branch.BranchName);
+                if (obj.Inventory.Branch != null)
+                {
+                    MainWindowViewModel model = StaticContainer.Container.Resolve<MainWindowViewModel>();
+                    model.UpdateBranchOnEdit(obj.Inventory.BranchId.Value, obj.Inventory.Branch.BranchName);
+                }
                 ButtonText = "Update Inventory";
             }
         }

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
@@ -72,7 +73,18 @@ namespace POSSystem.UI.ViewModel
 
         private async void OnPrintQrCodeExecute()
         {
-            IsQrGenerating = true;
+            if (Inventory == null)
+            {
+                IsQrGenerating = false;
+                StaticContainer.ShowNotification("No Item Selected", "You haven't selected any item to print QR Code. Please selecte at least 1 item.", NotificationType.Information);
+                return;
+            }
+
+            Application.Current.Invoke(delegate
+            {
+                IsQrGenerating = true;
+            });
+            
             List<Inventory> selectedItems = Inventory.Where(x => x.IsSelected == true).Select(x => x.Model).ToList();
             if(selectedItems.Count >0 )
             {
@@ -84,6 +96,7 @@ namespace POSSystem.UI.ViewModel
             }
             else
             {
+              
                 IsQrGenerating = false;
                 StaticContainer.ShowNotification("No Item Selected", "You haven't selected any item to print QR Code. Please selecte at least 1 item.", NotificationType.Information);
             }

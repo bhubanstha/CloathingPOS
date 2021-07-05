@@ -21,7 +21,7 @@ namespace POSSystem.UI.PDFViewer
 		private string pdfFilePath;
 		private string pdfPassword;
 		private List<Inventory> selectedItems;
-
+		int previousNoofLeaveLabel = 0;
 		internal MoonPdfPanel MoonPdfPanel { get { return this.moonPdfPanel; } }
 
 		public PDFViewerWindow()
@@ -64,6 +64,7 @@ namespace POSSystem.UI.PDFViewer
 			this.pdfFilePath = pdfFilePath;
 			this.pdfPassword = password;
 			this.selectedItems = items;
+			this.previousNoofLeaveLabel = 0;
 			borderLabelModifier.Visibility = Visibility.Visible;
 		}
 
@@ -217,12 +218,14 @@ namespace POSSystem.UI.PDFViewer
         private async void btnLeaveLabel_Click(object sender, RoutedEventArgs e)
         {
 			int count = (int)txtNoOfLabel.Value;
-			if (selectedItems !=null && selectedItems.Count>0)
+
+			if (selectedItems !=null && selectedItems.Count>0 && previousNoofLeaveLabel != count)
             {
 				if(MoonPdfPanel.IsLoaded)
                 {
 					MoonPdfPanel.Unload();
 				}
+				previousNoofLeaveLabel = count;
 				CreateQRCode createQRCode = new CreateQRCode(pdfPassword);
 				pdfFilePath = await createQRCode .CreateLabel(selectedItems, count);
 				OpenPdf(pdfFilePath, pdfPassword);
