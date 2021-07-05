@@ -28,7 +28,7 @@ namespace POS.Utilities.PDF
                 using (FileStream stream = new FileStream(pdfpath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     Margin margin = new Margin(10);
-                    Document doc = stream.CreateDocument(PageSize.A4, margin, "");
+                    Document doc = stream.CreateDocument(PageSize.A4, margin, this.pdfPassword);
                     /*
                      Label printer paper can have many label in sigle paper. Most often it there can be
                     1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 24, 30, 33, 40, 48, 56, 65, 84 labels in single A4 paper 
