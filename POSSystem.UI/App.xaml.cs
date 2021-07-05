@@ -4,6 +4,7 @@ using log4net;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.PDF;
 using POSSystem.UI.Service;
 using POSSystem.UI.Views;
 using System;
@@ -46,6 +47,9 @@ namespace POSSystem.UI
 
             logger.Info("Reloading Configuration");
             ReloadConfig();
+
+            //CreateQRCode code = new CreateQRCode();
+            //code.CreateLabel();
 
             var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;

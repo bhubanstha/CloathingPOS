@@ -35,12 +35,23 @@
             <Button
                 Grid.Row="0"
                 Grid.Column="0"
-                Width="150"
+                Padding="20 0"
                 HorizontalAlignment="Left"
                 Command="{Binding LoadDataCommand}"
                 Content="Load Data"
                 IsDefault="True"
-                Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Padding="20 0"
+                Margin="110, 0 0 0"
+                HorizontalAlignment="Left"
+                Command="{Binding PrintQrCodeCommand}"
+                Content="Print QR Code"
+                IsDefault="True"
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
 
             <DataGrid
                 x:Name="CartGrid"
@@ -49,16 +60,20 @@
                 Grid.ColumnSpan="3"
                 Margin="0,0,8,5"
                 AutoGenerateColumns="False"
+                EnableColumnVirtualization="True"
+                EnableRowVirtualization="True"
+                SelectionUnit="FullRow"
+                VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                 BorderThickness="1"
                 CanUserAddRows="False"
                 CanUserReorderColumns="False"
                 CanUserResizeColumns="False"
                 CanUserSortColumns="False"
                 CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
-                IsReadOnly="True"
-                ItemsSource="{Binding Inventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 RowStyle="{StaticResource DataGrid.Inventory.List.Row}"
-                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                ItemsSource="{Binding Inventory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                >
 
                 <DataGrid.MaxHeight>
                     <MultiBinding
@@ -74,26 +89,36 @@
                 </DataGrid.MaxHeight>
 
                 <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            EditingElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
+                                            ElementStyle="{DynamicResource MahApps.Styles.CheckBox.DataGrid.Win10}"
+                                            Header="Select"
+                                            Width="60"/>
                     <DataGridTextColumn
                         Width="0.5*"
                         Binding="{Binding BrandName}"
+                        IsReadOnly="True"
                         Header="Brand" />
                     <DataGridTextColumn
                         Width="0.5*"
                         Binding="{Binding CategoryName}"
+                        IsReadOnly="True"
                         Header="Category" />
                     <DataGridTextColumn
                         Width="70"
                         Binding="{Binding Code}"
+                        IsReadOnly="True"
                         Header="Code" />
                     <DataGridTextColumn
                         Width="*"
                         Binding="{Binding Name}"
+                        IsReadOnly="True"
                         Header="Name" />
                     <DataGridTextColumn
                         Width="45"
                         Binding="{Binding Size}"
                         ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
                         Header="Size" />
                     <DataGridTemplateColumn Header="Colour">
                         <DataGridTemplateColumn.CellTemplate>
@@ -112,21 +137,25 @@
                         Width="50"
                         Binding="{Binding Quantity}"
                         ElementStyle="{StaticResource GridNumericColumn}"
+                        IsReadOnly="True"
                         Header="Qty" />
                     <DataGridTextColumn
                         Width="110"
                         Binding="{Binding PurchaseRate, StringFormat=N2}"
                         ElementStyle="{StaticResource GridNumericColumn}"
+                        IsReadOnly="True"
                         Header="Purchase Rate" />
                     <DataGridTextColumn
                         Width="85"
                         Binding="{Binding RetailRate, StringFormat=N2}"
                         ElementStyle="{StaticResource GridNumericColumn}"
+                        IsReadOnly="True"
                         Header="Retail Rate" />
                     <DataGridTextColumn
                         Width="110"
                         Binding="{Binding FirstPurchaseDate, StringFormat=\{0:yyyy/MM/dd\}}"
                         ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
                         Header="Purchase Date"
                         HeaderStringFormat="yyyy/MM/dd" />
                     <DataGridTemplateColumn Width="100" Header="Options">

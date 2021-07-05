@@ -94,6 +94,26 @@ namespace POS.Utilities
             return fileFullPath;
         }
 
+        public static string GetLabelPdfPath(bool deleteIfExists = true)
+        {
+            string fileFullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"productlabel.pdf");
+            if (deleteIfExists)
+            {
+                if (File.Exists(fileFullPath))
+                {
+                    try
+                    {
+                        File.Delete(fileFullPath);
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                }
+            }
+            return fileFullPath;
+        }
+
         public static bool CheckInvoiceFileExists(string invoiceFile)
         {
             return File.Exists(invoiceFile);

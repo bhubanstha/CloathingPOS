@@ -10,11 +10,11 @@ namespace POS.Model.ViewModel
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Password is required.")]
-        [MaxLength(6, ErrorMessage = "Password can not be longer than 6 charactes long.")]
+        [MaxLength(10, ErrorMessage = "Password can not be longer than 10 charactes long.")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Confirmation Password is required.")]
-        [MaxLength(6, ErrorMessage = "Password can not be longer than 6 charactes long.")]
+        [MaxLength(10, ErrorMessage = "Password can not be longer than 10 charactes long.")]
         [Compare("Password", ErrorMessage = "Confirmation password and  password didn't match.")]
         public string ConfirmPassword { get; set; }
     }

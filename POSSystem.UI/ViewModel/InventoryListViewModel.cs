@@ -1,7 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.PDF;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
@@ -42,6 +44,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand AddInventoryItemStockCommand { get; }
         public ICommand EditInventoryItemCommand { get; }
         public ICommand LoadDataCommand { get; }
+        public ICommand PrintQrCodeCommand { get; }
 
 
         public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator)
@@ -53,8 +56,23 @@ namespace POSSystem.UI.ViewModel
             AddInventoryItemStockCommand = new DelegateCommand<InventoryWrapper>(OnAddInventoryItemStock);
             EditInventoryItemCommand = new DelegateCommand<InventoryWrapper>(OnInventoryItemEdit);
             LoadDataCommand = new DelegateCommand(OnLoadDataExecute);
+            PrintQrCodeCommand = new DelegateCommand(OnPrintQrCodeExecute);
             eventAggregator.GetEvent<InventoryChangedEvent>().Subscribe(ReloadInventory);
-            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ReloadBranchData);           
+            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ReloadBranchData);
+        }
+
+        private void OnPrintQrCodeExecute()
+        {
+            List<Inventory> selectedItems = Inventory.Where(x => x.IsSelected == true).Select(x => x.Model).ToList();
+            if(selectedItems.Count >0 )
+            {
+                CreateQRCode createQRCode = new CreateQRCode(StaticContainer.Shop.PdfPassword);
+                string pdfPath = createQRCode.CreateLabel(selectedItems);
+            }
+            else
+            {
+                StaticContainer.ShowNotification("No Item Selected", "You haven't selected any item to print QR Code. Please selecte at least 1 item.", NotificationType.Information);
+            }
         }
 
         private void OnLoadDataExecute()

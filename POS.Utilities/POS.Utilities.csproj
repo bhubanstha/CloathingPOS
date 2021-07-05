@@ -109,10 +109,16 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="QrCodeGenerator, Version=1.6.0.0, Culture=neutral, PublicKeyToken=6aa6bd7a159d47c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Net.Codecrete.QrCodeGenerator.1.6.1\lib\netstandard2.0\QrCodeGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.1\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -133,6 +139,7 @@
     <Compile Include="Encryption\BouncyCastleEncryption.cs" />
     <Compile Include="Encryption\IBouncyCastleEncryption.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
+    <Compile Include="PDF\CreateQRCode.cs" />
     <Compile Include="PDF\PDFUtility.cs" />
     <Compile Include="PDF\SalesMockData.cs" />
     <Compile Include="PDF\StandardPaperSize.cs" />

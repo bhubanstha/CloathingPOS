@@ -32,7 +32,6 @@ namespace POS.Utilities.PDF
             }
             using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-
                 //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
                 byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
                 WriterProperties props = new WriterProperties()
