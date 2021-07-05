@@ -20,11 +20,10 @@ namespace POS.Utilities.PDF
         {
             this.pdfPassword = pdfPassword;
         }
-        public async Task<string> CreateLabel(List<Inventory> inventoryItems, int leaveLabels = 0)
+        public Task<string> CreateLabel(List<Inventory> inventoryItems, int leaveLabels = 0)
         {
             Task<string> t =  Task.Run(()=>
             {
-                //Task.Delay(5000);
                 string pdfpath = FileUtility.GetLabelPdfPath(true);
                 using (FileStream stream = new FileStream(pdfpath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
@@ -93,7 +92,8 @@ namespace POS.Utilities.PDF
 
             //t.Wait();
 
-            return await Task.FromResult(t.Result);
+            // return await Task.FromResult(t.Result);
+            return t;
         }
 
 
