@@ -23,65 +23,68 @@ namespace POS.Utilities.PDF
 
         public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, ShopVM shop, string pdfPassword)
         {
-            Document document;
-            string pdfPath = FileUtility.GetInvoicePdfPath(bill.BillNo, true);  //System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.BillNo}.pdf");
-            if (string.IsNullOrEmpty(pdfPath)) return "";
-            if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
+            return await Task.Run(() =>
             {
-                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));
-            }
-            using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
-            {
-                //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
-                byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
-                WriterProperties props = new WriterProperties()
-                    .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
-                            EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
-
-                PdfWriter writer = new PdfWriter(stream, props);
-                //PdfWriter writer = new PdfWriter(stream);
-                PdfDocument pdf = new PdfDocument(writer);
-                //document = new Document(pdf, new PageSize(rectangle));
-                document = new Document(pdf, StandardPaperSize.C6);
-                document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);
-
-                //List<SalesModel> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
-
-                int salesCount = salesItem.Count;
-                int totalPages = salesCount > 0 ? (int)Math.Ceiling(salesCount / 10.0) : 1;
-                int skipCount = 0;
-
-
-                PageHeaderEventHandler handler = new PageHeaderEventHandler(document, bill, shop);
-                pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, handler);
-                PageFooterEventHandler footerEventHandler = new PageFooterEventHandler(totalPages);
-                pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, footerEventHandler);
-
-                
-                for (int page = 1; page <= totalPages; page++)
+                Document document;
+                string pdfPath = FileUtility.GetInvoicePdfPath(bill.BillNo, true);  //System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.BillNo}.pdf");
+                if (string.IsNullOrEmpty(pdfPath)) return "";
+                if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
                 {
-                    Table table = new Table(5);
-                    table.SetWidth(UnitValue.CreatePercentValue(100));
-                    PDFUtility.CreateInvoiceTableHeader(ref table);
-                    int sn = 1;
-                   
-                    List<SalesModel> workingItems = salesItem.Skip(skipCount).Take(10).ToList();
-                    foreach (SalesModel item in workingItems)
-                    {
-                        PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
-                        sn++;
-                    }
-                    PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count , sn);
-                    PDFUtility.CreateInvoiceTotal(ref table, salesItem, shop);
-                    
-                    skipCount += 10;
-                    document.Add(table);
-                    document.Add(PDFUtility.CreateParagraph($"", TextAlignment.LEFT, 1.0f));
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));
                 }
-                document.Close();
-            }
+                using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+                    byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
+                    WriterProperties props = new WriterProperties()
+                        .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
+                                EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
-            return pdfPath;
+                    PdfWriter writer = new PdfWriter(stream, props);
+                    //PdfWriter writer = new PdfWriter(stream);
+                    PdfDocument pdf = new PdfDocument(writer);
+                    //document = new Document(pdf, new PageSize(rectangle));
+                    document = new Document(pdf, StandardPaperSize.C6);
+                    document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);
+
+                    //List<SalesModel> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
+
+                    int salesCount = salesItem.Count;
+                    int totalPages = salesCount > 0 ? (int)Math.Ceiling(salesCount / 10.0) : 1;
+                    int skipCount = 0;
+
+
+                    PageHeaderEventHandler handler = new PageHeaderEventHandler(document, bill, shop);
+                    pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, handler);
+                    PageFooterEventHandler footerEventHandler = new PageFooterEventHandler(totalPages);
+                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, footerEventHandler);
+
+
+                    for (int page = 1; page <= totalPages; page++)
+                    {
+                        Table table = new Table(5);
+                        table.SetWidth(UnitValue.CreatePercentValue(100));
+                        PDFUtility.CreateInvoiceTableHeader(ref table);
+                        int sn = 1;
+
+                        List<SalesModel> workingItems = salesItem.Skip(skipCount).Take(10).ToList();
+                        foreach (SalesModel item in workingItems)
+                        {
+                            PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
+                            sn++;
+                        }
+                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count, sn);
+                        PDFUtility.CreateInvoiceTotal(ref table, salesItem, shop);
+
+                        skipCount += 10;
+                        document.Add(table);
+                        document.Add(PDFUtility.CreateParagraph($"", TextAlignment.LEFT, 1.0f));
+                    }
+                    document.Close();
+                }
+
+                return pdfPath;
+            });
 
 
         }
@@ -89,67 +92,72 @@ namespace POS.Utilities.PDF
 
         public async Task<string> CreateInvoice(Bill bill, List<Sales> salesRecord, ShopVM shop, string pdfPassword)
         {
-            Document document;
-            string pdfPath = FileUtility.GetInvoicePdfPath(bill.Id, true);// System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.Id}.pdf");
-            if (string.IsNullOrEmpty(pdfPath)) return "";
-
-            if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
-            {
-                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));
-            }
-            using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
+            return await Task.Run(() =>
             {
 
-                //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
-                byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
-                WriterProperties props = new WriterProperties()
-                    .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
-                            EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
-                PdfWriter writer = new PdfWriter(stream, props);
-                //PdfWriter writer = new PdfWriter(stream);
-                PdfDocument pdf = new PdfDocument(writer);
-                //document = new Document(pdf, new PageSize(rectangle));
-                document = new Document(pdf, StandardPaperSize.C6);
-                document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);
+                Document document;
+                string pdfPath = FileUtility.GetInvoicePdfPath(bill.Id, true);// System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"{bill.Id}.pdf");
+                if (string.IsNullOrEmpty(pdfPath)) return "";
 
-                //List<SalesModel> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
-
-                int salesCount = salesRecord.Count;
-                int totalPages = salesCount > 0 ? (int)Math.Ceiling(salesCount / 10.0) : 1;
-                int skipCount = 0;
-
-
-                PageHeaderEventHandler handler = new PageHeaderEventHandler(document, bill, shop);
-                pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, handler);
-                PageFooterEventHandler footerEventHandler = new PageFooterEventHandler(totalPages);
-                pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, footerEventHandler);
-
-
-                for (int page = 1; page <= totalPages; page++)
+                if (!Directory.Exists(System.IO.Path.GetDirectoryName(pdfPath)))
                 {
-                    Table table = new Table(5);
-                    table.SetWidth(UnitValue.CreatePercentValue(100));
-                    PDFUtility.CreateInvoiceTableHeader(ref table);
-                    int sn = 1;
-
-                    List<Sales> workingItems = salesRecord.Skip(skipCount).Take(10).ToList();
-                    foreach (Sales item in workingItems)
-                    {
-                        PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
-                        sn++;
-                    }
-                    PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count, sn);
-                    PDFUtility.CreateInvoiceTotal(ref table, salesRecord, shop);
-
-                    skipCount += 10;
-                    document.Add(table);
-                    document.Add(PDFUtility.CreateParagraph($"", TextAlignment.LEFT, 1.0f));
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(pdfPath));
                 }
-                document.Close();
-            }
+                using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
 
-            return pdfPath;
+                    //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+                    byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
+                    WriterProperties props = new WriterProperties()
+                        .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
+                                EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
+
+                    PdfWriter writer = new PdfWriter(stream, props);
+                    //PdfWriter writer = new PdfWriter(stream);
+                    PdfDocument pdf = new PdfDocument(writer);
+                    //document = new Document(pdf, new PageSize(rectangle));
+                    document = new Document(pdf, StandardPaperSize.C6);
+                    document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);
+
+                    //List<SalesModel> mockSales = salesItem;// SalesMockData.GetMockSalesData(1);
+
+                    int salesCount = salesRecord.Count;
+                    int totalPages = salesCount > 0 ? (int)Math.Ceiling(salesCount / 10.0) : 1;
+                    int skipCount = 0;
+
+
+                    PageHeaderEventHandler handler = new PageHeaderEventHandler(document, bill, shop);
+                    pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, handler);
+                    PageFooterEventHandler footerEventHandler = new PageFooterEventHandler(totalPages);
+                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, footerEventHandler);
+
+
+                    for (int page = 1; page <= totalPages; page++)
+                    {
+                        Table table = new Table(5);
+                        table.SetWidth(UnitValue.CreatePercentValue(100));
+                        PDFUtility.CreateInvoiceTableHeader(ref table);
+                        int sn = 1;
+
+                        List<Sales> workingItems = salesRecord.Skip(skipCount).Take(10).ToList();
+                        foreach (Sales item in workingItems)
+                        {
+                            PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
+                            sn++;
+                        }
+                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count, sn);
+                        PDFUtility.CreateInvoiceTotal(ref table, salesRecord, shop);
+
+                        skipCount += 10;
+                        document.Add(table);
+                        document.Add(PDFUtility.CreateParagraph($"", TextAlignment.LEFT, 1.0f));
+                    }
+                    document.Close();
+                }
+
+                return pdfPath;
+            });
         }
     }
 
@@ -176,7 +184,7 @@ namespace POS.Utilities.PDF
                 BillingPAN = bill.BillingPAN,
                 BillNo = bill.Id,
                 BillTo = bill.BillTo,
-                GrandTotal = 0, 
+                GrandTotal = 0,
                 VAT = bill.VAT
             };
         }
@@ -186,7 +194,7 @@ namespace POS.Utilities.PDF
 
             PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
             Rectangle pageSize = docEvent.GetPage().GetPageSize();
-            pageSize.ApplyMargins(14.4f, 10.0f, 14.4f, 10.0f,false);
+            pageSize.ApplyMargins(14.4f, 10.0f, 14.4f, 10.0f, false);
 
             Canvas canvas = new Canvas(docEvent.GetPage(), pageSize);
 
@@ -206,7 +214,7 @@ namespace POS.Utilities.PDF
             canvas.Close();
         }
 
-        
+
     }
 
     class PageFooterEventHandler : IEventHandler
@@ -226,16 +234,16 @@ namespace POS.Utilities.PDF
             PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
             PdfPage page = docEvent.GetPage();
             Rectangle pageSize = page.GetPageSize();
-            pageSize.ApplyMargins(pageSize.GetHeight()-35, 10.0f, 14.4f, 10.0f, false);
+            pageSize.ApplyMargins(pageSize.GetHeight() - 35, 10.0f, 14.4f, 10.0f, false);
 
             Canvas canvas = new Canvas(page, pageSize);
             //canvas.ShowTextAligned(String.Format("Page %d of", pageNum));
-            
+
             canvas.Add(table);
 
-            if(this._totalPage>1)
+            if (this._totalPage > 1)
             {
-               
+
                 int pageNum = docEvent.GetDocument().GetPageNumber(page);
 
                 Rectangle bilCountRectangle = new Rectangle(page.GetPageSize().GetWidth(), 200);// page.GetPageSize();
@@ -245,10 +253,10 @@ namespace POS.Utilities.PDF
                 p.SetRotationAngle(145);
                 billingCanvas.Add(p);
             }
-           
+
         }
 
-       
+
         private Table CreateFooterTable()
         {
             Table footerTable = new Table(1);

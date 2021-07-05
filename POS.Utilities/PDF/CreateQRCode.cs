@@ -24,7 +24,6 @@ namespace POS.Utilities.PDF
         {
             return await Task.Run(()=>
             {
-                 Task.Delay(5000);
                 string pdfpath = FileUtility.GetLabelPdfPath(true);
                 using (FileStream stream = new FileStream(pdfpath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
