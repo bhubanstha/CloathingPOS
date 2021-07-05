@@ -1,8 +1,6 @@
 ﻿using iText.IO.Image;
-using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Layout;
-using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Net.Codecrete.QrCodeGenerator;
@@ -10,8 +8,7 @@ using POS.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace POS.Utilities.PDF
@@ -24,12 +21,11 @@ namespace POS.Utilities.PDF
         {
             this.pdfPassword = pdfPassword;
         }
-        public string CreateLabel(List<Inventory> inventoryItems)
+        public async Task<string> CreateLabel(List<Inventory> inventoryItems, int leaveLabels = 0)
         {
-            string pdfpath = FileUtility.GetLabelPdfPath(true);
-
-            Task t = new Task(() =>
+            Task<string> t = Task.Run(()=>
             {
+                string pdfpath = FileUtility.GetLabelPdfPath(true);
                 using (FileStream stream = new FileStream(pdfpath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     Margin margin = new Margin(10);
@@ -46,6 +42,22 @@ namespace POS.Utilities.PDF
                     table.SetWidth(UnitValue.CreatePercentValue(100));
 
                     int colCount = 1;
+                    for (int i = 0; i < leaveLabels; i++)
+                    {
+                        Cell cell = CreateLabelCell();
+                        table.AddCell(cell);
+
+                        if (colCount < 5)
+                        {
+                            cell = CreateLabelCell(5);
+                            table.AddCell(cell);
+                        }
+                        colCount += 2;
+                        if (colCount > 5)
+                            colCount = 1;
+                    }
+
+                    
                     foreach (Inventory inventory in inventoryItems)
                     {
                         string code = $"{inventory.BarCode}";
@@ -76,10 +88,10 @@ namespace POS.Utilities.PDF
                     doc.Add(table);
                     doc.Close();
                 }
+                return pdfpath;
             });
-            t.Start();
             t.Wait();
-            return pdfpath;
+            return await Task.FromResult(t.Result);
         }
 
         private System.Drawing.Bitmap GetQrCode(string code)
@@ -95,8 +107,7 @@ namespace POS.Utilities.PDF
             //1 inch = 72 points
             c.SetWidth(width); // 2.5 inch = 180 points
             c.SetHeight(height);// 1.5 inch = 108f points
-            //c.SetBackgroundColor(backgroundColor);
-            c.SetBorder(Border.NO_BORDER);
+            //c.SetBorder(Border.NO_BORDER);
             return c;
         }
     }

@@ -52,6 +52,8 @@
                 Content="Print QR Code"
                 IsDefault="True"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+            
+            <mah:ProgressRing IsActive="{Binding IsQrGenerating, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Panel.ZIndex="1" VerticalAlignment="Top" Margin="0 30 0 0" />
 
             <DataGrid
                 x:Name="CartGrid"

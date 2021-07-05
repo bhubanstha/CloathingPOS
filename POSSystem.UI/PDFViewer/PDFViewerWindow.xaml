@@ -5,7 +5,8 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mpd="clr-namespace:POSSystem.UI.PDFViewer"
     xmlns:mpp="clr-namespace:MoonPdfLib;assembly=MoonPdfLib"
-    Title="MainWindow"
+    xmlns:sc="clr-namespace:POSSystem.UI.Service"
+    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="640"
     MinWidth="450"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
@@ -138,13 +139,49 @@
                 <MenuItem Command="{Binding Commands.ShowAboutCommand}" Header="{Binding Commands.ShowAboutCommand.Name}" />
             </MenuItem>-->
         </Menu>
-        <mpp:MoonPdfPanel
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Accent}" BorderThickness="0 1 0 0" x:Name="borderLabelModifier" Visibility="Collapsed">
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 2">
+                    
+                    <TextBlock Text="Leave no. of Label" 
+                               Style="{DynamicResource MahApps.Styles.TextBlock}" 
+                               VerticalAlignment="Center" 
+                               Margin="5 0"/>
+                    <mah:NumericUpDown
+                        x:Name="txtNoOfLabel"
+                        MinWidth="120"
+                        Margin="5 0"
+                        Padding="{StaticResource ControlPadding}"
+                        HorizontalContentAlignment="Left"
+                        VerticalAlignment="Center"
+                        mah:TextBoxHelper.ClearTextButton="True"
+                        mah:TextBoxHelper.SelectAllOnFocus="True"
+                        mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                        Maximum="20"
+                        Minimum="0"
+                        TextAlignment="Left"
+                        Value="0" />
+                <Button 
+                    Content="Apply" 
+                    x:Name="btnLeaveLabel" 
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" 
+                    Click="btnLeaveLabel_Click"/>
+                </StackPanel>
+            </Border>
+            <mpp:MoonPdfPanel
             x:Name="moonPdfPanel"
             x:FieldModifier="private"
             AllowDrop="True"
+            Grid.Row="1"
             Background="{DynamicResource MahApps.Brushes.Accent4}"
             PageMargin="0,2,4,2"
             PageRowDisplay="ContinuousPageRows"
             ViewType="SinglePage" />
+        </Grid>
     </DockPanel>
 </mah:MetroWindow>

@@ -5,6 +5,7 @@ using POS.BusinessRule;
 using POS.Model;
 using POS.Utilities.PDF;
 using POSSystem.UI.Event;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.UIModel;
 using POSSystem.UI.Views.Dialog;
@@ -22,6 +23,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class InventoryListViewModel : ViewModelBase
     {
+        private bool _isQrGenerating =false; 
         private InventoryBO _inventoryBo;
         MetroWindow _window;
         private UpdateInventoryDialog _updateInventoryDialog;
@@ -38,6 +40,13 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged(); 
             }
         }
+
+        public bool IsQrGenerating
+        {
+            get { return _isQrGenerating; }
+            set { _isQrGenerating = value; OnPropertyChanged(); }
+        }
+
 
 
         public ICommand DeleteInventoryItemCommand { get; }
@@ -61,16 +70,21 @@ namespace POSSystem.UI.ViewModel
             eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ReloadBranchData);
         }
 
-        private void OnPrintQrCodeExecute()
+        private async void OnPrintQrCodeExecute()
         {
+            IsQrGenerating = true;
             List<Inventory> selectedItems = Inventory.Where(x => x.IsSelected == true).Select(x => x.Model).ToList();
             if(selectedItems.Count >0 )
             {
                 CreateQRCode createQRCode = new CreateQRCode(StaticContainer.Shop.PdfPassword);
-                string pdfPath = createQRCode.CreateLabel(selectedItems);
+                string pdfPath = await createQRCode.CreateLabel(selectedItems);
+                PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword, selectedItems);
+                IsQrGenerating = false;
+                window.ShowDialog();                
             }
             else
             {
+                IsQrGenerating = false;
                 StaticContainer.ShowNotification("No Item Selected", "You haven't selected any item to print QR Code. Please selecte at least 1 item.", NotificationType.Information);
             }
         }

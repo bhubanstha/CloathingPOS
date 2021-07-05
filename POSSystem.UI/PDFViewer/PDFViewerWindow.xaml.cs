@@ -1,9 +1,11 @@
 using MahApps.Metro.Controls;
 using MoonPdfLib;
 using MoonPdfLib.MuPdf;
+using POS.Model;
 using POS.Utilities.PDF;
 using POSSystem.UI.Service;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,22 +20,22 @@ namespace POSSystem.UI.PDFViewer
 		private MainWindowDataContext dataContext;
 		private string pdfFilePath;
 		private string pdfPassword;
+		private List<Inventory> selectedItems;
 
 		internal MoonPdfPanel MoonPdfPanel { get { return this.moonPdfPanel; } }
 
 		public PDFViewerWindow()
 		{
 			InitializeComponent();
-
+			borderLabelModifier.Visibility = Visibility.Collapsed;
 			this.dataContext = new MainWindowDataContext(this);
 			//this.Icon = MoonPdf.Resources.moon.ToBitmapSource();
 			this.DataContext = dataContext;
-			this.UpdateTitle();
+			//this.UpdateTitle();
 
 			moonPdfPanel.ViewTypeChanged += moonPdfPanel_ViewTypeChanged;
 			moonPdfPanel.ZoomTypeChanged += moonPdfPanel_ZoomTypeChanged;
 			moonPdfPanel.PageRowDisplayChanged += moonPdfPanel_PageDisplayChanged;
-			moonPdfPanel.PdfLoaded += moonPdfPanel_PdfLoaded;
             moonPdfPanel.PasswordRequired += moonPdfPanel_PasswordRequired;
 
 			this.UpdatePageDisplayMenuItem();
@@ -45,18 +47,28 @@ namespace POSSystem.UI.PDFViewer
 
 		public PDFViewerWindow(string pdfFilePath) : this()
 		{
-			InitializeComponent();
+			//InitializeComponent();
 			this.pdfFilePath = pdfFilePath;
-
-
 		}
 
 		public PDFViewerWindow(string pdfFilePath, string password) : this()
 		{
-			InitializeComponent();
+			//InitializeComponent();
 			this.pdfFilePath = pdfFilePath;
 			this.pdfPassword = password;
 		}
+
+		public PDFViewerWindow(string pdfFilePath, string password, List<Inventory> items) : this()
+		{
+			//InitializeComponent();
+			this.pdfFilePath = pdfFilePath;
+			this.pdfPassword = password;
+			this.selectedItems = items;
+			borderLabelModifier.Visibility = Visibility.Visible;
+		}
+
+
+
 
 		void moonPdfPanel_PasswordRequired(object sender, PasswordRequiredEventArgs e)
         {
@@ -160,29 +172,24 @@ namespace POSSystem.UI.PDFViewer
 			}
 		}
 
-		void moonPdfPanel_PdfLoaded(object sender, EventArgs e)
-		{
-			this.UpdateTitle();
-		}
+		//private void UpdateTitle()
+		//{
+		//	if( appName == null )
+		//		appName = ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true).First()).Product;
 
-		private void UpdateTitle()
-		{
-			if( appName == null )
-				appName = ((AssemblyProductAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), true).First()).Product;
+  //          if (IsPdfLoaded())
+  //          {
+  //              var fs = moonPdfPanel.CurrentSource as FileSource;
 
-            if (IsPdfLoaded())
-            {
-                var fs = moonPdfPanel.CurrentSource as FileSource;
-
-                if( fs != null )
-                {
-                    this.Title = string.Format("{0} - {1}", System.IO.Path.GetFileName(fs.Filename), appName);
-                    return;
-                }
-            }
+  //              if( fs != null )
+  //              {
+  //                  this.Title = string.Format("{0} - {1}", System.IO.Path.GetFileName(fs.Filename), appName);
+  //                  return;
+  //              }
+  //          }
             
-			this.Title = appName;
-		}
+		//	this.Title = appName;
+		//}
 
 		internal bool IsPdfLoaded()
 		{
@@ -206,5 +213,20 @@ namespace POSSystem.UI.PDFViewer
 		{
 			this.itmFullscreen.IsChecked = isFullscreen;
 		}
-	}
+
+        private async void btnLeaveLabel_Click(object sender, RoutedEventArgs e)
+        {
+			int count = (int)txtNoOfLabel.Value;
+			if (selectedItems !=null && selectedItems.Count>0)
+            {
+				if(MoonPdfPanel.IsLoaded)
+                {
+					MoonPdfPanel.Unload();
+				}
+				CreateQRCode createQRCode = new CreateQRCode(pdfPassword);
+				pdfFilePath = await createQRCode .CreateLabel(selectedItems, count);
+				OpenPdf(pdfFilePath, pdfPassword);
+			}
+        }
+    }
 }
