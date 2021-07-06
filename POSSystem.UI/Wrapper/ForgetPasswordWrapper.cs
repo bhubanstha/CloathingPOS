@@ -24,8 +24,12 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<string>(); }
             set { 
                 SetValue(value);
+                ClearErrors(nameof(ConfirmPassword));
                 PasswordMessage = GetFirstError(nameof(Password));
+                ConfirmPasswordMessage = GetFirstError(nameof(ConfirmPassword));
+
                 OnPropertyChanged(nameof(PasswordMessage));
+                OnPropertyChanged(nameof(ConfirmPasswordMessage));
             }
         }
 
@@ -35,8 +39,12 @@ namespace POSSystem.UI.Wrapper
             set 
             { 
                 SetValue(value);
+                ClearErrors(nameof(Password));
                 ConfirmPasswordMessage = GetFirstError(nameof(ConfirmPassword));
+                PasswordMessage = GetFirstError(nameof(Password));
+
                 OnPropertyChanged(nameof(ConfirmPasswordMessage));
+                OnPropertyChanged(nameof(PasswordMessage));
             }
         }
 
