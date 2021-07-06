@@ -10,12 +10,15 @@
     <conv:QuantityLowStock x:Key="QtyLow" />
 
 
-    <LinearGradientBrush x:Key="AccentBackground" StartPoint="1,1" EndPoint="0,0">
-        <GradientStop Offset="0.00" Color="{DynamicResource MahApps.Colors.Accent}" />
-        <GradientStop Offset="0.25" Color="{DynamicResource MahApps.Colors.Accent2}" />
-        <GradientStop Offset="0.50" Color="{DynamicResource MahApps.Colors.Accent3}" />
-        <GradientStop Offset="0.75" Color="{DynamicResource MahApps.Colors.Accent4}" />
-    </LinearGradientBrush>
+    <Style x:Key="TextBlock.ValidationMessage" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Validation5}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Style.Triggers>
+            <Trigger Property="Text" Value="">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
 
     <Style x:Key="App.Hamburger" TargetType="Button">
