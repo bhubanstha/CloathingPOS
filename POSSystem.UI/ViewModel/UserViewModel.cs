@@ -29,9 +29,6 @@ namespace POSSystem.UI.ViewModel
         private string _buttonText = "Create Account";
         private ObservableCollection<UserWrapper> _userList;
         private UserWrapper _newUser;
-        private string _logoFullPathName;
-        private string _logoName;
-        private bool _isLogoChanged = false;
 
 
         private ICacheService _cacheService;
@@ -45,7 +42,6 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteUserCommand { get; }
         public ICommand ResetUserCommand { get; }
         public ICommand RestoreUserCommand { get; }
-        public ICommand FilePickCommand { get; }
         public ICommand ChangeUserPasswordCommand { get; }
         public UserWrapper NewUser
         {
@@ -67,23 +63,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public string LogoFullPathName
-        {
-            get { return _logoFullPathName; }
-            set
-            {
-                _logoFullPathName = value;
-                OnPropertyChanged();
-            }
-        }
 
-
-
-        public string LogoName
-        {
-            get { return _logoName; }
-            set { _logoName = value; OnPropertyChanged(); }
-        }
 
         public string ButtonText
         {
@@ -113,11 +93,15 @@ namespace POSSystem.UI.ViewModel
             this._eventAggregator = eventAggregator;
             this._encryption = encryption;
             _userBo = new UserBO(encryption);
-            NewUser = new UserWrapper(new User(), cacheService);
-            NewUser.PromptForPasswordReset = true;
-            NewUser.UserName = "";
-            NewUser.CanAccessAllBranch = false;
-            NewUser.BranchId = StaticContainer.ActiveBranchId;
+            NewUser = new UserWrapper(new User(), cacheService)
+            {
+                PromptForPasswordReset = true,
+                UserName = "",
+                CanAccessAllBranch = false,
+                BranchId = StaticContainer.ActiveBranchId,
+                ProfileImage=""
+            };
+
 
             NewUser.PropertyChanged += NewUser_PropertyChanged;
             CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
@@ -125,19 +109,18 @@ namespace POSSystem.UI.ViewModel
             DeleteUserCommand = new DelegateCommand<UserWrapper>(LockUser);
             ResetUserCommand = new DelegateCommand(ResetUser);
             RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
-            FilePickCommand = new DelegateCommand(OnFilePickCommandExecute);
             ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
             eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
             LoadAllUsers();
         }
 
-        
+
 
         private void OnUserPasswordChanged(User obj)
         {
             var u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
             u.PromptForPasswordReset = obj.PromptForPasswordReset;
-            if(NewUser.Id == obj.Id)
+            if (NewUser.Id == obj.Id)
             {
                 NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
             }
@@ -151,17 +134,6 @@ namespace POSSystem.UI.ViewModel
             _window.ShowMetroDialogAsync(_adminChangePasswordUI);
         }
 
-        private void OnFilePickCommandExecute()
-        {
-            string fileName = FileUtility.OpenImageFilePicker();
-            if(!string.IsNullOrEmpty(fileName))
-            {
-                NewUser.ProfileImage = Path.GetFileName(fileName);
-                LogoName = $".....\\{NewUser.ProfileImage}";
-                LogoFullPathName = fileName;
-                _isLogoChanged = true;
-            }
-        }
 
         private async void OnUserRestoreExecute(UserWrapper obj)
         {
@@ -220,6 +192,7 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.CanAccessAllBranch = false;
             this.NewUser.BranchId = obj.BranchId;
             this.NewUser.CanAccessAllBranch = obj.CanAccessAllBranch;
+            this.NewUser.ProfileImage = obj.ProfileImage;
             this.ButtonText = "Update User";
         }
 
@@ -232,15 +205,7 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                if (_isLogoChanged)
-                {
-                   bool profileImageSaved =  FileUtility.SaveProfileFile(LogoFullPathName, NewUser.ProfileImage);
-                    if(!profileImageSaved)
-                    {
-                        StaticContainer.ShowNotification("Profile Image", "Profile picture image name already exists. Upload different profile picture and try again.", NotificationType.Warning);
-                        return;
-                    }
-                }
+
 
                 User u = new User
                 {
@@ -318,7 +283,7 @@ namespace POSSystem.UI.ViewModel
         private void ManageUserInCollection(User obj)
         {
             UserWrapper u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
-            if(u != null)
+            if (u != null)
             {
                 u.IsActive = obj.IsActive;
                 u.DeactivationDate = obj.DeactivationDate;
@@ -335,14 +300,10 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.DisplayName = "";
             this.NewUser.IsAdmin = false;
             this.NewUser.PromptForPasswordReset = true;
-            this.NewUser.ProfileImage = "";
             this.NewUser.Password = "";
-            this.LogoName = "";
-            this.LogoFullPathName = "";
-            this._isLogoChanged = false;
         }
 
-        
+
 
     }
 }
