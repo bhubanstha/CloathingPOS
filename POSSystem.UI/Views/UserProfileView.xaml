@@ -11,6 +11,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <StackPanel Margin="0 5 3 5">
 
         <Grid Margin="{DynamicResource ControlMargin}">
@@ -45,16 +48,59 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border x:Name="mask" Background="{DynamicResource MahApps.Brushes.Accent}" CornerRadius="15 15 0 0"/>
+                    <Button 
+                        Padding="20 0"
+                        Height="30" 
+                        Panel.ZIndex="1" 
+                        Grid.Row="0" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                        Command="{Binding ImportNewImageCommand}"
+                        Margin="0 10 10 0">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="PencilSquare"
+                                                    Style="{StaticResource row.option.icon}" />
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
+                    <StackPanel 
+                        Margin="0 10 10 5" 
+                        Grid.Row="0" 
+                        Panel.ZIndex="1" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Bottom" 
+                        Visibility="{Binding IsProfileImageChanged, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Orientation="Horizontal">
+                            <Button 
+                                Padding="20 0"
+                                Content="Save" 
+                                Height="30" 
+                                Margin="5 0"
+                                Command="{Binding ChangeProfilePicCommand}"/>
+                        <Button 
+                                Padding="20 0"
+                                Content="Discard" 
+                                Height="30" 
+                                Command="{Binding DiscardProfilePicCommand}"/>
+                    </StackPanel>
+                    
                     <StackPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
 
                         <!-- Use a VisualBrush of 'mask' as the opacity mask -->
                         <StackPanel.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=mask}"/>
                         </StackPanel.OpacityMask>
+                        
                         <Image
                             Height="300"
-                            Source="/Image/profileImage.png"
+                            Source="{Binding ProfileImage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                             Stretch="Fill" />
+                        
                     </StackPanel>
                     <!--<DockPanel Grid.Row="0" Background="{DynamicResource MahApps.Brushes.Accent}">
                         <Image

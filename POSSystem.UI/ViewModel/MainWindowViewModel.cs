@@ -5,7 +5,6 @@ using POS.Model;
 using POSSystem.UI.Enum;
 using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
-using POSSystem.UI.ViewModel.Service;
 using POSSystem.UI.Views;
 using Prism.Commands;
 using System;
@@ -18,11 +17,11 @@ namespace POSSystem.UI.ViewModel
     {
         private double _popupRightMargin = 200;
         private ICacheService _cacheService;
-        private IMessageDialogService _messageDialogService;
         private bool _isPopUpMenuVisible = false;
         private bool _isFeatureHighlightOpen = true;
         private bool _isAdminMenuVisible = false;
         private bool _isSysAdminMenuVisible = false;
+
 
         public ICommand UserMenuCommand { get; }
         public ICommand ManageAccount { get; }
@@ -43,8 +42,6 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-
-        
 
         public Int64 CurrentBranchId
         {
@@ -96,14 +93,13 @@ namespace POSSystem.UI.ViewModel
         public bool IsLogout { get; set; }
 
 
-        public MainWindowViewModel(ICacheService cacheService, 
-            IMessageDialogService messageDialogService)
+        public MainWindowViewModel(ICacheService cacheService)
         {
             CurrentBranchId = _loggedInUser.BranchId.Value;
             _cacheService = cacheService;
-            _messageDialogService = messageDialogService;
+
             IsFeatureHighlightOpen = Application.Current.Properties["FeatureShown"] == null ? true: Convert.ToBoolean(Application.Current.Properties["FeatureShown"]);
-            User = cacheService.ReadCache<User>("LoginUser");
+            User = cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
             AddBranchCommand = new DelegateCommand(OnAddBranchExecute);
@@ -111,7 +107,7 @@ namespace POSSystem.UI.ViewModel
             LogoutCommand = new DelegateCommand(OnUserLogout);
             OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
             ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
-        }     
+        }
 
         private void OnAddBranchExecute()
         {
