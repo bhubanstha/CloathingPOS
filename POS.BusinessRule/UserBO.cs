@@ -29,11 +29,11 @@ namespace POS.BusinessRule
             //return genericDataRepository.HasChanges();
         }
 
-        public List<User> GetAllUser(string myUserName)
+        public List<User> GetAllUser(string myUserName, Int64 branchId)
         {
             List<User> users =  genericDataRepository
                 .GetAll()
-                .Where(x => x.UserName != "sysadmin" && x.UserName != myUserName)
+                .Where(x => x.UserName != "sysadmin" && x.UserName != myUserName && x.BranchId == branchId)
                 .Include(i=>i.Branch)
                 .ToList();
             return users;

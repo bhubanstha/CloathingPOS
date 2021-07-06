@@ -111,10 +111,13 @@ namespace POSSystem.UI.ViewModel
             RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
             ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
             eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
-            LoadAllUsers();
+            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(OnBranchSwitched);
         }
 
-
+        private void OnBranchSwitched(BranchWrapper obj)
+        {
+            LoadAllUsers();
+        }
 
         private void OnUserPasswordChanged(User obj)
         {
@@ -269,7 +272,7 @@ namespace POSSystem.UI.ViewModel
         {
             User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             _userBo = new UserBO(_encryption);
-            List<User> _users = _userBo.GetAllUser(me.UserName);
+            List<User> _users = _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
             UsersList = new ObservableCollection<UserWrapper>();
             foreach (User u in _users)
             {
