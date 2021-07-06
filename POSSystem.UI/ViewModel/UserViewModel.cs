@@ -271,16 +271,19 @@ namespace POSSystem.UI.ViewModel
         private void LoadAllUsers()
         {
             User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
-            _userBo = new UserBO(_encryption);
-            List<User> _users = _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
-            UsersList = new ObservableCollection<UserWrapper>();
-            foreach (User u in _users)
+            if (me != null)
             {
-                UserWrapper userWrapper = new UserWrapper(u);
-                userWrapper.BranchName = u.Branch.BranchName;
-                UsersList.Add(userWrapper);
+                _userBo = new UserBO(_encryption);
+                List<User> _users = _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
+                UsersList = new ObservableCollection<UserWrapper>();
+                foreach (User u in _users)
+                {
+                    UserWrapper userWrapper = new UserWrapper(u);
+                    userWrapper.BranchName = u.Branch.BranchName;
+                    UsersList.Add(userWrapper);
+                }
+                _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
             }
-            _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
         }
 
         private void ManageUserInCollection(User obj)

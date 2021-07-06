@@ -24,12 +24,13 @@ namespace POSSystem.UI.ViewModel
 
         [Required(ErrorMessage = "Password is required.")]
         [MaxLength(10, ErrorMessage = "Password can be 10 characters long.")]
+        [Compare("ConfirmationPassword", ErrorMessage = "Password and confirmation password didn't match.")]
         public string Password { get; set; }
 
 
         [Required(ErrorMessage = "Password is required.")]
         [MaxLength(10, ErrorMessage = "Password can be 10 characters long.")]
-        [Compare(nameof(Password), ErrorMessage = "Confirmation password not matched with Password.")]
+        [Compare("Password", ErrorMessage = "Confirmation password and  password didn't match.")]
         public string ConfirmationPassword { get; set; }
 
         public bool PromptForPasswordReset { get; set; }
@@ -38,6 +39,8 @@ namespace POSSystem.UI.ViewModel
 
     public class ChangePasswordWrapper : WrapperBase<ChangePassword>
     {
+        private string _pwdMsg;
+        private string _conMsg;
         public ChangePasswordWrapper(ChangePassword obj) : base(obj)
         {
 
@@ -46,19 +49,58 @@ namespace POSSystem.UI.ViewModel
         public string Password 
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set 
+            { 
+                SetValue(value);
+                ClearErrors(nameof(ConfirmationPassword));
+                PasswordMessage = GetFirstError(nameof(Password));
+                ConfirmPasswordMessage = GetFirstError(nameof(ConfirmationPassword));
+
+                OnPropertyChanged(nameof(PasswordMessage));
+                OnPropertyChanged(nameof(ConfirmPasswordMessage));
+            }
         }
 
         public string ConfirmationPassword
         {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set 
+            { 
+                SetValue(value);
+                ClearErrors(nameof(Password));
+                ConfirmPasswordMessage = GetFirstError(nameof(ConfirmationPassword));
+                PasswordMessage = GetFirstError(nameof(Password));
+
+                OnPropertyChanged(nameof(ConfirmPasswordMessage));
+                OnPropertyChanged(nameof(PasswordMessage));
+            }
         }
 
         public bool PromptForPasswordReset
         {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
+        }
+
+        public string PasswordMessage
+        {
+            get { return _pwdMsg; }
+            set
+            {
+                _pwdMsg = value;
+                OnPropertyChanged();
+                
+            }
+        }
+
+        public string ConfirmPasswordMessage
+        {
+            get { return _conMsg; }
+            set
+            {
+                _conMsg = value;
+                OnPropertyChanged();
+            }
         }
     }
     
