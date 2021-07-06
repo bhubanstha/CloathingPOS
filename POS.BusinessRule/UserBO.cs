@@ -45,6 +45,7 @@ namespace POS.BusinessRule
                             .GetAll()
                             .Where(f => f.UserName == userName
                                     && f.Password == password
+                                    && f.DeactivationDate.ToString() == ""
                                     && (f.BranchId == branchId || f.CanAccessAllBranch == true)
                                     )
                             .FirstOrDefault();
