@@ -34,8 +34,32 @@
                     <Setter Property="ToolTipService.HasDropShadow" Value="True" />
                     <Setter Property="AllowDrop" Value="False" />
                     <Setter Property="IsDropDownOpen" Value="False" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <TextBlock Text="{Binding Items[0].BranchName, ElementName=cmbBranch}" />
+                                <ControlTemplate.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Padding" Value="10,0" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="Width" Value="Auto" />
+                                        <Setter Property="HorizontalAlignment" Value="Right" />
+                                    </Style>
+                                </ControlTemplate.Resources>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
                 </DataTrigger>
             </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="Branch.OnlyOne"
+            BasedOn="{DynamicResource MahApps.Styles.TextBlock}"
+            TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </UserControl.Resources>
     <Grid>
