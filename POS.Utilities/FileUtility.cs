@@ -97,6 +97,8 @@ namespace POS.Utilities
         public static string GetLabelPdfPath(bool deleteIfExists = true)
         {
             string fileFullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", $"productlabel.pdf");
+            string dir = Path.GetDirectoryName(fileFullPath);
+            CreateDirectory(dir);
             if (deleteIfExists)
             {
                 if (File.Exists(fileFullPath))
