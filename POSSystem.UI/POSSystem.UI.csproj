@@ -967,7 +967,8 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy $(SolutionDir)ThirdPartyUtility\PdfRenderer\$(PlatformName)\libmupdf.dll $(TargetDir) /Y
 if $(ConfigurationName) == Release del $(TargetDir)*.xml
-if $(ConfigurationName) == Release del $(TargetDir)*.pdb</PostBuildEvent>
+if $(ConfigurationName) == Release del $(TargetDir)*.pdb
+if $(ConfigurationName) == Release del $(TargetDir)*.dll.config</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if not exist DirToCreate mkdir $(TargetDir)Image\CompanyLogo
