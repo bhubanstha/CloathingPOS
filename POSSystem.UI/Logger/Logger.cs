@@ -27,7 +27,7 @@ namespace POSSystem.UI
         private  void SetLog4NetConfiguration()
         {
             var logRepo = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(logRepo, new FileInfo("log4NetConfig.config"));
+            XmlConfigurator.Configure(logRepo, new FileInfo("log4Net.config"));
         }
     }
 }
