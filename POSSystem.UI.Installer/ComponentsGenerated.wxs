@@ -2,247 +2,242 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp5331CA5F52193D033714FDDF20C463C5" Guid="{6CE43280-0622-4CCB-8C02-9388524BD2FF}">
+            <Component Id="cmp5331CA5F52193D033714FDDF20C463C5" Guid="{6981812C-BFB2-4F31-AF9C-3423900135D6}">
                 <File Id="filCB70EB97061F227F60A18AA79D1F1486" KeyPath="yes" Source="$(var.BasePath)\App.config" />
             </Component>
-            <Component Id="cmpDA27922DC39ABEE4AED51766786E4CFD" Guid="{BB48EDB4-0C25-4DFB-B13D-F6BF57683BE7}">
+            <Component Id="cmpDA27922DC39ABEE4AED51766786E4CFD" Guid="{2E4CD106-C193-4524-B2B3-9F40C37A48F8}">
                 <File Id="fil35A245A4D0EADE39BA1ACE4C3747CE4D" KeyPath="yes" Source="$(var.BasePath)\Autofac.dll" />
             </Component>
-            <Component Id="cmpCF9B3A227754E55B2A4622BDADF51333" Guid="{E3C459A1-381E-4BCA-A31D-D851A4F3E198}">
+            <Component Id="cmpCF9B3A227754E55B2A4622BDADF51333" Guid="{B179B9D2-9FDB-4B5F-81BD-2EF51DC1A0B9}">
                 <File Id="fil244CDAED28510644E512EA1DBCB9390F" KeyPath="yes" Source="$(var.BasePath)\BouncyCastle.Crypto.dll" />
             </Component>
-            <Component Id="cmp7C9D7ECB8AA42F8F89FFDA128508D39E" Guid="{9E897BB9-8AFC-4FAB-A4DE-A2A26410B46F}">
+            <Component Id="cmp7C9D7ECB8AA42F8F89FFDA128508D39E" Guid="{DC11232A-52CA-4380-84C5-4D4755CAB852}">
                 <File Id="fil537261B9AB04F5C0A27396309F4EA107" KeyPath="yes" Source="$(var.BasePath)\Common.Logging.Core.dll" />
             </Component>
-            <Component Id="cmp059A81F557F2A7B3731E3EE81BE97CCD" Guid="{271B7D58-59A4-435D-9006-AF005FC0BA7D}">
+            <Component Id="cmp059A81F557F2A7B3731E3EE81BE97CCD" Guid="{2532F8E1-B337-4901-B092-332EA25A06B0}">
                 <File Id="fil0D1D3D4225BB5A570B5EFFD192341BA3" KeyPath="yes" Source="$(var.BasePath)\Common.Logging.dll" />
             </Component>
-            <Component Id="cmp9110E4565D76564E9BC2F34625854902" Guid="{59A314FF-044B-4C70-8D06-E5AC86BBB80D}">
+            <Component Id="cmp9110E4565D76564E9BC2F34625854902" Guid="{24917DCF-8F20-4C4D-961C-29FB34AB4875}">
                 <File Id="filAC751AB8116CEF372F8CFDA54B395D08" KeyPath="yes" Source="$(var.BasePath)\ControlzEx.dll" />
             </Component>
-            <Component Id="cmp0BFABD100B4065787B40AA6B05938DF7" Guid="{F84FA275-C907-4A16-9112-ED00F60F71C8}">
+            <Component Id="cmp0BFABD100B4065787B40AA6B05938DF7" Guid="{E47EE2AD-443C-43AC-9979-BEA0875E4E36}">
                 <File Id="fil1D38723F4A034EDE78B6A3B94EFB99F2" KeyPath="yes" Source="$(var.BasePath)\EntityFramework.dll" />
             </Component>
-            <Component Id="cmpB8E7B130B6B78399B39307530A3D65B2" Guid="{DB8B4E69-B6E6-4A4C-B86A-3E8773FFD251}">
+            <Component Id="cmpB8E7B130B6B78399B39307530A3D65B2" Guid="{D15A7DA2-0887-49C5-9A96-9D671F29002D}">
                 <File Id="fil55247FAD2E00E96001D9F9C3E501E9FA" KeyPath="yes" Source="$(var.BasePath)\EntityFramework.SqlServer.dll" />
             </Component>
-            <Component Id="cmp353FCB63A792C43A60F7237E4C156972" Guid="{D3D4D447-5245-4CE7-BCC6-EB0B84579543}">
+            <Component Id="cmp353FCB63A792C43A60F7237E4C156972" Guid="{1602DBAA-5822-4CB4-B317-3ACFE7DEEE07}">
                 <File Id="filD27CA513C5594710A643EC5105EDED52" KeyPath="yes" Source="$(var.BasePath)\itext.barcodes.dll" />
             </Component>
-            <Component Id="cmpDAAD44A6F31E9384DC7498D6E5DA16BC" Guid="{F479524B-FE43-41E4-B5BD-0059A26C640E}">
+            <Component Id="cmpDAAD44A6F31E9384DC7498D6E5DA16BC" Guid="{B59C23E8-27C6-4FAE-A8DE-6A248136FB4C}">
                 <File Id="fil2D621EB63B5B0E28122D7ACDC983B0FE" KeyPath="yes" Source="$(var.BasePath)\itext.forms.dll" />
             </Component>
-            <Component Id="cmp2331F32DFD90A18159E2AF28D876FB6E" Guid="{49C23A6B-AA6F-40BA-BADA-34EE40FC3B81}">
+            <Component Id="cmp2331F32DFD90A18159E2AF28D876FB6E" Guid="{0B1B0AB7-AD0E-47C0-87CC-9B3867DBBB38}">
                 <File Id="fil10E06E2AD134760B9089317124219C52" KeyPath="yes" Source="$(var.BasePath)\itext.io.dll" />
             </Component>
-            <Component Id="cmpC898D880A2401AD1520397C34B1F1D1D" Guid="{44099CBB-D72E-483B-A05B-E3F6D6E95637}">
+            <Component Id="cmpC898D880A2401AD1520397C34B1F1D1D" Guid="{F6CB25AF-8506-4C6B-8066-600A7AFFC9AF}">
                 <File Id="fil1A0623B9141FA5A582352CD8A91EDF67" KeyPath="yes" Source="$(var.BasePath)\itext.kernel.dll" />
             </Component>
-            <Component Id="cmp8D8B4EF96A670A683B8B382D6EFD0DF9" Guid="{B8A1D1CB-B663-4E3F-B2C0-620D8E69A27C}">
+            <Component Id="cmp8D8B4EF96A670A683B8B382D6EFD0DF9" Guid="{7F790811-A60E-489E-9F32-B66CFD1B9752}">
                 <File Id="filA816A940F12D52C10FFBD61C58F1D3F8" KeyPath="yes" Source="$(var.BasePath)\itext.layout.dll" />
             </Component>
-            <Component Id="cmp5DE9BF4074F35105DD3D1F54AFF1E911" Guid="{C86523DF-5B91-4AAD-B264-ACA84A0FC1BC}">
+            <Component Id="cmp5DE9BF4074F35105DD3D1F54AFF1E911" Guid="{39929FEC-6EBC-4F1E-9421-1A4E7AC650FF}">
                 <File Id="fil314A7D628AC9C1A32504188C00F571D1" KeyPath="yes" Source="$(var.BasePath)\itext.pdfa.dll" />
             </Component>
-            <Component Id="cmpBFB298C8A209B08DDEC573BA6A5D93AF" Guid="{D56FEE3B-2D6E-4D66-ABA4-1994BC48CD55}">
+            <Component Id="cmpBFB298C8A209B08DDEC573BA6A5D93AF" Guid="{334E6417-FAEE-4B6D-BE91-4ADD66FB69BC}">
                 <File Id="fil95B14FCB331CA1A01779EFF6D9AE6FD8" KeyPath="yes" Source="$(var.BasePath)\itext.sign.dll" />
             </Component>
-            <Component Id="cmp347AD5D5E9BF1B68FC1208B7B8E1C244" Guid="{9B5E9922-BE03-41B1-9C67-827C5E251D68}">
+            <Component Id="cmp347AD5D5E9BF1B68FC1208B7B8E1C244" Guid="{87BDD395-DD88-4F77-93CF-2B8394151B6D}">
                 <File Id="fil4B5FF2E29CD2C0256C86C0EF3F664619" KeyPath="yes" Source="$(var.BasePath)\itext.styledxmlparser.dll" />
             </Component>
-            <Component Id="cmp15897A97B602185F83041E3A44896EEA" Guid="{CF07386C-C8F5-4475-B476-5F790B09608B}">
+            <Component Id="cmp15897A97B602185F83041E3A44896EEA" Guid="{2500AB70-8098-4001-A5AF-22484644632D}">
                 <File Id="filF68B8B346C503CC7A42B5DB01415A399" KeyPath="yes" Source="$(var.BasePath)\itext.svg.dll" />
             </Component>
-            <Component Id="cmp5BB131D3412A0020ED44AA46F653A699" Guid="{6104CD8A-1A9D-4980-8F8D-B1CF7FFE8F93}">
+            <Component Id="cmp5BB131D3412A0020ED44AA46F653A699" Guid="{0C22FC88-9B6B-480A-A375-5AFCFF76A0E3}">
                 <File Id="filEDEE8A3F1A85AF5D2A1349D32D6C90DF" KeyPath="yes" Source="$(var.BasePath)\libmupdf.dll" />
             </Component>
-            <Component Id="cmp8AC02A3D9D5212F3B6D661556E712803" Guid="{D54C7ED1-E88F-4D2A-B681-7F34B43697DD}">
+            <Component Id="cmp8AC02A3D9D5212F3B6D661556E712803" Guid="{13EE3880-A77A-451E-998F-7696FF20D90D}">
                 <File Id="filAD8353012266B1FF056E4A35422767DC" KeyPath="yes" Source="$(var.BasePath)\log4Net.config" />
             </Component>
-            <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="{2B56488D-46A3-47E4-83BF-99AD1ED0CF84}">
+            <Component Id="cmp13D58469BCB864EB53214ED46E622188" Guid="{9E6A5D4B-FBA4-4717-8F72-9F95174A16B8}">
                 <File Id="fil28F7A9478894C77C5F6C2A95DAA4B459" KeyPath="yes" Source="$(var.BasePath)\log4net.dll" />
             </Component>
-            <Component Id="cmp223D4754378C01052DA8253A843FD297" Guid="{EA8B7CF8-6915-4B57-A703-6C20B73732ED}">
+            <Component Id="cmp223D4754378C01052DA8253A843FD297" Guid="{1A55B6B9-F566-45CA-9BD8-A76728C5DDB7}">
                 <File Id="filBC562C5B3D9848A2114F0AF7275FF1E6" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.dll" />
             </Component>
-            <Component Id="cmp599019E425F9812986DF199C28168780" Guid="{497218EB-C280-48F0-8924-6382FEDC264C}">
+            <Component Id="cmp599019E425F9812986DF199C28168780" Guid="{37FCAC42-0926-4933-AF4B-FFC5B251C83D}">
                 <File Id="fil6FDFE628B5E19D68C85D409C24047C6C" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.BootstrapIcons.dll" />
             </Component>
-            <Component Id="cmpDBDD8544E85DD3C3636F7941BFBD847F" Guid="{4D0E45CB-C5B4-4972-8CE1-432393E76DC4}">
+            <Component Id="cmpDBDD8544E85DD3C3636F7941BFBD847F" Guid="{DB6E5F6B-AD30-4C79-8A8B-9E2904BFA8FB}">
                 <File Id="filC5CCD35EB2DAD5EBEE463C6170FCA2F1" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.BoxIcons.dll" />
             </Component>
-            <Component Id="cmpE891C06C30655F69FB0C1A9F94680000" Guid="{5FE7CF2A-B498-4E70-BF79-3176EFFB6053}">
+            <Component Id="cmpE891C06C30655F69FB0C1A9F94680000" Guid="{BE039EAF-8EFE-4970-BA3A-61E40D3A32B2}">
                 <File Id="fil9FB8CC8B6FE10A225C88818C4010368E" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Codicons.dll" />
             </Component>
-            <Component Id="cmpC234DEDFFB8D946FF8A56EFCF85E3D95" Guid="{D891D6B7-D722-42E7-902A-834DBED70B69}">
+            <Component Id="cmpC234DEDFFB8D946FF8A56EFCF85E3D95" Guid="{D4739441-A205-4A06-A629-57DDA8072D87}">
                 <File Id="fil8FD0A63F98224528D2F347E68DA1B3B0" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Core.dll" />
             </Component>
-            <Component Id="cmp92541AC2EB5E4FF723447A4B16C84B26" Guid="{33F7C53A-C58C-464F-99FE-9571279A7CE3}">
+            <Component Id="cmp92541AC2EB5E4FF723447A4B16C84B26" Guid="{53EA2B3E-5ED5-4289-91AF-AAE95087E07D}">
                 <File Id="fil1804F95784F7DF73708DF02E3A4A131D" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.dll" />
             </Component>
-            <Component Id="cmp52C458826BE83F5325B67A8D13A2561B" Guid="{7B4FB856-A766-4491-9C8C-146C88FA00D5}">
+            <Component Id="cmp52C458826BE83F5325B67A8D13A2561B" Guid="{8E1E347D-3D81-4B1D-9CAE-357986EA0DBD}">
                 <File Id="fil88232901A7A03EC7F7871E008CBABF6C" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Entypo.dll" />
             </Component>
-            <Component Id="cmp7E4E9D811750528A690C3AFCD0DA00B8" Guid="{940ABB41-9803-41D6-AA3A-5618E4941F8D}">
+            <Component Id="cmp7E4E9D811750528A690C3AFCD0DA00B8" Guid="{17BE6BBE-EBC1-4842-A38F-A15187D4EE8E}">
                 <File Id="filF209461358E02283CD4E608190014878" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.EvaIcons.dll" />
             </Component>
-            <Component Id="cmp93D18B2EAC40C73BB05442E90D445539" Guid="{6EF86AE0-8732-46AE-8DD6-B7D9166E27B6}">
+            <Component Id="cmp93D18B2EAC40C73BB05442E90D445539" Guid="{021E5C39-DAE5-48A0-9143-6CDF355E5E07}">
                 <File Id="filEAC3D24E7D04B4A47F479537766C62C8" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.FeatherIcons.dll" />
             </Component>
-            <Component Id="cmp70D5581ED833B5B0D0BF17C559516981" Guid="{9EFFF226-4F56-48BC-8B5C-43775D51D675}">
+            <Component Id="cmp70D5581ED833B5B0D0BF17C559516981" Guid="{C9347F94-A5C4-4E48-898E-C4B5F2BEFB04}">
                 <File Id="fil385BFC70CBCCCD804B2957D5431D406E" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.FileIcons.dll" />
             </Component>
-            <Component Id="cmp330852142FC3457EFE1269AC05E97E72" Guid="{6B8BBE57-5418-4F44-9004-A2796EC43C63}">
+            <Component Id="cmp330852142FC3457EFE1269AC05E97E72" Guid="{E8704230-4121-42BD-97DE-7140B5731A9E}">
                 <File Id="fil7DF1C6B81F25498E65B138A8CB69AB87" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Fontaudio.dll" />
             </Component>
-            <Component Id="cmpE27AE8AA4A51881D06744260A57C1F8D" Guid="{4B4B0FB5-CE37-4CE9-B474-77AA6BB3A1D0}">
+            <Component Id="cmpE27AE8AA4A51881D06744260A57C1F8D" Guid="{26926E09-C24E-4568-8547-3044FA36F608}">
                 <File Id="fil6DFB124A90F790C4DFF0F402B25F1270" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.FontAwesome.dll" />
             </Component>
-            <Component Id="cmp2E1577D0913E67858E31590570ACE928" Guid="{1AE5B40F-6948-488B-BD85-48C569795481}">
+            <Component Id="cmp2E1577D0913E67858E31590570ACE928" Guid="{1F2195D2-0A66-4B40-99B9-5CBED964D70E}">
                 <File Id="fil5448860411162E10A69972B6BFCB31BB" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.ForkAwesome.dll" />
             </Component>
-            <Component Id="cmp75CB11D0336CABC4A50FF6EA21C4E650" Guid="{3D2C0D23-406C-4D71-8467-DFD35B612834}">
+            <Component Id="cmp75CB11D0336CABC4A50FF6EA21C4E650" Guid="{D1314CC5-E369-44A9-BCC9-998B450523C8}">
                 <File Id="filEDBFA7351BC133BA8E484C7D89611596" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Ionicons.dll" />
             </Component>
-            <Component Id="cmpDCA909D76B399305A6BCFF03B70AE8E3" Guid="{B3A18D4E-62E2-40B5-B256-E93E8322884D}">
+            <Component Id="cmpDCA909D76B399305A6BCFF03B70AE8E3" Guid="{16E03CC9-B438-4663-89DB-BD5B61A3A25B}">
                 <File Id="fil1521728AF353FE0A225B3F2472D4F913" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.JamIcons.dll" />
             </Component>
-            <Component Id="cmp4C14B76F9B61832734CB583BE75D62F3" Guid="{AA426428-572F-4D6B-9E89-613B5B148C26}">
+            <Component Id="cmp4C14B76F9B61832734CB583BE75D62F3" Guid="{65D93938-BB21-41D4-970C-50B399EAD60E}">
                 <File Id="filDD48E7D6642DB50D7244AD380D7CCEF3" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Material.dll" />
             </Component>
-            <Component Id="cmp231C5556DD226570ED618E5DB5CD75DA" Guid="{4AB7AA3F-44B9-4A54-AE51-EFE9B876C17B}">
+            <Component Id="cmp231C5556DD226570ED618E5DB5CD75DA" Guid="{95D9A88A-AB66-428B-B9C1-5DF74D827281}">
                 <File Id="fil2403C1FCFBB9EC10A11863F2DE0D6112" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.MaterialDesign.dll" />
             </Component>
-            <Component Id="cmpB38803DE110834BE68DDC0F081977135" Guid="{523E3E16-4D3D-4366-84CE-D8D6CF5B9B9C}">
+            <Component Id="cmpB38803DE110834BE68DDC0F081977135" Guid="{FDD42CD0-F295-45E5-A328-84AC7B7729E9}">
                 <File Id="fil953C72B4CFA1A28F4BC168C016338CA9" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.MaterialLight.dll" />
             </Component>
-            <Component Id="cmp629346261566963C46D8E02425D6C4FC" Guid="{2BE938FB-7B18-47AE-8AC1-B9B7AF6FA836}">
+            <Component Id="cmp629346261566963C46D8E02425D6C4FC" Guid="{3065A865-B36C-4238-B075-19771BE0EB0C}">
                 <File Id="fil9DA8A63F12982825B81B7C025E142355" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Microns.dll" />
             </Component>
-            <Component Id="cmp7AC861F6E061133F5D0DF7B11B452D87" Guid="{676222E0-6A4E-417F-A917-A3E48CF1928B}">
+            <Component Id="cmp7AC861F6E061133F5D0DF7B11B452D87" Guid="{95943A04-739D-4A25-BB5C-C6FD0F4C1279}">
                 <File Id="fil2D2A57F6E762C2D61CBC1FACED3F38E7" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Modern.dll" />
             </Component>
-            <Component Id="cmpD636EDAEE74C545B2182FDDEBE89CDFF" Guid="{5F41A74B-E0B6-4959-9E97-3C798E19CBD5}">
+            <Component Id="cmpD636EDAEE74C545B2182FDDEBE89CDFF" Guid="{778CE435-7A2E-418A-83FC-DA631F1525C1}">
                 <File Id="filD684BA0371106CEFFFBEF2F71A734A30" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Octicons.dll" />
             </Component>
-            <Component Id="cmp4DC34B98C7FDE2AA7D7FC0B110563AEB" Guid="{5317FE6E-E023-482F-8C18-04A1AA2E8509}">
+            <Component Id="cmp4DC34B98C7FDE2AA7D7FC0B110563AEB" Guid="{1913FFAB-9590-4805-99AA-1C630FEB99C8}">
                 <File Id="fil015244E3A6A540A9D04526BC3D11FCD2" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.PicolIcons.dll" />
             </Component>
-            <Component Id="cmpA1315620B2A25DBCF68D1F22FBB42658" Guid="{840AB02E-DE9F-4A7B-8CAE-34924814D89D}">
+            <Component Id="cmpA1315620B2A25DBCF68D1F22FBB42658" Guid="{46D86385-CD4B-4179-8160-5D6A31D534B8}">
                 <File Id="fil1D0D2BD646CB22307B4A7F3DDA54C91D" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.PixelartIcons.dll" />
             </Component>
-            <Component Id="cmp355F0AD579CF7A1F33D94893C511AF97" Guid="{5B2F3A46-49B9-45B5-9079-E5F433D76BAA}">
+            <Component Id="cmp355F0AD579CF7A1F33D94893C511AF97" Guid="{8BD8CC70-BFA5-4142-926F-D8ACE8FAFF23}">
                 <File Id="filACDE5904D4B3028049BB996E0E4D0937" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.RadixIcons.dll" />
             </Component>
-            <Component Id="cmpF8EA928B3AF06415FF27F023C66EC22C" Guid="{84EEDFAA-BD25-4FD6-9A0D-82EBEFED1445}">
+            <Component Id="cmpF8EA928B3AF06415FF27F023C66EC22C" Guid="{71C6B5B6-90FE-42CC-8A49-EB5A28B7687B}">
                 <File Id="filE01518949618CB5EED2ABDA79DA2740D" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.RemixIcon.dll" />
             </Component>
-            <Component Id="cmp033C5366FD7CEFD1D9D63DEF290B08E7" Guid="{2121A686-4FD5-45A6-974A-7E9E6FCB128C}">
+            <Component Id="cmp033C5366FD7CEFD1D9D63DEF290B08E7" Guid="{923D3BB7-F50C-44D6-A926-1AE032A76CCB}">
                 <File Id="fil395F3FC44AF1E6AA41CDE03A57D05F31" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.RPGAwesome.dll" />
             </Component>
-            <Component Id="cmpEE515C3F40DFD53938FF630DCCAC9523" Guid="{4F0382CC-E13B-47CF-AE91-1FEE9CA313A5}">
+            <Component Id="cmpEE515C3F40DFD53938FF630DCCAC9523" Guid="{211F2C20-EC8C-42F9-B182-D8B3C6E2AA17}">
                 <File Id="fil92D8221AA653D8908BFFE749416AA659" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.SimpleIcons.dll" />
             </Component>
-            <Component Id="cmpD044C03C41D4BDF3D6F4E7F4C0E1B35B" Guid="{DB583DED-3256-40E5-B721-CA18DC705BBE}">
+            <Component Id="cmpD044C03C41D4BDF3D6F4E7F4C0E1B35B" Guid="{0FBE114E-E750-4C11-9328-9F1FED664B39}">
                 <File Id="fil9956D5D3EB5D977EC3FFAD3344DA5250" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Typicons.dll" />
             </Component>
-            <Component Id="cmpF3DAC61D1CA12CA2E998067967F43A39" Guid="{75AC78B6-460B-40B9-BF20-193A2A65629B}">
+            <Component Id="cmpF3DAC61D1CA12CA2E998067967F43A39" Guid="{6B547C7B-00C5-462E-A957-C2CB94663016}">
                 <File Id="fil5EF16A1A4D699BE993FA325A0284CC86" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Unicons.dll" />
             </Component>
-            <Component Id="cmp269D93EB371BA9F3C210EBD50A296959" Guid="{EA9D3FDB-384F-45B6-8A2F-6685F3133048}">
+            <Component Id="cmp269D93EB371BA9F3C210EBD50A296959" Guid="{22F20C11-55DD-4E99-923F-BE925850EDF7}">
                 <File Id="filA19B78EC7D02DE172D843493BFC7F2C5" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.VaadinIcons.dll" />
             </Component>
-            <Component Id="cmpBFC016051224370342819CF5B700A622" Guid="{61ACE901-AC13-44D2-8DA6-AE575FA8FE40}">
+            <Component Id="cmpBFC016051224370342819CF5B700A622" Guid="{8C7E66F6-CE3A-4992-91FC-68842424274A}">
                 <File Id="filDD44B4F3B74D0EA842F32808C24EA1E8" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.WeatherIcons.dll" />
             </Component>
-            <Component Id="cmp02DDEBF07EB0A5EE6295EE7C3245DAD4" Guid="{F6D27041-BEFE-489A-B9A4-A85821ECEF61}">
+            <Component Id="cmp02DDEBF07EB0A5EE6295EE7C3245DAD4" Guid="{21DE0E12-7852-44E9-964E-C69468C9DA78}">
                 <File Id="fil9F4756495632FE8F36AA507188FBC3F5" KeyPath="yes" Source="$(var.BasePath)\MahApps.Metro.IconPacks.Zondicons.dll" />
             </Component>
-            <Component Id="cmp20E5A82EE1F53BB560782568696E50EF" Guid="{AB197FE6-B7F9-4340-ADC4-EF755480E191}">
+            <Component Id="cmp20E5A82EE1F53BB560782568696E50EF" Guid="{C44D1FFA-A53F-4F6B-A6FF-2F350BC1DB9F}">
                 <File Id="fil2E537F5E44EFF72FBE1AF325D6F073A2" KeyPath="yes" Source="$(var.BasePath)\Microsoft.Bcl.AsyncInterfaces.dll" />
             </Component>
-            <Component Id="cmp8AC833CFB7DC6722697152FE46DA157A" Guid="{000F3F99-BE64-4981-A9A0-E683135DD6A3}">
+            <Component Id="cmp8AC833CFB7DC6722697152FE46DA157A" Guid="{720DB41C-ADB4-43DC-9657-59CAF402B32C}">
                 <File Id="filD3CAD095889A5DE7EAAE25C73BC9910A" KeyPath="yes" Source="$(var.BasePath)\Microsoft.Xaml.Behaviors.dll" />
             </Component>
-            <Component Id="cmp7144F4795F0A6DAC72074C200D9F1FBD" Guid="{4A89AB68-07AC-45F3-BA8D-598D4C387D48}">
+            <Component Id="cmp7144F4795F0A6DAC72074C200D9F1FBD" Guid="{729CE0B0-3060-462A-BE78-530AC5160754}">
                 <File Id="fil6A5116D94CF2658533C11D495728CEE5" KeyPath="yes" Source="$(var.BasePath)\MoonPdfLib.dll" />
             </Component>
-            <Component Id="cmp6DABD9ED7053A545C60C1289C94E8050" Guid="{AB3B297D-3B40-4A82-AB15-5EE8D2477B2C}">
+            <Component Id="cmp6DABD9ED7053A545C60C1289C94E8050" Guid="{1F9D9E5C-692B-4F94-A777-24133A366ABA}">
                 <File Id="fil2EA4AC197678E70999BD595E42393709" KeyPath="yes" Source="$(var.BasePath)\MouseKeyboardActivityMonitor.dll" />
             </Component>
-            <Component Id="cmpED8E1C970CE04E2E92FB5F3F3D4290E8" Guid="{CFE2262A-771F-4044-9781-EDBA4AF21A36}">
+            <Component Id="cmpED8E1C970CE04E2E92FB5F3F3D4290E8" Guid="{88CA2645-6377-4A93-A6A5-1BFA88F4C4F1}">
                 <File Id="fil8FC423A9E18AD6D38F21AA94638A7E1F" KeyPath="yes" Source="$(var.BasePath)\Notifications.Wpf.dll" />
             </Component>
-            <Component Id="cmp9867DD01B906E145D73B1AA12191B24D" Guid="{BBA88B92-64D2-4CBE-840B-CB436820D577}">
+            <Component Id="cmp9867DD01B906E145D73B1AA12191B24D" Guid="{4D183F7B-2ABB-4739-B832-4E4EFC385082}">
                 <File Id="filF3C7E1DBD3AD0BE68A0C0D000EC5A7D6" KeyPath="yes" Source="$(var.BasePath)\OxyPlot.dll" />
             </Component>
-            <Component Id="cmp8F4FC608131CDC6A82B59CBB8B203778" Guid="{14BA4040-EC7B-4518-8C2E-0CCD8E09A610}">
+            <Component Id="cmp8F4FC608131CDC6A82B59CBB8B203778" Guid="{8F066A74-9837-4725-8A62-F6247F3161C7}">
                 <File Id="filE9CE96E94505AA7F35F51DF61E20A061" KeyPath="yes" Source="$(var.BasePath)\OxyPlot.Wpf.dll" />
             </Component>
-            <Component Id="cmp93747094CED501F0871DB62EEF98BB01" Guid="{403F3D1B-5F32-46BE-B1CF-F5576A8A573D}">
+            <Component Id="cmp93747094CED501F0871DB62EEF98BB01" Guid="{13CD6245-4279-4965-AC16-AA9675B1BC6A}">
                 <File Id="fil30F3C525ACC1D93B7139150197D217C9" KeyPath="yes" Source="$(var.BasePath)\POS.BusinessRule.dll" />
             </Component>
-            <Component Id="cmp2B84FF772996C3EBDADA6F06D464263A" Guid="{696C5B44-C73B-40EC-8E2E-885BC4658ADF}">
+            <Component Id="cmp2B84FF772996C3EBDADA6F06D464263A" Guid="{307F671C-C78B-4BF8-80D4-4E76328992C4}">
                 <File Id="fil7C0FCE00291FF795E8514748C24A493E" KeyPath="yes" Source="$(var.BasePath)\POS.Data.dll" />
             </Component>
-            <Component Id="cmp6D8882F7AFED8DB4F890DC9C0291B1DE" Guid="{470F7248-D1FC-44E5-B0E2-3CBED334BC02}">
+            <Component Id="cmp6D8882F7AFED8DB4F890DC9C0291B1DE" Guid="{58E26B59-79FA-4F44-A046-197E10277573}">
                 <File Id="fil85B9FF81FB54548174FAAB026C1E20D3" KeyPath="yes" Source="$(var.BasePath)\POS.Model.dll" />
             </Component>
-            <Component Id="cmp9D813A18BA8DE5A2B19067A7F92575D4" Guid="{20396347-EBD1-4783-95A2-6F22210D1C10}">
+            <Component Id="cmp9D813A18BA8DE5A2B19067A7F92575D4" Guid="{192F2539-42C9-476C-9CC3-1066DA7A83D9}">
                 <File Id="fil1667E436947FBAFFAB0B5DF078857B87" KeyPath="yes" Source="$(var.BasePath)\POS.Utilities.dll" />
             </Component>
-            <Component Id="cmp99026B540A8C4AD8405EA5FFBB843F81" Guid="{BEA61C90-1398-4604-AA86-B85EB0CA1208}">
+            <Component Id="cmp99026B540A8C4AD8405EA5FFBB843F81" Guid="{5D02EBC4-E112-40C7-9835-4CA2E2168DA9}">
                 <File Id="fil14E049FE822D48F0E0077BF257F1F344" KeyPath="yes" Source="$(var.BasePath)\POSSystem.exe" />
             </Component>
-            <Component Id="cmp93B90BE0B1D611EBE6C1BE8C327818A2" Guid="{14FA5BFD-6524-4FC2-BC91-72D744B8207C}">
+            <Component Id="cmp93B90BE0B1D611EBE6C1BE8C327818A2" Guid="{A7DECC05-CE8A-48EF-9154-C51781152AE0}">
                 <File Id="fil3D2DE2EE899506C126D963F6C9E26FD2" KeyPath="yes" Source="$(var.BasePath)\POSSystem.exe.config" />
             </Component>
-            <Component Id="cmp59564654D02343646998A8D6A6F0C25F" Guid="{231408AD-07B8-4FE9-96B2-790196C55493}">
+            <Component Id="cmp59564654D02343646998A8D6A6F0C25F" Guid="{E4F40DAF-0E83-4813-80AC-DF45D24D551F}">
                 <File Id="fil86F2842A309A2CABD479166F2B4E0588" KeyPath="yes" Source="$(var.BasePath)\Prism.dll" />
             </Component>
-            <Component Id="cmp6FEECD8C2264852757DE480218D6318B" Guid="{6CAB658F-B24F-4411-87D4-3E715EB98ECD}">
+            <Component Id="cmp6FEECD8C2264852757DE480218D6318B" Guid="{9ECE9AB0-70C9-49F7-9477-3247DA001CDA}">
                 <File Id="fil73B2A3BAC36C0469180E926431414392" KeyPath="yes" Source="$(var.BasePath)\QrCodeGenerator.dll" />
             </Component>
-            <Component Id="cmpA748C45814948C0E47F0962CF5A9E2C5" Guid="{67405E9B-331D-43A4-8E13-E702A00F59E3}">
+            <Component Id="cmpA748C45814948C0E47F0962CF5A9E2C5" Guid="{EC528757-C7A2-4D02-BB17-AD51DAA44BE0}">
                 <File Id="filAF63FF48A59E0E5E7F49BFD1CBBB0CC3" KeyPath="yes" Source="$(var.BasePath)\System.Buffers.dll" />
             </Component>
-            <Component Id="cmpE722E076AB8486E4A4F24B01268787A2" Guid="{34F7D681-9422-4731-8E7B-341EC6FE2454}">
+            <Component Id="cmpE722E076AB8486E4A4F24B01268787A2" Guid="{1E185B90-2F9E-4296-9DDA-AD03E91258FA}">
                 <File Id="fil92FE767CE7126933F4E9DEEEBAAE9354" KeyPath="yes" Source="$(var.BasePath)\System.Diagnostics.DiagnosticSource.dll" />
             </Component>
-            <Component Id="cmp08EBD8C605FF27A4F0FCEC5A1317087B" Guid="{1B6C6AF3-0A2B-458C-8D6B-63B4FAA3F831}">
+            <Component Id="cmp08EBD8C605FF27A4F0FCEC5A1317087B" Guid="{0270ACC9-C96A-4FF2-B1B7-76F938BBF444}">
                 <File Id="fil01C46D7B4C6F372B6DD0D0DC961DAE47" KeyPath="yes" Source="$(var.BasePath)\System.Drawing.Common.dll" />
             </Component>
-            <Component Id="cmp642ED5B0D0BD1F16347D1310992C55A0" Guid="{E235216A-3FBB-488C-AEE9-87AD274B24AD}">
+            <Component Id="cmp642ED5B0D0BD1F16347D1310992C55A0" Guid="{9D60C72A-E6A9-4154-9224-D01F9A023533}">
                 <File Id="filFA1D7EC932018D1CCB80F9F43D328009" KeyPath="yes" Source="$(var.BasePath)\System.Memory.dll" />
             </Component>
-            <Component Id="cmp89AE5ECEB789ECF60BE6CC568D60B2F9" Guid="{8423C955-8674-468C-BAA5-7841ACE9048C}">
+            <Component Id="cmp89AE5ECEB789ECF60BE6CC568D60B2F9" Guid="{F078CE4A-29ED-4B73-A39E-A5967BD5A82B}">
                 <File Id="fil07CC506FCE6F39AF87379627460A5FFB" KeyPath="yes" Source="$(var.BasePath)\System.Numerics.Vectors.dll" />
             </Component>
-            <Component Id="cmpAFCF21A15F6EDA45A32D147050609285" Guid="{4612E425-7B55-4995-A1A7-D23C1C11AE70}">
+            <Component Id="cmpAFCF21A15F6EDA45A32D147050609285" Guid="{D3A86605-DEC5-49C9-822A-52978994C22B}">
                 <File Id="filAE286E96EA00902BC284AEBF3030D6E4" KeyPath="yes" Source="$(var.BasePath)\System.Runtime.CompilerServices.Unsafe.dll" />
             </Component>
-            <Component Id="cmpB3AE432D48BF3A5AB43C6DAF12AB454A" Guid="{E03489E3-9E49-4543-AB22-D83022199192}">
+            <Component Id="cmpB3AE432D48BF3A5AB43C6DAF12AB454A" Guid="{DB320B87-F373-4F9B-AB0F-977FFCA47286}">
                 <File Id="filF7CF33617C2B93F6EEF50C0DEB533B07" KeyPath="yes" Source="$(var.BasePath)\System.Threading.Tasks.Extensions.dll" />
             </Component>
             <Directory Id="dir242DC17B8DFC53C13CAF172FC08B730A" Name="de">
-                <Component Id="cmp55E09061A1DF30E9878313719FAE6664" Guid="{2948C70C-F113-4820-8B97-A2C8B47D0018}">
+                <Component Id="cmp55E09061A1DF30E9878313719FAE6664" Guid="{15FF496D-C22D-4382-8B98-CBA01059A11E}">
                     <File Id="fil1424015000F4C871286F581C5375B980" KeyPath="yes" Source="$(var.BasePath)\de\MahApps.Metro.resources.dll" />
                 </Component>
             </Directory>
             <Directory Id="dir2ABE573089966EC793F218C9B8C47B03" Name="Image">
-                <Component Id="cmp3D07F7CF03C82E883C6BD8CDC467C76B" Guid="{00C62C7B-FECC-45C5-84B6-CA31182BDA0B}">
+                <Component Id="cmp3D07F7CF03C82E883C6BD8CDC467C76B" Guid="{ABE6DA47-1770-41DA-BCD9-8449E1D20B05}">
                     <File Id="fil3B3BDA0F4C8BA17DF4669855273939BD" KeyPath="yes" Source="$(var.BasePath)\Image\AppIcon.ico" />
                 </Component>
                 <Directory Id="dirDECC17FFC15D6C8B1D7B04B79635F568" Name="CompanyLogo">
-                    <Component Id="cmpAEFAD3E658D084BD53E83441B43734CF" Guid="{E08B92FE-AA06-43D8-9A86-D882FB97E6BF}">
+                    <Component Id="cmpAEFAD3E658D084BD53E83441B43734CF" Guid="{A01D77FC-9EA9-49EA-9798-70A7A884A7A3}">
                         <File Id="filD2C21A906A6B7017D4F2BECDA039520A" KeyPath="yes" Source="$(var.BasePath)\Image\CompanyLogo\companyLogo1.png" />
                     </Component>
                 </Directory>
-            </Directory>
-            <Directory Id="dir69CF91AD90A945A1589CAD8DC07F2D41" Name="logs">
-                <Component Id="cmpB47B202EBCDB1FC74ECD599905C3395E" Guid="{4D75167F-93BA-4A54-AEA5-E606E3EEADEE}">
-                    <File Id="fil5DE075D1B7335B6C1B1BE6B3A2D77CD0" KeyPath="yes" Source="$(var.BasePath)\logs\2021-07-07.txt" />
-                </Component>
             </Directory>
         </DirectoryRef>
     </Fragment>
@@ -325,7 +320,6 @@
             <ComponentRef Id="cmp55E09061A1DF30E9878313719FAE6664" />
             <ComponentRef Id="cmp3D07F7CF03C82E883C6BD8CDC467C76B" />
             <ComponentRef Id="cmpAEFAD3E658D084BD53E83441B43734CF" />
-            <ComponentRef Id="cmpB47B202EBCDB1FC74ECD599905C3395E" />
         </ComponentGroup>
     </Fragment>
 </Wix>
