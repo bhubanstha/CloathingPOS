@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture=";" xmlns="http://schemas.microsoft.com/wix/2006/localization">
 
-  <String Id="ProductCode_x86">{61062633-41F2-4E6D-B806-4877D2C226CB}</String>
-  <String Id="ProductCode_x64">{B846EE6E-B018-4E2B-A82B-A1E049991989}</String>
+  <String Id="ProductCode_x86">{9CF3936B-1DF3-42F1-9178-89214F0DC977}</String>
+  <String Id="ProductCode_x64">{5794C594-AFCE-45FA-8CB2-3356858E3520}</String>
   
 	<String Id="ProductName">POS System</String>
   <String Id="ProductNameFolder">POS System</String>
