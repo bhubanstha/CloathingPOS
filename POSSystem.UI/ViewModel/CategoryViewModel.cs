@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
@@ -21,6 +22,7 @@ namespace POSSystem.UI.ViewModel
     public class CategoryViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
+        private ILog _log;
         private CategoryBO categoryBO;
         private ObservableCollection<CategoryWrapper> categories;
 
@@ -42,9 +44,10 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand EditCategoryCommand { get; }
         public ICommand ResetCommand { get; }
-        public CategoryViewModel(IEventAggregator eventAggregator)
+        public CategoryViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
             _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(CategoryViewModel));
             NewCategory = new CategoryWrapper(new Category());
             LoadCategories();
             CreateCategoryCommand = new DelegateCommand(OnSaveCategory);
@@ -85,6 +88,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnDeleteCategory", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
         }
@@ -111,6 +115,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnSaveCategory", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
             finally
