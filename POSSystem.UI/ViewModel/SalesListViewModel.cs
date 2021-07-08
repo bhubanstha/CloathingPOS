@@ -90,7 +90,7 @@ namespace POSSystem.UI.ViewModel
                 if (_isBillingInfoUpdated || !FileUtility.CheckInvoiceFileExists(pdfPath))
                 {
                     List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
-                    pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
+                    pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop);
                     //Create Bill
                 }
                 //OpenBill

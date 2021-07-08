@@ -58,6 +58,7 @@ namespace POSSystem.UI
             builder.RegisterType<NepDate>().AsSelf();
             builder.RegisterType<ColorService>().As<IColorService>();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<Logger>().As<ILogger>().SingleInstance();
 
 
             //View Model Registration
@@ -80,6 +81,7 @@ namespace POSSystem.UI
             builder.RegisterType<BillingViewModel>().AsSelf();
             builder.RegisterType<BranchViewModel>().AsSelf();
             builder.RegisterType<UserBranchViewModel>().AsSelf();
+            builder.RegisterType<SettingViewModel>().AsSelf();
             builder.RegisterType<SplashScreenMessage>().AsSelf().SingleInstance();
 
 

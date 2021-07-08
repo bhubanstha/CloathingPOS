@@ -8,6 +8,7 @@ using POS.Model.ViewModel;
 using POS.Utilities.PDF;
 using POSSystem.UI.Controls;
 using POSSystem.UI.Event;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -32,10 +33,10 @@ namespace POSSystem.UI.ViewModel
         private ObservableCollection<SalesModel> _currentCart;
         private SalesWrapper _currentProduct;
         private AutoCompleteTextBox _productName;
-        private bool _enableBranchSelection = true;
+        private bool _isBillGenerating = false;
+
 
         //Public Properties
-        public MoonPdfPanel PdfPanel { get; set; }
         public List<Inventory> FilterProducts { get; set; }
         public CultureInfo CultureInfo { get; set; }
         public SalesWrapper CurrentProduct
@@ -48,15 +49,14 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public bool EnableBranchSelection
+
+
+        public bool IsBillGenerating
         {
-            get { return _enableBranchSelection; }
-            set
-            {
-                _enableBranchSelection = value;
-                OnPropertyChanged();
-            }
+            get { return _isBillGenerating; }
+            set { _isBillGenerating = value; OnPropertyChanged(); }
         }
+
         public BillWrapper CurrentBill { get; set; }
         public ObservableCollection<SalesModel> CurrentCart
         {
@@ -76,14 +76,12 @@ namespace POSSystem.UI.ViewModel
                 if (!string.IsNullOrEmpty(value))
                 {
                     _currentPdfFilePath = value;
-                    PdfPanel.OpenFile(value,StaticContainer.Shop.PdfPassword);
                     //PdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
                 }
             }
         }
-        public Border PdfOptionBorder { get; set; }
 
-        
+
         //Delegate Commands
         public ICommand AddItemToCartCommand { get; }
         public ICommand DeleteCartItemCommand { get; }
@@ -91,13 +89,12 @@ namespace POSSystem.UI.ViewModel
         public ICommand ResetCommand { get; }
 
         //Constructor
-        public SalesViewModel(Border pdfPanel, AutoCompleteTextBox productName)
+        public SalesViewModel(AutoCompleteTextBox productName)
         {
-            PdfOptionBorder = pdfPanel;
             _productName = productName;
 
             CurrentProduct = new SalesWrapper(new SalesModel());
-            
+
             CurrentCart = new ObservableCollection<SalesModel>();
             CurrentBill = new BillWrapper(new BillModel())
             {
@@ -149,7 +146,6 @@ namespace POSSystem.UI.ViewModel
             CurrentProduct.BrandId = 0;
             _productName.Text = "";
             _productName.SelectedItem = null;
-            PdfOptionVisibility();
         }
 
         #region Property Events
@@ -188,15 +184,13 @@ namespace POSSystem.UI.ViewModel
 
 
         #region Command Execute Methods
-        private async void AddItemToCart()
+        private void AddItemToCart()
         {
             try
             {
 
                 ManageItemInCart();
                 ClearProduct();
-                await CreatePdfFromCurrentCartItem();
-                EnableBranchSelection = false;
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
                     Title = "Item Added",
@@ -215,15 +209,13 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private async void RemoveItemFromCart(SalesModel obj)
+        private void RemoveItemFromCart(SalesModel obj)
         {
             try
             {
 
                 RemoveItemFromCurrentCart(obj);
                 CalculateVAT();
-                await CreatePdfFromCurrentCartItem();
-
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
                     Title = "Item Removed",
@@ -246,7 +238,8 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                CheckoutCart();
+                IsBillGenerating = true;
+                await CheckoutCart();
 
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
@@ -266,7 +259,15 @@ namespace POSSystem.UI.ViewModel
             }
             finally
             {
-                PdfPanel.Unload();
+                if (StaticContainer.Shop.PrintInvoice)
+                {
+                    string pdfPath = await CreatePdfFromCurrentCartItem();
+                    IsBillGenerating = false;
+                    PDFViewerWindow pDFViewer = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);
+                    pDFViewer.ShowDialog();
+
+                }
+                ClearProduct(true);
             }
         }
 
@@ -277,21 +278,6 @@ namespace POSSystem.UI.ViewModel
         {
             BillBO billBO = new BillBO();
             CurrentBill.BillNo = billBO.GetNewBillNo();
-        }
-        private void PdfOptionVisibility()
-        {
-            if (this.CurrentCart.Count > 0)
-            {
-                PdfOptionBorder.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                PdfOptionBorder.Visibility = Visibility.Hidden;
-                if (PdfPanel.IsLoaded)
-                {
-                    PdfPanel.Unload();
-                }
-            }
         }
 
         private void ClearProduct(bool clearAfterCheckout = false)
@@ -351,46 +337,47 @@ namespace POSSystem.UI.ViewModel
             CalculateVAT();
         }
 
-        private async void CheckoutCart()
+        private Task CheckoutCart()
         {
-            try
+            Task t = Task.Run(async () =>
             {
-
-                BillBO billBO = new BillBO();
-
-                Bill b = new Bill
+                try
                 {
-                    BillDate = DateTime.Now,
-                    BillingAddress = CurrentBill.BillingAddress,
-                    BillingPAN = CurrentBill.BillingPAN,
-                    BillTo = CurrentBill.BillTo,
-                    VAT = CurrentBill.VAT,
-                    BranchId = StaticContainer.ActiveBranchId,
-                    UserId = _loggedInUser.Id
-                };
-                Int64 billNo = billBO.CreateNewBill(ref b);
-                foreach (var item in CurrentCart)
-                {
-                    SalesBO salesBO = new SalesBO();
-                    Sales s = new Sales
+
+                    BillBO billBO = new BillBO();
+
+                    Bill b = new Bill
                     {
-                        SalesQuantity = item.SalesQuantity,
-                        Rate = item.RetailRate,
-                        Discount = item.Discount,
-                        ProductId = item.ProductId,
-                        BillNo = billNo
+                        BillDate = DateTime.Now,
+                        BillingAddress = CurrentBill.BillingAddress,
+                        BillingPAN = CurrentBill.BillingPAN,
+                        BillTo = CurrentBill.BillTo,
+                        VAT = CurrentBill.VAT,
+                        BranchId = StaticContainer.ActiveBranchId,
+                        UserId = _loggedInUser.Id
                     };
-                    await salesBO.CheckoutSales(s);
+                    Int64 billNo = billBO.CreateNewBill(ref b);
+                    foreach (var item in CurrentCart)
+                    {
+                        SalesBO salesBO = new SalesBO();
+                        Sales s = new Sales
+                        {
+                            SalesQuantity = item.SalesQuantity,
+                            Rate = item.RetailRate,
+                            Discount = item.Discount,
+                            ProductId = item.ProductId,
+                            BillNo = billNo
+                        };
+                        await salesBO.CheckoutSales(s);
+                    }
                 }
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                ClearProduct(true);
-            }
+                catch
+                {
+                    throw;
+                }
+            });
+
+            return t;
         }
 
         private void RemoveItemFromCurrentCart(SalesModel obj)
@@ -405,11 +392,11 @@ namespace POSSystem.UI.ViewModel
         #endregion
 
         #region Public Methods
-        public async Task CreatePdfFromCurrentCartItem()
+        public async Task<string> CreatePdfFromCurrentCartItem()
         {
             CurrentPdfFilePath = await new CreatePDF()
-                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop, StaticContainer.Shop.PdfPassword);
-            PdfOptionVisibility();
+                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop);
+            return CurrentPdfFilePath;
         }
 
         public List<Inventory> GetFilteredProduct(string productName)

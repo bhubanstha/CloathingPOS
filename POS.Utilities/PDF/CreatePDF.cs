@@ -21,7 +21,7 @@ namespace POS.Utilities.PDF
     public class CreatePDF
     {
 
-        public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, ShopVM shop, string pdfPassword)
+        public async Task<string> CreateInvoice(BillModel bill, List<SalesModel> salesItem, ShopVM shop)
         {
             return await Task.Run(() =>
             {
@@ -35,7 +35,7 @@ namespace POS.Utilities.PDF
                 using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
-                    byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
+                    byte[] password = Encoding.ASCII.GetBytes(shop.PdfPassword);
                     WriterProperties props = new WriterProperties()
                         .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                                 EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
@@ -90,7 +90,7 @@ namespace POS.Utilities.PDF
         }
 
 
-        public async Task<string> CreateInvoice(Bill bill, List<Sales> salesRecord, ShopVM shop, string pdfPassword)
+        public async Task<string> CreateInvoice(Bill bill, List<Sales> salesRecord, ShopVM shop)
         {
             return await Task.Run(() =>
             {
@@ -108,7 +108,7 @@ namespace POS.Utilities.PDF
                 {
 
                     //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
-                    byte[] password = Encoding.ASCII.GetBytes(pdfPassword);
+                    byte[] password = Encoding.ASCII.GetBytes(shop.PdfPassword);
                     WriterProperties props = new WriterProperties()
                         .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                                 EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);

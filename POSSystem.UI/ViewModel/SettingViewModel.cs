@@ -1,4 +1,6 @@
-﻿using POS.BusinessRule;
+﻿using log4net;
+using Notifications.Wpf;
+using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Service;
 using Prism.Commands;
@@ -16,7 +18,7 @@ namespace POSSystem.UI.ViewModel
         private bool _calVAT;
         private bool _printInvoice;
         private string _pdfPassword;
-
+        private ILog _log;
         public bool CalculateVAT
         {
             get { return _calVAT; }
@@ -39,12 +41,12 @@ namespace POSSystem.UI.ViewModel
         }
 
         public ICommand SaveSettingCommand { get; }
-        public SettingViewModel()
+        public SettingViewModel(ILogger logger)
         {
             CalculateVAT = StaticContainer.Shop.CalculateVATOnSales;
             PrintInvoice = StaticContainer.Shop.PrintInvoice;
             PdfPassword = StaticContainer.Shop.PdfPassword;
-
+            _log = logger.GetLogger(typeof(SettingViewModel));
             SaveSettingCommand = new DelegateCommand(OnSettingSave);
         }
 
@@ -52,6 +54,7 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+                throw new Exception("Test Error");
                 Shop s = new Shop
                 {
                     Id = StaticContainer.Shop.Id,
@@ -70,7 +73,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Success);
+                _log.Error("SettingViewModel.OnSettingSave", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using POSSystem.UI.ViewModel;
+﻿using Autofac;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System.Windows.Controls;
 
 namespace POSSystem.UI.Views
@@ -12,7 +14,7 @@ namespace POSSystem.UI.Views
         public PartialShopView()
         {
             InitializeComponent();
-            model = new SettingViewModel();
+            model = StaticContainer.Container.Resolve<SettingViewModel>();
             this.DataContext = model;
         }
     }

@@ -1,17 +1,12 @@
 ﻿using log4net;
 using log4net.Config;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace POSSystem.UI
 {
-    public class Logger
+    public class Logger : ILogger
     {
 
         public Logger()

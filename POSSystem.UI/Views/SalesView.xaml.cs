@@ -19,8 +19,7 @@ namespace POSSystem.UI.Views
         public SalesView()
         {
             InitializeComponent();
-            model = new SalesViewModel(pnlPdfOptions, txtProductName);
-            model.PdfPanel = moonPdfPanel;
+            model = new SalesViewModel(txtProductName);
             model.CurrentProduct.SalesQuantity = 1;
             this.DataContext = model;            
         }
@@ -51,23 +50,6 @@ namespace POSSystem.UI.Views
                 model.CurrentProduct.ColorName = pr.ColorName;
                 txtSalesQty.Maximum = (double)pr.Quantity;
             }
-        }
-
-
-        private void icon_FullScreen_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath, StaticContainer.Shop.PdfPassword);
-            window.Show();
-        }
-
-        private void icon_Printer_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            moonPdfPanel.Print();
-        }
-
-        private async void txCustInfo_LostFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-            await model.CreatePdfFromCurrentCartItem();
         }
     }
 }
