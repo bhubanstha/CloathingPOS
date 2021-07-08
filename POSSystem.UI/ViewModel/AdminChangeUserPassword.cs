@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
@@ -112,7 +113,7 @@ namespace POSSystem.UI.ViewModel
         private User user;
         private IEventAggregator eventAggregator;
         private IBouncyCastleEncryption _encryption;
-
+        private ILog _log;
         public ChangePasswordWrapper NewPassword 
         {
             get { return _newPassword; }
@@ -125,16 +126,16 @@ namespace POSSystem.UI.ViewModel
 
         }
 
-       
 
         public ICommand ChangePasswordCommand { get; }
         public ICommand CloseDialogCommand { get; }
         
 
-        public AdminChangeUserPasswordViewModel(IEventAggregator eventAggregator, IBouncyCastleEncryption encryption)
+        public AdminChangeUserPasswordViewModel(IEventAggregator eventAggregator, IBouncyCastleEncryption encryption, ILogger logger)
         {
             this.eventAggregator = eventAggregator;
             this._encryption = encryption;
+            this._log = logger.GetLogger(typeof(AdminChangeUserPasswordViewModel));
             NewPassword = new ChangePasswordWrapper(new ChangePassword());
             ChangePasswordCommand = new DelegateCommand(OnChangePasswordExecute, CanChangePasswordExecute);
             CloseDialogCommand = new DelegateCommand(OnCloseDialogExecute);
@@ -172,7 +173,6 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-
                 UserBO bO = new UserBO(_encryption);
                 user.Password = await bO.EncryptPassword(NewPassword.Password);
                 user.PromptForPasswordReset = NewPassword.PromptForPasswordReset;
@@ -181,10 +181,10 @@ namespace POSSystem.UI.ViewModel
                 eventAggregator.GetEvent<UserPasswordChangedEvent>().Publish(user);
                 StaticContainer.ShowNotification("Password Changed", $"{user.DisplayName} login password changed.", Notifications.Wpf.NotificationType.Success);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _log.Error("OnChangePasswordExecute", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
-                throw;
             }
         }
     }
