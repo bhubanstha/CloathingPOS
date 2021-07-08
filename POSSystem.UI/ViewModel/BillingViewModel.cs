@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -22,17 +23,20 @@ namespace POSSystem.UI.ViewModel
     public class BillingViewModel
     {
         private IEventAggregator _eventAggregator;
-
+        private ILog _log;
         public BillEntityWrapper Bill { get; set; }
 
         public UpdateBillingInfoDialog Dialog { get; set; }
         public ICommand ClosePopupCommand { get; private set; }
         public ICommand UpdateBillingCommand { get; private set; }
 
-        public BillingViewModel(IEventAggregator eventAggregator)
+        public BillingViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
-            Bill = new BillEntityWrapper(new Bill());
             this._eventAggregator = eventAggregator;
+            this._log = logger.GetLogger(typeof(BillingViewModel));
+
+            Bill = new BillEntityWrapper(new Bill());
+            
             ClosePopupCommand = new DelegateCommand(OnClosePopup);
             UpdateBillingCommand = new DelegateCommand(OnBillingUpdate);
 
@@ -67,6 +71,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnBillingUpdate", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
             }
             finally
