@@ -24,56 +24,46 @@ namespace POSSystem.UI
         private ILog logger;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            logger = new Logger().GetLogger(typeof(App));
-            logger.Info("Starting Application");
-
-            //            AppDomain.CurrentDomain.UnhandledException
-            //Application.Current.DispatcherUnhandledException
-            //TaskScheduler.UnobservedTaskException
-
-
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            Application.Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-
             var startup = new Startup();
             var container = startup.BootstrapDependencies();
 
+            logger = container.Resolve<Logger>().GetLogger(typeof(App));
+            logger.Info("Starting Application");
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
-            StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
+            StaticContainer.NotificationManager = new NotificationManager();
 
-            logger.Info("Bootrap completed");
 
             logger.Info("Reloading Configuration");
             ReloadConfig();
 
-            //CreateQRCode code = new CreateQRCode();
-            //code.CreateLabel();
 
             var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
             logger.Info("Showing Login Window");
-            //Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             window.Show();
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            logger.Error(e.Exception.ToString());
+            logger.Fatal("UnobservedTaskException", e.Exception);
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-
-            logger.Error(e.ToString());
+            logger.Fatal("UnhandledException", e.ExceptionObject as Exception);
         }
 
         
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-
-            logger.Error(e.Exception.Message);
+            logger.Fatal("DispatcherUnhandledException", e.Exception);
             StaticContainer.NotificationManager.Show(new NotificationContent
             {
                 Message = e.Exception.Message,
@@ -119,10 +109,7 @@ namespace POSSystem.UI
             }
             catch (FileNotFoundException ex)
             {
-                //throw ex;
-                // Handle when file is not found in isolated storage:
-                // * When the first application session
-                // * When file has been deleted
+                logger.Error("ReloadConfig", ex);
             }
             finally
             {
