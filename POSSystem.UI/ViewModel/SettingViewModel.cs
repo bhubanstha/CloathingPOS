@@ -54,7 +54,6 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                throw new Exception("Test Error");
                 Shop s = new Shop
                 {
                     Id = StaticContainer.Shop.Id,
