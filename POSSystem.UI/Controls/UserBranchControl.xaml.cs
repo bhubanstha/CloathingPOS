@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using log4net;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Event;
@@ -22,6 +23,7 @@ namespace POSSystem.UI.Controls
     {
         private bool _isBranchChanging = false;
         private UserBranchViewModel model;
+        private ILog _log;
 
         public long BranchValue
         {
@@ -90,6 +92,7 @@ namespace POSSystem.UI.Controls
                 BranchWrapper b = (BranchWrapper)e.AddedItems[0];
                 StaticContainer.Shop.Address = b.BranchAddress;
 
+                _log.Info($"{model._loggedInUser.UserName} Switched to {b.BranchName} from {((BranchWrapper)e.RemovedItems[0]).BranchName}");
                 //Publish branch change event
                 IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
                 eventAggregator.GetEvent<BranchSwitchedEvent>().Publish(b);
