@@ -1,14 +1,13 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
-using POS.Utilities;
 using POS.Utilities.Encryption;
 using POSSystem.UI.Enum;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
-using POSSystem.UI.UIModel;
 using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -17,7 +16,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Windows.Input;
 
@@ -29,8 +27,7 @@ namespace POSSystem.UI.ViewModel
         private string _buttonText = "Create Account";
         private ObservableCollection<UserWrapper> _userList;
         private UserWrapper _newUser;
-
-
+        private ILog _log;
         private ICacheService _cacheService;
         private AdminChangePassword _adminChangePasswordUI;
         private IEventAggregator _eventAggregator;
@@ -86,14 +83,15 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        public UserViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, IEventAggregator eventAggregator, AdminChangePassword adminChangePasswordUI)
+        public UserViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, IEventAggregator eventAggregator, ILogger logger,  AdminChangePassword adminChangePasswordUI)
         {
-            _cacheService = cacheService;
+            this._cacheService = cacheService;
+            this._log = logger.GetLogger(typeof(UserViewModel));
             this._adminChangePasswordUI = adminChangePasswordUI;
             this._eventAggregator = eventAggregator;
             this._encryption = encryption;
-            _userBo = new UserBO(encryption);
-            NewUser = new UserWrapper(new User(), cacheService)
+            this._userBo = new UserBO(encryption);
+            this.NewUser = new UserWrapper(new User(), cacheService)
             {
                 PromptForPasswordReset = true,
                 UserName = "",
@@ -258,12 +256,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Message = "Could not create user. Please provide all the required values.",
-                    Title = "Error",
-                    Type = NotificationType.Error
-                });
+                _log.Error("OnCreateUserExecute", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
 
         }
