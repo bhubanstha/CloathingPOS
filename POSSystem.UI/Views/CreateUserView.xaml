@@ -208,7 +208,25 @@
             Header="User List"
             IsExpanded="False">
 
-            <DataGrid
+            <StackPanel>
+                <TextBox
+                    x:Name="txtUserCode"
+                    Margin="0 0 0 5"
+                    MaxWidth="200"
+                    Width="200"
+                    VerticalAlignment="Center"
+                    Padding="{StaticResource ControlPadding}"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Search Criteria"
+                    ToolTip="Search by product name or code"
+                    SpellCheck.IsEnabled="True"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource MahApps.Styles.TextBox.Search}"
+                    Text="{Binding UserFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                
+                <DataGrid
                 x:Name="UserDataGrid"
                 HorizontalAlignment="Center"
                 HorizontalContentAlignment="Center"
@@ -429,7 +447,8 @@
                 </DataGrid.Columns>
 
             </DataGrid>
-
+ 
+            </StackPanel>
         </Expander>
     </StackPanel>
 

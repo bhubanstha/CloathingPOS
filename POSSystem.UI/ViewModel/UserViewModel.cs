@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -33,6 +34,8 @@ namespace POSSystem.UI.ViewModel
         private IEventAggregator _eventAggregator;
         private IBouncyCastleEncryption _encryption;
         private UserBO _userBo;
+        private string _userFilter = string.Empty;
+
 
         public ICommand CreateUserCommand { get; }
         public ICommand EditUserCommand { get; }
@@ -60,6 +63,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        public ICollectionView UserCollectionView { get; private set; }
 
 
         public string ButtonText
@@ -67,6 +71,14 @@ namespace POSSystem.UI.ViewModel
             get { return _buttonText; }
             set { _buttonText = value; OnPropertyChanged(); }
         }
+        
+
+        public string UserFilter
+        {
+            get { return _userFilter; }
+            set { _userFilter = value; OnPropertyChanged(); UserCollectionView.Refresh(); }
+        }
+
 
         public bool HasChanges
         {
@@ -277,7 +289,19 @@ namespace POSSystem.UI.ViewModel
                     UsersList.Add(userWrapper);
                 }
                 _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
+                UserCollectionView = CollectionViewSource.GetDefaultView(UsersList);
+                UserCollectionView.Filter = FilterUser;
             }
+        }
+
+        private bool FilterUser(object obj)
+        {
+            if (obj is UserWrapper usr)
+            {
+                return usr.DisplayName.StartsWith(UserFilter, StringComparison.InvariantCultureIgnoreCase) ||
+                    usr.UserName.StartsWith(UserFilter, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
         }
 
         private void ManageUserInCollection(User obj)
