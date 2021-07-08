@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using log4net;
 using MahApps.Metro.Controls;
 using Notifications.Wpf;
 using POS.Model;
@@ -17,6 +18,7 @@ namespace POSSystem.UI.ViewModel
     {
         private double _popupRightMargin = 200;
         private ICacheService _cacheService;
+        private ILog _log;
         private bool _isPopUpMenuVisible = false;
         private bool _isFeatureHighlightOpen = true;
         private bool _isAdminMenuVisible = false;
@@ -93,11 +95,11 @@ namespace POSSystem.UI.ViewModel
         public bool IsLogout { get; set; }
 
 
-        public MainWindowViewModel(ICacheService cacheService)
+        public MainWindowViewModel(ICacheService cacheService, ILogger logger)
         {
             CurrentBranchId = _loggedInUser.BranchId.Value;
             _cacheService = cacheService;
-
+            _log = logger.GetLogger(typeof(MainWindowViewModel));
             IsFeatureHighlightOpen = Application.Current.Properties["FeatureShown"] == null ? true: Convert.ToBoolean(Application.Current.Properties["FeatureShown"]);
             User = cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             UserMenuCommand = new DelegateCommand(OnUserMenuClick);
