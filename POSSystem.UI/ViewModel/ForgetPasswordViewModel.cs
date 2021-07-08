@@ -1,10 +1,10 @@
-﻿using Notifications.Wpf;
+﻿using log4net;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POS.Model.ViewModel;
 using POS.Utilities.Encryption;
 using POSSystem.UI.Service;
-using POSSystem.UI.UIModel;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using System;
@@ -15,6 +15,7 @@ namespace POSSystem.UI.ViewModel
     public class ForgetPasswordViewModel : NotifyPropertyChanged
     {
         private bool _isUserNameEditable = false;
+        private ILog _log;
         private ForgetPasswordWrapper _currentUser;
         private ICacheService _cacheService;
         private IBouncyCastleEncryption _encryption;
@@ -34,10 +35,11 @@ namespace POSSystem.UI.ViewModel
             set { _isUserNameEditable = value; OnPropertyChanged(); }
         }
 
-        public ForgetPasswordViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption)
+        public ForgetPasswordViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, ILogger logger)
         {
             _cacheService = cacheService;
             this._encryption = encryption;
+            this._log = logger.GetLogger(typeof(ForgetPasswordViewModel));
             _user = _cacheService.ReadCache<User>("LoginUser");
             ChangePasswordCommand = new DelegateCommand(OnPasswordChange, OnPasswordCanChange);            
             LoadLoginUser();
@@ -87,6 +89,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnPasswordChange", ex);
                 StaticContainer.IsPasswordChanged = false;
                 StaticContainer.NotificationManager.Show(new NotificationContent
                 {
