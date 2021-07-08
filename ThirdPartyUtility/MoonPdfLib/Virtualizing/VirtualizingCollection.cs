@@ -21,24 +21,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 
 namespace MoonPdfLib.Virtualizing
 {
-	/// <summary>
-	/// Specialized list implementation that provides data virtualization. The collection is divided up into pages,
-	/// and pages are dynamically fetched from the IItemsProvider when required. Stale pages are removed after a
-	/// configurable period of time.
-	/// Intended for use with large collections on a network or disk resource that cannot be instantiated locally
-	/// due to memory consumption or fetch latency.
-	/// </summary>
-	/// <remarks>
-	/// The IList implmentation is not fully complete, but should be sufficient for use as read only collection 
-	/// data bound to a suitable ItemsControl.
-	/// </remarks>
-	/// <typeparam name="T"></typeparam>
-	internal class VirtualizingCollection<T> : IList<T>, IList
+    /// <summary>
+    /// Specialized list implementation that provides data virtualization. The collection is divided up into pages,
+    /// and pages are dynamically fetched from the IItemsProvider when required. Stale pages are removed after a
+    /// configurable period of time.
+    /// Intended for use with large collections on a network or disk resource that cannot be instantiated locally
+    /// due to memory consumption or fetch latency.
+    /// </summary>
+    /// <remarks>
+    /// The IList implmentation is not fully complete, but should be sufficient for use as read only collection 
+    /// data bound to a suitable ItemsControl.
+    /// </remarks>
+    /// <typeparam name="T"></typeparam>
+    internal class VirtualizingCollection<T> : IList<T>, IList
 	{
 		#region Constructors
 

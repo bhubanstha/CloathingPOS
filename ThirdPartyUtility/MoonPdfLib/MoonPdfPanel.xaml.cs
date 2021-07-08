@@ -14,30 +14,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
+using MoonPdfLib.Helper;
+using MoonPdfLib.MuPdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MoonPdfLib.MuPdf;
-using MoonPdfLib.Helper;
 using System.Windows.Threading;
-using System.ComponentModel;
-using System.Diagnostics;
 using static MoonPdfLib.MuPdf.MuPdfWrapper;
 
 namespace MoonPdfLib
 {
-	public partial class MoonPdfPanel : UserControl
+    public partial class MoonPdfPanel : UserControl
 	{
 		public event EventHandler PdfLoaded;
 		public event EventHandler ZoomTypeChanged;

@@ -14,22 +14,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using MouseKeyboardActivityMonitor;
 using MouseKeyboardActivityMonitor.WinApi;
-using System.Windows.Media;
+using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MoonPdfLib
 {
-	internal class MoonPdfPanelInputHandler
+    internal class MoonPdfPanelInputHandler
 	{
 		private MouseHookListener mouseHookListener;
 		private MoonPdfPanel source;

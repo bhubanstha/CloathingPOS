@@ -2,15 +2,11 @@ using Autofac;
 using log4net;
 using MahApps.Metro.Controls;
 using MoonPdfLib;
-using MoonPdfLib.MuPdf;
 using POS.Model;
 using POS.Utilities.PDF;
 using POSSystem.UI.Service;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 

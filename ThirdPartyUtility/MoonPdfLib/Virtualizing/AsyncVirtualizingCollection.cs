@@ -21,17 +21,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace MoonPdfLib.Virtualizing
 {
-	/// <summary>
-	/// Derived VirtualizatingCollection, performing loading asychronously.
-	/// </summary>
-	/// <typeparam name="T">The type of items in the collection</typeparam>
-	internal class AsyncVirtualizingCollection<T> : VirtualizingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
+    /// <summary>
+    /// Derived VirtualizatingCollection, performing loading asychronously.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection</typeparam>
+    internal class AsyncVirtualizingCollection<T> : VirtualizingCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
 	{
 		#region Constructors
 
