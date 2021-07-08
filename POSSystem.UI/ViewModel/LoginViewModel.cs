@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using log4net;
 using MahApps.Metro.Controls;
 using POS.BusinessRule;
 using POS.Model;
@@ -17,6 +18,7 @@ namespace POSSystem.UI.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         private bool _hasChanges;
+        private ILog _log;
         private LoginWrapper _loginUser;
         private string _noUserFound;
         private bool _isLoginOnProgress = false;
@@ -26,9 +28,6 @@ namespace POSSystem.UI.ViewModel
         private ICacheService _cacheService;
 
         public MetroWindow LoginWindow { get; set; }
-
-
-
 
         public bool IsLoginOnProgress
         {
@@ -42,7 +41,6 @@ namespace POSSystem.UI.ViewModel
             get { return _loginUser; }
             set { _loginUser = value; OnPropertyChanged(); }
         }
-
 
 
         public string NoUserFound
@@ -70,10 +68,11 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public LoginViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption)
+        public LoginViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, ILogger logger)
         {
             _bouncyCastleEncryption = encryption;
             _cacheService = cacheService;
+            _log = logger.GetLogger(typeof(LoginViewModel));
             LoginUser = new LoginWrapper(new LoginModel());
             LoginUser.UserName = "";
             LoginUser.PropertyChanged += LoginUser_PropertyChanged;
@@ -126,84 +125,92 @@ namespace POSSystem.UI.ViewModel
 
         private Task<MetroWindow> Login()
         {
-            Task<MetroWindow> t = Task.Run(() =>
+            try
             {
-                string encryptePassword = _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result;
-                UserBO bo = new UserBO(_bouncyCastleEncryption);
-
-                User u = bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
-
-                MetroWindow window = null;
-                if (u != null)
-                {
-                    if (LoginUser.RememberMe)
+                Task<MetroWindow> t = Task.Run(() =>
                     {
-                        Application.Current.Properties["UserName"] = LoginUser.UserName;
-                        Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
-                        Application.Current.Properties["BranchId"] = LoginUser.BranchId;
-                    }
-                    else
-                    {
-                        Application.Current.Properties["UserName"] = "";
-                        Application.Current.Properties["RememberMe"] = false;
-                        Application.Current.Properties["BranchId"] = -1;
-                    }
-                    u.BranchId = LoginUser.BranchId;
-                    _cacheService.SetCache(Enum.CacheKey.LoginUser.ToString(), u);
+                        string encryptePassword = _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result;
+                        UserBO bo = new UserBO(_bouncyCastleEncryption);
 
-                    if (u != null)
-                    {
-                        if (u.PromptForPasswordReset)
+                        User u = bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
+
+                        MetroWindow window = null;
+                        if (u != null)
                         {
-                            Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                            if (LoginUser.RememberMe)
                             {
-                                LoginWindow.Hide();
-                                StaticContainer.IsPasswordChanged = false;
-                                ForgotPasswordWindow forgetPasswindow = null;
-                                forgetPasswindow = GetPasswordResetWindow();
-                                StaticContainer.ThisApp.MainWindow = forgetPasswindow;
-                                forgetPasswindow.IsUserNameEditable = false;
-                                forgetPasswindow.IsBackButtonVisible = false;
-                                forgetPasswindow.LookForPasswordChange = true;
-
-                                window = forgetPasswindow;
-                            }));
-
-                        }
-                        else
-                        {
-                            BranchBO branchBO = new BranchBO();
-                            Branch b = branchBO.GetById(u.BranchId.Value);
-                            if (b != null)
-                            {
-                                StaticContainer.Shop = new ShopVM
-                                {
-                                    Id = b.Shop.Id,
-                                    Address = b.BranchAddress,
-                                    CalculateVATOnSales = b.Shop.CalculateVATOnSales,
-                                    LogoPath = b.Shop.LogoPath,
-                                    Name = b.Shop.Name,
-                                    PANNumber = b.Shop.PANNumber,
-                                    PdfPassword = b.Shop.PdfPassword,
-                                    PrintInvoice = b.Shop.PrintInvoice
-                                };
+                                Application.Current.Properties["UserName"] = LoginUser.UserName;
+                                Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
+                                Application.Current.Properties["BranchId"] = LoginUser.BranchId;
                             }
-
-                            Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                            else
                             {
-                                MainWindow mainWindow = GetMainWindow();
-                                StaticContainer.ThisApp.MainWindow = mainWindow;
-                                window = mainWindow;
-                            }));
-                        }
-                    }
-                    return window;
-                    
-                }
+                                Application.Current.Properties["UserName"] = "";
+                                Application.Current.Properties["RememberMe"] = false;
+                                Application.Current.Properties["BranchId"] = -1;
+                            }
+                            u.BranchId = LoginUser.BranchId;
+                            _cacheService.SetCache(Enum.CacheKey.LoginUser.ToString(), u);
 
-                return window;
-            });
-            return t;
+                            if (u != null)
+                            {
+                                if (u.PromptForPasswordReset)
+                                {
+                                    Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                                    {
+                                        LoginWindow.Hide();
+                                        StaticContainer.IsPasswordChanged = false;
+                                        ForgotPasswordWindow forgetPasswindow = null;
+                                        forgetPasswindow = GetPasswordResetWindow();
+                                        StaticContainer.ThisApp.MainWindow = forgetPasswindow;
+                                        forgetPasswindow.IsUserNameEditable = false;
+                                        forgetPasswindow.IsBackButtonVisible = false;
+                                        forgetPasswindow.LookForPasswordChange = true;
+
+                                        window = forgetPasswindow;
+                                    }));
+
+                                }
+                                else
+                                {
+                                    BranchBO branchBO = new BranchBO();
+                                    Branch b = branchBO.GetById(u.BranchId.Value);
+                                    if (b != null)
+                                    {
+                                        StaticContainer.Shop = new ShopVM
+                                        {
+                                            Id = b.Shop.Id,
+                                            Address = b.BranchAddress,
+                                            CalculateVATOnSales = b.Shop.CalculateVATOnSales,
+                                            LogoPath = b.Shop.LogoPath,
+                                            Name = b.Shop.Name,
+                                            PANNumber = b.Shop.PANNumber,
+                                            PdfPassword = b.Shop.PdfPassword,
+                                            PrintInvoice = b.Shop.PrintInvoice
+                                        };
+                                    }
+
+                                    Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                                    {
+                                        MainWindow mainWindow = GetMainWindow();
+                                        StaticContainer.ThisApp.MainWindow = mainWindow;
+                                        window = mainWindow;
+                                    }));
+                                }
+                            }
+                            return window;
+
+                        }
+
+                        return window;
+                    });
+                return t;
+            }
+            catch (System.Exception ex)
+            {
+                _log.Error("Login", ex);
+            }
+            return null;
         }
 
 
