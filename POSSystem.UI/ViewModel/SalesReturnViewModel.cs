@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -15,7 +16,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class SalesReturnViewModel : ViewModelBase
     {
-
+        private ILog _log;
         private Int64 _billNo = 1;
         private ObservableCollection<Sales> _sales;
         private Bill _bill;
@@ -44,8 +45,9 @@ namespace POSSystem.UI.ViewModel
         public ICommand SearchCommand { get; }
         public ICommand ReturnItemCommand { get; }
 
-        public SalesReturnViewModel()
+        public SalesReturnViewModel(ILogger logger)
         {
+            _log = logger.GetLogger(typeof(SalesReturnViewModel));
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
             ReturnItemCommand = new DelegateCommand<Sales>(OnSalesReturn);
@@ -98,12 +100,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                _log.Error("OnSalesReturn", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -119,13 +117,13 @@ namespace POSSystem.UI.ViewModel
 
         private void  ManageBills(Int64 BillNo)
         {
-           Task t =  Task.Run(() =>
+           Task t =  Task.Run(async () =>
             {
                 BillBO billBO = new BillBO();
                 int totalRemainingSales = billBO.GetRemainingSalesCount(BillNo);
                 if(totalRemainingSales == 0)
                 {
-                    billBO.Remove(BillNo);
+                    await billBO.Remove(BillNo);
                 }
             });
 
@@ -145,12 +143,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                _log.Error("LoadSales", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
             return 1;
         }
