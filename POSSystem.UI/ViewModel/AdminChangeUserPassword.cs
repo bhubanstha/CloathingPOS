@@ -29,8 +29,8 @@ namespace POSSystem.UI.ViewModel
         public string Password { get; set; }
 
 
-        [Required(ErrorMessage = "Password is required.")]
-        [MaxLength(10, ErrorMessage = "Password can be 10 characters long.")]
+        [Required(ErrorMessage = "Confirmation password is required.")]
+        [MaxLength(10, ErrorMessage = "Confirmation password can be 10 characters long.")]
         [Compare("Password", ErrorMessage = "Confirmation password and  password didn't match.")]
         public string ConfirmationPassword { get; set; }
 
