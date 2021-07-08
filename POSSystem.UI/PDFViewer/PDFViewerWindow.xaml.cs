@@ -1,3 +1,5 @@
+using Autofac;
+using log4net;
 using MahApps.Metro.Controls;
 using MoonPdfLib;
 using MoonPdfLib.MuPdf;
@@ -16,7 +18,7 @@ namespace POSSystem.UI.PDFViewer
 {
     public partial class PDFViewerWindow : MetroWindow
 	{
-		private static string appName;
+		private ILog log;
 		private MainWindowDataContext dataContext;
 		private string pdfFilePath;
 		private string pdfPassword;
@@ -28,7 +30,8 @@ namespace POSSystem.UI.PDFViewer
 		{
 			InitializeComponent();
 			borderLabelModifier.Visibility = Visibility.Collapsed;
-			this.dataContext = new MainWindowDataContext(this);
+			this.log = StaticContainer.Container.Resolve<ILogger>().GetLogger(typeof(PDFViewerWindow));
+			this.dataContext = new MainWindowDataContext(this, log);
 			//this.Icon = MoonPdf.Resources.moon.ToBitmapSource();
 			this.DataContext = dataContext;
 			//this.UpdateTitle();

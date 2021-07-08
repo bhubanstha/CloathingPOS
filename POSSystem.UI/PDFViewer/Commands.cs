@@ -1,3 +1,6 @@
+using log4net;
+using Notifications.Wpf;
+using POSSystem.UI.Service;
 using System;
 using System.Windows.Input;
 
@@ -35,7 +38,7 @@ namespace POSSystem.UI.PDFViewer
 
 		public PDFDelegateCommand PrintCommand { get; private set; }
 
-		public Commands(PDFViewerWindow wnd)
+		public Commands(PDFViewerWindow wnd, ILog logger)
 		{
 			var pdfPanel = wnd.MoonPdfPanel;
 			Predicate<object> isPdfLoaded = f => wnd.IsPdfLoaded(); // used for the CanExecute callback
@@ -52,12 +55,8 @@ namespace POSSystem.UI.PDFViewer
                         }
                         catch (Exception ex)
                         {
-							POSSystem.UI.Service.StaticContainer.NotificationManager.Show(new Notifications.Wpf.NotificationContent
-							{
-								Title="Error",
-								Message = $"An error occured: {ex.Message}",
-								Type=Notifications.Wpf.NotificationType.Error
-							});
+							logger.Error("MainWindowDataContext.Commands", ex);
+							StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
                         }
                     }
 				}, f => true, new KeyGesture(Key.O, ModifierKeys.Control));
