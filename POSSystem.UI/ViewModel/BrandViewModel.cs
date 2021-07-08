@@ -1,4 +1,5 @@
-﻿using POS.BusinessRule;
+﻿using log4net;
+using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Event;
 using POSSystem.UI.Service;
@@ -17,6 +18,7 @@ namespace POSSystem.UI.ViewModel
     public class BrandViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
+        private ILog _log;
         private BrandBO brandBO;
         private ObservableCollection<BrandWrapper> brands;
 
@@ -38,15 +40,19 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand EditBrandCommand { get; }
         public ICommand ResetCommand { get; }
-        public BrandViewModel(IEventAggregator eventAggregator)
+        public BrandViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
             _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(BrandViewModel));
+
             NewBrand = new BrandWrapper(new Brand());
-            LoadCategories();
+           
             CreateBrandCommand = new DelegateCommand(OnSaveBrand);
             DeleteBrandCommand = new DelegateCommand<BrandWrapper>(OnDeleteBrand);
             EditBrandCommand = new DelegateCommand<BrandWrapper>(OnEditBrand);
             ResetCommand = new DelegateCommand(ResetEdit);
+
+            LoadCategories();
         }
 
 
@@ -81,6 +87,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnDeleteBrand", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
         }
@@ -107,6 +114,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnSaveBrand", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
             finally
