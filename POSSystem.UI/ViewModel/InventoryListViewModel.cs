@@ -16,9 +16,11 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -31,7 +33,7 @@ namespace POSSystem.UI.ViewModel
         MetroWindow _window;
         private UpdateInventoryDialog _updateInventoryDialog;
         private IEventAggregator _eventAggregator;
-
+        public ICollectionView InventoryCollectionView { get; private set; }
         private ObservableCollection<InventoryWrapper> _inventory;
 
         public ObservableCollection<InventoryWrapper> Inventory
@@ -48,6 +50,14 @@ namespace POSSystem.UI.ViewModel
         {
             get { return _isQrGenerating; }
             set { _isQrGenerating = value; OnPropertyChanged(); }
+        }
+
+        private string _productFilter = string.Empty;
+
+        public string ProductFilter
+        {
+            get { return _productFilter; }
+            set { _productFilter = value; OnPropertyChanged(); InventoryCollectionView.Refresh(); }
         }
 
 
@@ -162,6 +172,18 @@ namespace POSSystem.UI.ViewModel
                 wrapper.BrandName = item.Brand.Name;
                 Inventory.Add(wrapper);
             }
+            InventoryCollectionView = CollectionViewSource.GetDefaultView(Inventory);
+            InventoryCollectionView.Filter = FilterInventory;
+        }
+
+        private bool FilterInventory(object obj)
+        {
+           if(obj is InventoryWrapper inv)
+            {
+                return inv.Name.StartsWith(ProductFilter,StringComparison.InvariantCultureIgnoreCase) || 
+                    inv.Code.StartsWith(ProductFilter, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
         }
 
         private void ReloadInventory(InventoryChangedEventArgs args)
