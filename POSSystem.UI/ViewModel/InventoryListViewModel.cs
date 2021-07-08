@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -24,7 +25,8 @@ namespace POSSystem.UI.ViewModel
 {
     public class InventoryListViewModel : ViewModelBase
     {
-        private bool _isQrGenerating =false; 
+        private bool _isQrGenerating =false;
+        private ILog _log;
         private InventoryBO _inventoryBo;
         MetroWindow _window;
         private UpdateInventoryDialog _updateInventoryDialog;
@@ -57,10 +59,11 @@ namespace POSSystem.UI.ViewModel
         public ICommand PrintQrCodeCommand { get; }
 
 
-        public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator)
+        public InventoryListViewModel(UpdateInventoryDialog updateInventoryDialog, IEventAggregator eventAggregator, ILogger logger)
         {
             _updateInventoryDialog = updateInventoryDialog;
             _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(InventoryListViewModel));
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             DeleteInventoryItemCommand = new DelegateCommand<InventoryWrapper>(DeleteInventoryItem);
             AddInventoryItemStockCommand = new DelegateCommand<InventoryWrapper>(OnAddInventoryItemStock);
@@ -133,8 +136,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-
-                throw;
+                _log.Error("OnAddInventoryItemStock", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
            
         }
