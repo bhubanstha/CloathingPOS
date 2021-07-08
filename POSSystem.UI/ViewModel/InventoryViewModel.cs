@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using log4net;
 using MahApps.Metro.Controls;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -20,6 +21,7 @@ namespace POSSystem.UI.ViewModel
     public class InventoryViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
+        private ILog _log;
         private ObservableCollection<CategoryWrapper> _categories = null;
         private ObservableCollection<BrandWrapper> _brands = null;
         private InventoryBO InventoryBO;
@@ -46,10 +48,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-
         public InventoryWrapper Inventory { get; set; }
-
-        
 
         public string ButtonText
         {
@@ -57,17 +56,15 @@ namespace POSSystem.UI.ViewModel
             set { _buttonText = value; OnPropertyChanged(); }
         }
 
-
-
-
         public ICommand SaveCommand { get; }
         public ICommand AddCategoryCommand { get; }
         public ICommand AddBrandCommand { get; }
         public ICommand ResetCommand { get; }
 
-        public InventoryViewModel(ICacheService cacheService, IEventAggregator eventAggregator)
+        public InventoryViewModel(ICacheService cacheService, IEventAggregator eventAggregator, ILogger logger)
         {
             _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(InventoryViewModel));
             CategoryBO = new CategoryBO();
             Inventory = new InventoryWrapper(new Inventory())
             {
@@ -207,6 +204,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnSaveProduct", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
