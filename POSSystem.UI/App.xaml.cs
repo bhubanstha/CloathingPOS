@@ -27,7 +27,7 @@ namespace POSSystem.UI
             var startup = new Startup();
             var container = startup.BootstrapDependencies();
 
-            logger = container.Resolve<Logger>().GetLogger(typeof(App));
+            logger = container.Resolve<ILogger>().GetLogger(typeof(App));
             logger.Info("Starting Application");
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

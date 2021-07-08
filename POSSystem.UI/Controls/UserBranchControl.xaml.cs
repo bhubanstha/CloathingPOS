@@ -52,6 +52,7 @@ namespace POSSystem.UI.Controls
         public UserBranchControl()
         {
             InitializeComponent();
+            _log = StaticContainer.Container.Resolve<ILogger>().GetLogger(typeof(UserBranchControl));
             model = StaticContainer.Container.Resolve<UserBranchViewModel>();
             (this.Content as FrameworkElement).DataContext = model;
         }
@@ -92,7 +93,12 @@ namespace POSSystem.UI.Controls
                 BranchWrapper b = (BranchWrapper)e.AddedItems[0];
                 StaticContainer.Shop.Address = b.BranchAddress;
 
-                _log.Info($"{model._loggedInUser.UserName} Switched to {b.BranchName} from {((BranchWrapper)e.RemovedItems[0]).BranchName}");
+                string previousBranch = "";
+                if(e.RemovedItems.Count>0)
+                {
+                    previousBranch = $" from {((BranchWrapper)e.RemovedItems[0]).BranchName}";
+                }
+                _log.Info($"{model._loggedInUser.UserName} switched to {b.BranchName} branch {previousBranch}");
                 //Publish branch change event
                 IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
                 eventAggregator.GetEvent<BranchSwitchedEvent>().Publish(b);
