@@ -32,7 +32,7 @@
     </mah:Flyout.Resources>
 
     <mah:Flyout.HeaderTemplate>
-        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <DataTemplate>
             <DockPanel
                 x:Name="dpHeader"
                 VerticalAlignment="Center"
