@@ -1,4 +1,5 @@
-﻿using Notifications.Wpf;
+﻿using log4net;
+using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
 using POSSystem.UI.Event;
@@ -23,7 +24,7 @@ namespace POSSystem.UI.ViewModel
         private ObservableCollection<BranchWrapper> branches;
         private IEventAggregator eventAggregator;
         private string buttonText = "Create Branch";
-
+        private ILog _log;
         public BranchWrapper Branch
         {
             get { return branch; }
@@ -53,9 +54,10 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteBranchCommand { get; private set; }
 
 
-        public BranchViewModel(IEventAggregator eventAggregator)
+        public BranchViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
             this.eventAggregator = eventAggregator;
+            this._log = logger.GetLogger(typeof(BranchViewModel));
             Branch = new BranchWrapper(new Branch())
             {
                 ShopId = 1
@@ -92,6 +94,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnSaveBranchExecute", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
             finally
@@ -143,6 +146,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnBranchDeleteExecute", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
