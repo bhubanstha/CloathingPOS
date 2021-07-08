@@ -1,6 +1,5 @@
 ﻿using Autofac;
-using MahApps.Metro.Controls;
-using MoonPdfLib;
+using log4net;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
@@ -19,8 +18,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
@@ -29,6 +26,7 @@ namespace POSSystem.UI.ViewModel
     {
         //private Fields
         private string _currentPdfFilePath = "";
+        private ILog _log;
         private InventoryBO inventoryBO;
         private ObservableCollection<SalesModel> _currentCart;
         private SalesWrapper _currentProduct;
@@ -48,8 +46,6 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-
-
 
         public bool IsBillGenerating
         {
@@ -89,10 +85,10 @@ namespace POSSystem.UI.ViewModel
         public ICommand ResetCommand { get; }
 
         //Constructor
-        public SalesViewModel(AutoCompleteTextBox productName)
+        public SalesViewModel(AutoCompleteTextBox productName, ILogger logger)
         {
             _productName = productName;
-
+            _log = logger.GetLogger(typeof(SalesViewModel));
             CurrentProduct = new SalesWrapper(new SalesModel());
 
             CurrentCart = new ObservableCollection<SalesModel>();
@@ -200,12 +196,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = "Something went wrong while trying to add item to cart.",
-                    Type = NotificationType.Error
-                });
+                _log.Error("AddItemToCart", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -225,12 +217,8 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = "Something went wrong while trying to remove item to cart.",
-                    Type = NotificationType.Error
-                });
+                _log.Error("RemoveItemFromCart", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
@@ -241,21 +229,12 @@ namespace POSSystem.UI.ViewModel
                 IsBillGenerating = true;
                 await CheckoutCart();
 
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Checkout",
-                    Message = "Cart checkout. Items sold successfully",
-                    Type = NotificationType.Success
-                });
+                StaticContainer.ShowNotification("Checkout", "Cart checkout. Items sold successfully", NotificationType.Success);
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                _log.Error("OnSalesCheckout", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
             finally
             {

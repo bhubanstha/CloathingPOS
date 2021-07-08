@@ -1,4 +1,6 @@
-﻿using POSSystem.UI.ViewModel;
+﻿using Autofac;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System.Windows.Controls;
 
 namespace POSSystem.UI.Views
@@ -12,7 +14,7 @@ namespace POSSystem.UI.Views
         public SalesReturnView()
         {
             InitializeComponent();
-            _model = new SalesReturnViewModel();
+            _model = StaticContainer.Container.Resolve<SalesReturnViewModel>();
             this.DataContext = _model;
         }
     }

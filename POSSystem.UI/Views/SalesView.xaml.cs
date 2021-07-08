@@ -1,11 +1,8 @@
-﻿using POS.BusinessRule;
+﻿using Autofac;
 using POS.Model;
-using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
-using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace POSSystem.UI.Views
@@ -19,7 +16,8 @@ namespace POSSystem.UI.Views
         public SalesView()
         {
             InitializeComponent();
-            model = new SalesViewModel(txtProductName);
+            ILogger logger = StaticContainer.Container.Resolve<ILogger>();
+            model = new SalesViewModel(txtProductName, logger);
             model.CurrentProduct.SalesQuantity = 1;
             this.DataContext = model;            
         }
