@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -29,6 +30,7 @@ namespace POSSystem.UI.ViewModel
         private ICollection<Sales> _salesList;
         private DateTime? _billingDate = DateTime.Today;
         private IEventAggregator _eventAggregator;
+        private ILog _log;
         private UpdateBillingInfoDialog _billingDialog;
         private bool _isBillingInfoUpdated = false;
         private bool _isBillGenerating = false;
@@ -67,9 +69,10 @@ namespace POSSystem.UI.ViewModel
         public ICommand ReprintBillCommand { get; private set; }
        
 
-        public SalesListViewModel(IEventAggregator eventAggregator, UpdateBillingInfoDialog dialog)
+        public SalesListViewModel(IEventAggregator eventAggregator, ILogger logger, UpdateBillingInfoDialog dialog)
         {
             _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(SalesListViewModel));
             _billingDialog = dialog;
             SearchBillCommand = new DelegateCommand(OnBillSearchExecute);
             EditBillingInfoCommand = new DelegateCommand<Int64?>(OnBillInfoEditExeucte);
@@ -79,26 +82,38 @@ namespace POSSystem.UI.ViewModel
 
         private async void OnBillReprintExeucte(long? obj)
         {
-            string pdfPath = FileUtility.GetInvoicePdfPath(obj.Value);
-            IsBillGenerating = true;
-            if (string.IsNullOrEmpty(pdfPath))
+            try
             {
-                StaticContainer.ShowNotification("Error", $"The invoice file is in use by another application. Close the invoice and retry", NotificationType.Information);
-            }
-            else
-            {
-                if (_isBillingInfoUpdated || !FileUtility.CheckInvoiceFileExists(pdfPath))
+                string pdfPath = FileUtility.GetInvoicePdfPath(obj.Value);
+                IsBillGenerating = true;
+                if (string.IsNullOrEmpty(pdfPath))
                 {
-                    List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
-                    pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop);
-                    //Create Bill
+                    StaticContainer.ShowNotification("Error", $"The invoice file is in use by another application. Close the invoice and retry", NotificationType.Information);
                 }
-                //OpenBill
-                PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);                
-                window.Show();
+                else
+                {
+                    //Create Bill if existing billing file not found or billing info is changed
+                    if (_isBillingInfoUpdated || !FileUtility.CheckInvoiceFileExists(pdfPath))
+                    {
+                        List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
+                        pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop);
+                        
+                    }
+                    //OpenBill
+                    PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);
+                    IsBillGenerating = false;
+                    window.ShowDialog();
+                }
+               
             }
-            IsBillGenerating = false;
-            //StaticContainer.ShowNotification("passed value", $"The value for bill {obj.Value}", NotificationType.Information);
+            catch (Exception ex)
+            {
+                _log.Error("OnBillReprintExeucte", ex);
+            }
+            finally
+            {
+                IsBillGenerating = false;
+            }
         }
 
         private void OnBillInfoUpdateReceive(BillingInfoUpdateEventArgs obj)
