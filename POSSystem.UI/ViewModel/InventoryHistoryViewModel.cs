@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
@@ -24,6 +25,7 @@ namespace POSSystem.UI.ViewModel
 
         private InventoryHistoryWrapper _inventory;
         private IEventAggregator _eventAggregator;
+        private ILog _log;
 
         public InventoryHistoryWrapper Inventory
         {
@@ -34,16 +36,16 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand ClosePopupCommand { get; private set; }
         public ICommand UpdateInventoryCommand { get; private set; }
-        public InventoryHistoryViewModel(IEventAggregator eventAggregator)
+        public InventoryHistoryViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
+            _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(InventoryHistoryViewModel));
 
             Inventory = new InventoryHistoryWrapper(new InventoryHistory())
             {
                 PurchaseDate = DateTime.Now
             };
-            _eventAggregator = eventAggregator;
-            // _dialog = dialog;
-
+           
             eventAggregator.GetEvent<InventoryUpdatePopupOpenEvent>().Subscribe(OnPopuOpen);
             ClosePopupCommand = new DelegateCommand(OnClosePopup);
             UpdateInventoryCommand = new DelegateCommand(OnInventoryUpdate);
@@ -72,6 +74,7 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
+                _log.Error("OnInventoryUpdate", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
             finally
