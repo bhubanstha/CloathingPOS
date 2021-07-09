@@ -104,6 +104,10 @@
     <Compile Include="Migrations\202107090842042_columnnamechanged.designer.cs">
       <DependentUpon>202107090842042_columnnamechanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107091413478_datatype_changed.cs" />
+    <Compile Include="Migrations\202107091413478_datatype_changed.designer.cs">
+      <DependentUpon>202107091413478_datatype_changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107090842042_columnnamechanged.resx">
       <DependentUpon>202107090842042_columnnamechanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107091413478_datatype_changed.resx">
+      <DependentUpon>202107091413478_datatype_changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
