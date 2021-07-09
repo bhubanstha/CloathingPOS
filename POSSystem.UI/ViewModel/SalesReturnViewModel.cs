@@ -108,19 +108,22 @@ namespace POSSystem.UI.ViewModel
                     if (salesReturn == item.SalesQuantity)
                     {
                         i = await salesBO.Remove(item);
+                        Sales.Remove(item);
                     }
                     else
                     {
                         item.SalesQuantity -= salesReturn;
-                        i = await salesBO.Update(item); 
+                        i = await salesBO.Update(item);
+                        var itm = Sales.Where(x => x.Id == item.Id).FirstOrDefault();
+                        itm.SalesQuantity = item.SalesQuantity;
                     }
                     //Restock Item into inventory
                     InventoryBO inventoryBO = new InventoryBO();
                     await inventoryBO.Restock(item.Inventory, salesReturn);
 
                     //Remove BillingInfo if no sales record exists for current billno
-                    ManageBills(item.BillNo);
-                    await LoadSales();
+                    ManageBills(item.Bill, Sales.ToList());
+                    //await LoadSales();
                     StaticContainer.NotificationManager.Show(new NotificationContent
                     {
                         Title = "Sales Return",
@@ -146,18 +149,42 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void  ManageBills(Int64 BillNo)
+        private void  ManageBills(Bill bill, List<Sales> salesRecord)
         {
            Task t =  Task.Run(async () =>
             {
                 BillBO billBO = new BillBO();
-                int totalRemainingSales = billBO.GetRemainingSalesCount(BillNo);
+                int totalRemainingSales = salesRecord.Count;// billBO.GetRemainingSalesCount(bill.Id);
                 if(totalRemainingSales == 0)
                 {
                     await billBO.Remove(BillNo);
                 }
+                else if(bill.CalculateVAT)
+                {
+                    decimal vatAmount = await RecalculateVAT( salesRecord);
+                    bill.VAT = vatAmount;
+                    await billBO.Update(bill);
+                }
             });
 
+        }
+
+
+        private Task<decimal> RecalculateVAT(List<Sales> salesRecord)
+        {
+            Task<decimal> t = Task.Run(() => {
+                SalesBO salesBO = new SalesBO();
+                //List<Sales> sales = await salesBO.GetSalesByBillNo(billNo, StaticContainer.ActiveBranchId);
+                decimal total = 0;
+                foreach (Sales item in salesRecord)
+                {
+                    decimal itemTotal = (item.Rate * item.SalesQuantity);
+                    total += itemTotal;
+                }
+                decimal vat = (13 * total) / 100;
+                return vat;
+            });
+            return t;
         }
         private async Task<int> LoadSales()
         {
