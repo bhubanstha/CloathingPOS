@@ -27,6 +27,21 @@ namespace POSSystem.UI.Wrapper
             
         }
 
+        public bool IsValid()
+        {
+            var context = new ValidationContext(Model);
+            List<ValidationResult> validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(Model, context, validationResults, true);
+            foreach (ValidationResult result in validationResults)
+            {
+                foreach (string propertyName in result.MemberNames)
+                {
+                    AddError(propertyName, result.ErrorMessage);
+                }                
+            }
+
+            return isValid;
+        }
         private void ValidatePropertyInternal<TValue>(string propertyName, TValue value)
         {
             ClearErrors(propertyName);
