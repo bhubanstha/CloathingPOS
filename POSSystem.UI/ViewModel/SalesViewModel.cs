@@ -111,7 +111,6 @@ namespace POSSystem.UI.ViewModel
             IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
             eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ResetSales);
 
-            CreateNewBill();
         }
 
         private void ResetSales(BranchWrapper obj)
@@ -243,11 +242,7 @@ namespace POSSystem.UI.ViewModel
         #endregion
 
         #region Private Methods
-        private void CreateNewBill()
-        {
-            BillBO billBO = new BillBO();
-            CurrentBill.BillNo = billBO.GetNewBillNo();
-        }
+
 
         private void ClearProduct(bool clearAfterCheckout = false)
         {

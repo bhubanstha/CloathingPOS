@@ -95,7 +95,15 @@
                     <Run Text="{Binding Bill.BillDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0:yyyy/MM/dd}'}" />
                 </TextBlock>
             </StackPanel>
-           
+
+            <mah:ProgressRing 
+                Grid.Row="2" 
+                Grid.Column="0" 
+                Grid.ColumnSpan="4" 
+                Panel.ZIndex="1"
+                IsActive="{Binding IsProgressVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+
             <DataGrid
                 Grid.Row="2"
                 Grid.Column="0"

@@ -26,12 +26,12 @@ namespace POSSystem.UI.ViewModel
         private ObservableCollection<SaleWrapper> _sales;
         private Bill _bill;
         private MetroWindow _window;
-        private bool _isBillGenerating = false;
+        private bool _isProgressVisible = false;
 
-        public bool IsBillGenerating
+        public bool IsProgressVisible
         {
-            get { return _isBillGenerating; }
-            set { _isBillGenerating = value; }
+            get { return _isProgressVisible; }
+            set { _isProgressVisible = value; }
         }
 
 
@@ -73,11 +73,11 @@ namespace POSSystem.UI.ViewModel
         {
             if (Sales.Count > 0)
             {
-                IsBillGenerating = true;
+                IsProgressVisible = true;
                 string path = await new CreatePDF()
                     .CreateInvoice(Sales[0].Model.Bill, Sales.Select(x=>x.Model).ToList(), StaticContainer.Shop);
                 PDFViewerWindow window = new PDFViewerWindow(path, StaticContainer.Shop.PdfPassword);
-                IsBillGenerating = false;
+                IsProgressVisible = false;
                 window.ShowDialog();
             }
             else
@@ -90,6 +90,7 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+               
                 _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
                 int salesReturn = item.SalesQuantity;
                 if (item.SalesQuantity > 1)
@@ -104,6 +105,7 @@ namespace POSSystem.UI.ViewModel
 
                 if(salesReturn>0)
                 {
+                    IsProgressVisible = true;
                     SalesBO salesBO = new SalesBO();                   
                     int i = 0;
                     if (salesReturn == item.SalesQuantity)
@@ -123,8 +125,8 @@ namespace POSSystem.UI.ViewModel
                     await inventoryBO.Restock(item.Inventory, salesReturn);
 
                     //Remove BillingInfo if no sales record exists for current billno
-                    ManageBills(item.Bill, Sales.Select(x=>x.Model).ToList());
-                    //await LoadSales();
+                    await ManageBills(item.Bill, Sales.Select(x=>x.Model).ToList());
+
                     StaticContainer.NotificationManager.Show(new NotificationContent
                     {
                         Title = "Sales Return",
@@ -138,6 +140,10 @@ namespace POSSystem.UI.ViewModel
                 _log.Error("OnSalesReturn", ex);
                 StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
+            finally
+            {
+                IsProgressVisible = false;
+            }
         }
 
         private async void OnSearchExecute()
@@ -150,7 +156,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void  ManageBills(Bill bill, List<Sales> salesRecord)
+        private Task  ManageBills(Bill bill, List<Sales> salesRecord)
         {
            Task t =  Task.Run(async () =>
             {
@@ -167,7 +173,7 @@ namespace POSSystem.UI.ViewModel
                     await billBO.Update(bill);
                 }
             });
-
+            return t;
         }
 
 
