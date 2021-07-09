@@ -73,16 +73,6 @@
                     new Category
                     {
                         Id = 3,
-                        Name = "Men Upper"
-                    },
-                    new Category
-                    {
-                        Id = 4,
-                        Name = "Woman Upper"
-                    },
-                    new Category
-                    {
-                        Id = 5,
                         Name = "Children"
                     }
 
@@ -165,7 +155,7 @@
                         Id = 1,
                         ShopId = 1,
                         BranchName = "Main Branch",
-                        BranchAddress = "Gongabu-5, Kathmandu"
+                        BranchAddress = "Your Main Branch Address"
                     }
                     );
             }
