@@ -8,6 +8,7 @@ using POS.Model.ViewModel;
 using POS.Utilities.PDF;
 using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace POSSystem.UI.ViewModel
     {
         private ILog _log;
         private Int64 _billNo = 1;
-        private ObservableCollection<Sales> _sales;
+        private ObservableCollection<SaleWrapper> _sales;
         private Bill _bill;
         private MetroWindow _window;
         private bool _isBillGenerating = false;
@@ -40,7 +41,7 @@ namespace POSSystem.UI.ViewModel
             set { _billNo = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Sales> Sales
+        public ObservableCollection<SaleWrapper> Sales
         {
             get { return _sales; }
             set { _sales = value; OnPropertyChanged(); }
@@ -63,9 +64,9 @@ namespace POSSystem.UI.ViewModel
             _log = logger.GetLogger(typeof(SalesReturnViewModel));
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
-            ReturnItemCommand = new DelegateCommand<Sales>(OnSalesReturn);
+            ReturnItemCommand = new DelegateCommand<SaleWrapper>(OnSalesReturn);
             PrintReceiptCommand = new DelegateCommand(OnReprintReceipt);
-            Sales = new ObservableCollection<Sales>();
+            Sales = new ObservableCollection<SaleWrapper>();
         }
 
         private async void OnReprintReceipt()
@@ -74,7 +75,7 @@ namespace POSSystem.UI.ViewModel
             {
                 IsBillGenerating = true;
                 string path = await new CreatePDF()
-                    .CreateInvoice(Sales[0].Bill, Sales.ToList(), StaticContainer.Shop);
+                    .CreateInvoice(Sales[0].Model.Bill, Sales.Select(x=>x.Model).ToList(), StaticContainer.Shop);
                 PDFViewerWindow window = new PDFViewerWindow(path, StaticContainer.Shop.PdfPassword);
                 IsBillGenerating = false;
                 window.ShowDialog();
@@ -85,7 +86,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private async void OnSalesReturn(Sales item)
+        private async void OnSalesReturn(SaleWrapper item)
         {
             try
             {
@@ -107,13 +108,13 @@ namespace POSSystem.UI.ViewModel
                     int i = 0;
                     if (salesReturn == item.SalesQuantity)
                     {
-                        i = await salesBO.Remove(item);
+                        i = await salesBO.Remove(item.Model);
                         Sales.Remove(item);
                     }
                     else
                     {
                         item.SalesQuantity -= salesReturn;
-                        i = await salesBO.Update(item);
+                        i = await salesBO.Update(item.Model);
                         var itm = Sales.Where(x => x.Id == item.Id).FirstOrDefault();
                         itm.SalesQuantity = item.SalesQuantity;
                     }
@@ -122,7 +123,7 @@ namespace POSSystem.UI.ViewModel
                     await inventoryBO.Restock(item.Inventory, salesReturn);
 
                     //Remove BillingInfo if no sales record exists for current billno
-                    ManageBills(item.Bill, Sales.ToList());
+                    ManageBills(item.Bill, Sales.Select(x=>x.Model).ToList());
                     //await LoadSales();
                     StaticContainer.NotificationManager.Show(new NotificationContent
                     {
@@ -195,8 +196,10 @@ namespace POSSystem.UI.ViewModel
                 Sales.Clear();
                 foreach (Sales item in _sales)
                 {
+                    SaleWrapper sw = new SaleWrapper(new Sales());
+                    sw.Model = item;
                     Bill = item.Bill;
-                    Sales.Add(item); 
+                    Sales.Add(sw); 
                 }
             }
             catch (Exception ex)

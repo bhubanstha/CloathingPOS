@@ -1,4 +1,5 @@
-﻿using POS.Model.ViewModel;
+﻿using POS.Model;
+using POS.Model.ViewModel;
 using System;
 
 namespace POSSystem.UI.Wrapper
@@ -106,6 +107,69 @@ namespace POSSystem.UI.Wrapper
             this.BrandId = source.BrandId;
             this.BrandName = source.BrandName;
             this.ColorName = source.ColorName;
+        }
+    }
+
+    public class SaleWrapper : WrapperBase<Sales>
+    {
+        public SaleWrapper(Sales model) : base(model)
+        {
+
+        }
+
+        public Int64 Id
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
+        public Int64 ProductId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
+        public Int64 BillNo
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
+
+        public int SalesQuantity
+        {
+            get { return GetValue<int>(); }
+            set { SetValue(value); }
+        }
+
+        public decimal SalesRate
+        {
+            get { return GetValue<decimal>(); }
+            set { SetValue(value); }
+        }
+
+        public decimal PurchaseRate
+        {
+            get { return GetValue<decimal>(); }
+            set { SetValue(value); }
+        }
+
+        public decimal Discount
+        {
+            get { return GetValue<decimal>(); }
+            set { SetValue(value); }
+        }
+
+        public Inventory Inventory
+        {
+            get { return GetValue<Inventory>(); }
+            set { SetValue(value); }
+        }
+
+        public Bill Bill
+        {
+            get { return GetValue<Bill>(); }
+            set { SetValue(value); }
         }
     }
 }
