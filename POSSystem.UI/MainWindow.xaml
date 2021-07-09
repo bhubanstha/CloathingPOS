@@ -323,7 +323,7 @@
             Grid.Column="0"
             HamburgerButtonName="btnHamburgerMenuOpenClose"
             HamburgerButtonStyle="{DynamicResource App.Hamburger}"
-            HamburgerHeight="72"
+            HamburgerHeight="73"
             IsPaneOpen="True"
             IsTabStop="False"
             ItemInvoked="HamburgerMenuControl_ItemInvoked"
@@ -419,7 +419,7 @@
 
             <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Background="{DynamicResource MahApps.Brushes.Accent4}">
                         <Image Source="/Image/pos_company_logo.png" />
                     </StackPanel>
                 </DataTemplate>
