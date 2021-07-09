@@ -283,7 +283,7 @@
                         Header="Qty" />
                     <DataGridTextColumn
                         Width="110"
-                        Binding="{Binding Rate, StringFormat=N2}"
+                        Binding="{Binding SalesRate, StringFormat=N2}"
                         ElementStyle="{StaticResource GridNumericColumn}"
                         Header="Sales Rate" />
                     <DataGridTextColumn
@@ -298,7 +298,7 @@
                                     <Label.Content>
                                         <MultiBinding Converter="{StaticResource TotalCalc}">
                                             <Binding Path="SalesQuantity" />
-                                            <Binding Path="Rate" />
+                                            <Binding Path="SalesRate" />
                                             <Binding Path="Discount" />
                                         </MultiBinding>
                                     </Label.Content>

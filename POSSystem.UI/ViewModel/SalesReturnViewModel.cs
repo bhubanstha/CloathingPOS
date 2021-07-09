@@ -178,7 +178,7 @@ namespace POSSystem.UI.ViewModel
                 decimal total = 0;
                 foreach (Sales item in salesRecord)
                 {
-                    decimal itemTotal = (item.Rate * item.SalesQuantity);
+                    decimal itemTotal = (item.SalesRate * item.SalesQuantity);
                     total += itemTotal;
                 }
                 decimal vat = (13 * total) / 100;

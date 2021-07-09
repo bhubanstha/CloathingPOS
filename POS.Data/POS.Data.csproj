@@ -100,6 +100,10 @@
     <Compile Include="Migrations\202107090757462_calculate_vat_ref_in_bill.designer.cs">
       <DependentUpon>202107090757462_calculate_vat_ref_in_bill.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202107090842042_columnnamechanged.cs" />
+    <Compile Include="Migrations\202107090842042_columnnamechanged.designer.cs">
+      <DependentUpon>202107090842042_columnnamechanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +129,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202107090757462_calculate_vat_ref_in_bill.resx">
       <DependentUpon>202107090757462_calculate_vat_ref_in_bill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202107090842042_columnnamechanged.resx">
+      <DependentUpon>202107090842042_columnnamechanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

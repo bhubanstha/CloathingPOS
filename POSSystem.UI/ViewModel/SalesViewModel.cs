@@ -339,7 +339,7 @@ namespace POSSystem.UI.ViewModel
                         Sales s = new Sales
                         {
                             SalesQuantity = item.SalesQuantity,
-                            Rate = item.RetailRate,
+                            SalesRate = item.RetailRate,
                             Discount = item.Discount,
                             ProductId = item.ProductId,
                             BillNo = billNo,
