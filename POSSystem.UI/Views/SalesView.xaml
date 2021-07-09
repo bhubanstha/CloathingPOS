@@ -201,15 +201,10 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0">
-                    <Run Text="Bill No.: " />
-                    <Run Text="{Binding CurrentBill.BillNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </TextBlock>
-
                 <TextBlock
                     Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2">
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3">
                     <Run Text="Billing Date: " />
                     <Run Text="{Binding Source={x:Static sys:DateTime.Now}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='yyyy/MM/dd hh:mm tt'}" />
                 </TextBlock>
