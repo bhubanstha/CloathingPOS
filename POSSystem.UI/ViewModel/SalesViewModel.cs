@@ -93,7 +93,8 @@ namespace POSSystem.UI.ViewModel
             CurrentBill = new BillWrapper(new BillModel())
             {
                 BranchId = StaticContainer.ActiveBranchId,
-                UserId = _loggedInUser.Id
+                UserId = _loggedInUser.Id,
+                CalculateVAT = StaticContainer.Shop.CalculateVATOnSales
             };
             CultureInfo = StaticContainer.CultureInfo;
 
@@ -328,6 +329,7 @@ namespace POSSystem.UI.ViewModel
                         BillTo = CurrentBill.BillTo,
                         VAT = CurrentBill.VAT,
                         BranchId = StaticContainer.ActiveBranchId,
+                        CalculateVAT = StaticContainer.Shop.CalculateVATOnSales,
                         UserId = _loggedInUser.Id
                     };
                     Int64 billNo = billBO.CreateNewBill(ref b);

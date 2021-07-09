@@ -33,5 +33,7 @@ namespace POS.Model
 
         public virtual Branch Branch { get; set; }
         public virtual User User { get; set; }
+
+        public bool CalculateVAT { get; set; }
     }
 }

@@ -39,5 +39,7 @@ namespace POS.Model.ViewModel
         public string BillingPAN { get; set; }
         public decimal VAT{ get; set; }
         public decimal GrandTotal { get; set; }
+
+        public bool CalculateVAT { get; set; }
     }
 }

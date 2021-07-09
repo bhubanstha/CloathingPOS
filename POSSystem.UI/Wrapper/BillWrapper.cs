@@ -51,6 +51,12 @@ namespace POSSystem.UI.Wrapper
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
+        } 
+        
+        public bool CalculateVAT
+        {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
         }
 
         public decimal VAT
