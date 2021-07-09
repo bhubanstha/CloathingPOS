@@ -27,7 +27,7 @@ namespace POSSystem.UI.ViewModel
 {
     public class SalesListViewModel : ViewModelBase
     {
-        private ICollection<Sales> _salesList;
+        private ObservableCollection<Sales> _salesList;
         private DateTime? _billingDate = DateTime.Today;
         private IEventAggregator _eventAggregator;
         private ILog _log;
@@ -35,7 +35,7 @@ namespace POSSystem.UI.ViewModel
         private bool _isBillingInfoUpdated = false;
         private bool _isBillGenerating = false;
 
-        public ICollection<Sales> SalesList
+        public ObservableCollection<Sales> SalesList
         {
             get { return _salesList; }
             set
@@ -137,31 +137,42 @@ namespace POSSystem.UI.ViewModel
             window.ShowMetroDialogAsync(_billingDialog);
         }
 
-        private void OnBillSearchExecute()
+        private async void OnBillSearchExecute()
         {
-            LoadSales();
-        }
-
-        void LoadSales()
-        {
-            if (BillingDate.HasValue)
-            {
-                SalesBO bo = new SalesBO();
-                var billList = bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
-                SalesList = new ObservableCollection<Sales>(billList);
-                if(SalesList.Count == 0)
-                {
-                    Flyout f = StaticContainer.NoSearchResultFlyout;
-                    f.IsOpen = !f.IsOpen;
-                }
-               
-            }
-            else
-            {
-                SalesList = new ObservableCollection<Sales>();
-            }
+            IsBillGenerating = true;
+            await LoadSales();
             SalesCollectionView = CollectionViewSource.GetDefaultView(SalesList);
             SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BillNo)));
+            IsBillGenerating = false;
+        }
+
+        Task LoadSales()
+        {
+            Task<ObservableCollection<Sales>> t = Task.Run(() =>
+            {
+                if (BillingDate.HasValue)
+                {
+
+                    SalesBO bo = new SalesBO();
+                    var billList = bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
+                    SalesList = new ObservableCollection<Sales>(billList);
+                    if (SalesList.Count == 0)
+                    {
+                        Flyout f = StaticContainer.NoSearchResultFlyout;
+                        f.IsOpen = !f.IsOpen;
+                    }
+
+                }
+                else
+                {
+                    SalesList = new ObservableCollection<Sales>();
+                }
+                return SalesList;
+                
+            });
+            
+            return t;
+            
         }
     }
 }
