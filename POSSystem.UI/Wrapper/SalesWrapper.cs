@@ -1,10 +1,5 @@
 ﻿using POS.Model.ViewModel;
-using POSSystem.UI.UIModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POSSystem.UI.Wrapper
 {
@@ -38,6 +33,12 @@ namespace POSSystem.UI.Wrapper
         
 
         public decimal RetailRate
+        {
+            get { return GetValue<decimal>(); }
+            set { SetValue(value); }
+        }
+
+        public decimal PurchaseRate
         {
             get { return GetValue<decimal>(); }
             set { SetValue(value); }
@@ -95,6 +96,7 @@ namespace POSSystem.UI.Wrapper
             this.ProductId = source.ProductId;
             this.ProductName = source.ProductName;
             this.RetailRate = source.RetailRate;
+            this.PurchaseRate = source.PurchaseRate;
             this.SalesQuantity = source.SalesQuantity;
             this.Size = source.Size;
             this.Discount = source.Discount;

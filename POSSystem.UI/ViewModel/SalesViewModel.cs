@@ -28,7 +28,7 @@ namespace POSSystem.UI.ViewModel
         private string _currentPdfFilePath = "";
         private ILog _log;
         private InventoryBO inventoryBO;
-        private ObservableCollection<SalesModel> _currentCart;
+        private ObservableCollection<SalesWrapper> _currentCart;
         private SalesWrapper _currentProduct;
         private AutoCompleteTextBox _productName;
         private bool _isBillGenerating = false;
@@ -54,13 +54,12 @@ namespace POSSystem.UI.ViewModel
         }
 
         public BillWrapper CurrentBill { get; set; }
-        public ObservableCollection<SalesModel> CurrentCart
+        public ObservableCollection<SalesWrapper> CurrentCart
         {
             get { return _currentCart; }
             set
             {
                 _currentCart = value;
-                OnPropertyChanged();
             }
 
         }
@@ -72,7 +71,6 @@ namespace POSSystem.UI.ViewModel
                 if (!string.IsNullOrEmpty(value))
                 {
                     _currentPdfFilePath = value;
-                    //PdfPanel.PageRowDisplay = MoonPdfLib.PageRowDisplayType.ContinuousPageRows;
                 }
             }
         }
@@ -91,7 +89,7 @@ namespace POSSystem.UI.ViewModel
             _log = logger.GetLogger(typeof(SalesViewModel));
             CurrentProduct = new SalesWrapper(new SalesModel());
 
-            CurrentCart = new ObservableCollection<SalesModel>();
+            CurrentCart = new ObservableCollection<SalesWrapper>();
             CurrentBill = new BillWrapper(new BillModel())
             {
                 BranchId = StaticContainer.ActiveBranchId,
@@ -101,7 +99,7 @@ namespace POSSystem.UI.ViewModel
 
 
             AddItemToCartCommand = new DelegateCommand(AddItemToCart, CanAdditemToCartExecute);
-            DeleteCartItemCommand = new DelegateCommand<SalesModel>(RemoveItemFromCart);
+            DeleteCartItemCommand = new DelegateCommand<SalesWrapper>(RemoveItemFromCart);
             CheckoutCommand = new DelegateCommand(OnSalesCheckout, CanSalesCheckoutExecute);
             ResetCommand = new DelegateCommand(OnResetExecute);
 
@@ -159,7 +157,7 @@ namespace POSSystem.UI.ViewModel
         }
         private void CurrentProduct_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ProductName")
+            if (e.PropertyName == "ProductName" || e.PropertyName == "SalesQuantity")
             {
                 ((DelegateCommand)AddItemToCartCommand).RaiseCanExecuteChanged();
             }
@@ -174,7 +172,7 @@ namespace POSSystem.UI.ViewModel
 
         public bool CanAdditemToCartExecute()
         {
-            return CurrentProduct != null && !string.IsNullOrEmpty(CurrentProduct.ProductName);
+            return CurrentProduct != null && !string.IsNullOrEmpty(CurrentProduct.ProductName) && CurrentProduct.SalesQuantity != 0;
         }
         #endregion
 
@@ -187,12 +185,7 @@ namespace POSSystem.UI.ViewModel
 
                 ManageItemInCart();
                 ClearProduct();
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Item Added",
-                    Message = "Item added into cart for checkout.",
-                    Type = NotificationType.Success
-                });
+                StaticContainer.ShowNotification("Item Added", "Item added into cart for checkout.", NotificationType.Information);
             }
             catch (Exception ex)
             {
@@ -201,19 +194,14 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void RemoveItemFromCart(SalesModel obj)
+        private void RemoveItemFromCart(SalesWrapper obj)
         {
             try
             {
 
-                RemoveItemFromCurrentCart(obj);
+                RemoveItemFromCurrentCart(obj.Model);
                 CalculateVAT();
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Item Removed",
-                    Message = "Selected item removed from the cart.",
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Item Removed", "Selected item removed from the cart.", NotificationType.Error);
             }
             catch (Exception ex)
             {
@@ -246,6 +234,7 @@ namespace POSSystem.UI.ViewModel
                     pDFViewer.ShowDialog();
 
                 }
+                IsBillGenerating = false;
                 ClearProduct(true);
             }
         }
@@ -280,10 +269,7 @@ namespace POSSystem.UI.ViewModel
                 CurrentBill.VAT = 0;
                 CurrentBill.GrandTotal = 0;
 
-                while (CurrentCart.Count > 0)
-                {
-                    CurrentCart.RemoveAt(0);
-                }
+                CurrentCart.Clear();
 
             }
         }
@@ -304,16 +290,25 @@ namespace POSSystem.UI.ViewModel
             decimal vatAmount = StaticContainer.Shop.CalculateVATOnSales == true ? Math.Ceiling((13 * total) / 100) : 0;
             CurrentBill.VAT = vatAmount;
             CurrentBill.GrandTotal = total + vatAmount - totalDiscount;
-
         }
 
         private void ManageItemInCart()
         {
-            RemoveItemFromCurrentCart(CurrentProduct.Model);
-            SalesWrapper saleitem = new SalesWrapper(new SalesModel());
-            saleitem.Copy(CurrentProduct);
-            CurrentCart.Add(saleitem.Model);
-            CalculateVAT();
+            try
+            {
+                bool result = UpdateItemInCurrentCart(CurrentProduct);
+                if (!result)
+                {
+                    SalesWrapper saleitem = new SalesWrapper(new SalesModel());
+                    saleitem.Copy(CurrentProduct);
+                    CurrentCart.Add(saleitem);
+                }
+                CalculateVAT();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("ManageItemInCart", ex);
+            }
         }
 
         private Task CheckoutCart()
@@ -359,6 +354,31 @@ namespace POSSystem.UI.ViewModel
             return t;
         }
 
+        private bool UpdateItemInCurrentCart(SalesWrapper obj)
+        {
+            try
+            {
+                var item = CurrentCart.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
+                if (item != null)
+                {
+                    item.SalesQuantity += obj.SalesQuantity;
+                    item.Discount = obj.Discount;
+                    if (item.SalesQuantity == 0)
+                    {
+                        CurrentCart.Remove(item);
+                    }
+                    return true;
+                }
+                
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("UpdateItemInCurrentCart", ex);
+                return false;
+            }
+        }
+
         private void RemoveItemFromCurrentCart(SalesModel obj)
         {
             var item = CurrentCart.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
@@ -374,7 +394,7 @@ namespace POSSystem.UI.ViewModel
         public async Task<string> CreatePdfFromCurrentCartItem()
         {
             CurrentPdfFilePath = await new CreatePDF()
-                .CreateInvoice(CurrentBill.Model, CurrentCart.ToList(), StaticContainer.Shop);
+                .CreateInvoice(CurrentBill.Model, CurrentCart.Select(x => x.Model).ToList(), StaticContainer.Shop);
             return CurrentPdfFilePath;
         }
 

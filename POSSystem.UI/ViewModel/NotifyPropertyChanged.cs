@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace POSSystem.UI.ViewModel
@@ -10,12 +11,6 @@ namespace POSSystem.UI.ViewModel
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected virtual bool CompareString(string a, string b)
-        {
-            int i = string.Compare(a, b, System.StringComparison.OrdinalIgnoreCase);
-            return i == 0;
         }
     }
 }

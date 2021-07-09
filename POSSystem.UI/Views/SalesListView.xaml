@@ -18,7 +18,8 @@
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
         <conv:BillToBillInfoConverter x:Key="BillInfoConverter" />
-
+        <conv:TotalPriceConverter x:Key="TotalCalc" />
+        
         <Style x:Key="DataGrid.Test" TargetType="{x:Type DataGrid}" />
     </UserControl.Resources>
 
@@ -290,11 +291,21 @@
                         Binding="{Binding Discount, StringFormat=N2}"
                         ElementStyle="{StaticResource GridNumericColumn}"
                         Header="Discount" />
-                    <DataGridTextColumn
-                        Width="110"
-                        Binding="{Binding Discount, StringFormat=N2}"
-                        ElementStyle="{StaticResource GridNumericColumn}"
-                        Header="Total" />
+                    <DataGridTemplateColumn Width="100" Header="Total">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Style="{StaticResource Grid.Numeric.Column}">
+                                    <Label.Content>
+                                        <MultiBinding Converter="{StaticResource TotalCalc}">
+                                            <Binding Path="SalesQuantity" />
+                                            <Binding Path="Rate" />
+                                            <Binding Path="Discount" />
+                                        </MultiBinding>
+                                    </Label.Content>
+                                </Label>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
 
                     <!--<DataGridTemplateColumn Width="70" Header="Options">

@@ -17,6 +17,7 @@ namespace POS.Model.ViewModel
         public decimal Discount { get; set; }
         
         public decimal RetailRate { get; set; }
+        public decimal PurchaseRate { get; set; }
         public string ProductName { get; set; }
         public string Size { get; set; }
         public string Color { get; set; }        

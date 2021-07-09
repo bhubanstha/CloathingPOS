@@ -4,6 +4,7 @@ using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace POSSystem.UI.Views
 {
@@ -38,6 +39,7 @@ namespace POSSystem.UI.Views
                 var pr = txtProductName.SelectedItem as Inventory;
                 model.CurrentProduct.ProductId = pr.Id;
                 model.CurrentProduct.RetailRate = pr.RetailRate;
+                model.CurrentProduct.PurchaseRate = pr.PurchaseRate;
                 model.CurrentProduct.ProductName = pr.Name;
                 model.CurrentProduct.Color = pr.Color;
                 model.CurrentProduct.Size = pr.Size;
@@ -47,7 +49,21 @@ namespace POSSystem.UI.Views
                 model.CurrentProduct.BrandName = pr.Brand.Name;
                 model.CurrentProduct.ColorName = pr.ColorName;
                 txtSalesQty.Maximum = (double)pr.Quantity;
+                txtSalesQty.Minimum = NegativeItemInCart(pr.Id);
             }
+        }
+
+        private double NegativeItemInCart(Int64 productId)
+        {
+            if (model.CurrentCart != null && model.CurrentCart.Count > 0)
+            {
+                var itm = model.CurrentCart.Where(x => x.ProductId == productId).FirstOrDefault();
+                if(itm != null)
+                {
+                    return itm.SalesQuantity * -1;
+                }
+            }
+            return 1;
         }
     }
 }

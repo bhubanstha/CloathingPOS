@@ -189,18 +189,21 @@ namespace POSSystem.UI.ViewModel
         {
             if(args.Action == EventAction.Add)
             {
-                CategoryBO categoryBO = new CategoryBO();
-                Category c = categoryBO.GetCategory(args.Inventory.CategoryId);
-                args.Inventory.Category = c;
+                if (Inventory != null)
+                {
+                    CategoryBO categoryBO = new CategoryBO();
+                    Category c = categoryBO.GetCategory(args.Inventory.CategoryId);
+                    args.Inventory.Category = c;
 
-                BrandBO brandBo = new BrandBO();
-                Brand b = brandBo.GetBrand(args.Inventory.BrandId);
-                args.Inventory.Brand = b;
+                    BrandBO brandBo = new BrandBO();
+                    Brand b = brandBo.GetBrand(args.Inventory.BrandId);
+                    args.Inventory.Brand = b;
 
-                InventoryWrapper wrapper = new InventoryWrapper(args.Inventory);
-                wrapper.CategoryName = c.Name;
-                wrapper.BrandName = b.Name;
-                Inventory.Add(wrapper);
+                    InventoryWrapper wrapper = new InventoryWrapper(args.Inventory);
+                    wrapper.CategoryName = c.Name;
+                    wrapper.BrandName = b.Name;
+                    Inventory.Add(wrapper);
+                }
             }
             else if(args.Action == EventAction.Update)
             {

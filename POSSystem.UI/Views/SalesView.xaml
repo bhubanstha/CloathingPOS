@@ -146,7 +146,6 @@
                             Grid.Column="1"
                             Margin="0,5,5,0"
                             mah:TextBoxHelper.SelectAllOnFocus="True"
-                            Minimum="1"
                             Style="{DynamicResource MahApps.Styles.NumericUpDown.DataGrid.Editing}"
                             TextAlignment="Left"
                             Value="{Binding CurrentProduct.SalesQuantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

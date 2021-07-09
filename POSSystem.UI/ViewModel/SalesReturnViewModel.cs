@@ -4,11 +4,15 @@ using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Model.ViewModel;
+using POS.Utilities.PDF;
+using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -21,6 +25,14 @@ namespace POSSystem.UI.ViewModel
         private ObservableCollection<Sales> _sales;
         private Bill _bill;
         private MetroWindow _window;
+        private bool _isBillGenerating = false;
+
+        public bool IsBillGenerating
+        {
+            get { return _isBillGenerating; }
+            set { _isBillGenerating = value; }
+        }
+
 
         public Int64 BillNo
         {
@@ -44,6 +56,7 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand SearchCommand { get; }
         public ICommand ReturnItemCommand { get; }
+        public ICommand PrintReceiptCommand { get; }
 
         public SalesReturnViewModel(ILogger logger)
         {
@@ -51,7 +64,25 @@ namespace POSSystem.UI.ViewModel
             _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             SearchCommand = new DelegateCommand(OnSearchExecute, OnSearchCanExecute);
             ReturnItemCommand = new DelegateCommand<Sales>(OnSalesReturn);
+            PrintReceiptCommand = new DelegateCommand(OnReprintReceipt);
             Sales = new ObservableCollection<Sales>();
+        }
+
+        private async void OnReprintReceipt()
+        {
+            if (Sales.Count > 0)
+            {
+                IsBillGenerating = true;
+                string path = await new CreatePDF()
+                    .CreateInvoice(Sales[0].Bill, Sales.ToList(), StaticContainer.Shop);
+                PDFViewerWindow window = new PDFViewerWindow(path, StaticContainer.Shop.PdfPassword);
+                IsBillGenerating = false;
+                window.ShowDialog();
+            }
+            else
+            {
+                StaticContainer.ShowNotification("Print", "No billable items found to create bill", NotificationType.Information);
+            }
         }
 
         private async void OnSalesReturn(Sales item)

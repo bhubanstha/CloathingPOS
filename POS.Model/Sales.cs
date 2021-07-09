@@ -7,6 +7,8 @@ namespace POS.Model
     {
         public int SalesQuantity { get; set; }
         public decimal Rate { get; set; }
+        public decimal PurchaseRate { get; set; }
+
         public decimal Discount { get; set; }
 
         [ForeignKey("Inventory")]
