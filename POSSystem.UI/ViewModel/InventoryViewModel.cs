@@ -13,6 +13,7 @@ using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Input;
 
@@ -149,8 +150,15 @@ namespace POSSystem.UI.ViewModel
             f.IsOpen = !f.IsOpen;
         }
 
+
         private async void OnSaveProduct()
         {
+            bool isValid = Inventory.IsValid();
+            if(!isValid)
+            {
+                return;
+            }
+
             EventAction eventAction;
             string msg = "";
             try
