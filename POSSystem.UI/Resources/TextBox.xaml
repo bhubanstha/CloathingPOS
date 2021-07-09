@@ -314,7 +314,7 @@
                             <Setter TargetName="PART_WaitingForDataEffectAdornerDecorator" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="Validation.HasError" Value="True">
-                            <Setter TargetName="Base" Property="BorderBrush" Value="Red" />
+                            <Setter TargetName="Base" Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Validation5}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

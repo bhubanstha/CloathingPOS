@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="Resources/AppCustomStyles.xaml" />
                 <ResourceDictionary Source="Resources/ScrollViewerStyle.xaml" />
                 <ResourceDictionary Source="Resources/TextBox.xaml" />
+                <ResourceDictionary Source="Resources/Combobox.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style
