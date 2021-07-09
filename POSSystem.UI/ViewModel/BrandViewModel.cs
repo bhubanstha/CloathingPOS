@@ -96,6 +96,11 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+                bool isValid = NewBrand.IsValid();
+                if(!isValid)
+                {
+                    return;
+                }
                 brandBO = new BrandBO();
                 Brand brand = new Brand
                 {

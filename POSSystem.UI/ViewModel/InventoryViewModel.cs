@@ -93,14 +93,14 @@ namespace POSSystem.UI.ViewModel
             
             Inventory.ColorNameEntryEnabled = false;
             Inventory.FirstPurchaseDate = DateTime.Now;
-            Inventory.CategoryId = 1;
-            Inventory.BrandId = 1;
+            Inventory.CategoryId = 0;
+            Inventory.BrandId = 0;
             Inventory.Name = "";
             Inventory.Code = "";
             Inventory.BarCode = "";
             Inventory.Size = "";
-            Inventory.Color = "";
-            Inventory.ColorName = "";
+            Inventory.Color = "#000000";
+            Inventory.ColorName = "Black";
             Inventory.Quantity = 1;
             Inventory.PurchaseRate = 1;
             Inventory.RetailRate = 1;

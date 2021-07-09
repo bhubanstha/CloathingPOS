@@ -97,6 +97,11 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+                bool isValid = NewCategory.IsValid();
+                if(!isValid)
+                {
+                    return;
+                }
                 categoryBO = new CategoryBO();
                 Category c = new Category
                 {

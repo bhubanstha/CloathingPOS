@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -28,11 +29,11 @@
             IsChecked="{Binding PrintInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" />
 
-        <TextBox
-            mah:TextBoxHelper.ClearTextButton="True"
-            mah:TextBoxHelper.SelectAllOnFocus="True"
-            Style="{DynamicResource MahApps.Styles.TextBox}"
-            Text="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Invoice Password" Style="{DynamicResource MahApps.Styles.TextBlock}" Margin="0 0 5 0" VerticalAlignment="Center"/>
+            <ctrl:BindablePasswordBox Password="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>            
+        </StackPanel>
+       
         <Button
             x:Name="btnSaveShopSettings"
             Width="100"

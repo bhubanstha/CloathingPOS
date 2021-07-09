@@ -76,6 +76,11 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
+                bool isValid = Branch.IsValid();
+                if(!isValid)
+                {
+                    return;
+                }
                 BranchBO bo = new BranchBO();
                 Branch branch = new Branch
                 {

@@ -135,7 +135,7 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Category Name"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
+                Style="{DynamicResource TextBox.Validation}"
                 Text="{Binding NewCategory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
