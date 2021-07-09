@@ -96,14 +96,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
-    <Compile Include="Migrations\202107090546014_init.cs" />
-    <Compile Include="Migrations\202107090546014_init.designer.cs">
-      <DependentUpon>202107090546014_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107090614585_newcolumnadded.cs" />
-    <Compile Include="Migrations\202107090614585_newcolumnadded.designer.cs">
-      <DependentUpon>202107090614585_newcolumnadded.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,14 +117,6 @@
       <Project>{36e57be4-520f-4de1-b896-26f9c00e433d}</Project>
       <Name>POS.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107090546014_init.resx">
-      <DependentUpon>202107090546014_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107090614585_newcolumnadded.resx">
-      <DependentUpon>202107090614585_newcolumnadded.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
