@@ -93,12 +93,15 @@ namespace POSSystem.UI.Controls
                 BranchWrapper b = (BranchWrapper)e.AddedItems[0];
                 StaticContainer.Shop.Address = b.BranchAddress;
 
-                string previousBranch = "";
-                if(e.RemovedItems.Count>0)
+                if (model._loggedInUser != null)
                 {
-                    previousBranch = $" from {((BranchWrapper)e.RemovedItems[0]).BranchName}";
+                    string previousBranch = "";
+                    if (e.RemovedItems.Count > 0)
+                    {
+                        previousBranch = $" from {((BranchWrapper)e.RemovedItems[0]).BranchName}";
+                    }
+                    _log.Info($"{model._loggedInUser.UserName} switched to {b.BranchName} branch {previousBranch}");
                 }
-                _log.Info($"{model._loggedInUser.UserName} switched to {b.BranchName} branch {previousBranch}");
                 //Publish branch change event
                 IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
                 eventAggregator.GetEvent<BranchSwitchedEvent>().Publish(b);
