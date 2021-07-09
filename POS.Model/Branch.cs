@@ -10,11 +10,13 @@ namespace POS.Model
 
         [Required(ErrorMessage = "Branch name is required.")]
         [MaxLength(50, ErrorMessage = "Branch name can be upto 50 character long")]
+        [Column(TypeName = "VARCHAR")]
         public string BranchName { get; set; }
 
 
         [Required(ErrorMessage = "Branch address is required.")]
         [MaxLength(300, ErrorMessage = "Branch address can be upto 300 character long")]
+        [Column(TypeName = "VARCHAR")]
         public string BranchAddress { get; set; }
 
 

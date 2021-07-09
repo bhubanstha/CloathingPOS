@@ -96,25 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conventions\DataTypePropertyAttributeConvention.cs" />
-    <Compile Include="Migrations\202107011301534_init.cs" />
-    <Compile Include="Migrations\202107011301534_init.designer.cs">
-      <DependentUpon>202107011301534_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107020753388_inventorybranch_user.cs" />
-    <Compile Include="Migrations\202107020753388_inventorybranch_user.designer.cs">
-      <DependentUpon>202107020753388_inventorybranch_user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107020812513_code_and_barcode.cs" />
-    <Compile Include="Migrations\202107020812513_code_and_barcode.designer.cs">
-      <DependentUpon>202107020812513_code_and_barcode.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107021005126_sales_branch_user.cs" />
-    <Compile Include="Migrations\202107021005126_sales_branch_user.designer.cs">
-      <DependentUpon>202107021005126_sales_branch_user.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202107031046071_new.cs" />
-    <Compile Include="Migrations\202107031046071_new.designer.cs">
-      <DependentUpon>202107031046071_new.cs</DependentUpon>
+    <Compile Include="Migrations\202107090546014_init.cs" />
+    <Compile Include="Migrations\202107090546014_init.designer.cs">
+      <DependentUpon>202107090546014_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="POSDataContext.cs" />
@@ -139,20 +123,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107011301534_init.resx">
-      <DependentUpon>202107011301534_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107020753388_inventorybranch_user.resx">
-      <DependentUpon>202107020753388_inventorybranch_user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107020812513_code_and_barcode.resx">
-      <DependentUpon>202107020812513_code_and_barcode.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107021005126_sales_branch_user.resx">
-      <DependentUpon>202107021005126_sales_branch_user.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202107031046071_new.resx">
-      <DependentUpon>202107031046071_new.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107090546014_init.resx">
+      <DependentUpon>202107090546014_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

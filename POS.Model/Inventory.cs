@@ -26,7 +26,7 @@ namespace POS.Model
 
         [Required(ErrorMessage = "Purchase Date is required.")]
         [DataType(DataType.Date)]
-        [Column(TypeName = "Date")]
+        [Column(TypeName = "DATE")]
         public DateTime FirstPurchaseDate { get; set; }
 
         public bool IsDeleted { get; set; }

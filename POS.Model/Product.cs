@@ -8,6 +8,7 @@ namespace POS.Model
     {
         [Required(ErrorMessage = "Item Code is required.")]
         [MaxLength(50, ErrorMessage = "Item Code can be upto 50 character long.")]
+        [Column(TypeName = "VARCHAR")]
         public string Code { get; set; }
 
 
@@ -17,12 +18,14 @@ namespace POS.Model
 
         [Required(ErrorMessage = "Item Name is required.")]
         [MaxLength(50, ErrorMessage = "Item name can be upto 50 character long.")]
+        [Column(TypeName = "VARCHAR")]
         public string Name { get; set; }
 
 
 
         [Required(ErrorMessage = "Item size is required.")]
         [MaxLength(5, ErrorMessage = "Size should be upto 5 character long.")]
+        [Column(TypeName = "VARCHAR")]
         public string Size { get; set; }
 
 
@@ -30,12 +33,14 @@ namespace POS.Model
 
         [Required(ErrorMessage = "Item colour is required.")]
         [MaxLength(9, ErrorMessage = "Color value should be upto 9 character long")]
+        [Column(TypeName = "VARCHAR")]
         public string Color { get; set; }
 
 
 
         [Required(ErrorMessage = "Color name is required.")]
         [MaxLength(20, ErrorMessage = "Color name can be upto 20 characters long only.")]
+        [Column(TypeName = "VARCHAR")]
         public string ColorName { get; set; }
 
 

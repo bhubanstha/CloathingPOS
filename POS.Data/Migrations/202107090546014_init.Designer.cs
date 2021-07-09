@@ -7,13 +7,13 @@ namespace POS.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class inventorybranch_user : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(inventorybranch_user));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202107020753388_inventorybranch_user"; }
+            get { return "202107090546014_init"; }
         }
         
         string IMigrationMetadata.Source
