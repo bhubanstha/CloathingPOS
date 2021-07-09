@@ -342,14 +342,15 @@ namespace POSSystem.UI.ViewModel
                             Rate = item.RetailRate,
                             Discount = item.Discount,
                             ProductId = item.ProductId,
-                            BillNo = billNo
+                            BillNo = billNo,
+                            PurchaseRate = item.PurchaseRate
                         };
                         await salesBO.CheckoutSales(s);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    throw;
+                    _log.Error("CheckoutCart", ex);
                 }
             });
 
