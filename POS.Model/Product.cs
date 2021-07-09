@@ -54,7 +54,7 @@ namespace POS.Model
 
         [ForeignKey("Brand")]
         [Required(ErrorMessage = "Brand is required")]
-        [Range(1, (double)Int64.MaxValue, ErrorMessage = "Category should be a valid value.")]
+        [Range(1, (double)Int64.MaxValue, ErrorMessage = "Brand should be a valid value.")]
         public Int64 BrandId { get; set; }
 
 
