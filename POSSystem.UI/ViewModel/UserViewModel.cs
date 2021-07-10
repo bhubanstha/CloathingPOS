@@ -1,37 +1,49 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
+using POS.Utilities.Encryption;
+using POSSystem.UI.Enum;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
+using System.Linq;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
     public class UserViewModel : ViewModelBase
     {
-        private MetroWindow _window { get; set; }
         private bool _hasChanges;
         private string _buttonText = "Create Account";
-        private ObservableCollection<User> _userList;
-        private CreateUserWrapper _newUser;
-        public PasswordBox PasswordTextBox { get; set; }
+        private ObservableCollection<UserWrapper> _userList;
+        private UserWrapper _newUser;
+        private ILog _log;
+        private ICacheService _cacheService;
+        private AdminChangePassword _adminChangePasswordUI;
+        private IEventAggregator _eventAggregator;
+        private IBouncyCastleEncryption _encryption;
         private UserBO _userBo;
+        private string _userFilter = string.Empty;
+
 
         public ICommand CreateUserCommand { get; }
         public ICommand EditUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
         public ICommand ResetUserCommand { get; }
-
-        public CreateUserWrapper NewUser
+        public ICommand RestoreUserCommand { get; }
+        public ICommand ChangeUserPasswordCommand { get; }
+        public UserWrapper NewUser
         {
             get { return _newUser; }
             set
@@ -41,7 +53,7 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public ObservableCollection<User> UsersList
+        public ObservableCollection<UserWrapper> UsersList
         {
             get { return _userList; }
             set
@@ -51,11 +63,22 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
+        public ICollectionView UserCollectionView { get; private set; }
+
+
         public string ButtonText
         {
             get { return _buttonText; }
             set { _buttonText = value; OnPropertyChanged(); }
         }
+        
+
+        public string UserFilter
+        {
+            get { return _userFilter; }
+            set { _userFilter = value; OnPropertyChanged(); UserCollectionView.Refresh(); }
+        }
+
 
         public bool HasChanges
         {
@@ -72,107 +95,161 @@ namespace POSSystem.UI.ViewModel
         }
 
 
-        public UserViewModel()
+        public UserViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, IEventAggregator eventAggregator, ILogger logger,  AdminChangePassword adminChangePasswordUI)
         {
-            this._window = Application.Current.MainWindow as MetroWindow;
-            _userBo = new UserBO();
-            NewUser = new CreateUserWrapper(new User());
-            NewUser.PromptForPasswordReset = true;
+            this._cacheService = cacheService;
+            this._log = logger.GetLogger(typeof(UserViewModel));
+            this._adminChangePasswordUI = adminChangePasswordUI;
+            this._eventAggregator = eventAggregator;
+            this._encryption = encryption;
+            this._userBo = new UserBO(encryption);
+            this.NewUser = new UserWrapper(new User(), cacheService)
+            {
+                PromptForPasswordReset = true,
+                UserName = "",
+                CanAccessAllBranch = false,
+                BranchId = StaticContainer.ActiveBranchId,
+                ProfileImage=""
+            };
+
 
             NewUser.PropertyChanged += NewUser_PropertyChanged;
-            CreateUserCommand = new DelegateCommand<PasswordBox>(OnCreateUserExecute).ObservesProperty(() => HasChanges);
-            EditUserCommand = new DelegateCommand<User>(EditUser);
-            DeleteUserCommand = new DelegateCommand<User>(DeleteUser);
-            ResetUserCommand = new DelegateCommand<PasswordBox>(ResetUser);
+            CreateUserCommand = new DelegateCommand(OnCreateUserExecute, OnCreateUserCanExecute);
+            EditUserCommand = new DelegateCommand<UserWrapper>(EditUser);
+            DeleteUserCommand = new DelegateCommand<UserWrapper>(LockUser);
+            ResetUserCommand = new DelegateCommand(ResetUser);
+            RestoreUserCommand = new DelegateCommand<UserWrapper>(OnUserRestoreExecute);
+            ChangeUserPasswordCommand = new DelegateCommand<UserWrapper>(OnUserChangePasswordExecute);
+            eventAggregator.GetEvent<UserPasswordChangedEvent>().Subscribe(OnUserPasswordChanged);
+            eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(OnBranchSwitched);
+        }
 
+        private void OnBranchSwitched(BranchWrapper obj)
+        {
             LoadAllUsers();
+        }
+
+        private void OnUserPasswordChanged(User obj)
+        {
+            var u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
+            u.PromptForPasswordReset = obj.PromptForPasswordReset;
+            if (NewUser.Id == obj.Id)
+            {
+                NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
+            }
+        }
+
+        private void OnUserChangePasswordExecute(UserWrapper obj)
+        {
+            MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            StaticContainer.ChangeUserPasswordDialog = _adminChangePasswordUI;
+            _eventAggregator.GetEvent<ChangeUserPasswordEvent>().Publish(obj.Model);
+            _window.ShowMetroDialogAsync(_adminChangePasswordUI);
+        }
+
+
+        private async void OnUserRestoreExecute(UserWrapper obj)
+        {
+            if (obj != null && obj.Id > 0)
+            {
+                obj.DeactivationDate = null;
+                obj.PromptForPasswordReset = true;
+                obj.IsActive = true;
+                _userBo = new UserBO(_encryption);
+                int i = await _userBo.UpdateUser(obj.Model);
+                if (i > 0)
+                {
+                    ManageUserInCollection(obj.Model);
+                    StaticContainer.ShowNotification("User Activated", $"User {obj.DisplayName} is re activated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
+                }
+            }
         }
 
         private void NewUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!HasChanges)
-            {
-                HasChanges = _userBo.HasChanges();
-            }
-            //if(e.PropertyName == nameof(NewUser.HasErrors))
-            //{
-            //    ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
-            //}
+            ((DelegateCommand)CreateUserCommand).RaiseCanExecuteChanged();
         }
 
-        private void ResetUser(PasswordBox obj)
+        private void ResetUser()
         {
-            this.PasswordTextBox = obj;
             ClearAll();
         }
 
-        private async void DeleteUser(User obj)
+        private async void LockUser(UserWrapper obj)
         {
             if (obj != null && obj.Id > 0)
             {
                 obj.DeactivationDate = DateTime.Now;
                 obj.PromptForPasswordReset = false;
                 obj.IsActive = false;
-                UserBO userBO = new UserBO();
-                int i = await userBO.UpdateUser(obj);
+                _userBo = new UserBO(_encryption);
+                int i = await _userBo.UpdateUser(obj.Model);
                 if (i > 0)
                 {
-                    LoadAllUsers();
-                    await _window.ShowMessageAsync("User Removed", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}");
+                    ManageUserInCollection(obj.Model);
+                    //LoadAllUsers();
+                    StaticContainer.ShowNotification("User Locked", $"User {obj.DisplayName} is deactivated on {DateTime.Now.ToString("yyyy/MM/dd")}", NotificationType.Success);
                 }
             }
         }
 
-        private void EditUser(User obj)
+        private void EditUser(UserWrapper obj)
         {
-            UserBO userBO = new UserBO();
+            _userBo = new UserBO(_encryption);
             this.NewUser.Id = obj.Id;
             this.NewUser.DisplayName = obj.DisplayName;
             this.NewUser.UserName = obj.UserName;
-            this.NewUser.Password = userBO.DecryptPassword(obj.Password).Result;
+            this.NewUser.Password = _userBo.DecryptPassword(obj.Password).Result;
             this.NewUser.IsAdmin = obj.IsAdmin;
             this.NewUser.PromptForPasswordReset = obj.PromptForPasswordReset;
-            this.PasswordTextBox.Password = this.NewUser.Password;
+            this.NewUser.CanAccessAllBranch = false;
+            this.NewUser.BranchId = obj.BranchId;
+            this.NewUser.CanAccessAllBranch = obj.CanAccessAllBranch;
+            this.NewUser.ProfileImage = obj.ProfileImage;
             this.ButtonText = "Update User";
         }
 
-        private bool OnCreateUserCanExecute(PasswordBox txtPwdBox)
+        private bool OnCreateUserCanExecute()
         {
-            return this.NewUser != null && !this.NewUser.HasErrors && HasChanges && !string.IsNullOrEmpty(txtPwdBox.Password);
+            return this.NewUser != null && !this.NewUser.HasErrors && !string.IsNullOrEmpty(this.NewUser.Password);
         }
 
-        private async void OnCreateUserExecute(PasswordBox obj)
+        private async void OnCreateUserExecute()
         {
             try
             {
-                PasswordTextBox = obj;
+
+
                 User u = new User
                 {
                     Id = this.NewUser.Id,
+                    BranchId = StaticContainer.ActiveBranchId,
                     UserName = this.NewUser.UserName,
                     DisplayName = this.NewUser.DisplayName,
-                    Password = obj.Password,
+                    Password = this.NewUser.Password,
                     IsAdmin = this.NewUser.IsAdmin,
                     PromptForPasswordReset = this.NewUser.PromptForPasswordReset,
                     IsActive = true,
-                    CreatedDate = DateTime.Now
+                    CanAccessAllBranch = this.NewUser.CanAccessAllBranch,
+                    CreatedDate = DateTime.Now,
+                    ProfileImage = this.NewUser.ProfileImage
                 };
 
                 string title = "";
                 string msg = "";
-                UserBO userBO = new UserBO();
+                _userBo = new UserBO(_encryption);
                 int id = 0;
                 if (u.Id > 0)
                 {
-                    u.Password = await userBO.EncryptPassword(u.Password);
-                    id = await userBO.UpdateUser(u);
+                    u.Password = await _userBo.EncryptPassword(u.Password);
+                    id = await _userBo.UpdateUser(u);
                     ButtonText = "Create Account";
                     title = "User Updated";
                     msg = $"User {u.UserName} is updated successfully.";
                 }
                 else
                 {
-                    id = await userBO.SaveUser(u);
+                    id = await _userBo.SaveUser(u);
                     title = "User Creation";
                     msg = $"User {u.UserName} is created successfully.";
                 }
@@ -191,27 +268,51 @@ namespace POSSystem.UI.ViewModel
             }
             catch (Exception ex)
             {
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Message = "Could not create user. Please provide all the required values.",
-                    Title = "Error",
-                    Type = NotificationType.Error
-                });
+                _log.Error("OnCreateUserExecute", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
 
         }
 
         private void LoadAllUsers()
         {
-            UserBO userBO = new UserBO();
-            List<User> _users = userBO.GetAllUser();
-            _users.AddRange(MockUser(15));
-            UsersList = new ObservableCollection<User>();
-            foreach (User u in _users)
+            User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
+            if (me != null)
             {
-                UsersList.Add(u);
+                _userBo = new UserBO(_encryption);
+                List<User> _users = _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
+                UsersList = new ObservableCollection<UserWrapper>();
+                foreach (User u in _users)
+                {
+                    UserWrapper userWrapper = new UserWrapper(u);
+                    userWrapper.BranchName = u.Branch.BranchName;
+                    UsersList.Add(userWrapper);
+                }
+                _cacheService.SetCache(CacheKey.UserList.ToString(), UsersList);
+                UserCollectionView = CollectionViewSource.GetDefaultView(UsersList);
+                UserCollectionView.Filter = FilterUser;
             }
-            
+        }
+
+        private bool FilterUser(object obj)
+        {
+            if (obj is UserWrapper usr)
+            {
+                return usr.DisplayName.StartsWith(UserFilter, StringComparison.InvariantCultureIgnoreCase) ||
+                    usr.UserName.StartsWith(UserFilter, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
+        }
+
+        private void ManageUserInCollection(User obj)
+        {
+            UserWrapper u = UsersList.Where(x => x.Id == obj.Id).FirstOrDefault();
+            if (u != null)
+            {
+                u.IsActive = obj.IsActive;
+                u.DeactivationDate = obj.DeactivationDate;
+                u.PromptForPasswordReset = obj.PromptForPasswordReset;
+            }
         }
 
         private void ClearAll()
@@ -223,29 +324,11 @@ namespace POSSystem.UI.ViewModel
             this.NewUser.DisplayName = "";
             this.NewUser.IsAdmin = false;
             this.NewUser.PromptForPasswordReset = true;
-            this.PasswordTextBox.Password = "";
+            this.NewUser.Password = "";
         }
 
-        private List<User> MockUser(int count)
-        {
-            List<User> UsersList = new List<User>();
-            Random random = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                
-                UsersList.Add(new User
-                {
-                    Id = i + 10,
-                    UserName = $"user{i}",
-                    DisplayName = $"User Name{i}",
-                    IsActive = true,
-                    CreatedDate = DateTime.Now,
-                    IsAdmin = Convert.ToBoolean( random.Next(-1, 1)),
-                    PromptForPasswordReset = false
-                });
-            }
-            return UsersList;
-        }
+
+
     }
 }
 

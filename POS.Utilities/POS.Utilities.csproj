@@ -107,23 +107,46 @@
     <Reference Include="itext.svg, Version=7.1.15.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\itext7.7.1.15\lib\net45\itext.svg.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QrCodeGenerator, Version=1.6.0.0, Culture=neutral, PublicKeyToken=6aa6bd7a159d47c2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Net.Codecrete.QrCodeGenerator.1.6.1\lib\netstandard2.0\QrCodeGenerator.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.5.1\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encryption\PasswordEncryptDecryptor.cs" />
+    <Compile Include="Extension\StringExtension.cs" />
+    <Compile Include="FilePath.cs" />
+    <Compile Include="FileUtility.cs" />
+    <Compile Include="ImageUtility.cs" />
     <Compile Include="NumToWord\NumberToWord.cs" />
     <Compile Include="ObjectFinder.cs" />
     <Compile Include="Encryption\BouncyCastleEncryption.cs" />
     <Compile Include="Encryption\IBouncyCastleEncryption.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
+    <Compile Include="PDF\CreateQRCode.cs" />
     <Compile Include="PDF\PDFUtility.cs" />
     <Compile Include="PDF\SalesMockData.cs" />
+    <Compile Include="PDF\StandardPaperSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

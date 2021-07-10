@@ -21,23 +21,42 @@ namespace POS.BusinessRule
         public async Task<int> Save (Inventory inventory)
         {
             genericDataRepository.Insert(inventory);
-            return await genericDataRepository.SaveAsync();
+            int i =  await genericDataRepository.SaveAsync();
+            if(i>0)
+            {
+                InventoryHistoryBO inventoryHistory = new InventoryHistoryBO();
+                inventoryHistory.AddToHistory(inventory);
+
+            }
+            return i;
+        }
+
+        public List<Inventory> GetAllActiveProducts(Int64 branchId)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x=> x.IsDeleted == false && x.Quantity>0 && x.BranchId == branchId)
+                .ToList();
         }
 
         public List<Inventory> GetAllActiveProducts()
         {
-            return genericDataRepository.GetAll().Where(x=> x.IsDeleted == false && x.Quantity>0).ToList();
-        }
-
-        public List<Inventory> GetAllActiveProducts(string productName)
-        {
             return genericDataRepository
                 .GetAll()
-                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.Name.ToLower().StartsWith(productName))
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 )
                 .ToList();
         }
 
-        public Inventory GetById(int id)
+
+        public List<Inventory> GetAllActiveProducts(string productName, Int64 branchId)
+        {
+            return genericDataRepository
+                .GetAll()
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.BranchId == branchId  && x.Name.ToLower().StartsWith(productName))
+                .ToList();
+        }
+
+        public Inventory GetById(Int64 id)
         {
             return genericDataRepository.GetByID(id);
         }
@@ -69,6 +88,19 @@ namespace POS.BusinessRule
 
                 genericDataRepository.Save();
             }
+        }
+
+        public async Task<int> UpdateInventory(Inventory inventory, InventoryHistory history)
+        {
+            genericDataRepository.Update(inventory);
+            InventoryHistoryBO inventoryHistoryBO = new InventoryHistoryBO();
+            inventoryHistoryBO.AddToHistory(history);
+            return await genericDataRepository.SaveAsync();
+        }
+        public async Task<int> UpdateInventory(Inventory inventory)
+        {
+            genericDataRepository.Update(inventory);
+            return await genericDataRepository.SaveAsync();
         }
 
         public async Task<int> Restock(Inventory inventory, int salesReturn)

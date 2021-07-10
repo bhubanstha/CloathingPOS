@@ -1,7 +1,9 @@
 ﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
 using System;
+using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +15,7 @@ namespace POS.Utilities.Encryption
         private readonly IBlockCipher _blockCipher;
         private PaddedBufferedBlockCipher _cipher;
         private IBlockCipherPadding _padding;
-        private string _encryptionKey = "1234567890123456";
+        private string _encryptionKey = "";
 
 
         /// <summary>
@@ -21,11 +23,26 @@ namespace POS.Utilities.Encryption
         /// </summary>
         /// <param name="encoding"></param>
         /// <param name="blockCipher">Org.BouncyCastle.Crypto.Engines</param>
-        public BouncyCastleEncryption(Encoding encoding, IBlockCipher blockCipher)
+        //public BouncyCastleEncryption(Encoding encoding, IBlockCipher blockCipher)
+        //{
+        //    _blockCipher = blockCipher;
+        //    _encoding = encoding;
+        //    _encryptionKey = ConfigurationManager.AppSettings["EncryptionKey"];
+        //}
+        //public BouncyCastleEncryption(Encoding encoding)
+        //{
+        //    _blockCipher = new AesEngine();
+        //    _encoding = encoding;
+        //    _encryptionKey = ConfigurationManager.AppSettings["EncryptionKey"];
+        //}
+
+        public BouncyCastleEncryption()
         {
-            _blockCipher = blockCipher;
-            _encoding = encoding;
+            _blockCipher = new AesEngine();
+            _encoding = Encoding.UTF8;
+            _encryptionKey = ConfigurationManager.AppSettings["EncryptionKey"];
         }
+
 
         public void SetPadding(IBlockCipherPadding padding)
         {

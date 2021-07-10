@@ -51,7 +51,6 @@ namespace POSSystem.UI
             {
                 timer = new Timer(CheckPasswordChangeStatus, null, 3000, 500);
             }
-            
         }
 
         void CheckPasswordChangeStatus(object state)

@@ -1,8 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.IconPacks;
+using POS.Utilities;
 using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
-using POSSystem.UI.Views;
 using System;
 using System.Drawing;
 using System.IO;
@@ -21,25 +22,23 @@ namespace POSSystem.UI
     {
         private MainWindowViewModel _model;
         public IDialogCoordinator DialogCoordinator;
-        public MainWindow(MainWindowViewModel model, LoginWindow loginWindow)
+        public MainWindow(MainWindowViewModel model)
         {
             model.CheckUserIsAdmin();
             InitializeComponent();
             _model = model;
-            _model.Window = this;
+            _model.MainWindow = this;
             _model.SettingFlyout = this.SettingsFlyout;
-            _model.LoginWindow = loginWindow;
-            DialogCoordinator = _model._dialogCoordinator;
             DataContext = _model;            
-            this.Loaded += MainWindow_Loaded;
-           
-            this.Closed += MainWindow_Closed;            
+            this.Loaded += MainWindow_Loaded;      
         }
 
         private void GlobalElements()
         {
             StaticContainer.SettingFlyout = this.SettingsFlyout;// container.Resolve<SettingView>();
             StaticContainer.AddCategoryFlyout = this.CategoryFlyout;
+            StaticContainer.AddBrandFlyout = this.BrandFlyout;
+            StaticContainer.AddBranchFlyout = this.BranchFlyout;
             StaticContainer.NoSearchResultFlyout = this.NoSearchResultFlyout;
             StaticContainer.DialogCoordinator = this.DialogCoordinator;
             StaticContainer.UIHamburgerMenuControl = this.HamburgerMenuControl;
@@ -53,31 +52,26 @@ namespace POSSystem.UI
             
             double additionalWidth = btnCmdUserName.ActualWidth > 42 ? (btnCmdUserName.ActualWidth - 42) / 2 : btnCmdUserName.ActualWidth - 42;//42 is default size for button
             _model.PopupRightMargin = 120 + additionalWidth;
-            System.Drawing.Size s = new System.Drawing.Size();
-            s.Width = (int)container.RenderSize.Width;
-            s.Height = (int)container.RenderSize.Height;
-            Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+            //System.Drawing.Size s = new System.Drawing.Size();
+            //s.Width = (int)container.RenderSize.Width;
+            //s.Height = (int)container.RenderSize.Height;
+            //Task.Delay(new TimeSpan(0, 0, 1)).ContinueWith(o => { Screenshot(s, container, this); });
+
+            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             Application.Current.MainWindow = this;
             StaticContainer.ThisApp.MainWindow = this;
-            //menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
-            //menuGraphs.IsVisible = _model.IsAdminMenuVisible;
-            //menuReport.IsVisible = _model.IsAdminMenuVisible;
-            if(!_model.IsAdminMenuVisible)
+
+            menuUserMgmt.IsVisible = _model.IsAdminMenuVisible;
+            menuGraphs.IsVisible = _model.IsAdminMenuVisible;
+            menuReport.IsVisible = _model.IsAdminMenuVisible;
+            ShopView.IsVisible = _model.IsSysAdminMenuVisible;
+
+            if (!_model.IsAdminMenuVisible)
             {
                 HamburgerMenuControl.SelectedIndex = 1;
             }
-
-
+            //App.Current.Resources["UserImage"] = ImageUtility.GetImageSource(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", "InvoiceSample.png"));
         }
-        private void MainWindow_Closed(object sender, EventArgs e)
-        {
-            if(!_model.IsLogout)
-            {
-                _model.LoginWindow.Close();
-            }
-            
-        }
- 
 
         private void HamburgerMenuControl_ItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs args)
         {
@@ -130,10 +124,9 @@ namespace POSSystem.UI
 
                     }
                 }
-                StaticContainer.AppScreenshot = image;
+               // StaticContainer.AppScreenshot = image;
             });
             
         }
-
     }
 }

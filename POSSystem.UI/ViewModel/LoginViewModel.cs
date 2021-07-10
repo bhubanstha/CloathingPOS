@@ -1,44 +1,58 @@
 ﻿using Autofac;
+using log4net;
 using MahApps.Metro.Controls;
-using Org.BouncyCastle.Crypto.Engines;
-using POS.Data;
-using POS.Data.Repository;
+using POS.BusinessRule;
 using POS.Model;
 using POS.Model.ViewModel;
 using POS.Utilities.Encryption;
 using POSSystem.UI.Service;
-using POSSystem.UI.UIModel;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class LoginViewModel : NotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
         private bool _hasChanges;
+        private ILog _log;
         private LoginWrapper _loginUser;
+        private string _noUserFound;
+        private bool _isLoginOnProgress = false;
 
         public ICommand LoginCommand { get; }
-        private IGenericDataRepository<User> _genericDataRepository;
         private IBouncyCastleEncryption _bouncyCastleEncryption;
         private ICacheService _cacheService;
 
-        public MetroWindow LoginWindow { get;  set; }
+        public MetroWindow LoginWindow { get; set; }
 
+        public bool IsLoginOnProgress
+        {
+            get { return _isLoginOnProgress; }
+            set { _isLoginOnProgress = value; OnPropertyChanged(); }
+        }
 
-        
 
         public LoginWrapper LoginUser
         {
             get { return _loginUser; }
             set { _loginUser = value; OnPropertyChanged(); }
         }
+
+
+        public string NoUserFound
+        {
+            get { return _noUserFound; }
+            set
+            {
+                _noUserFound = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public bool HasChanges
         {
@@ -54,12 +68,11 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        public LoginViewModel( ICacheService cacheService)
+        public LoginViewModel(ICacheService cacheService, IBouncyCastleEncryption encryption, ILogger logger)
         {
-            
-            _genericDataRepository = new DataRepository<User>(new POSDataContext());
-            _bouncyCastleEncryption = new BouncyCastleEncryption(Encoding.UTF8, new AesEngine());
+            _bouncyCastleEncryption = encryption;
             _cacheService = cacheService;
+            _log = logger.GetLogger(typeof(LoginViewModel));
             LoginUser = new LoginWrapper(new LoginModel());
             LoginUser.UserName = "";
             LoginUser.PropertyChanged += LoginUser_PropertyChanged;
@@ -69,66 +82,145 @@ namespace POSSystem.UI.ViewModel
         private void LoginUser_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
-            //if(e.PropertyName == nameof(LoginUser.HasErrors))
-            //{
-            //    ((DelegateCommand)LoginCommand).RaiseCanExecuteChanged();
-            //}
         }
 
-        private void OnLoginExecute()
+        private async void OnLoginExecute()
         {
-            IEnumerable<User> users = _genericDataRepository.GetAll().ToList();
-            User u = users
-                .Where(f => CompareString(f.UserName, LoginUser.UserName)
-                        && f.Password == _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result)
-                .FirstOrDefault();
-            if (u != null)
+            IsLoginOnProgress = true;
+            MetroWindow window = await Login();
+            if (window != null)
             {
-                if(LoginUser.RememberMe)
+                if (window is ForgotPasswordWindow)
                 {
-                    Application.Current.Properties["UserName"] = LoginUser.UserName;
-                    Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
-                }
-                else
-                {
-                    Application.Current.Properties["UserName"] = "";
-                    Application.Current.Properties["RememberMe"] = false;
-                }
-                
-                _cacheService.SetCache("LoginUser", u);
-                
-                if(u.PromptForPasswordReset)
-                {
+
                     LoginWindow.Hide();
-                    ForgotPasswordWindow forgetPasswindow = null;
-                    forgetPasswindow = GetPasswordResetWindow();
-                    ManageWindowVisibility(forgetPasswindow,  null);
-                    forgetPasswindow.IsUserNameEditable = false;
-                    forgetPasswindow.IsBackButtonVisible = false;
-                    forgetPasswindow.LookForPasswordChange = true;
-                    bool? result = forgetPasswindow.ShowDialog();
-                    if(result.HasValue && result.Value == true)
+                    bool? result = window.ShowDialog();
+
+                    if (result.HasValue && result.Value == true)
                     {
-                        System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                        IsLoginOnProgress = false;
+                        LoginUser.Password = "";
+                        LoginWindow.Show();
+                    }
+                    else
+                    {
                         Application.Current.Shutdown();
-                        
                     }
                 }
-                else
+                else if (window is MainWindow)
                 {
-                    MainWindow mainWindow = GetMainWindow();
-                    ManageWindowVisibility(mainWindow, LoginWindow, true);
+
+                    LoginWindow.Hide();
+                    window.Show();
+                    LoginWindow.Close();
                 }
-                
+            }
+            else
+            {
+                IsLoginOnProgress = false;
+                NoUserFound = "Username or password is invalid";
             }
         }
 
-        private bool OnLoginCanExecute()
+
+        private Task<MetroWindow> Login()
         {
-            return !string.IsNullOrEmpty(LoginUser.UserName) && !string.IsNullOrEmpty(LoginUser.Password);
+            try
+            {
+                Task<MetroWindow> t = Task.Run(() =>
+                    {
+                        string encryptePassword = _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result;
+                        UserBO bo = new UserBO(_bouncyCastleEncryption);
+
+                        User u = bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
+
+                        MetroWindow window = null;
+                        if (u != null)
+                        {
+                            if (LoginUser.RememberMe)
+                            {
+                                Application.Current.Properties["UserName"] = LoginUser.UserName;
+                                Application.Current.Properties["RememberMe"] = LoginUser.RememberMe;
+                                Application.Current.Properties["BranchId"] = LoginUser.BranchId;
+                            }
+                            else
+                            {
+                                Application.Current.Properties["UserName"] = "";
+                                Application.Current.Properties["RememberMe"] = false;
+                                Application.Current.Properties["BranchId"] = -1;
+                            }
+                            u.BranchId = LoginUser.BranchId;
+                            _cacheService.SetCache(Enum.CacheKey.LoginUser.ToString(), u);
+
+                            if (u != null)
+                            {
+                                if (u.PromptForPasswordReset)
+                                {
+                                    Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                                    {
+                                        LoginWindow.Hide();
+                                        StaticContainer.IsPasswordChanged = false;
+                                        ForgotPasswordWindow forgetPasswindow = null;
+                                        forgetPasswindow = GetPasswordResetWindow();
+                                        StaticContainer.ThisApp.MainWindow = forgetPasswindow;
+                                        forgetPasswindow.IsUserNameEditable = false;
+                                        forgetPasswindow.IsBackButtonVisible = false;
+                                        forgetPasswindow.LookForPasswordChange = true;
+
+                                        window = forgetPasswindow;
+                                    }));
+
+                                }
+                                else
+                                {
+                                    BranchBO branchBO = new BranchBO();
+                                    Branch b = branchBO.GetById(u.BranchId.Value);
+                                    if (b != null)
+                                    {
+                                        StaticContainer.Shop = new ShopVM
+                                        {
+                                            Id = b.Shop.Id,
+                                            Address = b.BranchAddress,
+                                            CalculateVATOnSales = b.Shop.CalculateVATOnSales,
+                                            LogoPath = b.Shop.LogoPath,
+                                            Name = b.Shop.Name,
+                                            PANNumber = b.Shop.PANNumber,
+                                            PdfPassword = b.Shop.PdfPassword,
+                                            PrintInvoice = b.Shop.PrintInvoice
+                                        };
+                                    }
+
+                                    Application.Current.Dispatcher.Invoke(new System.Action(() =>
+                                    {
+                                        MainWindow mainWindow = GetMainWindow();
+                                        StaticContainer.ThisApp.MainWindow = mainWindow;
+                                        window = mainWindow;
+                                    }));
+                                }
+                            }
+                            return window;
+
+                        }
+
+                        return window;
+                    });
+                return t;
+            }
+            catch (System.Exception ex)
+            {
+                _log.Error("Login", ex);
+            }
+            return null;
         }
 
-        
+
+
+        private bool OnLoginCanExecute()
+        {
+            return !string.IsNullOrEmpty(LoginUser.UserName) && !string.IsNullOrEmpty(LoginUser.Password) && LoginUser.BranchId > 0;
+        }
+
+
         private MainWindow GetMainWindow()
         {
             MainWindow window = StaticContainer.Container.Resolve<MainWindow>();
@@ -140,20 +232,5 @@ namespace POSSystem.UI.ViewModel
             return window;
         }
 
-        private void ManageWindowVisibility(MetroWindow windowToSetMainWindow, MetroWindow windowToClose, bool show=false)
-        {
-            Application.Current.MainWindow = windowToSetMainWindow;
-            if (windowToClose != null)
-            {
-                windowToClose.Close();
-            }
-            if (show)
-            {
-                windowToSetMainWindow.Show();
-            }
-           
-            StaticContainer.ThisApp.MainWindow = windowToSetMainWindow;           
-        }
-        
     }
 }

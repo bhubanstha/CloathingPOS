@@ -1,11 +1,10 @@
-﻿using POS.BusinessRule;
+﻿using Autofac;
 using POS.Model;
-using POSSystem.UI.PDFViewer;
+using POSSystem.UI.Service;
 using POSSystem.UI.ViewModel;
 using System;
-using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace POSSystem.UI.Views
 {
@@ -18,8 +17,8 @@ namespace POSSystem.UI.Views
         public SalesView()
         {
             InitializeComponent();
-            model = new SalesViewModel(pnlPdfOptions, txtProductName);
-            model.PdfPanel = moonPdfPanel;
+            ILogger logger = StaticContainer.Container.Resolve<ILogger>();
+            model = new SalesViewModel(txtProductName, logger);
             model.CurrentProduct.SalesQuantity = 1;
             this.DataContext = model;            
         }
@@ -40,30 +39,31 @@ namespace POSSystem.UI.Views
                 var pr = txtProductName.SelectedItem as Inventory;
                 model.CurrentProduct.ProductId = pr.Id;
                 model.CurrentProduct.RetailRate = pr.RetailRate;
+                model.CurrentProduct.PurchaseRate = pr.PurchaseRate;
                 model.CurrentProduct.ProductName = pr.Name;
                 model.CurrentProduct.Color = pr.Color;
                 model.CurrentProduct.Size = pr.Size;
                 model.CurrentProduct.CategoryId = pr.Category.Id;
                 model.CurrentProduct.CategoryName = pr.Category.Name;
+                model.CurrentProduct.BrandId = pr.Brand.Id;
+                model.CurrentProduct.BrandName = pr.Brand.Name;
+                model.CurrentProduct.ColorName = pr.ColorName;
                 txtSalesQty.Maximum = (double)pr.Quantity;
+                txtSalesQty.Minimum = NegativeItemInCart(pr.Id);
             }
         }
 
-
-        private void icon_FullScreen_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private double NegativeItemInCart(Int64 productId)
         {
-            PDFViewerWindow window = new PDFViewerWindow(model.CurrentPdfFilePath);
-            window.Show();
-        }
-
-        private void icon_Printer_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            moonPdfPanel.Print();
-        }
-
-        private async void txCustInfo_LostFocus(object sender, System.Windows.RoutedEventArgs e)
-        {
-            await model.CreatePdfFromCurrentCartItem();
+            if (model.CurrentCart != null && model.CurrentCart.Count > 0)
+            {
+                var itm = model.CurrentCart.Where(x => x.ProductId == productId).FirstOrDefault();
+                if(itm != null)
+                {
+                    return itm.SalesQuantity * -1;
+                }
+            }
+            return 1;
         }
     }
 }

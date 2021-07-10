@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="POSSystem.UI.Views.PartialShopView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <StackPanel Margin="0,5,0,0">
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}">
+            Application Setting
+        </TextBlock>
+        <CheckBox
+            Content="Enable VAT Calculation on sale"
+            IsChecked="{Binding CalculateVAT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" />
+
+        <CheckBox
+            Content="Enable Bill printing on sale"
+            IsChecked="{Binding PrintInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Style="{DynamicResource MahApps.Styles.CheckBox.Win10}" />
+
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+            <TextBlock Text="Invoice Password" Style="{DynamicResource MahApps.Styles.TextBlock}" Margin="0 0 5 0" VerticalAlignment="Center"/>
+            <ctrl:BindablePasswordBox Password="{Binding PdfPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="200"/>            
+        </StackPanel>
+       
+        <Button
+            x:Name="btnSaveShopSettings"
+            Width="100"
+            Margin="{StaticResource ControlMargin}"
+            HorizontalAlignment="Left"
+            Command="{Binding SaveSettingCommand}"
+            Content="Save Setting"
+            Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+    </StackPanel>
+</UserControl>

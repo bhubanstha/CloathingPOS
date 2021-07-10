@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using POSSystem.UI.Service;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -81,15 +82,6 @@ namespace POSSystem.UI.Controls
         {
             _isPasswordChanging = true;
             Password = txtPassword.Password;
-            var errors = Validation.GetErrors(this);
-            if(errors.Count>0)
-            {
-                lblValidationErrorMessage.Text = errors[0].ErrorContent.ToString() ;
-            }
-            else
-            {
-                lblValidationErrorMessage.Text = "";
-            }
             _isPasswordChanging = false;
         }
 

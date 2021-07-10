@@ -15,19 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
 using MoonPdfLib.MuPdf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace MoonPdfLib
 {
-	/// <summary>
-	/// Common interface for the two different display types, single pages (SinglePageMoonPdfPanel) and continuous pages (ContinuousMoonPdfPanel)
-	/// </summary>
-	internal interface IMoonPdfPanel
+    /// <summary>
+    /// Common interface for the two different display types, single pages (SinglePageMoonPdfPanel) and continuous pages (ContinuousMoonPdfPanel)
+    /// </summary>
+    internal interface IMoonPdfPanel
 	{
 		ScrollViewer ScrollViewer { get; }
 		UserControl Instance { get; }

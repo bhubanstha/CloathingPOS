@@ -19,6 +19,9 @@
         <Directory Id="ProgramFiles64Folder">
           <Directory Id="INSTALLFOLDER" Name="!(loc.ProductNameFolder)">
             <Directory Id="ImageFolder" Name="Image"/>
+            <Directory Id="de" Name="de"/>
+            <Directory Id="Bills" Name="Bills"/>
+            <Directory Id="Logs" Name="logs"/>
           </Directory>
         </Directory>
       
@@ -28,6 +31,9 @@
         <Directory Id="ProgramFilesFolder">
           <Directory Id="INSTALLFOLDER" Name="!(loc.ProductNameFolder)">
             <Directory Id="ImageFolder" Name="Image"/>
+            <Directory Id="de" Name="de"/>
+            <Directory Id="Bills" Name="Bills"/>
+            <Directory Id="Logs" Name="logs"/>
           </Directory>
         </Directory>
       

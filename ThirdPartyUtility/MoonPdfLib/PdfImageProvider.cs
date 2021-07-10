@@ -14,21 +14,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 !*/
+using MoonPdfLib.Helper;
+using MoonPdfLib.MuPdf;
+using MoonPdfLib.Virtualizing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using MoonPdfLib.MuPdf;
-using MoonPdfLib.Virtualizing;
-using MoonPdfLib.Helper;
-using System.Diagnostics;
 
 namespace MoonPdfLib
 {
-	internal class PdfImageProvider : IItemsProvider<IEnumerable<PdfImage>>
+    internal class PdfImageProvider : IItemsProvider<IEnumerable<PdfImage>>
 	{
         private IPdfSource pdfSource;
 		private int count = -1;

@@ -5,7 +5,7 @@
     xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
     xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity;assembly=System.Windows.Interactivity"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,12 +13,14 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="400"
-    Height="550"
+    Height="620"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
     Icon="/Image/pos_icon_toolbar.png"
     ResizeMode="NoResize"
     ShowMaxRestoreButton="False"
+    SizeToContent="Height"
     TitleCharacterCasing="Normal"
+    Topmost="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.IconTemplate>
@@ -42,17 +44,24 @@
             FontWeight="Bold"
             Foreground="{DynamicResource MahApps.Brushes.Accent}">
             <Run Text="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneTime}" />
-            <Run Text="Login"/>
+            <Run Text="Login" />
 
         </TextBlock>
 
+        <mah:ProgressRing
+            x:Name="ringLoginProgress"
+            Grid.Row="1"
+            Margin="0,70,0,0"
+            VerticalAlignment="Center"
+            Panel.ZIndex="1"
+            IsActive="{Binding IsLoginOnProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
         <Grid
             Grid.Row="1"
-            Margin="30,10,30,30"
+            Margin="30,10,30,10"
             Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="160" />
-                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -70,11 +79,22 @@
                 </Image.Clip>
             </Image>
 
+            <Grid Grid.Row="1" Background="{DynamicResource MahApps.Brushes.ValidationSummary5}">
+                <TextBlock
+                    Padding="0,5"
+                    HorizontalAlignment="Center"
+                    Style="{DynamicResource TextBlock.Validation.Summary}"
+                    Text="{Binding NoUserFound, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+
             <Grid
                 Grid.Row="2"
                 Margin="10"
-                behaviors:KeyboardFocus.On="{Binding ElementName=txtUserName}">
+                behaviors:KeyboardFocus.On="{Binding ElementName=cmbBranch}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -83,47 +103,63 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
+
                 <TextBlock Grid.Row="0">
+                    Branch
+                </TextBlock>
+                <StackPanel Grid.Row="1">
+                    <ctrl:UserBranchControl
+                        x:Name="cmbBranch"
+                        Grid.Row="1"
+                        Margin="{DynamicResource ControlMargin}"
+                        BorderBrush="Transparent"
+                        BranchValue="{Binding LoginUser.BranchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        StyleString="MahApps.Styles.ComboBox" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Style="{DynamicResource TextBlock.Validation.Message}"
+                        Text="{Binding LoginUser.BranchErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+
+                <TextBlock Grid.Row="2">
                     User Name
                 </TextBlock>
                 <TextBox
                     x:Name="txtUserName"
-                    Grid.Row="1"
+                    Grid.Row="3"
                     Margin="{StaticResource ControlMargin}"
                     Padding="{StaticResource ControlPadding}"
                     mah:TextBoxHelper.ClearTextButton="True"
                     mah:TextBoxHelper.SelectAllOnFocus="True"
                     mah:TextBoxHelper.Watermark="Enter user name"
-                    Style="{DynamicResource App.TextBox.Validation}"
+                    Style="{DynamicResource TextBox.Validation}"
                     Text="{Binding LoginUser.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Grid.Row="2">
+                <TextBlock Grid.Row="4">
                     Password
                 </TextBlock>
                 <ctrl:BindablePasswordBox
-                    Grid.Row="3"
+                    Grid.Row="5"
                     Margin="{DynamicResource ControlMargin}"
+                    BorderBrush="Transparent"
                     Password="{Binding LoginUser.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
-                <!--<PasswordBox
-                    x:Name="txtPassword"
-                    Grid.Row="3"
-                    Margin="{StaticResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter password"
-                    MaxLength="6"
-                    Style="{StaticResource MahApps.Styles.PasswordBox.Button.Revealed}" />-->
+                <TextBlock
+                    Grid.Row="6"
+                    Style="{DynamicResource TextBlock.Validation.Message}"
+                    Text="{Binding LoginUser.PasswordErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
 
 
                 <CheckBox
-                    Grid.Row="4"
+                    Grid.Row="7"
                     Margin="{DynamicResource ControlMargin}"
                     Content="Remember me"
                     FlowDirection="LeftToRight"
                     IsChecked="{Binding LoginUser.RememberMe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <Button
-                    Grid.Row="5"
+                    Grid.Row="8"
                     Margin="0,5,0,5"
                     HorizontalAlignment="Left"
                     Command="{Binding LoginCommand}"
@@ -134,10 +170,15 @@
                         <iconPacks:PackIconBootstrapIcons Kind="BoxArrowRight" />
                         <TextBlock Margin="5,0,0,0">Login</TextBlock>
                     </StackPanel>
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:ChangePropertyAction TargetObject="{Binding ElementName=ringLoginProgress}" PropertyName="IsActive" Value="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
                 </Button>
 
                 <TextBlock
-                    Grid.Row="5"
+                    Grid.Row="8"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center">
                     <Hyperlink

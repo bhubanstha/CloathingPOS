@@ -1,21 +1,18 @@
-﻿using POSSystem.UI.Views;
+﻿using Autofac;
+using ControlzEx.Theming;
+using log4net;
+using Notifications.Wpf;
+using POS.BusinessRule;
+using POS.Model;
+using POS.Utilities.PDF;
+using POSSystem.UI.Service;
+using POSSystem.UI.Views;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+using System.ComponentModel.Composition.Hosting;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows;
-using POSSystem.UI.Startup;
-using Autofac;
-using POSSystem.UI.Service;
-using ControlzEx.Theming;
-using System.IO.IsolatedStorage;
-using System.IO;
-using Notifications.Wpf;
-using POS.Model;
-using POS.Data.Repository;
-using POS.Data;
 
 namespace POSSystem.UI
 {
@@ -24,32 +21,49 @@ namespace POSSystem.UI
     /// </summary>
     public partial class App : Application
     {
+        private ILog logger;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var startup = new Startup.Startup();
+            var startup = new Startup();
             var container = startup.BootstrapDependencies();
+
+            logger = container.Resolve<ILogger>().GetLogger(typeof(App));
+            logger.Info("Starting Application");
+
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Current.DispatcherUnhandledException += Application_DispatcherUnhandledException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             StaticContainer.ThisApp = this;
             StaticContainer.Container = container;
-            StaticContainer.NotificationManager = new Notifications.Wpf.NotificationManager();
-           
+            StaticContainer.NotificationManager = new NotificationManager();
+
+
+            logger.Info("Reloading Configuration");
             ReloadConfig();
-            LoadCompanyInfo();
-            var window = container.Resolve<MainWindow>();
+
+
+            var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
-            Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+            logger.Info("Showing Login Window");
+            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
             window.Show();
         }
 
-        private void LoadCompanyInfo()
+        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            IGenericDataRepository<Shop> genericDataRepository = new DataRepository<Shop>(new POSDataContext());
-            Shop shop = genericDataRepository.GetAll().FirstOrDefault();
-            StaticContainer.Shop = shop;
-            StaticContainer.Shop.LogoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Image", StaticContainer.Shop.LogoPath);
+            logger.Fatal("UnobservedTaskException", e.Exception);
         }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            logger.Fatal("UnhandledException", e.ExceptionObject as Exception);
+        }
+
+        
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            logger.Fatal("DispatcherUnhandledException", e.Exception);
             StaticContainer.NotificationManager.Show(new NotificationContent
             {
                 Message = e.Exception.Message,
@@ -95,10 +109,7 @@ namespace POSSystem.UI
             }
             catch (FileNotFoundException ex)
             {
-                //throw ex;
-                // Handle when file is not found in isolated storage:
-                // * When the first application session
-                // * When file has been deleted
+                logger.Error("ReloadConfig", ex);
             }
             finally
             {

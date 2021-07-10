@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Autofac;
+using POS.Model;
+using POSSystem.UI.Enum;
+using POSSystem.UI.Service;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,10 +12,19 @@ namespace POSSystem.UI.ViewModel
 {
     public class ViewModelBase : NotifyPropertyChanged, INotifyDataErrorInfo
     {
+        internal User _loggedInUser;
+
         private Dictionary<string, List<string>> _errorsByPropertyName = new Dictionary<string, List<string>>();
         public bool HasErrors => _errorsByPropertyName.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+
+        public ViewModelBase()
+        {
+            ICacheService cache = StaticContainer.Container.Resolve<ICacheService>();
+            _loggedInUser = cache.ReadCache<User>(CacheKey.LoginUser.ToString());
+        }
 
         public IEnumerable GetErrors(string propertyName)
         {
@@ -19,6 +32,17 @@ namespace POSSystem.UI.ViewModel
                 _errorsByPropertyName[propertyName] :
                 null;
         }
+
+        public string GetFirstError(string propertyName)
+        {
+
+            if(_errorsByPropertyName.ContainsKey(propertyName))
+            {
+                return _errorsByPropertyName[propertyName][0];
+            }
+            return "";
+        }
+
 
         protected virtual void OnErrorsChanged(string propertyName)
         {

@@ -14,8 +14,7 @@ namespace POSSystem.UI.Views
         public UserProfileView()
         {
             InitializeComponent();
-            var cacheService = StaticContainer.Container.Resolve<ICacheService>();
-            _model = new UserProfileViewModel(cacheService);
+            _model = StaticContainer.Container.Resolve<UserProfileViewModel>();
             this.DataContext = _model;
         }
     }

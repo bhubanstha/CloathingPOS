@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture=";" xmlns="http://schemas.microsoft.com/wix/2006/localization">
 
-  <String Id="ProductCode_x86">{54060496-F98E-4817-AD90-7508B9B4B3B0}</String>
-  <String Id="ProductCode_x64">{10CDBB87-287A-48FD-A889-828B163BBFF1}</String>
+  <String Id="ProductCode_x86">{C0AC35B8-ED66-455B-A0D6-9FA29665554E}</String>
+  <String Id="ProductCode_x64">{765D1439-3E2E-454C-A99E-4E3D7D02178F}</String>
   
 	<String Id="ProductName">POS System</String>
   <String Id="ProductNameFolder">POS System</String>
@@ -11,10 +11,11 @@
 	<String Id="Language">1033</String>
 	<String Id="Company">Bhuban Shrestha</String>
   
-	<String Id="Description">POS System is a complete solution to manage inventory and sales data for small business. It also include user management module through which you can manage who can access system and who can not. Along with such greate feature it comes with VAN inclusion/exclusion feature through which you can calculate or not to calculate sales vat during sales.</String>
+	<String Id="Description">POS System is a complete solution to manage inventory and sales data for small business. It also include user management module through which you can manage who can access system and who can not. Along with such greate feature it comes with VAT inclusion/exclusion feature through which you can calculate or not to calculate sales vat during sales.</String>
 	<String Id="Keywords">POS, .NET, Windows App, Bhuban Shrestha</String>
 	<String Id="Comments">Contact Bhuban Shretha for support.</String>
 	<String Id="DowngradeErrorMessage">A newer version of POS System is already installed.</String>
+	<String Id="Manufacturer">Bhuban_Shrestha</String>
   
   
 </WixLocalization>

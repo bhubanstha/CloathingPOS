@@ -1,11 +1,19 @@
-﻿using MahApps.Metro.Controls;
+﻿using log4net;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using POS.BusinessRule;
 using POS.Model;
+using POSSystem.UI.Event;
 using POSSystem.UI.Service;
+using POSSystem.UI.UIModel;
+using POSSystem.UI.Wrapper;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,30 +21,13 @@ namespace POSSystem.UI.ViewModel
 {
     public class CategoryViewModel : ViewModelBase
     {
-        private Int64 _id;
-        private string _name;
+        private IEventAggregator _eventAggregator;
+        private ILog _log;
         private CategoryBO categoryBO;
-        private List<Category> categories;
+        private ObservableCollection<CategoryWrapper> categories;
 
-        private MetroWindow _window;
-
-
-        public Int64 Id { 
-            get { return _id; }
-            set { _id = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Name {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<Category> Categories
+        public CategoryWrapper NewCategory { get; set; }
+        public ObservableCollection<CategoryWrapper> Categories
         {
             get { return categories; }
             set
@@ -53,32 +44,29 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand EditCategoryCommand { get; }
         public ICommand ResetCommand { get; }
-        public CategoryViewModel()
+        public CategoryViewModel(IEventAggregator eventAggregator, ILogger logger)
         {
-            _window = Application.Current.MainWindow as MetroWindow;
+            _eventAggregator = eventAggregator;
+            _log = logger.GetLogger(typeof(CategoryViewModel));
+            NewCategory = new CategoryWrapper(new Category());
             LoadCategories();
-            CreateCategoryCommand = new DelegateCommand(SaveCategory);
-            DeleteCategoryCommand = new DelegateCommand<Category>(DeleteCategory);
-            EditCategoryCommand = new DelegateCommand<Category>(EditCategory);
+            CreateCategoryCommand = new DelegateCommand(OnSaveCategory);
+            DeleteCategoryCommand = new DelegateCommand<CategoryWrapper>(OnDeleteCategory);
+            EditCategoryCommand = new DelegateCommand<CategoryWrapper>(OnEditCategory);
             ResetCommand = new DelegateCommand(ResetEdit);
         }
 
-        private void ResetEdit()
-        {
-            this.Name = "";
-            this.Id = 0;
-        }
 
-        private void EditCategory(Category obj)
+        private void OnEditCategory(CategoryWrapper obj)
         {
             if(obj != null)
             {
-                this.Id = obj.Id;
-                this.Name = obj.Name;
+                this.NewCategory.Id = obj.Id;
+                this.NewCategory.Name = obj.Name;
             }
         }
 
-        private async void DeleteCategory(Category obj)
+        private async void OnDeleteCategory(CategoryWrapper obj)
         {
             try
             {
@@ -88,47 +76,132 @@ namespace POSSystem.UI.ViewModel
                     int i =  await categoryBO.Delete(obj.Id);
                     if (i > 0)
                     {
-                        LoadCategories();
+                        RemoveCategoryFromList(obj.Model);
+                        CategoryChangedEventArgs categoryChangedEventArgs = new CategoryChangedEventArgs
+                        {
+                            Category = obj.Model,
+                            Action = EventAction.Remove
+                        };
+                        _eventAggregator.GetEvent<CategoryChangedEvent>().Publish(categoryChangedEventArgs);
                     }
                 }
             }
             catch (Exception ex)
             {
-                await _window.ShowMessageAsync("Error", ex.Message, MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary, StaticContainer.DialogSettings);
+                _log.Error("OnDeleteCategory", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
             }
         }
 
-        private async void SaveCategory()
+        private async void OnSaveCategory()
         {
-            categoryBO = new CategoryBO();
-            Category c = new Category
+            try
             {
-                Id = this.Id,
-                Name = this.Name
-            };
+                bool isValid = NewCategory.IsValid();
+                if(!isValid)
+                {
+                    return;
+                }
+                categoryBO = new CategoryBO();
+                Category c = new Category
+                {
+                    Id = NewCategory.Id,
+                    Name = NewCategory.Name
+                };
 
-            int i = 0;
-            if(this.Id>0)
+                CategoryChangedEventArgs categoryChangedEventArgs = await ManageCategory(c, categoryBO);  
+                
+                string msg = categoryChangedEventArgs.Action == EventAction.Add? 
+                    "New Category Added Successfully." 
+                    : "Category Changed Successfully.";
+
+                _eventAggregator.GetEvent<CategoryChangedEvent>().Publish(categoryChangedEventArgs);
+                StaticContainer.ShowNotification("Category", msg, Notifications.Wpf.NotificationType.Success);
+            }
+            catch (Exception ex)
             {
-                i = await categoryBO.Update(c);
+                _log.Error("OnSaveCategory", ex);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, Notifications.Wpf.NotificationType.Error);
+            }
+            finally
+            {
+                ResetEdit();
+            }
+        }
+
+        private async Task<CategoryChangedEventArgs> ManageCategory(Category category, CategoryBO bO)
+        {
+            CategoryChangedEventArgs categoryChangedEventArgs = new CategoryChangedEventArgs
+            {
+                Category = category
+            };
+            if (category.Id>0)
+            {
+                await bO.Update(category);
+                categoryChangedEventArgs.Action = EventAction.Update;
             }
             else
             {
-                i = await categoryBO.Save(c);
+                await bO.Save(category);
+                categoryChangedEventArgs.Action = EventAction.Add;
             }
-            
-            if (i > 0)
-            {
-                this.Id = 0;
-                this.Name = "";
-                LoadCategories();
-            }
+            ManageCategoryInList(categoryChangedEventArgs);
+            return categoryChangedEventArgs;
         }
 
         private void LoadCategories()
         {
             categoryBO = new CategoryBO();
-            Categories = categoryBO.GetCategories();
+            var categoryList = categoryBO.GetCategories();
+            Categories = new ObservableCollection<CategoryWrapper>();
+            foreach (Category category in categoryList)
+            {
+                CategoryWrapper categoryWrapper = new CategoryWrapper(category);
+                Categories.Add(categoryWrapper);
+            }
         }
+
+        private void ManageCategoryInList(CategoryChangedEventArgs args)
+        {
+            if(args.Action == EventAction.Add)
+            {
+                AddNewCategoryToList(args.Category);
+            }
+            else if(args.Action == EventAction.Update)
+            {
+                UpdateCategoryInList(args.Category);
+            }
+            else
+            {
+                RemoveCategoryFromList(args.Category);
+            }
+        }
+
+        private void AddNewCategoryToList(Category obj)
+        {
+            CategoryWrapper categoryWrapper = new CategoryWrapper(obj);
+            Categories.Add(categoryWrapper);
+        }
+
+        private void UpdateCategoryInList(Category obj)
+        {
+            var item = Categories.Where(x => x.Id == obj.Id).FirstOrDefault();
+            item.Name = obj.Name;
+        }
+
+        private void RemoveCategoryFromList(Category obj)
+        {
+            var item = Categories.Where(x => x.Id == obj.Id).FirstOrDefault();
+            Categories.Remove(item);
+        }
+        
+
+
+        private void ResetEdit()
+        {
+            this.NewCategory.Name = "";
+            this.NewCategory.Id = 0;
+        }
+
     }
 }

@@ -6,7 +6,9 @@ namespace POS.Model
     public class Sales : EntityBase
     {
         public int SalesQuantity { get; set; }
-        public decimal Rate { get; set; }
+        public decimal SalesRate { get; set; }
+        public decimal PurchaseRate { get; set; }
+
         public decimal Discount { get; set; }
 
         [ForeignKey("Inventory")]

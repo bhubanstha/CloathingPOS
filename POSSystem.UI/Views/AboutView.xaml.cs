@@ -29,8 +29,8 @@ namespace POSSystem.UI.Views
 
         private void AboutView_Loaded(object sender, RoutedEventArgs e)
         {
-            bitmapImage = StaticContainer.AppScreenshot;
-            ThisWindowPic.Source = bitmapImage;
+            //bitmapImage = StaticContainer.AppScreenshot;
+            //ThisWindowPic.Source = bitmapImage;
         }
 
         private BitmapImage TakeScreenshot()

@@ -29,7 +29,7 @@
     </mah:Flyout.Resources>
 
     <mah:Flyout.HeaderTemplate>
-        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <DataTemplate>
             <DockPanel
                 x:Name="dpHeader"
                 Margin="0,0,0,0"
@@ -135,8 +135,8 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Category Name"
                 SpellCheck.IsEnabled="True"
-                Style="{DynamicResource MahApps.Styles.TextBox.Button}"
-                Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                Style="{DynamicResource TextBox.Validation}"
+                Text="{Binding NewCategory.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Button
                 Grid.Row="6"

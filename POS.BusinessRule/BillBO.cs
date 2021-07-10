@@ -2,6 +2,7 @@
 using POS.Data.Repository;
 using POS.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,9 +17,18 @@ namespace POS.BusinessRule
             genericDataRepository = new DataRepository<Bill>(new POSDataContext());
         }
 
-        public void AddBillToMemory(ref Bill bill)
+        public List<Bill> GetAll()
         {
-            genericDataRepository.Insert(bill);
+            return genericDataRepository.GetAll().ToList();
+        }
+
+        public int GetRemainingSalesCount(Int64 BillNo)
+        {
+            int remainingRecords =  genericDataRepository.GetAll()
+                .Where(x=>x.Id == BillNo)
+                .Select(x=>x.Sales)
+                .Count();
+            return remainingRecords;
         }
 
         public long GetNewBillNo()
@@ -40,6 +50,17 @@ namespace POS.BusinessRule
             return 1;
         }
 
+        public Bill GetById(Int64 billId)
+        {
+            Bill b = genericDataRepository.GetByID(billId);
+            return b;
+        }
+
+        public async Task<int> Update(Bill bill)
+        {
+            genericDataRepository.Update(bill);
+            return await genericDataRepository.SaveAsync();
+        }
         public async Task<int> Remove(Int64 id)
         {
             genericDataRepository.Delete(id);

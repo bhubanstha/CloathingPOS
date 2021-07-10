@@ -73,14 +73,17 @@ namespace POSSystem.UI.Controls
             {
                 SetValue(SelectedItemProperty, value);
 
-                if (value != null)
+                if (TXT_SEARCHINPUT != null)
                 {
-                    TXT_SEARCHINPUT.Text = value.ToString();
-                    TXT_SEARCHINPUT.Select(TXT_SEARCHINPUT.Text.Length, 0);
-                }
-                else
-                {
-                    TXT_SEARCHINPUT.Text = "";
+                    if (value != null)
+                    {
+                        TXT_SEARCHINPUT.Text = value.ToString();
+                        TXT_SEARCHINPUT.Select(TXT_SEARCHINPUT.Text.Length, 0);
+                    }
+                    else
+                    {
+                        TXT_SEARCHINPUT.Text = "";
+                    }
                 }
                 if (this.OnSelectedItemChange != null)
                     this.OnSelectedItemChange.Invoke(this, new EventArgs());
