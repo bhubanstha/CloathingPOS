@@ -43,7 +43,7 @@ namespace POSSystem.UI
             ReloadConfig();
 
 
-            var window = container.Resolve<LoginWindow>();
+            var window = container.Resolve<EditorWindow>();
             this.MainWindow = window;
             logger.Info("Showing Login Window");
             Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
