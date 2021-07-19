@@ -35,7 +35,7 @@ namespace POS.BusinessRule
         {
             return genericDataRepository
                 .GetAll()
-                .Where(x=> x.IsDeleted == false && x.Quantity>0 && x.BranchId == branchId)
+                .Where(x=> x.IsDeleted == false && x.Quantity>=0 && x.BranchId == branchId)
                 .ToList();
         }
 
