@@ -52,8 +52,9 @@ namespace POS.BusinessRule
         {
             return genericDataRepository
                 .GetAll()
-                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.BranchId == branchId  && x.Name.ToLower().StartsWith(productName))
-                .ToList();
+                .Where(x => x.IsDeleted == false && x.Quantity > 0 && x.BranchId == branchId 
+                && (x.Name.ToLower().StartsWith(productName) || x.Code.ToLower().StartsWith(productName))
+                ).ToList();
         }
 
         public Inventory GetById(Int64 id)

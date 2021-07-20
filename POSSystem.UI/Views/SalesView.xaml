@@ -85,9 +85,13 @@
                                     Binding="{Binding Category.Name}"
                                     Header="Category" />
                                 <DataGridTextColumn
+                                    Width="80"
+                                    Binding="{Binding Code}"
+                                    Header="Code" />
+                                <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding Name}"
-                                    Header="Product Name" />
+                                    Header="Name" />
                                 <DataGridTextColumn
                                     Width="70"
                                     Binding="{Binding Size}"
