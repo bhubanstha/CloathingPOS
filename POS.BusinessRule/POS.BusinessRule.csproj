@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADO\BillBO.cs" />
     <Compile Include="BillBO.cs" />
     <Compile Include="BranchBO.cs" />
     <Compile Include="BrandBO.cs" />
