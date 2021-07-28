@@ -327,7 +327,7 @@ namespace POSSystem.UI.ViewModel
                         CalculateVAT = StaticContainer.Shop.CalculateVATOnSales,
                         UserId = _loggedInUser.Id
                     };
-                    Int64 billNo = billBO.CreateNewBill(ref b);
+                    Int64 billNo = await billBO.CreateNewBill(b);
                     foreach (var item in CurrentCart)
                     {
                         SalesBO salesBO = new SalesBO();
@@ -396,10 +396,10 @@ namespace POSSystem.UI.ViewModel
             return CurrentPdfFilePath;
         }
 
-        public List<Inventory> GetFilteredProduct(string productName)
+        public async Task<List<Inventory>> GetFilteredProduct(string productName)
         {
             inventoryBO = new InventoryBO();
-            List<Inventory> filteredInventory = inventoryBO.GetAllActiveProducts(productName, StaticContainer.ActiveBranchId);
+            List<Inventory> filteredInventory = await inventoryBO.GetAllActiveProducts( StaticContainer.ActiveBranchId, productName);
             return filteredInventory;
         }
 

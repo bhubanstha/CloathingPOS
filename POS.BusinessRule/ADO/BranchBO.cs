@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
     public class BranchBO
     {
@@ -68,7 +68,8 @@ namespace POS.BusinessRule.ADO
                     Id = (long)table.Rows[0]["Id"],
                     BranchName = table.Rows[0]["BranchName"].ToString(),
                     BranchAddress = table.Rows[0]["BranchAddress"].ToString(),
-                    ShopId = (long)table.Rows[0]["ShopId"]
+                    ShopId = (long)table.Rows[0]["ShopId"],
+                    Shop = await new ShopBO().GetShop()
                 };
                 return b;
             });

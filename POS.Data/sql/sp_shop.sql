@@ -1,6 +1,3 @@
-select * from Shop
-go
-
 create proc GetShop
 as
 begin
@@ -15,11 +12,12 @@ create proc SaveShop
 @LogoPath	varchar(200),
 @CalculateVATOnSales	bit,
 @PrintInvoice	bit,
-@PdfPassword	varchar(10)
+@PdfPassword	varchar(10) = null
 as
 begin
 	insert into Shop(Name, PANNumber, LogoPath, CalculateVATOnSales,PrintInvoice,PdfPassword) values
 	(@Name, @PANNumber, @LogoPath, @CalculateVATOnSales,@PrintInvoice,@PdfPassword)
+	select scope_identity()
 end
 
 go
@@ -31,7 +29,7 @@ create proc UpdateShop
 @LogoPath	varchar(200),
 @CalculateVATOnSales	bit,
 @PrintInvoice	bit,
-@PdfPassword	varchar(10)
+@PdfPassword	varchar(10) = null
 as
 begin
 	update Shop set

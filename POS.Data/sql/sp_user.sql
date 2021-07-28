@@ -1,7 +1,3 @@
-select top 1 * from [User]
-
-go
-
 create proc GetAllUser
 @UserName varchar(50),
 @BranchId bigint
@@ -62,16 +58,17 @@ create proc SaveUser
 @IsAdmin	bit,
 @IsActive	bit,
 @PromptForPasswordReset	bit,
-@ProfileImage	varchar(30),
+@ProfileImage	varchar(30)=null,
 @CreatedDate	datetime,
-@DeactivationDate	datetime,
-@LastPasswordChangeDate	datetime,
+@DeactivationDate	datetime=null,
+@LastPasswordChangeDate	datetime=null,
 @BranchId	bigint,
 @CanAccessAllBranch	bit
 as
 begin
 	insert into [User] (UserName, DisplayName, Password, IsAdmin, IsActive, PromptForPasswordReset, ProfileImage, CreatedDate, DeactivationDate, LastPasswordChangeDate, BranchId, CanAccessAllBranch) values
 	(@UserName, @DisplayName, @Password, @IsAdmin, @IsActive, @PromptForPasswordReset, @ProfileImage, @CreatedDate, @DeactivationDate, @LastPasswordChangeDate, @BranchId, @CanAccessAllBranch) 
+	select SCOPE_IDENTITY()
 end
 
 go
@@ -84,10 +81,10 @@ create proc UpdateUser
 @IsAdmin	bit,
 @IsActive	bit,
 @PromptForPasswordReset	bit,
-@ProfileImage	varchar(30),
+@ProfileImage	varchar(30)=null,
 @CreatedDate	datetime,
-@DeactivationDate	datetime,
-@LastPasswordChangeDate	datetime,
+@DeactivationDate	datetime=null,
+@LastPasswordChangeDate	datetime=null,
 @BranchId	bigint,
 @CanAccessAllBranch	bit
 as

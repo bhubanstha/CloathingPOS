@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
     public class BillBO
     {

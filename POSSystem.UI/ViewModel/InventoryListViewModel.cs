@@ -158,10 +158,10 @@ namespace POSSystem.UI.ViewModel
             RemoveItem(obj.Model);
         }
 
-        private void LoadInventory()
+        private async void LoadInventory()
         {
             _inventoryBo = new InventoryBO();
-            List<Inventory> items = _inventoryBo.GetAllActiveProducts(StaticContainer.ActiveBranchId);
+            List<Inventory> items = await _inventoryBo.GetAllActiveProducts(StaticContainer.ActiveBranchId, "");
 
             Inventory = new ObservableCollection<InventoryWrapper>();
             foreach (Inventory item in items)
@@ -185,18 +185,18 @@ namespace POSSystem.UI.ViewModel
             return false;
         }
 
-        private void ReloadInventory(InventoryChangedEventArgs args)
+        private async void ReloadInventory(InventoryChangedEventArgs args)
         {
             if(args.Action == EventAction.Add)
             {
                 if (Inventory != null)
                 {
                     CategoryBO categoryBO = new CategoryBO();
-                    Category c = categoryBO.GetCategory(args.Inventory.CategoryId);
+                    Category c = await categoryBO.GetCategory(args.Inventory.CategoryId);
                     args.Inventory.Category = c;
 
                     BrandBO brandBo = new BrandBO();
-                    Brand b = brandBo.GetBrand(args.Inventory.BrandId);
+                    Brand b = await brandBo.GetBrand(args.Inventory.BrandId);
                     args.Inventory.Brand = b;
 
                     InventoryWrapper wrapper = new InventoryWrapper(args.Inventory);
@@ -212,6 +212,12 @@ namespace POSSystem.UI.ViewModel
                 item.RetailRate = args.Inventory.RetailRate;
                 item.PurchaseRate = args.Inventory.PurchaseRate;
                 item.FirstPurchaseDate = args.Inventory.FirstPurchaseDate;
+                item.CategoryId = args.Inventory.CategoryId;
+                item.BrandId = args.Inventory.BrandId;
+                item.Code = args.Inventory.Code;
+                item.Name = args.Inventory.Name;
+                item.Color = args.Inventory.Color;
+                item.ColorName = args.Inventory.ColorName;
             }
         }
 

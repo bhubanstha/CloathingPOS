@@ -238,10 +238,9 @@ namespace POSSystem.UI.ViewModel
                 string title = "";
                 string msg = "";
                 _userBo = new UserBO(_encryption);
-                int id = 0;
+                long id = 0;
                 if (u.Id > 0)
                 {
-                    u.Password = await _userBo.EncryptPassword(u.Password);
                     id = await _userBo.UpdateUser(u);
                     ButtonText = "Create Account";
                     title = "User Updated";
@@ -250,6 +249,7 @@ namespace POSSystem.UI.ViewModel
                 else
                 {
                     id = await _userBo.SaveUser(u);
+                    u.Id = id;
                     title = "User Creation";
                     msg = $"User {u.UserName} is created successfully.";
                 }
@@ -274,13 +274,13 @@ namespace POSSystem.UI.ViewModel
 
         }
 
-        private void LoadAllUsers()
+        private async void LoadAllUsers()
         {
             User me = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
             if (me != null)
             {
                 _userBo = new UserBO(_encryption);
-                List<User> _users = _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
+                List<User> _users = await _userBo.GetAllUser(me.UserName, StaticContainer.ActiveBranchId);
                 UsersList = new ObservableCollection<UserWrapper>();
                 foreach (User u in _users)
                 {

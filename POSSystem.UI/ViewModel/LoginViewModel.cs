@@ -127,12 +127,12 @@ namespace POSSystem.UI.ViewModel
         {
             try
             {
-                Task<MetroWindow> t = Task.Run(() =>
+                Task<MetroWindow> t = Task.Run(async () =>
                     {
                         string encryptePassword = _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result;
                         UserBO bo = new UserBO(_bouncyCastleEncryption);
 
-                        User u = bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
+                        User u = await bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
 
                         MetroWindow window = null;
                         if (u != null)
@@ -174,12 +174,12 @@ namespace POSSystem.UI.ViewModel
                                 else
                                 {
                                     BranchBO branchBO = new BranchBO();
-                                    Branch b = branchBO.GetById(u.BranchId.Value);
+                                    Branch b = await branchBO.GetById(u.BranchId.Value);
                                     if (b != null)
                                     {
                                         StaticContainer.Shop = new ShopVM
                                         {
-                                            Id = b.Shop.Id,
+                                            Id = b.ShopId,
                                             Address = b.BranchAddress,
                                             CalculateVATOnSales = b.Shop.CalculateVATOnSales,
                                             LogoPath = b.Shop.LogoPath,

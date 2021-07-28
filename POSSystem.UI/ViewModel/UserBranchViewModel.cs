@@ -73,10 +73,10 @@ namespace POSSystem.UI.ViewModel
                 //}
             }
         }
-        private void LoadBranches()
+        private async void LoadBranches()
         {
             BranchBO bo = new BranchBO();
-            List<Branch> branchlist = _loggedInUser == null? bo.GetAll() : bo.GetAll(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
+            List<Branch> branchlist = _loggedInUser == null? await bo.GetAll() : await bo.GetAll(_loggedInUser.BranchId.Value, _loggedInUser.CanAccessAllBranch);
             Branches = new ObservableCollection<BranchWrapper>();
             foreach (Branch branch in branchlist)
             {

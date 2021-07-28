@@ -101,20 +101,22 @@
   <ItemGroup>
     <Compile Include="ADO\BillBO.cs" />
     <Compile Include="ADO\BranchBO.cs" />
+    <Compile Include="ADO\BrandBO.cs" />
     <Compile Include="ADO\CategoryBO.cs" />
     <Compile Include="ADO\InventoryBO.cs" />
+    <Compile Include="ADO\InventoryHistoryBO.cs" />
     <Compile Include="ADO\SalesBO.cs" />
     <Compile Include="ADO\ShopBO.cs" />
     <Compile Include="ADO\UserBO.cs" />
-    <Compile Include="BillBO.cs" />
-    <Compile Include="BranchBO.cs" />
-    <Compile Include="BrandBO.cs" />
-    <Compile Include="CategoryBO.cs" />
-    <Compile Include="InventoryBO.cs" />
-    <Compile Include="InventoryHistoryBO.cs" />
-    <Compile Include="SalesBO.cs" />
-    <Compile Include="ShopBO.cs" />
-    <Compile Include="UserBO.cs" />
+    <Compile Include="EF\BillBO.cs" />
+    <Compile Include="EF\BranchBO.cs" />
+    <Compile Include="EF\BrandBO.cs" />
+    <Compile Include="EF\CategoryBO.cs" />
+    <Compile Include="EF\InventoryBO.cs" />
+    <Compile Include="EF\InventoryHistoryBO.cs" />
+    <Compile Include="EF\SalesBO.cs" />
+    <Compile Include="EF\ShopBO.cs" />
+    <Compile Include="EF\UserBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,19 +1,20 @@
 ﻿using POS.Data;
 using POS.Model;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
-    public class ShopBO 
+    public class ShopBO
     {
         public Task<Shop> GetShop()
         {
             return Task.Run(async () =>
             {
 
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("GetShop");
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
                 Shop shop = new Shop
                 {
@@ -28,13 +29,12 @@ namespace POS.BusinessRule.ADO
                 return shop;
             });
         }
-
         public Task<int> SaveShop(Shop shop)
         {
             return Task.Run(async () =>
             {
 
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("SaveShop");
                 cmd.Parameters.AddWithValue("@Name", shop.Name);
                 cmd.Parameters.AddWithValue("@PANNumber", shop.PANNumber);
                 cmd.Parameters.AddWithValue("@LogoPath", shop.LogoPath);
@@ -51,7 +51,7 @@ namespace POS.BusinessRule.ADO
             return Task.Run(async () =>
             {
 
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("UpdateShop");
                 cmd.Parameters.AddWithValue("@Id", shop.Id);
                 cmd.Parameters.AddWithValue("@Name", shop.Name);
                 cmd.Parameters.AddWithValue("@PANNumber", shop.PANNumber);

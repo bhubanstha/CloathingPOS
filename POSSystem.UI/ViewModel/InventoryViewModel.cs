@@ -182,7 +182,7 @@ namespace POSSystem.UI.ViewModel
                     BarCode = this.Inventory.Code.PadRight(8,'0').Substring(0,8) + Guid.NewGuid().ToString("N")
                 };
                 InventoryBO = new InventoryBO();
-                int c = 0;
+                long c = 0;
                 if(this.Inventory.Id>0)
                 {
                     c = await InventoryBO.UpdateInventory(inventory);
@@ -192,6 +192,7 @@ namespace POSSystem.UI.ViewModel
                 else
                 {
                     c = await InventoryBO.Save(inventory);
+                    inventory.Id = c;
                     eventAction = EventAction.Add;
                     msg = "added into inventory";
                 }
@@ -217,9 +218,9 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void LoadCategories()
+        private async void LoadCategories()
         {
-            List<Category> categories = CategoryBO.GetCategories();
+            List<Category> categories = await CategoryBO.GetCategories();
             Categories = new ObservableCollection<CategoryWrapper>();
             foreach (Category item in categories)
             {
@@ -228,10 +229,10 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void LoadBrands()
+        private async void LoadBrands()
         {
             BrandBO brandBo = new BrandBO();
-            List<Brand> brands = brandBo.GetBrands();
+            List<Brand> brands = await brandBo.GetBrands();
             Brands = new ObservableCollection<BrandWrapper>();
             foreach (Brand item in brands)
             {

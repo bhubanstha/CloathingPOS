@@ -169,7 +169,7 @@ namespace POSSystem.UI.ViewModel
             }
             else
             {
-                await bO.Save(branch);
+                branch.Id =  await bO.Save(branch);
                 args.Action = EventAction.Add;
             }
             ManageBranchInList(args);
@@ -211,10 +211,10 @@ namespace POSSystem.UI.ViewModel
             Branches.Remove(item);
         }
 
-        private void LoadBranches()
+        private async void LoadBranches()
         {
             BranchBO bo = new BranchBO();
-            List<Branch> branchlist = bo.GetAll();
+            List<Branch> branchlist = await bo.GetAll();
             Branches = new ObservableCollection<BranchWrapper>();
             foreach (Branch branch in branchlist)
             {

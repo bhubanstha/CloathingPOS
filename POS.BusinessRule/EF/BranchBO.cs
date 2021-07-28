@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule
+namespace POS.BusinessRule.EF
 {
     public class BranchBO
     {

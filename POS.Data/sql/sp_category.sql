@@ -1,7 +1,4 @@
-﻿select top 1 * from Category
-go
-
-create proc GetAllCategory
+﻿create proc GetAllCategory
 as
 begin
 	select c.Id, c.Name from dbo.Category c with (nolock)
@@ -24,6 +21,7 @@ create proc SaveCategory
 as
 begin
 	insert into Category values (@Name)
+	select scope_identity()
 end
 
 go

@@ -141,17 +141,17 @@ namespace POSSystem.UI.ViewModel
             }
             else
             {
-                await bO.Save(brand);
+                brand.Id =  await bO.Save(brand);
                 categoryChangedEventArgs.Action = EventAction.Add;
             }
             ManageCategoryInList(categoryChangedEventArgs);
             return categoryChangedEventArgs;
         }
 
-        private void LoadCategories()
+        private async void LoadCategories()
         {
             brandBO = new BrandBO();
-            var brandList = brandBO.GetBrands();
+            var brandList = await brandBO .GetBrands();
             Brands = new ObservableCollection<BrandWrapper>();
             foreach (Brand brand in brandList)
             {

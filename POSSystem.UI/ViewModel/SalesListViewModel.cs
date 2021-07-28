@@ -148,13 +148,13 @@ namespace POSSystem.UI.ViewModel
 
         Task LoadSales()
         {
-            Task<ObservableCollection<Sales>> t = Task.Run(() =>
+            Task<ObservableCollection<Sales>> t = Task.Run(async () =>
             {
                 if (BillingDate.HasValue)
                 {
 
                     SalesBO bo = new SalesBO();
-                    var billList = bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
+                    var billList = await bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
                     SalesList = new ObservableCollection<Sales>(billList);
                     if (SalesList.Count == 0)
                     {

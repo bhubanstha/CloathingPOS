@@ -6,35 +6,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule
+namespace POS.BusinessRule.EF
 {
-    public class BrandBO
+    public class CategoryBO
     {
-        private IGenericDataRepository<Brand> genericDataRepository;
+        private IGenericDataRepository<Category> genericDataRepository;
 
-        public BrandBO()
+        public CategoryBO()
         {
-            genericDataRepository = new DataRepository<Brand>(new POSDataContext());
+            genericDataRepository = new DataRepository<Category>(new POSDataContext());
         }
 
 
-        public List<Brand> GetBrands()
+        public List<Category> GetCategories()
         {
             return genericDataRepository.GetAll().ToList();
         }
 
-        public Brand GetBrand(Int64 id)
+        public Category GetCategory(Int64 id)
         {
             return genericDataRepository.GetByID(id);
         }
 
-        public async Task<int> Save(Brand brand)
+        public async Task<int> Save(Category category)
         {
-            genericDataRepository.Insert(brand);
+            genericDataRepository.Insert(category);
             return await genericDataRepository.SaveAsync();
         }
 
-        public async Task<int> Update(Brand obj)
+        public async Task<int> Update(Category obj)
         {
             genericDataRepository.Update(obj);
             return await genericDataRepository.SaveAsync();

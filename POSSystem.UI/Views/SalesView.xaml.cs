@@ -28,7 +28,7 @@ namespace POSSystem.UI.Views
             TextBox inp = sender as TextBox;
             //model.FilterProducts = model.Products.Where(p => p.Name.ToLower().StartsWith(inp.Text.ToLower())).ToList();
             //txtProduct.AutoCompleteItemSource = model.FilterProducts;
-            model.FilterProducts = model.GetFilteredProduct(inp.Text.ToLower());
+            model.FilterProducts = await model.GetFilteredProduct(inp.Text.ToLower());
             txtProductName.AutoCompleteItemSource = model.FilterProducts;
         }
 

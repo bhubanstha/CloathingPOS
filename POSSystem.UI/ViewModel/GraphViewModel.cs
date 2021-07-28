@@ -8,6 +8,7 @@ using POSSystem.UI.UIModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace POSSystem.UI.ViewModel
 {
@@ -52,7 +53,7 @@ namespace POSSystem.UI.ViewModel
         }
 
         
-        public void CreateGraphModel()
+        public async void CreateGraphModel()
         {
             PlotModel = new PlotModel();
             var purchasePoints = new List<GraphPoint>();
@@ -62,7 +63,7 @@ namespace POSSystem.UI.ViewModel
 
             purchasePoints = PurchaseHistory();
             salePoints = SalesHistory();
-            stockPoints = Stock(2021, ref purchasePoints, ref salePoints);
+            stockPoints = await Stock(2021,  purchasePoints,  salePoints);
 
             var max1 = purchasePoints.Count == 0 ? 0 : purchasePoints.Max(x => x.Value);
             var max2 = salePoints.Count == 0 ? 0 : salePoints.Max(x => x.Value);
@@ -118,14 +119,14 @@ namespace POSSystem.UI.ViewModel
         {
 
             InventoryHistoryBO bO = new InventoryHistoryBO();
-            List<InventoryHistory> result = bO.GetHistory(SelectedItem.Id);
+            List<InventoryHistory> result = bO.GetHistory(SelectedItem.Id).Result;
 
             List<GraphPoint> points = new List<GraphPoint>();
             foreach (InventoryHistory history in result)
             {
                 points.Add(new GraphPoint
                 {
-                    Time = history.PurchaseDate,
+                    Time = history.PurchaseDate.Date,
                     Value = history.Quantity
                 });
             }
@@ -136,20 +137,20 @@ namespace POSSystem.UI.ViewModel
         {
 
             SalesBO bO = new SalesBO();
-            List<Sales> results = bO.GetSalesHistory(SelectedItem.Id);
+            List<Sales> results = bO.GetSalesHistory(SelectedItem.Id).Result;
             List<GraphPoint> points = new List<GraphPoint>();
             foreach (Sales sale in results)
             {
                 points.Add(new GraphPoint
                 {
-                    Time = sale.Bill.BillDate,
+                    Time = sale.Bill.BillDate.Date,
                     Value = sale.SalesQuantity
                 });
             }
             return points;
         }
 
-        private List<GraphPoint> Stock(int year, ref List<GraphPoint> purchaseHistory, ref List<GraphPoint> salesHistory)
+        private async Task<List<GraphPoint>> Stock(int year,  List<GraphPoint> purchaseHistory,  List<GraphPoint> salesHistory)
         {
             List<GraphPoint> stock = new List<GraphPoint>();
 
@@ -181,7 +182,7 @@ namespace POSSystem.UI.ViewModel
                         stock.Add(new GraphPoint
                         {
                             Time = new DateTime(year, month, 1),
-                            Value = LastYearStock(year)
+                            Value = await LastYearStock(year)
                         });
                     }
                     var stockQty = totalPurchase - totalSales;
@@ -196,17 +197,18 @@ namespace POSSystem.UI.ViewModel
             return stock;
         }
 
-        private int LastYearStock(int thisYear)
+        private async Task<int> LastYearStock(int thisYear)
         {
             InventoryBO inventoryBO = new InventoryBO();
-            var qty = inventoryBO.GetAllActiveProducts().Where(x => x.FirstPurchaseDate.Year == thisYear - 1).Sum(x => x.Quantity);
+            List<Inventory> inventories = await inventoryBO.GetAllActiveProducts(StaticContainer.ActiveBranchId, "");
+            var qty = inventories.Where(x => x.FirstPurchaseDate.Year == thisYear - 1).Sum(x => x.Quantity);
             return qty;
         }
 
-        private void GetAllProducts()
+        private async void GetAllProducts()
         {
             InventoryBO inventoryBO = new InventoryBO();
-            Products = inventoryBO.GetAllActiveProducts();
+            Products = await inventoryBO.GetAllActiveProducts(StaticContainer.ActiveBranchId, "");
         }
 
 

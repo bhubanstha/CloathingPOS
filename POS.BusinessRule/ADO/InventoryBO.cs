@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
     public class InventoryBO
     {
@@ -28,6 +28,7 @@ namespace POS.BusinessRule.ADO
                 cmd.Parameters.AddWithValue("@Size", inventory.Size);
                 cmd.Parameters.AddWithValue("@Color", inventory.Color);
                 cmd.Parameters.AddWithValue("@ColorName", inventory.ColorName);
+                cmd.Parameters.AddWithValue("@CategoryId", inventory.CategoryId);
                 cmd.Parameters.AddWithValue("@BrandId", inventory.BrandId);
                 int i = await DataAccess.ExecuteNonQueryAsync(cmd);
                 return i;
@@ -39,7 +40,7 @@ namespace POS.BusinessRule.ADO
             return Task.Run(async () =>
             {
                 SqlCommand cmd = DataAccess.CreateCommand("GetAllActiveInventory");
-                cmd.Parameters.AddWithValue("@Id", branchId);
+                cmd.Parameters.AddWithValue("@BranchId", branchId);
                 cmd.Parameters.AddWithValue("@Name", productName);
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
                 List<Inventory> inventories = new List<Inventory>();
@@ -63,6 +64,8 @@ namespace POS.BusinessRule.ADO
                         ColorName = row["ColorName"].ToString(),
                         CategoryId = (long)row["CategoryId"],
                         BrandId = (long)row["BrandId"],
+                        Category = await new CategoryBO().GetCategory((long)row["CategoryId"]),
+                        Brand = await new BrandBO().GetBrand((long)row["BrandId"])
                     });
                 }
                 return inventories;
@@ -94,15 +97,17 @@ namespace POS.BusinessRule.ADO
                     ColorName = tbl.Rows[0]["ColorName"].ToString(),
                     CategoryId = (long)tbl.Rows[0]["CategoryId"],
                     BrandId = (long)tbl.Rows[0]["BrandId"],
+                    Category = await new CategoryBO().GetCategory((long)tbl.Rows[0]["CategoryId"]),
+                    Brand = await new BrandBO().GetBrand((long)tbl.Rows[0]["BrandId"])
                 };
-                
                 return inv;
             });
         }
 
         public Task<int> RemoveItem(Inventory item)
         {
-            return Task.Run(async () => {
+            return Task.Run(async () =>
+            {
                 SqlCommand cmd = DataAccess.CreateCommand("RemoveItem");
                 cmd.Parameters.AddWithValue("@Id", item.Id);
 
@@ -114,7 +119,8 @@ namespace POS.BusinessRule.ADO
 
         public Task<int> DeductQuantity(Int64 productId, int deductionQty)
         {
-            return Task.Run(async () => {
+            return Task.Run(async () =>
+            {
                 SqlCommand cmd = DataAccess.CreateCommand("DeductInventoryQuantity");
                 cmd.Parameters.AddWithValue("@Id", productId);
                 cmd.Parameters.AddWithValue("@Quantity", deductionQty);
@@ -126,7 +132,8 @@ namespace POS.BusinessRule.ADO
 
         public Task<int> UpdateInventory(Inventory inventory, InventoryHistory history = null)
         {
-            return Task.Run(async () => {
+            return Task.Run(async () =>
+            {
                 SqlCommand cmd = DataAccess.CreateCommand("UpdateInventory");
                 cmd.Parameters.AddWithValue("@Id", inventory.Id);
                 cmd.Parameters.AddWithValue("@PurchaseRate", inventory.PurchaseRate);
@@ -143,7 +150,8 @@ namespace POS.BusinessRule.ADO
                 cmd.Parameters.AddWithValue("@Color", inventory.Color);
                 cmd.Parameters.AddWithValue("@ColorName", inventory.ColorName);
                 cmd.Parameters.AddWithValue("@BrandId", inventory.BrandId);
-                cmd.Parameters.AddWithValue("@MaintainHistory", history!=null);
+                cmd.Parameters.AddWithValue("@CategoryId", inventory.CategoryId);
+                cmd.Parameters.AddWithValue("@MaintainHistory", history != null);
 
                 int i = await DataAccess.ExecuteNonQueryAsync(cmd);
                 return i;
@@ -152,7 +160,8 @@ namespace POS.BusinessRule.ADO
 
         public Task<int> Restock(Inventory inventory, int salesReturn)
         {
-            return Task.Run(async () => {
+            return Task.Run(async () =>
+            {
                 SqlCommand cmd = DataAccess.CreateCommand("RestockInventory");
                 cmd.Parameters.AddWithValue("@Id", inventory.Id);
                 cmd.Parameters.AddWithValue("@Quantity", salesReturn);

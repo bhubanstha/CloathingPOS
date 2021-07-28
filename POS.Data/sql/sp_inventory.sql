@@ -1,7 +1,4 @@
-﻿select top 1 * from Inventory
-go
-
-create proc SaveInventory
+﻿create proc SaveInventory
 @PurchaseRate	decimal(18,2),
 @RetailRate	decimal(18,2),
 @Quantity	int,

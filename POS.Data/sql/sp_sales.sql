@@ -1,7 +1,4 @@
-﻿select top 1 * from Sales
-go
-
-create proc GetAllSales
+﻿create proc GetAllSales
 as
 begin
 	select s.Id, s.SalesQuantity, s.PurchaseRate, s.Discount, s.ProductId, s.BillNo, s.SalesRate from Sales s with (nolock)
@@ -114,9 +111,11 @@ create proc GetSalesHistory
 @ProductId bigint
 as
 begin
-	select s.Id, s.SalesQuantity, s.PurchaseRate, s.Discount, s.ProductId, s.BillNo, s.SalesRate 
+	select sum(s.SalesQuantity) AS SalesQuantity, convert(date,b.BillDate) AS BillDate
 	from Sales s with (nolock)
 	inner join Bill b with (nolock) on s.BillNo = b.Id
-	where s.ProductId = @ProductId
-	order by b.BillDate asc
+	--where s.ProductId = @ProductId
+	group by convert(date, b.BillDate)
+	order by convert(date, b.BillDate) asc
+
 end

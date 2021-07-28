@@ -56,7 +56,7 @@ namespace POSSystem.UI.ViewModel
             try
             {
                 userBO = new UserBO(_encryption);
-                User u = userBO.GetUserFromUserName(CurrentUser.UserName);
+                User u = await userBO.GetUserFromUserName(CurrentUser.UserName);
                 if(u != null)
                 {
                     u.Password = await userBO.EncryptPassword( CurrentUser.Password);

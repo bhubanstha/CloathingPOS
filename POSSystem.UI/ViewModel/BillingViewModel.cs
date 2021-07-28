@@ -43,12 +43,12 @@ namespace POSSystem.UI.ViewModel
             eventAggregator.GetEvent<BillingInfoUpdateEvent>().Subscribe(OnDialogOpen);
         }
 
-        private void OnDialogOpen(BillingInfoUpdateEventArgs arg)
+        private async void OnDialogOpen(BillingInfoUpdateEventArgs arg)
         {
             if (arg.Action == EventAction.Edit)
             {
                 BillBO bO = new BillBO();
-                Bill b = bO.GetById(arg.BillId);
+                Bill b = await bO.GetById(arg.BillId);
                 Bill.BillDate = b.BillDate;
                 Bill.BillingAddress = b.BillingAddress;
                 Bill.BillingPAN = b.BillingPAN;

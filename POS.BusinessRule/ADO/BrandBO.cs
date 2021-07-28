@@ -7,36 +7,36 @@ using System.Threading.Tasks;
 
 namespace POS.BusinessRule
 {
-    public class CategoryBO
+    public class BrandBO
     {
-        public Task<List<Category>> GetCategories()
+        public Task<List<Brand>> GetBrands()
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllCategory");
+                SqlCommand cmd = DataAccess.CreateCommand("GetAllBrands");
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
-                List<Category> categories = new List<Category>();
+                List<Brand> brands = new List<Brand>();
                 foreach (DataRow row in tbl.Rows)
                 {
-                    categories.Add(new Category
+                    brands.Add(new Brand
                     {
                         Id = (long)row["Id"],
                         Name = row["Name"].ToString()
                     });
                 }
-                return categories;
+                return brands;
             });
         }
 
-        public Task<Category> GetCategory(long id)
+        public Task<Brand> GetBrand(long id)
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetCategoryById");
+                SqlCommand cmd = DataAccess.CreateCommand("GetBrandById");
                 cmd.Parameters.AddWithValue("@Id", id);
                 DataTable table = await DataAccess.ExecuteReaderCommandAsync(cmd);
 
-                Category c = new Category
+                Brand c = new Brand
                 {
                     Id = (long)table.Rows[0]["Id"],
                     Name = table.Rows[0]["Name"].ToString()
@@ -45,24 +45,24 @@ namespace POS.BusinessRule
             });
         }
 
-        public Task<long> Save(Category category)
+        public Task<long> Save(Brand brand)
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("SaveCategory");
-                cmd.Parameters.AddWithValue("@Name", category.Name);
+                SqlCommand cmd = DataAccess.CreateCommand("SaveBrand");
+                cmd.Parameters.AddWithValue("@Name", brand.Name);
                 long i = await DataAccess.ExecuteScalarCommandAsync<long>(cmd);
                 return i;
             });
         }
 
-        public Task<int> Update(Category category)
+        public Task<int> Update(Brand brand)
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("UpdateCategory");
-                cmd.Parameters.AddWithValue("@Id", category.Id);
-                cmd.Parameters.AddWithValue("@Name", category.Name);
+                SqlCommand cmd = DataAccess.CreateCommand("UpdateBrand");
+                cmd.Parameters.AddWithValue("@Id", brand.Id);
+                cmd.Parameters.AddWithValue("@Name", brand.Name);
                 int i = await DataAccess.ExecuteNonQueryAsync(cmd);
                 return i;
             });
@@ -72,7 +72,7 @@ namespace POS.BusinessRule
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("RemoveCategory");
+                SqlCommand cmd = DataAccess.CreateCommand("RemoveBrand");
                 cmd.Parameters.AddWithValue("@Id", id);
                 int i = await DataAccess.ExecuteNonQueryAsync(cmd);
                 return i;

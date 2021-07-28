@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
     public class UserBO
     {
@@ -21,7 +21,9 @@ namespace POS.BusinessRule.ADO
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("GetAllUser");
+                cmd.Parameters.AddWithValue("@UserName", myUserName);
+                cmd.Parameters.AddWithValue("@BranchId", branchId);
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
                 List<User> users = new List<User>();
                 foreach (DataRow row in tbl.Rows)
@@ -52,19 +54,23 @@ namespace POS.BusinessRule.ADO
                         DeactivationDate = deactive,
                         LastPasswordChangeDate = lastpwdChange,
                         BranchId = (long)row["BranchId"],
-                        CanAccessAllBranch = (bool)row["CanAccessAllBranch"]
-                    });
+                        CanAccessAllBranch = (bool)row["CanAccessAllBranch"],
+                        Branch = await new BranchBO().GetById((long)row["BranchId"])
+                    }); ;
                 }
                 return users;
             });
         }
 
 
-        public Task<User> Login(string userName, string password, Int64 branchId)
+        public Task<User> Login(string userName, string password, long branchId)
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("LoginUser");
+                cmd.Parameters.AddWithValue("@UserName", userName);
+                cmd.Parameters.AddWithValue("@Password", password);
+                cmd.Parameters.AddWithValue("@BranchId", branchId);
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
                 if (tbl.Rows.Count > 0)
                 {
@@ -93,7 +99,8 @@ namespace POS.BusinessRule.ADO
                         DeactivationDate = deactive,
                         LastPasswordChangeDate = lastpwdChange,
                         BranchId = (long)tbl.Rows[0]["BranchId"],
-                        CanAccessAllBranch = (bool)tbl.Rows[0]["CanAccessAllBranch"]
+                        CanAccessAllBranch = (bool)tbl.Rows[0]["CanAccessAllBranch"],
+                        Branch = await new BranchBO().GetById((long)tbl.Rows[0]["BranchId"])
                     };
                     return u;
                 }
@@ -101,11 +108,12 @@ namespace POS.BusinessRule.ADO
             });
         }
 
-        public Task<int> SaveUser(User u)
+        public Task<long> SaveUser(User u)
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                u.Password = await EncryptPassword(u.Password);
+                SqlCommand cmd = DataAccess.CreateCommand("SaveUser");
                 cmd.Parameters.AddWithValue("@UserName", u.UserName);
                 cmd.Parameters.AddWithValue("@DisplayName", u.DisplayName);
                 cmd.Parameters.AddWithValue("@Password", u.Password);
@@ -118,7 +126,7 @@ namespace POS.BusinessRule.ADO
                 cmd.Parameters.AddWithValue("@LastPasswordChangeDate", u.LastPasswordChangeDate);
                 cmd.Parameters.AddWithValue("@BranchId", u.BranchId);
                 cmd.Parameters.AddWithValue("@CanAccessAllBranch", u.CanAccessAllBranch);
-                int i = await DataAccess.ExecuteNonQueryAsync(cmd);
+                long i = await DataAccess.ExecuteScalarCommandAsync<long>(cmd);
 
                 return i;
             });
@@ -128,7 +136,8 @@ namespace POS.BusinessRule.ADO
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                u.Password = await EncryptPassword(u.Password);
+                SqlCommand cmd = DataAccess.CreateCommand("UpdateUser");
                 cmd.Parameters.AddWithValue("@Id", u.Id);
                 cmd.Parameters.AddWithValue("@UserName", u.UserName);
                 cmd.Parameters.AddWithValue("@DisplayName", u.DisplayName);
@@ -152,7 +161,8 @@ namespace POS.BusinessRule.ADO
         {
             return Task.Run(async () =>
             {
-                SqlCommand cmd = DataAccess.CreateCommand("GetAllSales");
+                SqlCommand cmd = DataAccess.CreateCommand("GetUserByUserName");
+                cmd.Parameters.AddWithValue("@UserName", userName);
                 DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
                 if (tbl.Rows.Count > 0)
                 {
@@ -181,7 +191,8 @@ namespace POS.BusinessRule.ADO
                         DeactivationDate = deactive,
                         LastPasswordChangeDate = lastpwdChange,
                         BranchId = (long)tbl.Rows[0]["BranchId"],
-                        CanAccessAllBranch = (bool)tbl.Rows[0]["CanAccessAllBranch"]
+                        CanAccessAllBranch = (bool)tbl.Rows[0]["CanAccessAllBranch"],
+                        Branch = await new BranchBO().GetById((long)tbl.Rows[0]["BranchId"])
                     };
                     return u;
                 }

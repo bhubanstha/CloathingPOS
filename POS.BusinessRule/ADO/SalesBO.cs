@@ -6,7 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace POS.BusinessRule.ADO
+namespace POS.BusinessRule
 {
     public class SalesBO
     {
@@ -27,7 +27,9 @@ namespace POS.BusinessRule.ADO
                         Discount = (decimal)row["Discount"],
                         ProductId = (long)row["ProductId"],
                         BillNo = (long)row["BillNo"],
-                        SalesRate = (decimal)row["SalesRate"]
+                        SalesRate = (decimal)row["SalesRate"],
+                        Inventory = await new InventoryBO().GetById((long)row["ProductId"]),
+                        Bill = await new BillBO().GetById((long)row["BillNo"])
                     });
                 }
                 return sales;
@@ -54,7 +56,9 @@ namespace POS.BusinessRule.ADO
                         Discount = (decimal)row["Discount"],
                         ProductId = (long)row["ProductId"],
                         BillNo = (long)row["BillNo"],
-                        SalesRate = (decimal)row["SalesRate"]
+                        SalesRate = (decimal)row["SalesRate"],
+                        Inventory = await new InventoryBO().GetById((long)row["ProductId"]),
+                        Bill = await new BillBO().GetById((long)row["BillNo"])
                     });
                 }
                 return sales;
@@ -125,7 +129,9 @@ namespace POS.BusinessRule.ADO
                         Discount = (decimal)row["Discount"],
                         ProductId = (long)row["ProductId"],
                         BillNo = (long)row["BillNo"],
-                        SalesRate = (decimal)row["SalesRate"]
+                        SalesRate = (decimal)row["SalesRate"],
+                        Inventory = await new InventoryBO().GetById((long)row["ProductId"]),
+                        Bill = await new BillBO().GetById((long)row["BillNo"])
                     });
                 }
                 return sales;
@@ -144,13 +150,17 @@ namespace POS.BusinessRule.ADO
                 {
                     sales.Add(new Sales
                     {
-                        Id = (long)row["Id"],
+                        Id = 0,
                         SalesQuantity = (int)row["SalesQuantity"],
-                        PurchaseRate = (decimal)row["PurchaseRate"],
-                        Discount = (decimal)row["Discount"],
-                        ProductId = (long)row["ProductId"],
-                        BillNo = (long)row["BillNo"],
-                        SalesRate = (decimal)row["SalesRate"]
+                        PurchaseRate = 0,
+                        Discount = 0,
+                        ProductId = itemId,
+                        BillNo = 0,
+                        SalesRate = 0,
+                        Bill = new Bill
+                        {
+                            BillDate = (DateTime)row["BillDate"]
+                        }
                     });
                 }
                 return sales;
