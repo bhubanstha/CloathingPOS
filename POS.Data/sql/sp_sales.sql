@@ -2,6 +2,13 @@
 go
 
 create proc GetAllSales
+as
+begin
+	select s.Id, s.SalesQuantity, s.PurchaseRate, s.Discount, s.ProductId, s.BillNo, s.SalesRate from Sales s with (nolock)
+end
+go
+
+create proc SaveSales
 @SalesQuantity	int,
 @PurchaseRate	decimal(18,2),
 @Discount	decimal(18,2),
@@ -87,4 +94,29 @@ begin
 	begin
 		delete from Bill where Id = @BillNo
 	end
+end
+go
+
+create proc GetSalesByBill
+@BillNo bigint,
+@BranchId bigint
+as
+begin
+	select s.Id, s.SalesQuantity, s.PurchaseRate, s.Discount, s.ProductId, s.BillNo, s.SalesRate 
+	from Sales s with (nolock)
+	inner join Bill b with (nolock) on s.BillNo = b.Id
+	where s.BillNo = @BillNo and b.BranchId = @BranchId
+end
+
+go
+
+create proc GetSalesHistory
+@ProductId bigint
+as
+begin
+	select s.Id, s.SalesQuantity, s.PurchaseRate, s.Discount, s.ProductId, s.BillNo, s.SalesRate 
+	from Sales s with (nolock)
+	inner join Bill b with (nolock) on s.BillNo = b.Id
+	where s.ProductId = @ProductId
+	order by b.BillDate asc
 end
