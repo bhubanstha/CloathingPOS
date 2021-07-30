@@ -20,7 +20,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition MaxHeight="100" />
                 <RowDefinition MaxHeight="20" />
-                <RowDefinition MaxHeight="230" />
+                <RowDefinition MaxHeight="230" Height="Auto" />
                 <RowDefinition Height="*" />
 
             </Grid.RowDefinitions>
@@ -169,7 +169,7 @@
                 CornerRadius="15">
                 <tile:UserStatTitle
                     Icon="Cart"
-                    StatCount="200"
+                    StatCount="{Binding SalesCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     StatName="Total Sales" />
             </Border>
             <Border
@@ -182,7 +182,7 @@
                 CornerRadius="15">
                 <tile:UserStatTitle
                     Icon="Receipt"
-                    StatCount="500"
+                    StatCount="{Binding PurchaseCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     StatName="Total Purchase" />
             </Border>
             <Border

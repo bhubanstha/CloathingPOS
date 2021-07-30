@@ -43,15 +43,15 @@ namespace POSSystem.UI.ViewModel
                 _salesList = value;
                 OnPropertyChanged();
             }
-        
+
         }
 
-       
+
 
         public bool IsBillGenerating
         {
-            get { return _isBillGenerating ; }
-            set { _isBillGenerating  = value; OnPropertyChanged(); }
+            get { return _isBillGenerating; }
+            set { _isBillGenerating = value; OnPropertyChanged(); }
         }
 
 
@@ -67,7 +67,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand SearchBillCommand { get; private set; }
         public ICommand EditBillingInfoCommand { get; private set; }
         public ICommand ReprintBillCommand { get; private set; }
-       
+
 
         public SalesListViewModel(IEventAggregator eventAggregator, ILogger logger, UpdateBillingInfoDialog dialog)
         {
@@ -97,14 +97,14 @@ namespace POSSystem.UI.ViewModel
                     {
                         List<Sales> salesRecord = SalesList.Where(x => x.BillNo == obj.Value).ToList();
                         pdfPath = await new CreatePDF().CreateInvoice(salesRecord[0].Bill, salesRecord, StaticContainer.Shop);
-                        
+
                     }
                     //OpenBill
                     PDFViewerWindow window = new PDFViewerWindow(pdfPath, StaticContainer.Shop.PdfPassword);
                     IsBillGenerating = false;
                     window.ShowDialog();
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -116,12 +116,23 @@ namespace POSSystem.UI.ViewModel
             }
         }
 
-        private void OnBillInfoUpdateReceive(BillingInfoUpdateEventArgs obj)
+        private async void OnBillInfoUpdateReceive(BillingInfoUpdateEventArgs obj)
         {
             if (obj.Action == EventAction.Update)
             {
                 _isBillingInfoUpdated = true;
-                LoadSales();
+                List<Sales> sales = await LoadSales();
+                if (sales == null || sales.Count == 0)
+                {
+                    Flyout f = StaticContainer.NoSearchResultFlyout;
+                    f.IsOpen = !f.IsOpen;
+                }
+                else
+                {
+                    SalesList = new ObservableCollection<Sales>(sales);
+                    SalesCollectionView = CollectionViewSource.GetDefaultView(SalesList);
+                    SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BillNo)));
+                }
             }
         }
 
@@ -140,39 +151,35 @@ namespace POSSystem.UI.ViewModel
         private async void OnBillSearchExecute()
         {
             IsBillGenerating = true;
-            await LoadSales();
-            SalesCollectionView = CollectionViewSource.GetDefaultView(SalesList);
-            SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BillNo)));
+            List<Sales> sales = await LoadSales();
+            if (sales == null || sales.Count == 0)
+            {
+                Flyout f = StaticContainer.NoSearchResultFlyout;
+                f.IsOpen = !f.IsOpen;
+            }
+            else
+            {
+                SalesList = new ObservableCollection<Sales>(sales);
+                SalesCollectionView = CollectionViewSource.GetDefaultView(SalesList);
+                SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BillNo)));
+            }
             IsBillGenerating = false;
         }
 
-        Task LoadSales()
+        Task<List<Sales>> LoadSales()
         {
-            Task<ObservableCollection<Sales>> t = Task.Run(async () =>
+            return Task.Run(async () =>
             {
                 if (BillingDate.HasValue)
                 {
 
                     SalesBO bo = new SalesBO();
-                    var billList = await bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
-                    SalesList = new ObservableCollection<Sales>(billList);
-                    if (SalesList.Count == 0)
-                    {
-                        Flyout f = StaticContainer.NoSearchResultFlyout;
-                        f.IsOpen = !f.IsOpen;
-                    }
+                    List<Sales> billList = await bo.GetAllOnDate(BillingDate.Value, StaticContainer.ActiveBranchId);
+                    return billList;
+                }
+                return null;
 
-                }
-                else
-                {
-                    SalesList = new ObservableCollection<Sales>();
-                }
-                return SalesList;
-                
             });
-            
-            return t;
-            
         }
     }
 }

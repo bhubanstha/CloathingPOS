@@ -200,6 +200,31 @@ namespace POS.BusinessRule
             });
         }
 
+
+        /// <summary>
+        /// Get User purchase and sales statistics
+        /// </summary>
+        /// <param name="userId">A user whose stat is required <see cref="User"/></param>
+        /// <returns>A <see cref="Tuple{T1, T2}"/> where T1 is Purchase Stat and T2 is Sales Stat</returns>
+        public Task<Tuple<int, int>> GetUserStat(long userId)
+        {
+            return Task.Run(async () =>
+            {
+                SqlCommand cmd = DataAccess.CreateCommand("GetUserStat");
+                cmd.Parameters.AddWithValue("@UserId", userId);
+                DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
+                int purchase = 0, sales = 0;
+                if (tbl.Rows.Count > 0)
+                {
+                    purchase = (int)tbl.Rows[0]["PurchaseCount"];
+                    sales = (int)tbl.Rows[0]["SalesCount"];
+                }
+                var stat = Tuple.Create(purchase, sales);
+
+                return stat;
+            });
+        }
+
         public async Task<string> DecryptPassword(string encryptedPassword)
         {
             string pwd = await bouncyCastleEncryption.DecryptAsAsync(encryptedPassword);

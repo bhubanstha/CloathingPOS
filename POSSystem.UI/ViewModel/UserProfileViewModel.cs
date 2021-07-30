@@ -22,6 +22,21 @@ namespace POSSystem.UI.ViewModel
         private string _profileImageFullPath = "";
         private bool _isProfileImageChanged;
         private ImageSource _profileImage = null;
+        private int _salesCount;
+        private int _purchaseCount;
+
+        public int SalesCount
+        {
+            get { return _salesCount; }
+            set { _salesCount = value; OnPropertyChanged(); }
+        }
+
+        public int PurchaseCount
+        {
+            get { return _purchaseCount; }
+            set { _purchaseCount = value; OnPropertyChanged(); }
+        }
+
 
         public bool IsProfileImageChanged
         {
@@ -55,6 +70,7 @@ namespace POSSystem.UI.ViewModel
             DiscardProfilePicCommand = new DelegateCommand(OnProfileImageDiscar);
 
             LoadDefaultProfileImage();
+            GetUserStat();
         }
 
         private void OnProfileImageDiscar()
@@ -119,6 +135,14 @@ namespace POSSystem.UI.ViewModel
             {
                 ProfileImage = GetImageFromFileName(getProfilePath);
             }
+        }
+
+        private async void GetUserStat()
+        {
+            UserBO userBO = new UserBO(_encryption);
+            Tuple<int, int> userStat = await userBO.GetUserStat(_loggedInUser.Id);
+            PurchaseCount = userStat.Item1;
+            SalesCount = userStat.Item2;
         }
 
         private ImageSource GetImageFromFileName(string imageFullPath)

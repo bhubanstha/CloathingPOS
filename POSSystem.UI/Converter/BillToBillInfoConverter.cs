@@ -15,7 +15,7 @@ namespace POSSystem.UI.Converter
             {
                 BillBO billBO = new BillBO();
                 Bill b = billBO.GetById(System.Convert.ToInt64(value)).Result;
-                return $"Bill No.: {b.Id} - {b.BillTo} - ({b.BillingAddress})";
+                return $"Bill No.: {b.Id} - {b.BillTo} - (Address: {b.BillingAddress})";
             }
             return "";
         }

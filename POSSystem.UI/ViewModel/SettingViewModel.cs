@@ -61,15 +61,19 @@ namespace POSSystem.UI.ViewModel
                     PdfPassword = PdfPassword
                 };
                 ShopBO bo = new ShopBO();
-                await bo.UpdateShop(s);
-                StaticContainer.Shop.CalculateVATOnSales = s.CalculateVATOnSales;
-                StaticContainer.Shop.PrintInvoice = s.PrintInvoice;
-                StaticContainer.Shop.PdfPassword = s.PdfPassword;
+                int i = await bo.UpdateShop(s);
+                if (i > 0)
+                {
+                    StaticContainer.Shop.CalculateVATOnSales = s.CalculateVATOnSales;
+                    StaticContainer.Shop.PrintInvoice = s.PrintInvoice;
+                    StaticContainer.Shop.PdfPassword = s.PdfPassword;
+                    StaticContainer.ShowNotification("Settings Changed", "Application settings saved", NotificationType.Success);
+                }
             }
             catch (Exception ex)
             {
                 _log.Error("SettingViewModel.OnSettingSave", ex);
-                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Success);
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
     }

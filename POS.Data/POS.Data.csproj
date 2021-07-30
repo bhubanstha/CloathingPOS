@@ -148,6 +148,7 @@
     <Content Include="sql\sp_brand.sql" />
     <Content Include="sql\sp_category.sql" />
     <Content Include="sql\sp_inventory.sql" />
+    <Content Include="sql\sp_inventoryHistory.sql" />
     <Content Include="sql\sp_sales.sql" />
     <Content Include="sql\sp_shop.sql" />
     <Content Include="sql\sp_user.sql" />

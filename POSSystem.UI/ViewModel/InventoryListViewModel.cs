@@ -56,7 +56,13 @@ namespace POSSystem.UI.ViewModel
         public string ProductFilter
         {
             get { return _productFilter; }
-            set { _productFilter = value; OnPropertyChanged(); InventoryCollectionView.Refresh(); }
+            set { _productFilter = value; 
+                OnPropertyChanged();
+                if (InventoryCollectionView != null)
+                {
+                    InventoryCollectionView.Refresh();
+                }
+            }
         }
 
 

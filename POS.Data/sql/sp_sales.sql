@@ -28,7 +28,7 @@ create proc GetSalesOnDate
 as
 begin
 	select * from Bill b with (nolock)
-	inner join Sales s with (nolock) on b.Id = s.Id
+	inner join Sales s with (nolock) on b.Id = s.BillNo
 	where b.BranchId = @BranchId 
 	and CONVERT(date, b.BillDate) = @SalesDate
 end

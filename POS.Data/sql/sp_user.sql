@@ -129,3 +129,23 @@ begin
 	from [User] u
 	where u.UserName = @UserName
 end
+
+go
+
+create proc GetUserStat
+@UserId bigint
+as
+begin
+
+select top 1
+(
+	select COUNT(s.Id) AS SalesCount from Bill b with (nolock)
+	inner join Sales s with (nolock) on b.Id = s.BillNo
+	where b.UserId = @UserId
+
+) AS SalesCount ,
+(
+	select COUNT(Id) AS PurchaseCount from Inventory i with (nolock) where i.UserId  = @UserId
+) AS PurchaseCount
+from Shop
+end
