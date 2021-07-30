@@ -249,12 +249,12 @@
                                     <ImageBrush ImageSource="{Binding ProfileImage, Converter={StaticResource ImageConverter}}" />
                                 </Ellipse.Fill>
                             </Ellipse>
-                            <iconPacks:PackIconFontAwesome
+                            <iconPacks:PackIconBootstrapIcons
                                 x:Name="icnUserImage"
-                                Width="22"
-                                Height="22"
+                                Width="17"
+                                Height="17"
                                 VerticalAlignment="Center"
-                                Kind="UserAltSolid"
+                                Kind="PersonFill"
                                 Visibility="{Binding ProfileImage, Converter={StaticResource IconVisibility}}" />
                             <TextBlock
                                 Margin="4,0,0,0"
@@ -337,40 +337,40 @@
                 <mah:HamburgerMenuItemCollection>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuUserMgmt"
-                        Icon="{iconPacks:Material Kind=Account}"
+                        Icon="{iconPacks:BootstrapIcons Kind=PersonFill}"
                         Label="User Management">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:CreateUserView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=TshirtCrew}" Label="Inventory">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=List}" Label="Inventory">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:InventoryView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=FormatListNumbered}" Label="Inventory List">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:FontAwesome Kind=ListOlSolid}" Label="Inventory List">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:InventoryListView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartPlus}" Label="Sales">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=CartPlus}" Label="Sales">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartMinus}" Label="Sales Return">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=CartDash}" Label="Sales Return">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesReturnView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=CartArrowUp}" Label="Sales List">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=CartFill}" Label="Sales List">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesListView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuReport"
-                        Icon="{iconPacks:Material Kind=FileDocument}"
+                        Icon="{iconPacks:BootstrapIcons Kind=FileBarGraph}"
                         Label="Report">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:ReportView />
@@ -378,7 +378,7 @@
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuGraphs"
-                        Icon="{iconPacks:Material Kind=ChartBellCurveCumulative}"
+                        Icon="{iconPacks:BootstrapIcons Kind=BarChart}"
                         Label="Graph">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:GraphView />
@@ -386,7 +386,7 @@
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="menuUserProfile"
-                        Icon="{iconPacks:Material Kind=FaceProfile}"
+                        Icon="{iconPacks:BootstrapIcons Kind=PersonBadge}"
                         IsVisible="False"
                         Label="Profile">
                         <mah:HamburgerMenuIconItem.Tag>
@@ -395,7 +395,7 @@
                     </mah:HamburgerMenuIconItem>
                     <mah:HamburgerMenuIconItem
                         x:Name="ShopView"
-                        Icon="{iconPacks:Material Kind=Store}"
+                        Icon="{iconPacks:BootstrapIcons Kind=Shop}"
                         Label="Company">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:ShopView />
@@ -409,7 +409,7 @@
             <!--  Options  -->
             <mah:HamburgerMenu.OptionsItemsSource>
                 <mah:HamburgerMenuItemCollection>
-                    <mah:HamburgerMenuIconItem Icon="{iconPacks:Material Kind=Information}" Label="About">
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=InfoCircle}" Label="About">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:AboutView />
                         </mah:HamburgerMenuIconItem.Tag>
@@ -446,14 +446,13 @@
                                     FontSize="{DynamicResource MahApps.Font.Size.Header}"
                                     Text="{Binding Label}"
                                     TextAlignment="Center" />
-                                <iconPacks:PackIconMaterial
+                                <!--Kind="{Binding Icon.Kind}"
+                                <iconPacks:PackIconFontAwesome
                                     Width="40"
-                                    Height="40"
-                                    Margin="0,0,10,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Foreground="{DynamicResource MahApps.Brushes.AccentBase}"
-                                    Kind="{Binding Icon.Kind}" />
+                                    Height="40"   
+                                    
+                                    Kind="Alarm"
+                                     />-->
                                 <Border
                                     Grid.Row="1"
                                     BorderBrush="{DynamicResource MahApps.Brushes.Accent}"

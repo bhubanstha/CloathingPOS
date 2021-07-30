@@ -56,10 +56,21 @@
                     SelectedDateFormat="Short" />
 
                 <Button
-                    Margin="5,0"
+                    Width="100"
+                    Margin="20,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Command="{Binding SearchBillCommand}"
-                    Content="Search"
-                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+                    IsDefault="True"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons Kind="Search" />
+                            <TextBlock Margin="10,0,0,0" Text="Search" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                
             </StackPanel>
             <mah:ProgressRing
                 Grid.Row="2"

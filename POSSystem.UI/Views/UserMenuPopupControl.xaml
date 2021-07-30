@@ -189,13 +189,13 @@
 
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconBoxIcons
+                            <iconPacks:PackIconFontAwesome
                             Grid.Column="0"
                             Width="24"
                             Height="24"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Kind="RegularExit" />
+                            Kind="DoorClosedSolid" />
                             <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"

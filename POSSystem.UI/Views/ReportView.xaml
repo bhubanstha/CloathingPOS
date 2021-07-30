@@ -15,12 +15,12 @@
                    VerticalAlignment="Center" 
                    Foreground="{DynamicResource MahApps.Brushes.Accent}"
                    Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}"/>
-        <iconPacks:PackIconBoxIcons 
+        <iconPacks:PackIconFontAwesome 
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Margin="-340 0 0 -130"
             Foreground="{DynamicResource MahApps.Brushes.Accent}"            
-            Kind="SolidMegaphone" Width="100" Height="100" RotationAngle="310"/>
+            Kind="BullhornSolid" Width="100" Height="100" RotationAngle="310"/>
 
     </Grid>
 </UserControl>
