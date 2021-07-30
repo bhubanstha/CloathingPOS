@@ -77,13 +77,12 @@ namespace POSSystem.UI.ViewModel
                             CurrentUser.UserName = null;
                         }
                         StaticContainer.IsPasswordChanged = true;
-                        StaticContainer.NotificationManager.Show(new NotificationContent
-                        {
-                            Title="Password Changed",
-                            Message = "User password is changed",
-                            Type = NotificationType.Success
-                        });
+                        StaticContainer.ShowNotification("Password Changed", "User password is changed", NotificationType.Success);
                     }
+                }
+                else
+                {
+                    StaticContainer.ShowNotification("No User", "User doesn't exists to change password", NotificationType.Information);
                 }
 
             }
@@ -91,12 +90,7 @@ namespace POSSystem.UI.ViewModel
             {
                 _log.Error("OnPasswordChange", ex);
                 StaticContainer.IsPasswordChanged = false;
-                StaticContainer.NotificationManager.Show(new NotificationContent
-                {
-                    Title = "Application Error",
-                    Message = ex.Message,
-                    Type = NotificationType.Error
-                });
+                StaticContainer.ShowNotification("Error", StaticContainer.ErrorMessage, NotificationType.Error);
             }
         }
 
