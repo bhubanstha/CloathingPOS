@@ -11,9 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace POSSystem.UI.ViewModel.Service
+namespace POSSystem.UI.ViewModel
 {
-    public class ReportViewModel : ViewModelBase
+    public class ReportViewModel : NotifyPropertyChanged
     {
 
         private int _year;
