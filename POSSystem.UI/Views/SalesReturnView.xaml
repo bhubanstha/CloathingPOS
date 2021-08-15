@@ -159,18 +159,18 @@
                         Header="Quantity" />
                     <DataGridTextColumn
                         Width="100"
-                        Binding="{Binding SalesRate}"
+                        Binding="{Binding SalesRate,StringFormat='C', ConverterCulture='Ne-Np'}"
                         Header="Rate" />
                     <DataGridTextColumn
                         Width="100"
-                        Binding="{Binding Discount}"
+                        Binding="{Binding Discount,StringFormat='C', ConverterCulture='Ne-Np'}"
                         Header="Discount" />
                     <DataGridTemplateColumn Width="100" Header="Total">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Style="{StaticResource Grid.Numeric.Column}">
+                                <Label Style="{StaticResource Grid.Numeric.Column}" ContentStringFormat="C">
                                     <Label.Content>
-                                        <MultiBinding Converter="{StaticResource TotalCalc}">
+                                        <MultiBinding Converter="{StaticResource TotalCalc}" ConverterCulture="Ne-Np" StringFormat="C">
                                             <Binding Path="SalesQuantity" />
                                             <Binding Path="SalesRate" />
                                             <Binding Path="Discount" />

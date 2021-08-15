@@ -81,11 +81,13 @@
                                 Content="Save" 
                                 Height="30" 
                                 Margin="5 0"
+                                Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}"
                                 Command="{Binding ChangeProfilePicCommand}"/>
                         <Button 
                                 Padding="20 0"
                                 Content="Discard" 
-                                Height="30" 
+                                Width="100"
+                                Style="{DynamicResource button.Reset}"
                                 Command="{Binding DiscardProfilePicCommand}"/>
                     </StackPanel>
                     

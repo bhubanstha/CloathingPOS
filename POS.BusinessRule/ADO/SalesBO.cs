@@ -1,5 +1,6 @@
 ﻿using POS.Data;
 using POS.Model;
+using POS.Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -164,6 +165,36 @@ namespace POS.BusinessRule
                     });
                 }
                 return sales;
+            });
+        }
+
+        public Task<List<ProfitLossReport>> GetProfitLoss(int year, int month)
+        {
+            return Task.Run(async () =>
+            {
+                SqlCommand cmd = DataAccess.CreateCommand("GetSalesStat");
+                cmd.Parameters.AddWithValue("@Year", year);
+                cmd.Parameters.AddWithValue("@Month", month);
+                DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
+                List<ProfitLossReport> salesReport = new List<ProfitLossReport>();
+                foreach (DataRow row in tbl.Rows)
+                {
+                    salesReport.Add(new ProfitLossReport
+                    {
+                        BillingDate = (DateTime)row["BillDate"],
+                        Category = row["Category"].ToString(),
+                        Brand = row["Brand"].ToString(),
+                        ItemName = row["ItemName"].ToString(),
+                        Color = row["Color"].ToString(),
+                        ItemCode = row["Code"].ToString(),
+                        Size = row["Size"].ToString(),
+                        SalesQty = (int)row["SalesQuantity"],
+                        PurchaseTotal = (decimal)row["PurchaseTotal"],
+                        SalesTotal = (decimal)row["SalesTotal"],
+                        Profit = (decimal)row["SalesTotal"] - (decimal)row["PurchaseTotal"]
+                    });
+                }
+                return salesReport;
             });
         }
     }

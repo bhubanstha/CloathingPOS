@@ -101,6 +101,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ForgetPasswordModel.cs" />
     <Compile Include="ViewModel\LoginModel.cs" />
+    <Compile Include="ViewModel\Month.cs" />
+    <Compile Include="ViewModel\ProfitLossReport.cs" />
     <Compile Include="ViewModel\SalesModel.cs" />
     <Compile Include="ViewModel\ShopVM.cs" />
   </ItemGroup>

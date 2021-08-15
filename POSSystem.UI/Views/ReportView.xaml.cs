@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Autofac;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,8 @@ namespace POSSystem.UI.Views
         public ReportView()
         {
             InitializeComponent();
+            ReportViewModel vm = StaticContainer.Container.Resolve<ReportViewModel>();
+            DataContext = vm;
         }
     }
 }

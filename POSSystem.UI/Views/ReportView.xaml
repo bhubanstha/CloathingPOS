@@ -3,24 +3,153 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:POSSystem.UI.Converter"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:local="clr-namespace:POSSystem.UI.Views"
               xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:ColorToBrushConverter x:Key="ColorConverter" />
+    </UserControl.Resources>
     <Grid Margin="0,5,3,5">
-        <TextBlock FontSize="40" 
-                   Text="Coming Soon...." 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                   Style="{DynamicResource MahApps.Styles.TextBlock.HamburgerMenuHeader}"/>
-        <iconPacks:PackIconFontAwesome 
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Margin="-340 0 0 -130"
-            Foreground="{DynamicResource MahApps.Brushes.Accent}"            
-            Kind="BullhornSolid" Width="100" Height="100" RotationAngle="310"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <ComboBox 
+                Margin="0 0 3 3"
+                VerticalAlignment="Center"
+                SelectedIndex="0"
+                ItemsSource="{Binding Years, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
+                DisplayMemberPath="Value"
+                SelectedValuePath="Id"
+                SelectedValue="{Binding Year, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{DynamicResource ComboBox.Validation}"
+                />
+            <ComboBox
+                Margin="3 0 3 3"
+                SelectedIndex="0"
+                VerticalAlignment="Center"
+                ItemsSource="{Binding Months, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
+                DisplayMemberPath="Name"
+                SelectedValuePath="Id"
+                SelectedValue="{Binding Month, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{DynamicResource ComboBox.Validation}"/>
+            
+            <Button Content="Load Report" 
+                    Margin="3 0 3 3"
+                    Command="{Binding LoadReportCommand}"
+                    Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1" 
+                  Grid.ColumnSpan="2"
+                  AutoGenerateColumns="False" 
+                  RowStyle="{DynamicResource MahApps.Styles.DataGridRow}"
+                  CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
+                  Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" 
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Report, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding BillingDate, StringFormat='{}{0:yyyy/MM/dd}'}"
+                        IsReadOnly="True"
+                        Header="Date" />
+                <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Category}"
+                        IsReadOnly="True"
+                        Header="Category" />
+                <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Brand}"
+                        IsReadOnly="True"
+                        Header="Brand" />
+
+                <DataGridTextColumn
+                        Width="1.5*"
+                        Binding="{Binding ItemName}"
+                        IsReadOnly="True"
+                        Header="Item" />
+                <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding ItemCode}"
+                        IsReadOnly="True"
+                        Header="Code" />
+
+                <DataGridTextColumn
+                        Width="45"
+                        Binding="{Binding Size}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
+                        Header="Size" />
+                <DataGridTemplateColumn Header="Colour">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle
+                                    Width="24"
+                                    Height="20"
+                                    VerticalAlignment="Top"
+                                    Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
+                                    Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                                    StrokeThickness="0.5" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                        Width="80"
+                        Binding="{Binding SalesQty}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
+                        Header="Qty" />
+                <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding PurchaseTotal,StringFormat='C', ConverterCulture='Ne-Np'}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
+                        Header="Purchase Amount" />
+                <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding SalesTotal,StringFormat='C', ConverterCulture='Ne-Np'}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
+                        Header="Sales Amount" />
+                <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding Profit,StringFormat='C', ConverterCulture='Ne-Np'}"
+                        ElementStyle="{StaticResource GridNumericColumn.Center}"
+                        IsReadOnly="True"
+                        Header="Profit" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+         
+        <TextBlock 
+            Text="Grand Total" 
+            Grid.Row="2" 
+            Padding="0 3"
+            Grid.Column="0" 
+            TextAlignment="Center" 
+            FontWeight="Bold"
+            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
+        
+        <TextBlock 
+            Text="{Binding TotalProfit, StringFormat='C', ConverterCulture='Ne-Np', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+            Padding="0 3"
+            Grid.Row="2" 
+            Grid.Column="1" 
+            TextAlignment="Center" 
+            FontWeight="Bold"
+            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
 
     </Grid>
 </UserControl>

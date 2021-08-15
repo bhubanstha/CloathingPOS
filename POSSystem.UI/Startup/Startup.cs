@@ -82,6 +82,7 @@ namespace POSSystem.UI
             builder.RegisterType<UserBranchViewModel>().AsSelf();
             builder.RegisterType<SettingViewModel>().AsSelf();
             builder.RegisterType<ShopViewModel>().AsSelf();
+            builder.RegisterType<ReportViewModel>().AsSelf();
             builder.RegisterType<SplashScreenMessage>().AsSelf().SingleInstance();
 
 

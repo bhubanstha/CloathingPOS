@@ -28,6 +28,7 @@ namespace POSSystem.UI.Service
     }
     public static class StaticContainer
     {
+        public static int AppDeployedYear { get; private set; }
         public static string ApplicationName { get; set; }
         //public static BitmapImage AppScreenshot { get; set; }
 
@@ -70,6 +71,7 @@ namespace POSSystem.UI.Service
 
             SettingFile = "AppConfiguration.txt";// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppConfiguration.txt");
             ApplicationName = ConfigurationReader.GetConfiguration <string>(AppSettingKey.AppName);
+            AppDeployedYear = ConfigurationReader.GetConfiguration <int>(AppSettingKey.AppDeployedYear);
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
         }

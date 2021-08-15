@@ -468,6 +468,7 @@
     <Compile Include="ViewModel\SalesListViewModel.cs" />
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
+    <Compile Include="ViewModel\Service\ReportViewModel.cs" />
     <Compile Include="ViewModel\SettingViewModel.cs" />
     <Compile Include="ViewModel\ShopViewModel.cs" />
     <Compile Include="ViewModel\InventoryHistoryViewModel.cs" />

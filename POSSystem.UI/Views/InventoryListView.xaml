@@ -161,13 +161,13 @@
                         Header="Qty" />
                     <DataGridTextColumn
                         Width="110"
-                        Binding="{Binding PurchaseRate, StringFormat=N2}"
+                        Binding="{Binding PurchaseRate, StringFormat='C', ConverterCulture='Ne-Np'}"
                         ElementStyle="{StaticResource GridNumericColumn}"
                         IsReadOnly="True"
                         Header="Purchase Rate" />
                     <DataGridTextColumn
                         Width="85"
-                        Binding="{Binding RetailRate, StringFormat=N2}"
+                        Binding="{Binding RetailRate, StringFormat='C', ConverterCulture='Ne-Np'}"
                         ElementStyle="{StaticResource GridNumericColumn}"
                         IsReadOnly="True"
                         Header="Retail Rate" />
