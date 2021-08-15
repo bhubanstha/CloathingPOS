@@ -26,7 +26,7 @@
             VerticalAlignment="Bottom"
             FontSize="40"
             FontWeight="Bold">
-            500
+            0
         </TextBlock>
         <TextBlock
             x:Name="txtStatName"
