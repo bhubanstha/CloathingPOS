@@ -1,4 +1,5 @@
-﻿using POS.BusinessRule;
+﻿using MahApps.Metro.Controls;
+using POS.BusinessRule;
 using POS.Model.ViewModel;
 using POS.Utilities;
 using POSSystem.UI.Service;
@@ -64,8 +65,16 @@ namespace POSSystem.UI.ViewModel
         {
             SalesBO bo = new SalesBO();
             List<ProfitLossReport> rpt = await bo.GetProfitLoss(Year, Month);
-            Report = new ObservableCollection<ProfitLossReport>(rpt);
-            TotalProfit = rpt.Sum(x => x.Profit);
+            if (rpt.Count > 0)
+            {
+                Report = new ObservableCollection<ProfitLossReport>(rpt);
+                TotalProfit = rpt.Sum(x => x.Profit);
+            }
+            else
+            {
+                Flyout f = StaticContainer.NoSearchResultFlyout;
+                f.IsOpen = !f.IsOpen;
+            }
         }
     }
 }
