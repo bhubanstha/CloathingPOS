@@ -14,6 +14,7 @@ namespace POSSystem.UI.Views
         {
             InitializeComponent();
             ReportViewModel vm = StaticContainer.Container.Resolve<ReportViewModel>();
+            vm.PdfViewer = moonPdfPanel;
             DataContext = vm;
         }
     }

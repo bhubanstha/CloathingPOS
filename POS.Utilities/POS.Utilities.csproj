@@ -144,6 +144,7 @@
     <Compile Include="Encryption\BouncyCastleEncryption.cs" />
     <Compile Include="Encryption\IBouncyCastleEncryption.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
+    <Compile Include="PDF\CreateProfitLossReport.cs" />
     <Compile Include="PDF\CreateQRCode.cs" />
     <Compile Include="PDF\PDFUtility.cs" />
     <Compile Include="PDF\SalesMockData.cs" />

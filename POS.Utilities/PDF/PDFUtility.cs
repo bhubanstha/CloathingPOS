@@ -146,6 +146,26 @@ namespace POS.Utilities.PDF
             CreateTableHeader(ref invoiceTable, headerItems);
         }
 
+        public static void CreateReportTableHeader(ref Table reportTable)
+        {
+            List<TableHeader> headerItems = new List<TableHeader>
+            {
+                new TableHeader{Text = "S.N", TextAlignment= TextAlignment.CENTER, CellWidth=5},
+                new TableHeader{Text = "Date", TextAlignment= TextAlignment.CENTER, CellWidth=60},
+                new TableHeader{Text = "Brand", TextAlignment= TextAlignment.CENTER, CellWidth=60},
+                new TableHeader{Text = "Category", TextAlignment= TextAlignment.CENTER, CellWidth=60},
+                new TableHeader{Text = "Item", TextAlignment= TextAlignment.CENTER, CellWidth=140},
+                new TableHeader{Text = "Code", TextAlignment= TextAlignment.CENTER, CellWidth=60},
+                new TableHeader{Text = "Size", TextAlignment= TextAlignment.CENTER, CellWidth=40},
+                new TableHeader{Text = "Qty", TextAlignment= TextAlignment.CENTER, CellWidth=40},
+                new TableHeader{Text = "Purchase Total", TextAlignment= TextAlignment.CENTER, CellWidth=100},
+                new TableHeader{Text = "Sales Total", TextAlignment= TextAlignment.CENTER, CellWidth=100},
+                new TableHeader{Text = "Profit", TextAlignment= TextAlignment.CENTER, CellWidth=100}
+            };
+
+            CreateTableHeader(ref reportTable, headerItems);
+        }
+
         public static void CreateInoiceTableRecord(ref Table invoiceTable, SalesModel mockSales, int sn)
         {
             Cell c = CreateCell(sn.ToString(), TextAlignment.CENTER);

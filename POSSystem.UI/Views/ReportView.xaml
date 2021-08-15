@@ -8,15 +8,26 @@
     xmlns:local="clr-namespace:POSSystem.UI.Views"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mpp="clr-namespace:MoonPdfLib;assembly=MoonPdfLib"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
         <conv:ColorToBrushConverter x:Key="ColorConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <Style
+            x:Key="Button.Pdf.Options"
+            BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}"
+            TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+        </Style>
     </UserControl.Resources>
     <Grid Margin="0,5,3,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -56,108 +67,43 @@
                 Content="Load Report"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
         </StackPanel>
-        <DataGrid
+
+        <mah:ProgressRing
             Grid.Row="1"
-            Grid.ColumnSpan="2"
-            AutoGenerateColumns="False"
-            CellStyle="{DynamicResource MahApps.Styles.DataGridCell}"
-            IsReadOnly="True"
-            ItemsSource="{Binding Report, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            RowStyle="{DynamicResource MahApps.Styles.DataGridRow}"
-            Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding BillingDate, StringFormat='{}{0:yyyy/MM/dd}'}"
-                    Header="Date"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Category}"
-                    Header="Category"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Brand}"
-                    Header="Brand"
-                    IsReadOnly="True" />
-
-                <DataGridTextColumn
-                    Width="1.5*"
-                    Binding="{Binding ItemName}"
-                    Header="Item"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding ItemCode}"
-                    Header="Code"
-                    IsReadOnly="True" />
-
-                <DataGridTextColumn
-                    Width="45"
-                    Binding="{Binding Size}"
-                    ElementStyle="{StaticResource GridNumericColumn.Center}"
-                    Header="Size"
-                    IsReadOnly="True" />
-                <DataGridTemplateColumn Header="Colour">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Rectangle
-                                Width="24"
-                                Height="20"
-                                VerticalAlignment="Top"
-                                Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
-                                Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                                StrokeThickness="0.5" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    Width="80"
-                    Binding="{Binding SalesQty}"
-                    ElementStyle="{StaticResource GridNumericColumn.Center}"
-                    Header="Qty"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding PurchaseTotal, StringFormat='C', ConverterCulture='Ne-Np'}"
-                    ElementStyle="{StaticResource GridNumericColumn.Center}"
-                    Header="Purchase Amount"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding SalesTotal, StringFormat='C', ConverterCulture='Ne-Np'}"
-                    ElementStyle="{StaticResource GridNumericColumn.Center}"
-                    Header="Sales Amount"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding Profit, StringFormat='C', ConverterCulture='Ne-Np'}"
-                    ElementStyle="{StaticResource GridNumericColumn.Center}"
-                    Header="Profit"
-                    IsReadOnly="True" />
-
-            </DataGrid.Columns>
-        </DataGrid>
-
-
-        <TextBlock
-            Grid.Row="2"
             Grid.Column="0"
-            Padding="0,3"
-            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-            FontWeight="Bold"
-            Text="Grand Total"
-            TextAlignment="Center" />
+            Grid.ColumnSpan="2"
+            Panel.ZIndex="2"
+            IsActive="{Binding IsReportGenerating, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            Panel.ZIndex="1"
+            Visibility="{Binding IsPdfOptionsVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel
+                Margin="0,0,0,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Orientation="Horizontal">
+                <Button Command="{Binding PrintReportCommand}" Style="{StaticResource Button.Pdf.Options}">
+                    <Button.Content>
+                        <iconPacks:BootstrapIcons Kind="Printer" />
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding OpenReportCommand}" Style="{StaticResource Button.Pdf.Options}">
+                    <Button.Content>
+                        <iconPacks:BootstrapIcons Kind="BoxArrowUpRight" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
 
-        <TextBlock
-            Grid.Row="2"
-            Grid.Column="1"
-            Padding="0,3"
-            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
-            FontWeight="Bold"
-            Text="{Binding TotalProfit, StringFormat='C', ConverterCulture='Ne-Np', Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-            TextAlignment="Center" />
-
+        </Border>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <mpp:MoonPdfPanel
+                x:Name="moonPdfPanel"
+                x:FieldModifier="private"
+                AllowDrop="True"
+                PageMargin="0,2,4,2"
+                ViewType="SinglePage" />
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -222,14 +222,16 @@ namespace MoonPdfLib
 		}
 		public void Print()
 		{
-			Process p = new Process();
-			p.StartInfo = new ProcessStartInfo()
-			{
-				CreateNoWindow = true,
-				Verb = "print",
-				FileName = this.pdfFileName //put the correct path here
-			};
-			p.Start();
+			PrintPdfFile.SendFileToPrinter(this.pdfFileName);
+
+			//Process p = new Process();
+			//p.StartInfo = new ProcessStartInfo()
+			//{
+			//	CreateNoWindow = true,
+			//	Verb = "print",
+			//	FileName = this.pdfFileName //put the correct path here
+			//};
+			//p.Start();
 		}
 
         public void Unload()

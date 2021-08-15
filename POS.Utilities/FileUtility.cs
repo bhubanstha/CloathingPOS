@@ -71,7 +71,23 @@ namespace POS.Utilities
                 return true;
             }
             return false;
-            
+        }
+
+        public static string GetReportPath(int year, int month)
+        {
+            string fileFullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bills", "Report", $"{year}_{month}.pdf");
+            if (File.Exists(fileFullPath))
+            {
+                try
+                {
+                    File.Delete(fileFullPath);
+                }
+                catch
+                {
+                    return "";
+                }
+            }
+            return fileFullPath;
         }
 
         public static string GetInvoicePdfPath(Int64 billId, bool deleteIfExists = true)
