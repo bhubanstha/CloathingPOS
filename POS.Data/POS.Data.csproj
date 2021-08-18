@@ -143,7 +143,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sql\alter_Bill.sql" />
+    <Content Include="sql\alter_getBillById.sql" />
+    <Content Include="sql\alter_saveBill.sql" />
+    <Content Include="sql\script_default.sql" />
     <Content Include="sql\sp_bill.sql" />
+    <Content Include="sql\sp_billingcustomer.sql" />
     <Content Include="sql\sp_branch.sql" />
     <Content Include="sql\sp_brand.sql" />
     <Content Include="sql\sp_category.sql" />
@@ -153,6 +158,7 @@
     <Content Include="sql\sp_sales.sql" />
     <Content Include="sql\sp_shop.sql" />
     <Content Include="sql\sp_user.sql" />
+    <Content Include="sql\table_customer.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
