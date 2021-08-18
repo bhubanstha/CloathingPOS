@@ -43,5 +43,7 @@ namespace POS.Data
         public DbSet<User> User { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Branch> Branches { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
     }
 }

@@ -10,18 +10,8 @@ namespace POS.Model
         public DateTime BillDate { get; set; }
         public decimal VAT { get; set; }
 
-        [MaxLength(100)]
-        [Required(ErrorMessage = "Customer name is required.")]
-        [Column(TypeName = "VARCHAR")]
-        public string BillTo { get; set; }
-
-        [MaxLength(200)]
-        [Column(TypeName = "VARCHAR")]
-        public string BillingAddress { get; set; }
-
-        [MaxLength(20)]
-        [Column(TypeName = "VARCHAR")]
-        public string BillingPAN { get; set; }
+        [ForeignKey("Customer")]
+        public Int64 CustomerId { get; set; }
 
         [ForeignKey("Branch")]
         public Int64? BranchId { get; set; }
@@ -33,6 +23,7 @@ namespace POS.Model
 
         public virtual Branch Branch { get; set; }
         public virtual User User { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public bool CalculateVAT { get; set; }
     }

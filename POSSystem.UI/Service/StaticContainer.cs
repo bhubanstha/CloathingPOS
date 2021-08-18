@@ -5,6 +5,7 @@ using Notifications.Wpf;
 using POS.Model;
 using POS.Model.ViewModel;
 using POSSystem.UI.ViewModel;
+using POSSystem.UI.Views.Dialog;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace POSSystem.UI.Service
         public static HamburgerMenu UIHamburgerMenuControl { get; set; }
         public static CustomDialog InventoryUpdateDialog { get; set; }
         public static CustomDialog ChangeUserPasswordDialog { get; set; }
+        public static CustomDialog AddNewCustomerDialog { get; set; }
 
         public static Int64 ActiveBranchId { get; set; }
 

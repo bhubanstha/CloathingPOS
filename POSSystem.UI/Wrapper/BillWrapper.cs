@@ -17,6 +17,12 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public Int64 CustomerId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
         public Int64 BranchId
         {
             get { return GetValue<Int64>(); }
@@ -88,27 +94,15 @@ namespace POSSystem.UI.Wrapper
             set { SetValue(value); }
         }
 
+        public Int64 CustomerId
+        {
+            get { return GetValue<Int64>(); }
+            set { SetValue(value); }
+        }
+
         public DateTime BillDate
         {
             get { return GetValue<DateTime>(); }
-            set { SetValue(value); }
-        }
-
-        public string BillTo
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public string BillingAddress
-        {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public string BillingPAN
-        {
-            get { return GetValue<string>(); }
             set { SetValue(value); }
         }
 
@@ -117,6 +111,13 @@ namespace POSSystem.UI.Wrapper
             get { return GetValue<decimal>(); }
             set { SetValue(value); }
         }
+
+        public Customer Customer
+        {
+            get { return GetValue<Customer>(); }
+            set { SetValue(value); }
+        }
+
 
     }
 }

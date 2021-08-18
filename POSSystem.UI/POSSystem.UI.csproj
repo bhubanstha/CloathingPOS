@@ -457,11 +457,13 @@
     <Compile Include="UIModel\GraphPoint.cs" />
     <Compile Include="UIModel\InventoryChangedEventArgs.cs" />
     <Compile Include="UIModel\SalesUIModel.cs" />
+    <Compile Include="ViewModel\AddCustomerViewModel.cs" />
     <Compile Include="ViewModel\AdminChangeUserPassword.cs" />
     <Compile Include="ViewModel\BillingViewModel.cs" />
     <Compile Include="ViewModel\BranchViewModel.cs" />
     <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
+    <Compile Include="ViewModel\CustomerListViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
@@ -484,6 +486,12 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\AddNewCustomerDialog.xaml.cs">
+      <DependentUpon>AddNewCustomerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialog\AdminChangePassword.xaml.cs">
       <DependentUpon>AdminChangePassword.xaml</DependentUpon>
@@ -558,6 +566,7 @@
     <Compile Include="Wrapper\BranchWrapper.cs" />
     <Compile Include="Wrapper\BrandWrapper.cs" />
     <Compile Include="Wrapper\CategoryWrapper.cs" />
+    <Compile Include="Wrapper\CustomerWrapper.cs" />
     <Compile Include="Wrapper\ForgetPasswordWrapper.cs" />
     <Compile Include="Wrapper\InventoryHistoryWrapper.cs" />
     <Compile Include="Wrapper\InventoryWrapper.cs" />
@@ -651,6 +660,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\AddNewCustomerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

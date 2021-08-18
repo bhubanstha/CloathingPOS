@@ -53,6 +53,42 @@ namespace POSSystem.UI.Views
             }
         }
 
+
+        private async void Txt_OnCustomerNameChange(object sender, TextChangedEventArgs e)
+        {
+            TextBox inp = sender as TextBox;
+            string searchText = inp.Text.ToLower();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                model.FilterCustomers = await model.GetFilteredCustomer(searchText);
+                txtCustomerName.AutoCompleteItemSource = model.FilterCustomers;
+            }
+            else
+            {
+                model.CurrentCustomer.Id = 0;
+                model.CurrentCustomer.Name = string.Empty;
+                model.CurrentCustomer.Address = string.Empty;
+                model.CurrentCustomer.GoogleMap = string.Empty;
+                model.CurrentCustomer.Mobile1 = string.Empty;
+                model.CurrentCustomer.Mobile2 = string.Empty;
+            }
+        }
+
+        private void Txt_CustomerSelected(object sender, EventArgs e)
+        {
+            if (txtCustomerName.SelectedItem != null)
+            {
+                var cust = txtCustomerName.SelectedItem as Customer;
+                model.CurrentCustomer.Id = cust.Id;
+                model.CurrentCustomer.Name = cust.Name;
+                model.CurrentCustomer.Address = cust.Address;
+                model.CurrentCustomer.GoogleMap = cust.GoogleMap;
+                model.CurrentCustomer.Mobile1 = cust.Mobile1;
+                model.CurrentCustomer.Mobile2 = cust.Mobile2;                
+            }
+        }
+
+
         private double NegativeItemInCart(Int64 productId)
         {
             if (model.CurrentCart != null && model.CurrentCart.Count > 0)

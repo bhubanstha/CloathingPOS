@@ -20,11 +20,19 @@ using System.Windows.Input;
 
 namespace POSSystem.UI.ViewModel
 {
-    public class BillingViewModel
+    public class BillingViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
         private ILog _log;
         public BillEntityWrapper Bill { get; set; }
+        private CustomerWrapper _customer;
+
+        public CustomerWrapper Customer
+        {
+            get { return _customer; }
+            set { _customer = value; OnPropertyChanged(); }
+        }
+
 
         public UpdateBillingInfoDialog Dialog { get; set; }
         public ICommand ClosePopupCommand { get; private set; }
@@ -49,12 +57,22 @@ namespace POSSystem.UI.ViewModel
             {
                 BillBO bO = new BillBO();
                 Bill b = await bO.GetById(arg.BillId);
+
+                Customer = new CustomerWrapper(new Customer())
+                {
+                    Id = b.Customer.Id,
+                    Name = b.Customer.Name,
+                    Address = b.Customer.Address,
+                    GoogleMap = b.Customer.GoogleMap,
+                    Mobile1 = b.Customer.Mobile1,
+                    Mobile2 = b.Customer.Mobile2
+                };
+
                 Bill.BillDate = b.BillDate;
-                Bill.BillingAddress = b.BillingAddress;
-                Bill.BillingPAN = b.BillingPAN;
+                Bill.CustomerId = b.CustomerId;
                 Bill.Id = b.Id;
-                Bill.BillTo = b.BillTo;
                 Bill.VAT = b.VAT;
+                Bill.Customer = b.Customer;
             }
         }
 
@@ -63,7 +81,7 @@ namespace POSSystem.UI.ViewModel
             try
             {
                 BillBO bO = new BillBO();
-                int i = await bO.Update(Bill.Model);
+                int i = await bO.UpdateBillingInfo(Bill.Model, Customer.Model);
                 if (i > 0)
                 {
                     StaticContainer.ShowNotification("Updated", "Billing information updated.", NotificationType.Success);

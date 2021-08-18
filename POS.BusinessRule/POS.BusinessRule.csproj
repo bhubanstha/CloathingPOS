@@ -103,6 +103,7 @@
     <Compile Include="ADO\BranchBO.cs" />
     <Compile Include="ADO\BrandBO.cs" />
     <Compile Include="ADO\CategoryBO.cs" />
+    <Compile Include="ADO\CustomerBO.cs" />
     <Compile Include="ADO\InventoryBO.cs" />
     <Compile Include="ADO\InventoryHistoryBO.cs" />
     <Compile Include="ADO\SalesBO.cs" />

@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
 using POS.BusinessRule;
 using POS.Model;
@@ -9,6 +11,7 @@ using POSSystem.UI.Controls;
 using POSSystem.UI.Event;
 using POSSystem.UI.PDFViewer;
 using POSSystem.UI.Service;
+using POSSystem.UI.Views.Dialog;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -30,12 +33,15 @@ namespace POSSystem.UI.ViewModel
         private InventoryBO inventoryBO;
         private ObservableCollection<SalesWrapper> _currentCart;
         private SalesWrapper _currentProduct;
+        private CustomerWrapper _currentCustomer;
         private AutoCompleteTextBox _productName;
         private bool _isBillGenerating = false;
 
 
         //Public Properties
         public List<Inventory> FilterProducts { get; set; }
+        public List<Customer> FilterCustomers { get; set; }
+
         public CultureInfo CultureInfo { get; set; }
         public SalesWrapper CurrentProduct
         {
@@ -46,6 +52,15 @@ namespace POSSystem.UI.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        
+
+        public CustomerWrapper CurrentCustomer
+        {
+            get { return _currentCustomer; }
+            set { _currentCustomer = value; }
+        }
+
 
         public bool IsBillGenerating
         {
@@ -81,6 +96,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand DeleteCartItemCommand { get; }
         public ICommand CheckoutCommand { get; }
         public ICommand ResetCommand { get; }
+        public ICommand AddCustomerCommand { get; }
 
         //Constructor
         public SalesViewModel(AutoCompleteTextBox productName, ILogger logger)
@@ -88,7 +104,7 @@ namespace POSSystem.UI.ViewModel
             _productName = productName;
             _log = logger.GetLogger(typeof(SalesViewModel));
             CurrentProduct = new SalesWrapper(new SalesModel());
-
+            CurrentCustomer = new CustomerWrapper(new Customer());
             CurrentCart = new ObservableCollection<SalesWrapper>();
             CurrentBill = new BillWrapper(new BillModel())
             {
@@ -103,14 +119,34 @@ namespace POSSystem.UI.ViewModel
             DeleteCartItemCommand = new DelegateCommand<SalesWrapper>(RemoveItemFromCart);
             CheckoutCommand = new DelegateCommand(OnSalesCheckout, CanSalesCheckoutExecute);
             ResetCommand = new DelegateCommand(OnResetExecute);
+            AddCustomerCommand = new DelegateCommand(OnAddNewCustomerExecute);
 
             CurrentProduct.PropertyChanged += CurrentProduct_PropertyChanged;
             CurrentBill.PropertyChanged += CurrentBill_PropertyChanged;
+            CurrentCustomer.PropertyChanged += CurrentCustomer_PropertyChanged;
             CurrentCart.CollectionChanged += CurrentCart_CollectionChanged;
 
             IEventAggregator eventAggregator = StaticContainer.Container.Resolve<IEventAggregator>();
             eventAggregator.GetEvent<BranchSwitchedEvent>().Subscribe(ResetSales);
 
+        }
+
+        private void CurrentCustomer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name")
+            {
+                ((DelegateCommand)CheckoutCommand).RaiseCanExecuteChanged();
+            };
+        }
+
+        private void OnAddNewCustomerExecute()
+        {
+            MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            // StaticContainer.AddNewCustomerDialog = StaticContainer.Container.Resolve<AddNewCustomerDialog>();
+            //_eventAggregator.GetEvent<ChangeUserPasswordEvent>().Publish(obj.Model);
+
+            AddNewCustomerDialog dialog = StaticContainer.Container.Resolve<AddNewCustomerDialog>();
+            _window.ShowMetroDialogAsync(dialog);
         }
 
         private void ResetSales(BranchWrapper obj)
@@ -167,7 +203,7 @@ namespace POSSystem.UI.ViewModel
         #region Can Execute Methods
         private bool CanSalesCheckoutExecute()
         {
-            return CurrentCart.Count > 0 && !string.IsNullOrEmpty(CurrentBill.BillTo);
+            return CurrentCart.Count > 0 && !string.IsNullOrEmpty(CurrentCustomer.Name);
         }
 
         public bool CanAdditemToCartExecute()
@@ -319,9 +355,7 @@ namespace POSSystem.UI.ViewModel
                     Bill b = new Bill
                     {
                         BillDate = DateTime.Now,
-                        BillingAddress = CurrentBill.BillingAddress,
-                        BillingPAN = CurrentBill.BillingPAN,
-                        BillTo = CurrentBill.BillTo,
+                        CustomerId = CurrentCustomer.Id,
                         VAT = CurrentBill.VAT,
                         BranchId = StaticContainer.ActiveBranchId,
                         CalculateVAT = StaticContainer.Shop.CalculateVATOnSales,
@@ -346,6 +380,7 @@ namespace POSSystem.UI.ViewModel
                 catch (Exception ex)
                 {
                     _log.Error("CheckoutCart", ex);
+
                 }
             });
 
@@ -401,6 +436,14 @@ namespace POSSystem.UI.ViewModel
             inventoryBO = new InventoryBO();
             List<Inventory> filteredInventory = await inventoryBO.GetAllActiveProducts( StaticContainer.ActiveBranchId, productName);
             return filteredInventory;
+        }
+
+
+        public async Task<List<Customer>> GetFilteredCustomer(string searchString)
+        {
+            CustomerBO bo = new CustomerBO();
+            List<Customer> filteredCustomer = await bo.SearchCustomer(searchString);
+            return filteredCustomer;
         }
 
         #endregion

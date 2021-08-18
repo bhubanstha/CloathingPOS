@@ -189,8 +189,8 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="110" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="250" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -280,13 +280,13 @@
                             Header="Qty" />
                         <DataGridTextColumn
                             Width="100"
-                            Binding="{Binding Discount,StringFormat='C', ConverterCulture='Ne-Np'}"
+                            Binding="{Binding Discount, StringFormat='C', ConverterCulture='Ne-Np'}"
                             ElementStyle="{StaticResource GridNumericColumn.Center}"
                             Header="Discount" />
                         <DataGridTemplateColumn Width="100" Header="Total">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Label Style="{StaticResource Grid.Numeric.Column}" ContentStringFormat="C">
+                                    <Label ContentStringFormat="C" Style="{StaticResource Grid.Numeric.Column}">
                                         <Label.Content>
                                             <MultiBinding Converter="{StaticResource TotalCalc}" ConverterCulture="Ne-Np">
                                                 <Binding Path="SalesQuantity" />
@@ -339,7 +339,7 @@
                     x:Name="txtSalesVaT"
                     Grid.Row="2"
                     Grid.Column="1"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="1"
                     Margin="0,5"
                     Padding="{StaticResource ControlPadding}"
                     VerticalAlignment="Center"
@@ -364,7 +364,7 @@
                     x:Name="txtSalesTotal"
                     Grid.Row="3"
                     Grid.Column="1"
-                    Grid.ColumnSpan="2"
+                    Grid.ColumnSpan="1"
                     Margin="0,5"
                     Padding="{StaticResource ControlPadding}"
                     VerticalAlignment="Center"
@@ -383,66 +383,59 @@
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Right"
-                    Content="Billing To:  " />
+                    Content="Customer Info:" />
 
-                <TextBox
-                    x:Name="txtBillingTo"
+                <ctrl:AutoCompleteTextBox
+                    x:Name="txtCustomerName"
                     Grid.Row="4"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
-                    Margin="{DynamicResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    VerticalAlignment="Center"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter Customer Name"
-                    Style="{DynamicResource TextBox.Validation}"
-                    Text="{Binding CurrentBill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
+                    Margin="0,5,5,0"
+                    AutoCompleteHeight="200"
+                    AutoCompletePlacement="Bottom"
+                    AutoCompleteWidth="600"
+                    OnSelectedItemChange="Txt_CustomerSelected"
+                    OnTextChange="Txt_OnCustomerNameChange"
+                    TabIndex="1">
+                    <ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                        <DataGridTextColumn
+                            Width="Auto"
+                            MinWidth="60"
+                            Binding="{Binding Id}"
+                            Header="Id"
+                            Visibility="Hidden" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Name}"
+                            Header="Name" />
+                        <DataGridTextColumn
+                            Width="80"
+                            Binding="{Binding Address}"
+                            Header="Address" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Mobile1}"
+                            Header="Mobile1" />
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Mobile2}"
+                            Header="Mobile2" />
+                    </ctrl:AutoCompleteTextBox.AutoCompleteColumns>
+                </ctrl:AutoCompleteTextBox>
 
-                <Label
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    HorizontalContentAlignment="Right"
-                    Content="Billing Address:  " />
-
-                <TextBox
-                    x:Name="txtBillingAddress"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Margin="{DynamicResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    VerticalAlignment="Center"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter Customer Address"
-                    Style="{DynamicResource TextBox.Validation}"
-                    Text="{Binding CurrentBill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
-
-                <Label
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    HorizontalContentAlignment="Right"
-                    Content="PAN Number:  " />
-
-                <TextBox
-                    x:Name="txtPANNumber"
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    Margin="{DynamicResource ControlMargin}"
-                    Padding="{StaticResource ControlPadding}"
-                    VerticalAlignment="Center"
-                    mah:TextBoxHelper.ClearTextButton="True"
-                    mah:TextBoxHelper.SelectAllOnFocus="True"
-                    mah:TextBoxHelper.Watermark="Enter Customer PAN Number"
-                    Style="{DynamicResource TextBox.Validation}"
-                    Text="{Binding CurrentBill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left" />
+                <Button
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Width="26"
+                    Height="26"
+                    Margin="10,5,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                    Command="{Binding AddCustomerCommand}"
+                    Style="{StaticResource MahApps.Styles.Button.Circle}">
+                    <iconPacks:BootstrapIcons Kind="Plus" />
+                </Button>
 
 
                 <Button

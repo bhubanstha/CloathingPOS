@@ -1,0 +1,191 @@
+﻿<UserControl
+    x:Class="POSSystem.UI.Views.CustomerView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:POSSystem.UI.Behaviours"
+    xmlns:conv="clr-namespace:POSSystem.UI.Converter"
+    xmlns:ctrl="clr-namespace:POSSystem.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:POSSystem.UI.Views"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:ControlHeightCalculator x:Key="HeightCalc" />
+        <conv:UserDeactivationConverter x:Key="UserDeactivation" />
+        <conv:FileToImageSourceConverter x:Key="ImageConverter" />
+        <conv:ImageVisibilityConverter x:Key="ImageVisibility" />
+        <conv:IconVisibilityConverter x:Key="IconVisibility" />
+    </UserControl.Resources>
+    <StackPanel Margin="0,5,3,5">
+        <Grid x:Name="MainGrid">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <Button
+                Grid.Row="0"
+                Grid.Column="0"
+                Padding="20,0"
+                HorizontalAlignment="Left"
+                Command="{Binding LoadCustomerDataCommand}"
+                Content="Load Customer"
+                IsDefault="True"
+                Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
+
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <TextBox
+                    x:Name="txtCustomerName"
+                    Width="200"
+                    MaxWidth="200"
+                    Margin="5,0"
+                    Padding="{StaticResource ControlPadding}"
+                    VerticalAlignment="Center"
+                    mah:TextBoxHelper.ClearTextButton="True"
+                    mah:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+                    mah:TextBoxHelper.SelectAllOnFocus="True"
+                    mah:TextBoxHelper.Watermark="Enter Search Criteria"
+                    SpellCheck.IsEnabled="True"
+                    Style="{DynamicResource MahApps.Styles.TextBox.Search}"
+                    Text="{Binding CustomerFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                    ToolTip="Search by product name or code" />
+            </StackPanel>
+
+            <mah:ProgressRing
+                Grid.Row="2"
+                Margin="0,30,0,0"
+                VerticalAlignment="Top"
+                Panel.ZIndex="1"
+                IsActive="{Binding IsDataLoading, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+            <DataGrid
+                x:Name="UserDataGrid"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                AutoGenerateColumns="False"
+                BorderThickness="1"
+                CanUserAddRows="False"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="False"
+                CanUserSortColumns="False"
+                GridLinesVisibility="All"
+                HorizontalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}"
+                IsReadOnly="True"
+                ItemsSource="{Binding Path=CustomerList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectionMode="Single"
+                Style="{DynamicResource MahApps.Styles.DataGrid.Azure}"
+                VerticalGridLinesBrush="{DynamicResource MahApps.Brushes.Accent4}">
+                <DataGrid.MaxHeight>
+                    <MultiBinding
+                        Converter="{StaticResource HeightCalc}"
+                        Mode="TwoWay"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding>
+                            <Binding.Source>
+                                <sys:Double>500</sys:Double>
+                            </Binding.Source>
+                        </Binding>
+                    </MultiBinding>
+                </DataGrid.MaxHeight>
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="180"
+                        Binding="{Binding Id}"
+                        Header="UserId"
+                        Visibility="Hidden" />
+                    <DataGridTextColumn
+                        Width="30"
+                        Binding="{Binding SN}"
+                        Header="#" />
+                    <DataGridTextColumn
+                        Width="0.5*"
+                        Binding="{Binding Name}"
+                        Header="Name" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Address}"
+                        Header="Address" />
+                    <DataGridHyperlinkColumn
+                        Width="1.3*"
+                        Binding="{Binding GoogleMap}"
+                        ContentBinding="{Binding GoogleMap}"
+                        Header="Google Map">
+                        <DataGridHyperlinkColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <EventSetter Event="Hyperlink.Click" Handler="OnGoogleMapClick" />
+                            </Style>
+                        </DataGridHyperlinkColumn.ElementStyle>
+                    </DataGridHyperlinkColumn>
+
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Mobile1}"
+                        Header="Mobile1" />
+
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Mobile2}"
+                        Header="Mobile2" />
+
+
+                    <DataGridTemplateColumn Width="80" Header="Options">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button
+                                        Grid.Column="0"
+                                        Width="25"
+                                        Height="25"
+                                        Command="{Binding Path=DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=DataContext}"
+                                        Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                        Style="{DynamicResource Button.Circle.In.GridRow}"
+                                        ToolTip="Edit Customer Info">
+
+                                        <Button.ContentTemplate>
+                                            <DataTemplate>
+                                                <iconPacks:PackIconBootstrapIcons
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="PencilSquare"
+                                                    Style="{StaticResource row.option.icon}" />
+                                            </DataTemplate>
+                                        </Button.ContentTemplate>
+                                    </Button>
+                                </Grid>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+    </StackPanel>
+
+
+
+</UserControl>

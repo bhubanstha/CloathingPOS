@@ -34,7 +34,7 @@ namespace POSSystem.UI.Views.Dialog
 
         private void UpdateInventoryDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            txtQuantity.SelectAll();
+            txtCustomerName.SelectAll();
         }
 
         protected override void OnShown()

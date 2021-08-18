@@ -353,6 +353,12 @@
                             <views:InventoryListView />
                         </mah:HamburgerMenuIconItem.Tag>
                     </mah:HamburgerMenuIconItem>
+                    <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=PeopleFill}" Label="Customers">
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:CustomerView />
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+
                     <mah:HamburgerMenuIconItem Icon="{iconPacks:BootstrapIcons Kind=CartPlus}" Label="Sales">
                         <mah:HamburgerMenuIconItem.Tag>
                             <views:SalesView />
@@ -449,8 +455,8 @@
                                 <!--Kind="{Binding Icon.Kind}"
                                 <iconPacks:PackIconFontAwesome
                                     Width="40"
-                                    Height="40"   
-                                    
+                                    Height="40"
+
                                     Kind="Alarm"
                                      />-->
                                 <Border

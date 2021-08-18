@@ -9,15 +9,19 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sc="clr-namespace:POSSystem.UI.Service"
+    MinHeight="0"
     d:DesignHeight="300"
     d:DesignWidth="800"
-    MinHeight="0"
     mc:Ignorable="d">
 
 
     <StackPanel behaviors:KeyboardFocus.On="{Binding ElementName=txtQuantity}">
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -69,15 +73,15 @@
                 Text="Customer Name" />
 
             <TextBox
-                x:Name="txtPurchaseRate"
+                x:Name="txtCustomerName"
                 Grid.Row="2"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter Customer Name"               
-                Text="{Binding Bill.BillTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                mah:TextBoxHelper.Watermark="Enter Customer Name"
+                Text="{Binding Customer.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="3"
@@ -86,27 +90,44 @@
                 Text="Address" />
 
             <TextBox
-                x:Name="txtRetailRate"
+                x:Name="txtAddress"
                 Grid.Row="3"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
                 HorizontalContentAlignment="Left"
                 mah:TextBoxHelper.SelectAllOnFocus="True"
-                mah:TextBoxHelper.Watermark="Enter Customer Address"                
-                Text="{Binding Bill.BillingAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-
-
+                mah:TextBoxHelper.Watermark="Enter Customer Address"
+                Text="{Binding Customer.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
 
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
                 VerticalAlignment="Center"
-                Text="PAN" />
+                Text="Google Map" />
 
             <TextBox
-                x:Name="txtQuantity"
+                x:Name="txtGoogleMap"
                 Grid.Row="4"
+                Grid.Column="1"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                HorizontalContentAlignment="Left"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Customer Address"
+                Text="{Binding Customer.GoogleMap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+
+
+
+            <TextBlock
+                Grid.Row="5"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Mobile1" />
+
+            <TextBox
+                x:Name="Mobile1"
+                Grid.Row="5"
                 Grid.Column="1"
                 Margin="{StaticResource ControlMargin}"
                 Padding="{StaticResource ControlPadding}"
@@ -114,12 +135,31 @@
                 mah:TextBoxHelper.SelectAllOnFocus="True"
                 mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
                 ForceCursor="True"
-                TextAlignment="Left"
-                Text="{Binding Bill.BillingPAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                Text="{Binding Customer.Mobile1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                TextAlignment="Left" />
+
+            <TextBlock
+                Grid.Row="6"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Text="Mobile2" />
+
+            <TextBox
+                x:Name="Mobile2"
+                Grid.Row="6"
+                Grid.Column="1"
+                Margin="{StaticResource ControlMargin}"
+                Padding="{StaticResource ControlPadding}"
+                HorizontalContentAlignment="Left"
+                mah:TextBoxHelper.SelectAllOnFocus="True"
+                mah:TextBoxHelper.Watermark="Enter Purchase Quantity"
+                ForceCursor="True"
+                Text="{Binding Customer.Mobile2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                TextAlignment="Left" />
 
 
             <Button
-                Grid.Row="5"
+                Grid.Row="8"
                 Grid.Column="1"
                 Width="150"
                 Margin="0,5,0,5"
@@ -130,7 +170,7 @@
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
 
             <Button
-                Grid.Row="5"
+                Grid.Row="8"
                 Grid.Column="1"
                 Width="100"
                 Margin="160,5,0,5"

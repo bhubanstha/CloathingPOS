@@ -180,10 +180,10 @@ namespace POS.Utilities.PDF
             this._bill = new BillModel
             {
                 BillDate = bill.BillDate,
-                BillingAddress = bill.BillingAddress,
-                BillingPAN = bill.BillingPAN,
+                BillingAddress = bill.Customer.Address,
+                BillingPAN = bill.Customer.Mobile1 + (!string.IsNullOrEmpty(bill.Customer.Mobile2) ? ", " + bill.Customer.Mobile2 : ""),
                 BillNo = bill.Id,
-                BillTo = bill.BillTo,
+                BillTo = bill.Customer.Name,
                 GrandTotal = 0,
                 VAT = bill.VAT
             };
@@ -209,7 +209,7 @@ namespace POS.Utilities.PDF
             canvas.Add(PDFUtility.CreateParagraph($"Bill No.: {_bill.BillNo}\t\t\t\t\tDate: {DateTime.Now.ToString("yyyy/mm/dd hh:mm tt")}", TextAlignment.LEFT, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"Customer Name: {_bill.BillTo}", TextAlignment.LEFT, 0.5f));
             canvas.Add(PDFUtility.CreateParagraph($"Customer Address: {_bill.BillingAddress}", TextAlignment.LEFT, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Customer PAN: {_bill.BillingPAN}", TextAlignment.LEFT, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"Customer Phone: {_bill.BillingPAN}", TextAlignment.LEFT, 0.5f));
             doc.SetTopMargin(145f);
             canvas.Close();
         }

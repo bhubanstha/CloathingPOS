@@ -91,6 +91,7 @@
     <Compile Include="Branch.cs" />
     <Compile Include="Brand.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryHistory.cs" />
