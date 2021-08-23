@@ -29,6 +29,7 @@ namespace POSSystem.UI.ViewModel
         public ICommand ManageAccount { get; }
         public ICommand AddBranchCommand { get; }
         public ICommand SettingsCommand { get; }
+        public ICommand RegisterProductCommand { get; }
         public ICommand LogoutCommand { get; }
         public ICommand OpenPdfViewerCommand { get; set; }
         public ICommand ApplicationExitCommand { get; set; }
@@ -106,9 +107,16 @@ namespace POSSystem.UI.ViewModel
             ManageAccount = new DelegateCommand(OnManageAccountExecute);
             AddBranchCommand = new DelegateCommand(OnAddBranchExecute);
             SettingsCommand = new DelegateCommand(OnSettingsCommandExecute);
+            RegisterProductCommand = new DelegateCommand(OnRegistrationCommandExecute);
             LogoutCommand = new DelegateCommand(OnUserLogout);
             OpenPdfViewerCommand = new DelegateCommand(OnOpenPdfViewerExecute);
             ApplicationExitCommand = new DelegateCommand(OnApplicationExit);
+        }
+
+        private void OnRegistrationCommandExecute()
+        {
+            RegistrationWindow window = StaticContainer.Container.Resolve<RegistrationWindow>();
+            window.ShowDialog();
         }
 
         private void OnAddBranchExecute()

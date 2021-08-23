@@ -86,101 +86,130 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="0 3 0 0" Background="Transparent">
+    <Grid Margin="0,3,0,0" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <!--<StackPanel Grid.Row="0" Height="20" >-->
-            <Polyline Points="0,20 0,10 100,10 115,0 130,10 229,10 229,20" Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}" StrokeThickness="1" Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" Grid.Row="0" />
+        <Polyline
+            Grid.Row="0"
+            Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
+            Points="0,20 0,10 100,10 115,0 130,10 229,10 229,20"
+            Stroke="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            StrokeThickness="1" />
         <!--</StackPanel>-->
-        
-            <Border BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"  Grid.Row="1" Background="{DynamicResource MahApps.Brushes.ThemeBackground}">
-                <StackPanel >
+
+        <Border
+            Grid.Row="1"
+            Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+            BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+            BorderThickness="1,0,1,1">
+            <StackPanel>
                 <ListView Style="{StaticResource MenuCotainer}">
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome
-                            Grid.Column="0"
-                            Width="24"
-                            Height="24"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Kind="AddressCardRegular" />
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="AddressCardRegular" />
                             <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Manage Account" />
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Manage Account" />
                         </StackPanel>
                         <ListViewItem.InputBindings>
                             <MouseBinding Command="{Binding ManageAccount}" MouseAction="LeftClick" />
                         </ListViewItem.InputBindings>
                     </ListViewItem>
 
-                    <ListViewItem Style="{StaticResource ListViewContainerStyle}" 
-                                  Visibility="{Binding IsAdminMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}" Visibility="{Binding IsAdminMenuVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome
-                            Grid.Column="0"
-                            Width="24"
-                            Height="24"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Kind="SitemapSolid" />
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="SitemapSolid" />
                             <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Branch" />
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Branch" />
                         </StackPanel>
                         <ListViewItem.InputBindings>
                             <MouseBinding Command="{Binding AddBranchCommand}" MouseAction="LeftClick" />
                         </ListViewItem.InputBindings>
                     </ListViewItem>
-                    
+
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome
-                            Grid.Column="0"
-                            Width="24"
-                            Height="24"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Kind="CogsSolid" />
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="CogsSolid" />
                             <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Settings" />
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Settings" />
                         </StackPanel>
                         <ListViewItem.InputBindings>
                             <MouseBinding Command="{Binding SettingsCommand}" MouseAction="LeftClick" />
                         </ListViewItem.InputBindings>
                     </ListViewItem>
 
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconBootstrapIcons
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="AwardFill" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Register Product" />
+                        </StackPanel>
+                        <ListViewItem.InputBindings>
+                            <MouseBinding Command="{Binding RegisterProductCommand}" MouseAction="LeftClick" />
+                        </ListViewItem.InputBindings>
+                    </ListViewItem>
+
                 </ListView>
-                <Separator Margin="0 5" />
+                <Separator Margin="0,5" />
                 <ListView Style="{StaticResource MenuCotainer}">
 
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome
-                            Grid.Column="0"
-                            Width="24"
-                            Height="24"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Kind="SignOutAltSolid" />
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="SignOutAltSolid" />
                             <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Logout" />
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Logout" />
                         </StackPanel>
                         <ListViewItem.InputBindings>
                             <MouseBinding Command="{Binding LogoutCommand}" MouseAction="LeftClick" />
@@ -190,32 +219,32 @@
                     <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconFontAwesome
-                            Grid.Column="0"
-                            Width="24"
-                            Height="24"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Kind="DoorClosedSolid" />
+                                Grid.Column="0"
+                                Width="24"
+                                Height="24"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Kind="DoorClosedSolid" />
                             <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="Exit" />
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="Exit" />
                         </StackPanel>
                         <ListViewItem.InputBindings>
                             <MouseBinding Command="{Binding ApplicationExitCommand}" MouseAction="LeftClick" />
                         </ListViewItem.InputBindings>
-                    </ListViewItem>                    
+                    </ListViewItem>
                 </ListView>
             </StackPanel>
-            </Border>
-            
+        </Border>
 
-        
-  
-       
-       
+
+
+
+
+
         <!--<StackPanel x:Name="UserMenuPopup">
             <Polygon
                 Fill="{DynamicResource MahApps.Brushes.ThemeBackground}"
@@ -322,7 +351,8 @@
                     </ListViewItem.InputBindings>
                 </ListViewItem>
             </ListView>
-            --><!--<Separator Margin="10" />
+        -->
+        <!--<Separator Margin="10" />
             <ListView Style="{StaticResource MenuCotainer}">
                 <ListViewItem Style="{StaticResource ListViewContainerStyle}">
                     <StackPanel Orientation="Horizontal">
@@ -346,7 +376,8 @@
                 </ListViewItem>
 
 
-            </ListView>--><!--
+            </ListView>-->
+        <!--
         </StackPanel>-->
     </Grid>
 
