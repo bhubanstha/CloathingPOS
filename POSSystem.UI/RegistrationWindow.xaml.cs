@@ -1,4 +1,7 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
+using POSSystem.UI.Service;
+using POSSystem.UI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,8 @@ namespace POSSystem.UI
         public RegistrationWindow()
         {
             InitializeComponent();
+            var model = StaticContainer.Container.Resolve<RegistrationViewModel>();
+            this.DataContext = model;
         }
     }
 }

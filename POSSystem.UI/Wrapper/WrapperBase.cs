@@ -24,7 +24,6 @@ namespace POSSystem.UI.Wrapper
             typeof(T).GetProperty(propertyName).SetValue(Model, value);
             ValidatePropertyInternal(propertyName, value);
             OnPropertyChanged(propertyName);
-            
         }
 
         public bool IsValid()

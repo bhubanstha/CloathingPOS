@@ -7,6 +7,7 @@ using POS.Model;
 using POS.Utilities.PDF;
 using POSSystem.UI.Service;
 using POSSystem.UI.Views;
+using SoftwareRegistration;
 using System;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
@@ -45,9 +46,20 @@ namespace POSSystem.UI
 
             var window = container.Resolve<LoginWindow>();
             this.MainWindow = window;
-            logger.Info("Showing Login Window");
-            Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-            window.Show();
+
+            logger.Info("Checking Software Registration");
+            bool isRegistered = RegistrationService.IsRegistered(window);
+
+            if (isRegistered)
+            {
+                logger.Info("Showing Login Window");
+                Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+                window.Show();
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)

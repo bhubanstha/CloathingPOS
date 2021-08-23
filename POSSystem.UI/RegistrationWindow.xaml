@@ -35,6 +35,7 @@
             MinHeight="150"
             AcceptsReturn="False"
             TextWrapping="Wrap"
+            Text="{Binding SerialKey, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
             VerticalScrollBarVisibility="Visible" />
         <StackPanel
             Grid.Row="2"
@@ -46,6 +47,7 @@
                 Content="Register"
                 FontSize="14"
                 IsDefault="True"
+                Command="{Binding RegisterCommand}"
                 Style="{DynamicResource MahApps.Styles.Button.Dialogs.AccentHighlight}" />
             <Button
                 Grid.Row="2"

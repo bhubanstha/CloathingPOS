@@ -209,6 +209,10 @@
       <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net47\Prism.dll</HintPath>
     </Reference>
     <Reference Include="ReachFramework" />
+    <Reference Include="SoftwareRegistration, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalPackage\SoftwareRegistration.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
@@ -448,6 +452,7 @@
     <Compile Include="Service\IColorService.cs" />
     <Compile Include="Service\NepDate.cs" />
     <Compile Include="Service\NepDateConverter.cs" />
+    <Compile Include="Service\RegistrationService.cs" />
     <Compile Include="Service\StaticContainer.cs" />
     <Compile Include="SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
@@ -470,6 +475,7 @@
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
+    <Compile Include="ViewModel\RegistrationViewModel.cs" />
     <Compile Include="ViewModel\SalesListViewModel.cs" />
     <Compile Include="ViewModel\SalesReturnViewModel.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
@@ -900,6 +906,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExternalPackage\SoftwareRegistration.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
