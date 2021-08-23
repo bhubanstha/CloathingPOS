@@ -166,6 +166,7 @@ namespace POSSystem.UI.ViewModel
 
         private async void LoadInventory()
         {
+            IsQrGenerating = true;
             _inventoryBo = new InventoryBO();
             List<Inventory> items = await _inventoryBo.GetAllActiveProducts(StaticContainer.ActiveBranchId, "");
 
@@ -179,6 +180,7 @@ namespace POSSystem.UI.ViewModel
             }
             InventoryCollectionView = CollectionViewSource.GetDefaultView(Inventory);
             InventoryCollectionView.Filter = FilterInventory;
+            IsQrGenerating = false;
         }
 
         private bool FilterInventory(object obj)
