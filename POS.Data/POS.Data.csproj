@@ -159,6 +159,7 @@
     <Content Include="sql\sp_shop.sql" />
     <Content Include="sql\sp_user.sql" />
     <Content Include="sql\table_customer.sql" />
+    <Content Include="sql\table_license.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

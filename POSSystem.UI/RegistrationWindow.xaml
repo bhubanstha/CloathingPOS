@@ -8,7 +8,8 @@
     xmlns:local="clr-namespace:POSSystem.UI"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="Registration"
+     xmlns:sc="clr-namespace:POSSystem.UI.Service"
+    Title="{Binding Source={x:Static sc:StaticContainer.ApplicationName}, Mode=OneWay}"
     Width="800"
     Height="450"
     GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
@@ -35,6 +36,7 @@
             MinHeight="150"
             AcceptsReturn="False"
             TextWrapping="Wrap"
+            Padding="5"
             Text="{Binding SerialKey, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
             VerticalScrollBarVisibility="Visible" />
         <StackPanel

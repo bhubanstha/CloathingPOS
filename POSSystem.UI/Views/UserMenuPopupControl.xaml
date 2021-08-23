@@ -14,6 +14,8 @@
     mc:Ignorable="d">
     <UserControl.Resources>
 
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        
         <Style x:Key="MenuCotainer" TargetType="ListView">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
@@ -170,7 +172,8 @@
                         </ListViewItem.InputBindings>
                     </ListViewItem>
 
-                    <ListViewItem Style="{StaticResource ListViewContainerStyle}">
+                    <ListViewItem Style="{StaticResource ListViewContainerStyle}" 
+                                  Visibility="{Binding IsAdminMenuVisible, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <StackPanel Orientation="Horizontal">
                             <iconPacks:PackIconBootstrapIcons
                                 Grid.Column="0"
