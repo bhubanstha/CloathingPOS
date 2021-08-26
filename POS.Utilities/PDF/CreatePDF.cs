@@ -35,13 +35,19 @@ namespace POS.Utilities.PDF
                 using (FileStream stream = new FileStream(pdfPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+
+                    //Pdf password protection forces user to enter pdf password during print action
+                    //thus this implementation is removed
+                    /*
+                    
                     byte[] password = Encoding.ASCII.GetBytes(shop.PdfPassword);
                     WriterProperties props = new WriterProperties()
                         .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                                 EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
                     PdfWriter writer = new PdfWriter(stream, props);
-                    //PdfWriter writer = new PdfWriter(stream);
+                    */
+                    PdfWriter writer = new PdfWriter(stream);
                     PdfDocument pdf = new PdfDocument(writer);
                     //document = new Document(pdf, new PageSize(rectangle));
                     document = new Document(pdf, StandardPaperSize.C6);
@@ -73,7 +79,7 @@ namespace POS.Utilities.PDF
                             PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
                             sn++;
                         }
-                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count, sn);
+                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, shop.TotalItemsInInvoice - workingItems.Count, sn);
                         PDFUtility.CreateInvoiceTotal(ref table, salesItem, shop);
 
                         skipCount += 10;
@@ -108,13 +114,18 @@ namespace POS.Utilities.PDF
                 {
 
                     //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+
+                    //Pdf password protection forces user to enter pdf password during print action
+                    //thus this implementation is removed
+                    /*
                     byte[] password = Encoding.ASCII.GetBytes(shop.PdfPassword);
                     WriterProperties props = new WriterProperties()
                         .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                                 EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
                     PdfWriter writer = new PdfWriter(stream, props);
-                    //PdfWriter writer = new PdfWriter(stream);
+                    */
+                    PdfWriter writer = new PdfWriter(stream);
                     PdfDocument pdf = new PdfDocument(writer);
                     //document = new Document(pdf, new PageSize(rectangle));
                     document = new Document(pdf, StandardPaperSize.C6);
@@ -146,7 +157,7 @@ namespace POS.Utilities.PDF
                             PDFUtility.CreateInoiceTableRecord(ref table, item, sn);
                             sn++;
                         }
-                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, 10 - workingItems.Count, sn);
+                        PDFUtility.CreateEmptyRowInInoiceTable(ref table, shop.TotalItemsInInvoice - workingItems.Count, sn);
                         PDFUtility.CreateInvoiceTotal(ref table, salesRecord, shop);
 
                         skipCount += 10;
@@ -203,14 +214,15 @@ namespace POS.Utilities.PDF
             canvas.Add(PDFUtility.CreateParagraph($"{invoiceHeader}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateParagraph($"{_shop.Name}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateParagraph($"{_shop.Address}", TextAlignment.CENTER, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f, 12));
+            //canvas.Add(PDFUtility.CreateParagraph($"PAN: {_shop.PANNumber}", TextAlignment.CENTER, 0.5f, 12));
             canvas.Add(PDFUtility.CreateLogoAtPoint(_shop.LogoPath, new Point(15, 390)));
-            canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Bill No.: {_bill.BillNo}\t\t\t\t\tDate: {DateTime.Now.ToString("yyyy/mm/dd hh:mm tt")}", TextAlignment.LEFT, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Customer Name: {_bill.BillTo}", TextAlignment.LEFT, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Customer Address: {_bill.BillingAddress}", TextAlignment.LEFT, 0.5f));
-            canvas.Add(PDFUtility.CreateParagraph($"Customer Phone: {_bill.BillingPAN}", TextAlignment.LEFT, 0.5f));
-            doc.SetTopMargin(145f);
+            canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f, 12));
+            canvas.Add(PDFUtility.CreateParagraph("", TextAlignment.CENTER, 0.5f, 12));
+            canvas.Add(PDFUtility.CreateParagraph($"Bill No.: {_bill.BillNo}                                             Date: {DateTime.Now.ToString("yyyy/MM/dd hh:mm tt")}", TextAlignment.LEFT, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"Name: {_bill.BillTo}", TextAlignment.LEFT, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"Address: {_bill.BillingAddress}", TextAlignment.LEFT, 0.5f));
+            canvas.Add(PDFUtility.CreateParagraph($"Phone: {_bill.BillingPAN}", TextAlignment.LEFT, 0.5f));
+            doc.SetTopMargin(130f);
             canvas.Close();
         }
 
@@ -234,7 +246,7 @@ namespace POS.Utilities.PDF
             PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
             PdfPage page = docEvent.GetPage();
             Rectangle pageSize = page.GetPageSize();
-            pageSize.ApplyMargins(pageSize.GetHeight() - 35, 10.0f, 14.4f, 10.0f, false);
+            pageSize.ApplyMargins(pageSize.GetHeight() - 27, 10.0f, 14.4f, 10.0f, false);
 
             Canvas canvas = new Canvas(page, pageSize);
             //canvas.ShowTextAligned(String.Format("Page %d of", pageNum));

@@ -33,12 +33,17 @@ namespace POS.Utilities.PDF
                 {
 
                     //Rectangle rectangle = new Rectangle(323.63f, 459.36f); //C6 paper size
+                    //Pdf password protection forces user to enter pdf password during print action
+                    //thus this implementation is removed
+                    /*
                     byte[] password = Encoding.ASCII.GetBytes(shop.PdfPassword);
                     WriterProperties props = new WriterProperties()
                         .SetStandardEncryption(password, password, EncryptionConstants.ALLOW_PRINTING,
                                 EncryptionConstants.ENCRYPTION_AES_256 | EncryptionConstants.DO_NOT_ENCRYPT_METADATA);
 
                     PdfWriter writer = new PdfWriter(stream, props);
+                    */
+                    PdfWriter writer = new PdfWriter(stream);
                     PdfDocument pdf = new PdfDocument(writer);
                     document = new Document(pdf, StandardPaperSize.A4.Rotate());
                     document.SetMargins(14.4f, 10.0f, 14.4f, 10.0f);

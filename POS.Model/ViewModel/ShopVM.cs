@@ -18,5 +18,7 @@ namespace POS.Model.ViewModel
         public string PdfPassword { get; set; }
         public string Address { get; set; }
 
+        public int TotalItemsInInvoice { get; set; }
+
     }
 }

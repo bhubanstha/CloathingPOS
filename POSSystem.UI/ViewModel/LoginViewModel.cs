@@ -186,7 +186,8 @@ namespace POSSystem.UI.ViewModel
                                             Name = b.Shop.Name,
                                             PANNumber = b.Shop.PANNumber,
                                             PdfPassword = b.Shop.PdfPassword,
-                                            PrintInvoice = b.Shop.PrintInvoice
+                                            PrintInvoice = b.Shop.PrintInvoice,
+                                            TotalItemsInInvoice = StaticContainer.TotalItemsInInvoice
                                         };
                                     }
 

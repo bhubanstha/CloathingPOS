@@ -58,7 +58,7 @@ namespace POSSystem.UI.Service
         public static CustomDialog AddNewCustomerDialog { get; set; }
 
         public static Int64 ActiveBranchId { get; set; }
-
+        public static int TotalItemsInInvoice { get; set; }
         static StaticContainer()
         {
             DialogSettings = new MetroDialogSettings
@@ -74,7 +74,9 @@ namespace POSSystem.UI.Service
             SettingFile = "AppConfiguration.txt";// Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AppConfiguration.txt");
             ApplicationName = ConfigurationReader.GetConfiguration <string>(AppSettingKey.AppName);
             AppDeployedYear = ConfigurationReader.GetConfiguration <int>(AppSettingKey.AppDeployedYear);
+            TotalItemsInInvoice = ConfigurationReader.GetConfiguration<int>(AppSettingKey.TotalItemsInInvoice);
             string culture = ConfigurationReader.GetConfiguration<string>(AppSettingKey.CurrencyCulture);
+            
             CultureInfo = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).Where(c => c.DisplayName == culture).FirstOrDefault();
         }
 

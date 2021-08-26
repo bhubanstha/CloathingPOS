@@ -19,6 +19,7 @@ namespace POSSystem.UI.Service
         AppName,
         PdfPassword,
         EncryptionKey,
-        AppDeployedYear
+        AppDeployedYear,
+        TotalItemsInInvoice
     }
 }
