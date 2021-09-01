@@ -442,6 +442,9 @@
     <Compile Include="PDFViewer\PdfPasswordDialog.xaml.cs">
       <DependentUpon>PdfPasswordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PrintTestWindow.xaml.cs">
+      <DependentUpon>PrintTestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
@@ -631,6 +634,10 @@
     <Page Include="PDFViewer\PdfPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PrintTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>

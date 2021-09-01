@@ -44,7 +44,7 @@ namespace POSSystem.UI
             ReloadConfig();
 
 
-            var window = container.Resolve<LoginWindow>();
+            var window = new PrintTestWindow();// container.Resolve<LoginWindow>();
             this.MainWindow = window;
 
             logger.Info("Checking Software Registration");
