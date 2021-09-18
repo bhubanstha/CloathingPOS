@@ -28,7 +28,7 @@ namespace POSSystem.UI.ViewModel
             get { return _currentUser; }
             set { _currentUser = value; OnPropertyChanged(); }
         }
-        
+
         public bool IsUserNameEditable
         {
             get { return _isUserNameEditable; }
@@ -41,7 +41,7 @@ namespace POSSystem.UI.ViewModel
             this._encryption = encryption;
             this._log = logger.GetLogger(typeof(ForgetPasswordViewModel));
             _user = _cacheService.ReadCache<User>("LoginUser");
-            ChangePasswordCommand = new DelegateCommand(OnPasswordChange, OnPasswordCanChange);            
+            ChangePasswordCommand = new DelegateCommand(OnPasswordChange, OnPasswordCanChange);
             LoadLoginUser();
             CurrentUser.PropertyChanged += CurrentUser_PropertyChanged;
         }
@@ -57,13 +57,13 @@ namespace POSSystem.UI.ViewModel
             {
                 userBO = new UserBO(_encryption);
                 User u = await userBO.GetUserFromUserName(CurrentUser.UserName);
-                if(u != null)
+                if (u != null)
                 {
-                    u.Password = await userBO.EncryptPassword( CurrentUser.Password);
+                    u.Password = await userBO.EncryptPassword(CurrentUser.Password);
                     u.LastPasswordChangeDate = DateTime.Now;
                     u.PromptForPasswordReset = false;
-                   int i=  await userBO.UpdateUser(u);
-                    if(i>0)
+                    int i = await userBO.UpdateUser(u);
+                    if (i > 0)
                     {
                         if (_user != null)
                         {
@@ -72,7 +72,7 @@ namespace POSSystem.UI.ViewModel
                         }
                         CurrentUser.Password = null;
                         CurrentUser.ConfirmPassword = null;
-                        if(IsUserNameEditable)
+                        if (IsUserNameEditable)
                         {
                             CurrentUser.UserName = null;
                         }
@@ -96,7 +96,7 @@ namespace POSSystem.UI.ViewModel
 
         private bool OnPasswordCanChange()
         {
-            return !string.IsNullOrEmpty(CurrentUser.Password) &&  !string.IsNullOrEmpty(CurrentUser.Password) && !string.IsNullOrEmpty(CurrentUser.ConfirmPassword) && string.Equals(CurrentUser.Password, CurrentUser.ConfirmPassword);
+            return !string.IsNullOrEmpty(CurrentUser.Password) && !string.IsNullOrEmpty(CurrentUser.Password) && !string.IsNullOrEmpty(CurrentUser.ConfirmPassword) && string.Equals(CurrentUser.Password, CurrentUser.ConfirmPassword);
         }
 
         private void LoadLoginUser()

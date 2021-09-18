@@ -5,6 +5,7 @@ using POS.BusinessRule;
 using POS.Model;
 using POS.Model.ViewModel;
 using POS.Utilities.Encryption;
+using POSSystem.UI.Enum;
 using POSSystem.UI.Service;
 using POSSystem.UI.Wrapper;
 using Prism.Commands;
@@ -88,6 +89,7 @@ namespace POSSystem.UI.ViewModel
         {
             IsLoginOnProgress = true;
             MetroWindow window = await Login();
+
             if (window != null)
             {
                 if (window is ForgotPasswordWindow)
@@ -109,7 +111,8 @@ namespace POSSystem.UI.ViewModel
                 }
                 else if (window is MainWindow)
                 {
-
+                    MainWindowViewModel vm = StaticContainer.Container.Resolve<MainWindowViewModel>();
+                    vm.User = _cacheService.ReadCache<User>(CacheKey.LoginUser.ToString());
                     LoginWindow.Hide();
                     window.Show();
                     LoginWindow.Close();
@@ -131,9 +134,7 @@ namespace POSSystem.UI.ViewModel
                     {
                         string encryptePassword = _bouncyCastleEncryption.EncryptAsAsync(LoginUser.Password).Result;
                         UserBO bo = new UserBO(_bouncyCastleEncryption);
-
                         User u = await bo.Login(LoginUser.UserName, encryptePassword, LoginUser.BranchId);
-
                         MetroWindow window = null;
                         if (u != null)
                         {

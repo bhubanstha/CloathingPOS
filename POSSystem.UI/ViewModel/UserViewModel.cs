@@ -238,6 +238,7 @@ namespace POSSystem.UI.ViewModel
                 string title = "";
                 string msg = "";
                 _userBo = new UserBO(_encryption);
+                u.Password = await _userBo.EncryptPassword(u.Password);
                 long id = 0;
                 if (u.Id > 0)
                 {

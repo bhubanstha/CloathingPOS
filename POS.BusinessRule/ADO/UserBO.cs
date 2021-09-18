@@ -3,6 +3,7 @@ using POS.Model;
 using POS.Utilities.Encryption;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ namespace POS.BusinessRule
         {
             bouncyCastleEncryption = encryption;
         }
-
         public Task<List<User>> GetAllUser(string myUserName, long branchId)
         {
             return Task.Run(async () =>
@@ -112,7 +112,7 @@ namespace POS.BusinessRule
         {
             return Task.Run(async () =>
             {
-                u.Password = await EncryptPassword(u.Password);
+                //u.Password = await EncryptPassword(u.Password);
                 SqlCommand cmd = DataAccess.CreateCommand("SaveUser");
                 cmd.Parameters.AddWithValue("@UserName", u.UserName);
                 cmd.Parameters.AddWithValue("@DisplayName", u.DisplayName);
@@ -132,11 +132,11 @@ namespace POS.BusinessRule
             });
         }
 
-        public Task<int>UpdateUser(User u)
+        public Task<int> UpdateUser(User u)
         {
             return Task.Run(async () =>
             {
-                u.Password = await EncryptPassword(u.Password);
+                //u.Password = await EncryptPassword(u.Password);
                 SqlCommand cmd = DataAccess.CreateCommand("UpdateUser");
                 cmd.Parameters.AddWithValue("@Id", u.Id);
                 cmd.Parameters.AddWithValue("@UserName", u.UserName);

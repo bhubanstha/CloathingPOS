@@ -39,8 +39,8 @@ namespace POSSystem.UI
             builder.RegisterType<SalesReturnView>().AsSelf();
             builder.RegisterType<AboutView>().AsSelf();
             builder.RegisterType<UserProfileView>().AsSelf();
-            
-            
+
+
 
             //Window Registration
             builder.RegisterType<LoginWindow>().AsSelf();
