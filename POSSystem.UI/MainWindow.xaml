@@ -118,6 +118,7 @@
                                     <Setter TargetName="ContentPresenter" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.SelectedForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Opacity" Value="1.0" />
+                                    <Setter TargetName="ContentPresenter" Property="FontSize" Value="25" />
                                 </Trigger>
                                 <MultiTrigger>
                                     <MultiTrigger.Conditions>
@@ -127,6 +128,7 @@
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionBackgroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="ContentPresenter" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.ActiveSelectionForegroundBrush), Mode=OneWay}" />
+                                    <Setter TargetName="ContentPresenter" Property="FontSize" Value="25" />
                                 </MultiTrigger>
 
                                 <MultiTrigger>
@@ -137,6 +139,7 @@
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedBackgroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="ContentPresenter" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverSelectedForegroundBrush), Mode=OneWay}" />
+                                    <Setter TargetName="ContentPresenter" Property="FontSize" Value="25" />
                                 </MultiTrigger>
                                 <MultiTrigger>
                                     <MultiTrigger.Conditions>
@@ -146,6 +149,7 @@
                                     <Setter TargetName="Border" Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverBackgroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="ContentPresenter" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
                                     <Setter TargetName="SelectionIndicator" Property="Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ItemHelper.HoverForegroundBrush), Mode=OneWay}" />
+
                                 </MultiTrigger>
 
                                 <Trigger Property="mah:ItemHelper.IsMouseLeftButtonPressed" Value="True">

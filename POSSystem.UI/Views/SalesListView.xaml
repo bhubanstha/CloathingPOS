@@ -19,7 +19,7 @@
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
         <conv:BillToBillInfoConverter x:Key="BillInfoConverter" />
         <conv:TotalPriceConverter x:Key="TotalCalc" />
-        
+
         <Style x:Key="DataGrid.Test" TargetType="{x:Type DataGrid}" />
     </UserControl.Resources>
 
@@ -70,7 +70,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                
+
             </StackPanel>
             <mah:ProgressRing
                 Grid.Row="2"
@@ -294,7 +294,7 @@
                         Header="Qty" />
                     <DataGridTextColumn
                         Width="110"
-                        Binding="{Binding SalesRate, StringFormat='C' , ConverterCulture='Ne-Np'}"
+                        Binding="{Binding SalesRate, StringFormat='C', ConverterCulture='Ne-Np'}"
                         ElementStyle="{StaticResource GridNumericColumn}"
                         Header="Sales Rate" />
                     <DataGridTextColumn
@@ -305,7 +305,7 @@
                     <DataGridTemplateColumn Width="100" Header="Total">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Style="{StaticResource Grid.Numeric.Column}" ContentStringFormat="C">
+                                <Label ContentStringFormat="C" Style="{StaticResource Grid.Numeric.Column}">
                                     <Label.Content>
                                         <MultiBinding Converter="{StaticResource TotalCalc}" ConverterCulture="Ne-Np">
                                             <Binding Path="SalesQuantity" />

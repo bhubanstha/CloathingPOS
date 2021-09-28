@@ -472,6 +472,7 @@
     <Compile Include="ViewModel\BrandViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\CustomerListViewModel.cs" />
+    <Compile Include="ViewModel\CustomerPurchaseHistoryViewModel.cs" />
     <Compile Include="ViewModel\ForgetPasswordViewModel.cs" />
     <Compile Include="ViewModel\InventoryListViewModel.cs" />
     <Compile Include="ViewModel\InventoryViewModel.cs" />
@@ -498,6 +499,9 @@
     </Compile>
     <Compile Include="Views\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialog\CustomerPurchaseHistoryDialog.xaml.cs">
+      <DependentUpon>CustomerPurchaseHistoryDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialog\AddNewCustomerDialog.xaml.cs">
       <DependentUpon>AddNewCustomerDialog.xaml</DependentUpon>
@@ -679,6 +683,10 @@
     <Page Include="Views\CustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialog\CustomerPurchaseHistoryDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Dialog\AddNewCustomerDialog.xaml">
       <SubType>Designer</SubType>

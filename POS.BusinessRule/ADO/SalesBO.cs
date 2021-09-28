@@ -66,6 +66,37 @@ namespace POS.BusinessRule
             });
         }
 
+
+        public Task<List<Sales>> GetCustomerPurchaseHitory(Int64 customerId)
+        {
+            return Task.Run(async () =>
+            {
+                SqlCommand cmd = DataAccess.CreateCommand("GetCustomerPurchaseHistory");
+                cmd.Parameters.AddWithValue("@CustomerId", customerId);
+                DataTable tbl = await DataAccess.ExecuteReaderCommandAsync(cmd);
+                List<Sales> sales = new List<Sales>();
+                foreach (DataRow row in tbl.Rows)
+                {
+                    Sales s = new Sales
+                    {
+                        Id = (long)row["Id"],
+                        SalesQuantity = (int)row["SalesQuantity"],
+                        PurchaseRate = (decimal)row["PurchaseRate"],
+                        Discount = (decimal)row["Discount"],
+                        ProductId = (long)row["ProductId"],
+                        BillNo = (long)row["BillNo"],
+                        SalesRate = (decimal)row["SalesRate"],
+                        Inventory = await new InventoryBO().GetById((long)row["ProductId"]),
+                        Bill = await new BillBO().GetById((long)row["BillNo"]),
+
+                    };
+                    s.Bill.Branch = await new BranchBO().GetById((long)row["BranchId"]);
+                    sales.Add(s);
+                }
+                return sales;
+            });
+        }
+
         public Task<int> CheckoutSales(Sales item)
         {
             return Task.Run(async () =>

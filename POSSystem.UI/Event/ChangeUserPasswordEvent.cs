@@ -25,4 +25,9 @@ namespace POSSystem.UI.Event
 
     }
 
+    public class ShowCustomerPurchaseEvent: PubSubEvent<long>
+    {
+
+    }
+
 }

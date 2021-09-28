@@ -23,6 +23,7 @@ namespace POSSystem.UI
             builder.RegisterType<AdminChangePassword>().AsSelf();
             builder.RegisterType<UpdateBillingInfoDialog>().AsSelf().SingleInstance();
             builder.RegisterType<AddNewCustomerDialog>().AsSelf().SingleInstance();
+            builder.RegisterType<CustomerPurchaseHistoryDialog>().AsSelf().SingleInstance();
 
 
             //Flyout Registration
@@ -88,6 +89,7 @@ namespace POSSystem.UI
             builder.RegisterType<AddCustomerViewModel>().AsSelf();
             builder.RegisterType<CustomerListViewModel>().AsSelf();
             builder.RegisterType<RegistrationViewModel>().AsSelf();
+            builder.RegisterType<CustomerPurchaseHistoryViewModel>().AsSelf();
             builder.RegisterType<SplashScreenMessage>().AsSelf().SingleInstance();
 
 

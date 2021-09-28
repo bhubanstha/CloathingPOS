@@ -59,12 +59,22 @@ namespace POSSystem.UI.ViewModel
 
         public ICommand LoadCustomerDataCommand { get; private set; }
         public ICommand EditCustomerCommand { get; private set; }
+        public ICommand ShowPurchaseHistoryCommand { get; private set; }
 
         public CustomerListViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             LoadCustomerDataCommand = new DelegateCommand(OnLoadCustomerExecute);
             EditCustomerCommand = new DelegateCommand<CustomerWrapper>(OnCustomerEditExecute);
+            ShowPurchaseHistoryCommand = new DelegateCommand<CustomerWrapper>(OnPurchaseHistoryExecute);
+        }
+
+        private void OnPurchaseHistoryExecute(CustomerWrapper obj)
+        {
+            MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            CustomerPurchaseHistoryDialog dialog = StaticContainer.Container.Resolve<CustomerPurchaseHistoryDialog>();
+            _eventAggregator.GetEvent<ShowCustomerPurchaseEvent>().Publish(obj.Id);
+            _window.ShowMetroDialogAsync(dialog);
         }
 
         private void OnCustomerEditExecute(CustomerWrapper obj)
