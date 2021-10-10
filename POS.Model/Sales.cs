@@ -21,5 +21,9 @@ namespace POS.Model
         public virtual Bill Bill { get; set; }
 
 
+        [NotMapped]
+        public string BranchName { get; set; }
+
+
     }
 }

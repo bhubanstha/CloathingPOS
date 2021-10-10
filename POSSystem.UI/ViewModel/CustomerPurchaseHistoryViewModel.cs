@@ -47,6 +47,7 @@ namespace POSSystem.UI.ViewModel
             CloseDialogCommand = new DelegateCommand(OnDialogCloseExecute);
         }
 
+
         private async void OnDialogOpenAsync(long customerId)
         {
             List<Sales> sales = await LoadSales(customerId);
@@ -59,10 +60,13 @@ namespace POSSystem.UI.ViewModel
             }
             else
             {
+                MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+                CustomerPurchaseHistoryDialog dialog = StaticContainer.Container.Resolve<CustomerPurchaseHistoryDialog>();
                 SalesList = new ObservableCollection<Sales>(sales);
                 SalesCollectionView = CollectionViewSource.GetDefaultView(SalesList);
-                SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.Bill.Branch.BranchName)));
+                SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BranchName)));
                 SalesCollectionView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Sales.BillNo)));
+                await _window.ShowMetroDialogAsync(dialog);
             }
         }
 

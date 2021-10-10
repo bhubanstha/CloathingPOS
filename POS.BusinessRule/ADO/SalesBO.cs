@@ -87,10 +87,10 @@ namespace POS.BusinessRule
                         BillNo = (long)row["BillNo"],
                         SalesRate = (decimal)row["SalesRate"],
                         Inventory = await new InventoryBO().GetById((long)row["ProductId"]),
-                        Bill = await new BillBO().GetById((long)row["BillNo"]),
-
+                        Bill = await new BillBO().GetById((long)row["BillNo"])
                     };
                     s.Bill.Branch = await new BranchBO().GetById((long)row["BranchId"]);
+                    s.BranchName = s.Bill.Branch.BranchName;
                     sales.Add(s);
                 }
                 return sales;

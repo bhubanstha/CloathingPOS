@@ -71,10 +71,10 @@ namespace POSSystem.UI.ViewModel
 
         private void OnPurchaseHistoryExecute(CustomerWrapper obj)
         {
-            MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
+            //MetroWindow _window = StaticContainer.ThisApp.MainWindow as MetroWindow;
             CustomerPurchaseHistoryDialog dialog = StaticContainer.Container.Resolve<CustomerPurchaseHistoryDialog>();
             _eventAggregator.GetEvent<ShowCustomerPurchaseEvent>().Publish(obj.Id);
-            _window.ShowMetroDialogAsync(dialog);
+            //_window.ShowMetroDialogAsync(dialog);
         }
 
         private void OnCustomerEditExecute(CustomerWrapper obj)

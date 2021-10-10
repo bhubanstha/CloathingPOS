@@ -24,6 +24,14 @@
         <conv:ControlHeightCalculator x:Key="HeightCalc" />
         <conv:BillToBillInfoConverter x:Key="BillInfoConverter" />
         <conv:TotalPriceConverter x:Key="TotalCalc" />
+
+        <CollectionViewSource x:Key="cvs" Source="{Binding TestData}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="TopProperty" />
+                <PropertyGroupDescription PropertyName="SubProperty" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+
     </Dialog:CustomDialog.Resources>
     <Grid behaviors:KeyboardFocus.On="{Binding ElementName=DisplayName}">
         <Grid.RowDefinitions>
@@ -101,8 +109,72 @@
                                                             Grid.Column="0"
                                                             VerticalAlignment="Center"
                                                             FontWeight="Bold">
+                                                            <Run Text="Branch: " />
+                                                            <Run Text="{Binding Path=Name, Mode=OneWay}" />
+                                                        </TextBlock>
+
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            VerticalAlignment="Center"
+                                                            FontWeight="Bold">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding StringFormat="{}{0}: {1}">
+                                                                    <Binding>
+                                                                        <Binding.Source>
+                                                                            <sys:String>Total Sales Record</sys:String>
+                                                                        </Binding.Source>
+                                                                    </Binding>
+                                                                    <Binding Mode="OneWay" Path="ItemCount" />
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+
+                <!--  Style for groups under the top level.  -->
+                <GroupStyle>
+
+                    <!--  Inner grid make fit within outer grid so that all columns remain as it is without collapse  -->
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Margin" Value="0,0,0,3" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander BorderThickness="1,1,1,1" IsExpanded="False">
+                                            <Expander.Header>
+                                                <DockPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock
+                                                            Grid.Column="0"
+                                                            VerticalAlignment="Center"
+                                                            FontWeight="Bold">
                                                             <Run Text="Billing Info:" />
                                                             <Run Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource BillInfoConverter}}" />
+                                                            <!--<Run Text="{Binding Path=Name}"/>-->
                                                         </TextBlock>
                                                         <!--<TextBlock Grid.Column="1" FontWeight="Bold">
                                                             <Run Text="Total Sales Record:"/>
@@ -138,20 +210,8 @@
                         </Style>
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
-                <!--  Style for groups under the top level.  -->
-                <!--<GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <DockPanel Background="{DynamicResource MahApps.Brushes.Accent}">
-                                <TextBlock Text="{Binding Path=Name}"  Margin="30,0,0,0" Width="100"/>
-                -->
-                <!--<TextBlock Text="{Binding Path=ItemCount}" Foreground="Blue"/>-->
-                <!--
-                            </DockPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>-->
             </DataGrid.GroupStyle>
+
 
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -233,6 +293,7 @@
             Margin="0,5,0,15"
             HorizontalAlignment="Center"
             Command="{Binding CloseDialogCommand}"
+           
             Content="Ok"
             IsCancel="True"
             Style="{DynamicResource MahApps.Styles.Button.Dialogs.Accent}" />
